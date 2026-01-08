@@ -13,13 +13,13 @@
 
     <title>Free Calorie & Macro Tracker | Simple & Unlimited</title>
     <meta name="description" content="The easiest free way to track calories and macros. No paywalls or complex features—just a simple, unlimited daily log for your nutrition goals.">
-    <meta name="keywords" content="free macro tracker, simple calorie counter, protein tracker, daily food log, unlimited nutrition tracker">
+    <meta name="keywords" content="free macro tracker, simple calorie counter, free calorie tracker, free calorie counter, protein tracker, daily food log, unlimited nutrition tracker">
     <meta name="robots" content="index, follow">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://free-calorie-track.vercel.app/">
     <meta property="og:title" content="Free Calorie & Macro Tracker">
-    <meta property="og:description" content="Finally, a calorie and macro tracker that is actually free. Simple logging, no ads, and no complicated extras.">
+    <meta property="og:description" content="Finally, a calorie and macro tracker that is actually free. Simple logging and no complicated extras.">
     <meta property="og:image" content="https://free-calorie-track.vercel.app/screenshot.png">
 
     <script type="application/ld+json">
@@ -38,9 +38,77 @@
       "description": "A completely free application for tracking daily calories and macronutrients simply and efficiently."
     }
     </script>
+    
+    <style>
+      .app-footer {
+        text-align: center;
+        padding: 40px 20px;
+        font-family: sans-serif;
+        color: #666;
+        font-size: 14px;
+        background-color: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 50px;
+      }
+      .gear-section {
+        margin-bottom: 20px;
+      }
+      .footer-link {
+        color: #10b981;
+        text-decoration: none;
+        font-weight: bold;
+        margin: 0 10px;
+      }
+      .footer-link:hover {
+        text-decoration: underline;
+      }
+      .bmc-button {
+        display: inline-block;
+        background-color: #FFDD00;
+        color: #000000;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        margin-top: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+      .disclaimer {
+        font-size: 11px; 
+        color: #999; 
+        margin-top: 15px;
+        display: block;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-  </body>
+    
+    <div class="app-footer">
+      
+      <div class="gear-section">
+        <strong>My Gear Picks:</strong><br><br>
+        
+        <a href="https://amzn.to/4qNU4Ko" target="_blank" class="footer-link">
+          ⚖️ Best Digital Food Scale
+        </a>
+        
+        <span style="color:#ccc">|</span>
+        
+        <a href="https://amzn.to/4bquRRF" target="_blank" class="footer-link">
+          🍱 Best Meal Prep Containers
+        </a>
+      </div>
+
+      <a href="https://buymeacoffee.com/griffs" target="_blank" class="bmc-button">
+        ☕ Buy me a coffee
+      </a>
+      
+      <br><br>
+      <small>© 2026 Free Calorie Track.</small>
+      <span class="disclaimer">As an Amazon Associate I earn from qualifying purchases.</span>
+    </div>
+    </body>
 </html>
