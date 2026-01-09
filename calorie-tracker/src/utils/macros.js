@@ -19,7 +19,9 @@ export const GOAL_INFO = {
   [FITNESS_GOALS.MUSCLE_GAIN]: {
     label: 'Build Lean Muscle',
     description: 'Optimize protein intake and caloric surplus for muscle growth',
-    calorieAdjustment: 300, // +300 cal surplus
+    calorieAdjustmentPercent: 0.15, // +15% surplus (scales with body size)
+    minAdjustment: 200,
+    maxAdjustment: 500,
     proteinPerKg: 2.0, // 2.0g per kg bodyweight
     fatPercent: 25, // 25% of total calories
     explanation: 'Higher protein (2.0g/kg) supports muscle protein synthesis. Moderate caloric surplus promotes muscle growth while minimizing fat gain.',
@@ -27,15 +29,19 @@ export const GOAL_INFO = {
   [FITNESS_GOALS.FAT_LOSS]: {
     label: 'Lose Fat',
     description: 'Preserve muscle while creating caloric deficit',
-    calorieAdjustment: -500, // -500 cal deficit
+    calorieAdjustmentPercent: -0.20, // -20% deficit (scales with body size)
+    minAdjustment: -1000, // Most aggressive
+    maxAdjustment: -500, // Minimum safe deficit
     proteinPerKg: 2.2, // 2.2g per kg bodyweight (higher during deficit)
     fatPercent: 25, // 25% of total calories
-    explanation: 'Higher protein (2.2g/kg) during deficit helps preserve lean mass. Moderate deficit allows sustainable fat loss of ~1 lb/week.',
+    explanation: 'Higher protein (2.2g/kg) during deficit helps preserve lean mass. Moderate deficit allows sustainable fat loss scaled to your size.',
   },
   [FITNESS_GOALS.MAINTENANCE]: {
     label: 'Maintain Weight',
     description: 'Balanced nutrition for weight maintenance',
-    calorieAdjustment: 0, // No adjustment
+    calorieAdjustmentPercent: 0, // No adjustment
+    minAdjustment: 0,
+    maxAdjustment: 0,
     proteinPerKg: 1.6, // 1.6g per kg bodyweight
     fatPercent: 30, // 30% of total calories
     explanation: 'Moderate protein (1.6g/kg) maintains muscle mass. Balanced macros support general health and performance.',
@@ -43,7 +49,9 @@ export const GOAL_INFO = {
   [FITNESS_GOALS.ATHLETIC_PERFORMANCE]: {
     label: 'Athletic Performance',
     description: 'Fuel training and optimize recovery',
-    calorieAdjustment: 200, // +200 cal for training demands
+    calorieAdjustmentPercent: 0.10, // +10% for training demands (scales with body size)
+    minAdjustment: 200,
+    maxAdjustment: 400,
     proteinPerKg: 1.8, // 1.8g per kg bodyweight
     fatPercent: 25, // 25% of total calories
     explanation: 'Moderate-high protein (1.8g/kg) for recovery. Higher carbs fuel intense training. Slight surplus supports performance.',
@@ -55,13 +63,25 @@ export const GOAL_INFO = {
  * @param {number} weight - Body weight in kg
  * @param {number} tdee - Total Daily Energy Expenditure
  * @param {string} goal - Fitness goal from FITNESS_GOALS
- * @returns {object} - { calories, protein, carbs, fat, explanation }
+ * @returns {object} - { calories, protein, carbs, fat, explanation, calorieAdjustment }
  */
 export function calculateMacroTargets(weight, tdee, goal) {
   const goalInfo = GOAL_INFO[goal] || GOAL_INFO[FITNESS_GOALS.MAINTENANCE];
 
+  // Calculate calorie adjustment based on TDEE percentage (scales with body size)
+  let calorieAdjustment = Math.round(tdee * goalInfo.calorieAdjustmentPercent);
+
+  // Apply min/max caps for safety
+  if (calorieAdjustment < 0) {
+    // For deficits: cap between maxAdjustment (less aggressive) and minAdjustment (more aggressive)
+    calorieAdjustment = Math.max(goalInfo.minAdjustment, Math.min(goalInfo.maxAdjustment, calorieAdjustment));
+  } else if (calorieAdjustment > 0) {
+    // For surpluses: cap between minAdjustment and maxAdjustment
+    calorieAdjustment = Math.min(goalInfo.maxAdjustment, Math.max(goalInfo.minAdjustment, calorieAdjustment));
+  }
+
   // Calculate target calories
-  const targetCalories = tdee + goalInfo.calorieAdjustment;
+  const targetCalories = tdee + calorieAdjustment;
 
   // Calculate protein (g)
   const proteinGrams = Math.round(weight * goalInfo.proteinPerKg);
@@ -83,6 +103,7 @@ export function calculateMacroTargets(weight, tdee, goal) {
     carbs: Math.max(0, carbGrams), // Ensure non-negative
     fat: fatGrams,
     explanation: goalInfo.explanation,
+    calorieAdjustment, // Return the calculated adjustment
     breakdown: {
       proteinPercent: Math.round((proteinCalories / targetCalories) * 100),
       carbPercent: Math.round((carbCalories / targetCalories) * 100),
