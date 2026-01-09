@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getProfile, saveProfile, saveDailyGoal } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
-import { FITNESS_GOALS, GOAL_INFO } from '../utils/macros';
+import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 
 export default function Settings({ onUpdateProfile, onClose }) {
   const currentProfile = getProfile();
@@ -47,11 +47,11 @@ export default function Settings({ onUpdateProfile, onClose }) {
       fitnessGoal: formData.fitnessGoal,
     };
 
-    // Auto-set NET calorie goal based on fitness goal
-    const goalInfo = GOAL_INFO[formData.fitnessGoal];
-    if (goalInfo) {
-      saveDailyGoal(goalInfo.calorieAdjustment);
-    }
+    // Auto-set NET calorie goal based on fitness goal (now weight-adjusted)
+    const bmrForGoal = calculateBMR(profile);
+    const tdeeForGoal = calculateTDEE(bmrForGoal, formData.activityLevel);
+    const macroTargets = calculateMacroTargets(weight, tdeeForGoal, formData.fitnessGoal);
+    saveDailyGoal(macroTargets.calorieAdjustment);
 
     saveProfile(profile);
     onUpdateProfile(profile);
@@ -262,7 +262,12 @@ export default function Settings({ onUpdateProfile, onClose }) {
             <div className="space-y-3">
               {Object.values(FITNESS_GOALS).map((goalKey) => {
                 const goal = GOAL_INFO[goalKey];
-                const netCalorieGoal = goal.calorieAdjustment;
+                // Calculate NET goal based on current weight (preview)
+                const previewBMR = calculateBMR(bmrProfile);
+                const previewTDEE = calculateTDEE(previewBMR, formData.activityLevel);
+                const previewTargets = calculateMacroTargets(metricWeight, previewTDEE, goalKey);
+                const netCalorieGoal = previewTargets.calorieAdjustment;
+
                 return (
                   <button
                     key={goalKey}
