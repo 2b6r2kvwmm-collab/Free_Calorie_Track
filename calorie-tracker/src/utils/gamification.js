@@ -79,7 +79,7 @@ export const ACHIEVEMENTS = {
     id: 'protein_goal_10',
     title: 'Protein Powered',
     description: 'Hit your protein goal 10 times',
-    icon: '🥩,
+    icon: '🥩',
     category: 'nutrition',
   },
   PERFECT_WEEK: {
