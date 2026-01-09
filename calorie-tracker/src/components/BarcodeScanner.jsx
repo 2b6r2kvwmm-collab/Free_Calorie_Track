@@ -4,6 +4,7 @@ import { getFoodByBarcode } from '../utils/openfoodfacts';
 
 export default function BarcodeScanner({ onAddFood, onClose }) {
   const scannerRef = useRef(null);
+  const scanProcessedRef = useRef(false); // Track if a scan has been processed
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -74,8 +75,11 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   };
 
   const onScanSuccess = async (decodedText) => {
-    if (loading) return; // Prevent multiple scans
+    // Prevent multiple scans - check both loading state and ref
+    if (loading || scanProcessedRef.current) return;
 
+    // Immediately mark as processed to prevent race conditions
+    scanProcessedRef.current = true;
     setLoading(true);
 
     // Stop scanner immediately to turn off camera
@@ -100,6 +104,8 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
       setError('Product not found in database. Try searching manually.');
       setLoading(false);
       setManualEntry(true); // Show manual entry form
+      // Reset the flag if product not found so user can try again
+      scanProcessedRef.current = false;
     }
   };
 
