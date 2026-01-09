@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
@@ -32,6 +32,8 @@ function App() {
 
   const handleProfileComplete = (newProfile) => {
     saveProfile(newProfile);
+    // Add initial weight to weight tracker
+    addWeightEntry(newProfile.weight);
     setProfile(newProfile);
   };
 
