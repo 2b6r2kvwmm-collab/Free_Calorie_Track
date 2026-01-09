@@ -214,8 +214,8 @@ function checkStreakAchievements(streak) {
   }
 }
 
-// Update workout count
-export function updateWorkoutCount() {
+// Track workout (update workout count)
+export function trackWorkout() {
   const data = getGamificationData();
   const exerciseLog = getExerciseLog();
   data.stats.totalWorkouts = exerciseLog.length;
@@ -233,8 +233,8 @@ export function updateWorkoutCount() {
   }
 }
 
-// Update food entry count
-export function updateFoodCount() {
+// Track food entry (update food entry count)
+export function trackFoodEntry() {
   const data = getGamificationData();
   const foodLog = getFoodLog();
   data.stats.totalFoodEntries = foodLog.length;
@@ -264,14 +264,14 @@ export function getMotivationalNudge(netCalories, dailyGoal, totalProtein, prote
   // Streak-based encouragement
   if (data.currentStreak > 0 && data.currentStreak % 7 === 0) {
     return {
-      message: `Amazing! You're on a ${data.currentStreak} day streak! ðŸ”¥`,
+      message: `Amazing! You're on a ${data.currentStreak} day streak! 🔥`,
       type: 'success',
     };
   }
 
   if (data.currentStreak >= 3) {
     return {
-      message: `${data.currentStreak} day streak - keep it going! ðŸ’ª`,
+      message: `${data.currentStreak} day streak - keep it going! 💪`,
       type: 'info',
     };
   }
@@ -279,7 +279,7 @@ export function getMotivationalNudge(netCalories, dailyGoal, totalProtein, prote
   // Protein progress nudges
   if (proteinGoal > 0 && proteinProgress >= 80 && proteinProgress < 100) {
     return {
-      message: `You're ${Math.round(proteinProgress)}% to your protein goal! Almost there! ðŸ¥©`,
+      message: `You're ${Math.round(proteinProgress)}% to your protein goal! Almost there! 🥩`,
       type: 'info',
     };
   }
@@ -290,14 +290,14 @@ export function getMotivationalNudge(netCalories, dailyGoal, totalProtein, prote
 
     if (remaining <= 100 && remaining > 0) {
       return {
-        message: `Only ${remaining} calories from your target - you're killing it! ðŸŽ¯`,
+        message: `Only ${remaining} calories from your target - you're killing it! 🎯`,
         type: 'info',
       };
     }
 
     if (Math.abs(netCalories - dailyGoal) <= 50) {
       return {
-        message: `Perfect! You hit your NET calorie goal! ðŸŽ‰`,
+        message: `Perfect! You hit your NET calorie goal! 🎉`,
         type: 'success',
       };
     }
