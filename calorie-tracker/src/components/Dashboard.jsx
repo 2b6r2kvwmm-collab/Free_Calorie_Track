@@ -40,7 +40,6 @@ export default function Dashboard({ onRefresh }) {
   const [showNewAchievement, setShowNewAchievement] = useState(null);
 
   const profile = getProfile();
-  const dailyGoal = getDailyGoal();
 
   const loadEntries = () => {
     setEntries(getTodayEntries());
@@ -70,6 +69,9 @@ export default function Dashboard({ onRefresh }) {
   const macroTargets = profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null;
   const proteinGoal = macroTargets?.protein || 0;
 
+  // Use calculated goal from profile settings, fallback to stored goal for backwards compatibility
+  const dailyGoal = macroTargets?.calorieAdjustment ?? getDailyGoal();
+
   const motivationalNudge = getMotivationalNudge(netCalories, dailyGoal, totalProtein, proteinGoal);
   const recentAchievements = getRecentAchievements();
 
@@ -97,9 +99,13 @@ export default function Dashboard({ onRefresh }) {
     const burned = baselineTDEE + // Full day's resting calories
                    dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
 
+    // Only calculate net calories if there's data for the day (food or exercise logged)
+    const hasData = dayFood.length > 0 || dayExercise.length > 0;
+
     previousDays.push({
       label: i === 1 ? 'Yesterday' : `${i} days ago`,
-      netCal: eaten - burned
+      netCal: hasData ? eaten - burned : null,
+      hasData
     });
   }
 
@@ -177,43 +183,53 @@ export default function Dashboard({ onRefresh }) {
       </div>
 
       {/* Streak & Achievements Banner */}
-      {(gamificationData.currentStreak > 0 || recentAchievements.length > 0) && (
-        <div className="card bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 border-2 border-emerald-300 dark:border-emerald-700">
-          <div className="flex justify-between items-center">
-            <div className="flex-1">
-              {gamificationData.currentStreak > 0 && (
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-3xl">🔥</span>
-                  <div>
-                    <div className="font-bold text-lg text-emerald-600 dark:text-emerald-400">
-                      {gamificationData.currentStreak} Day Streak!
-                    </div>
-                    <div className="text-xs text-gray-600 dark:text-gray-400">
-                      Best: {gamificationData.longestStreak} days
-                    </div>
+      <div className="card bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 border-2 border-emerald-300 dark:border-emerald-700">
+        <div className="flex justify-between items-center">
+          <div className="flex-1">
+            {gamificationData.currentStreak > 0 ? (
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-3xl">🔥</span>
+                <div>
+                  <div className="font-bold text-lg text-emerald-600 dark:text-emerald-400">
+                    {gamificationData.currentStreak} Day Streak!
+                  </div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
+                    Best: {gamificationData.longestStreak} days
                   </div>
                 </div>
-              )}
-              {recentAchievements.length > 0 && (
-                <div className="flex items-center gap-2 text-sm">
-                  <span>Recent:</span>
-                  {recentAchievements.slice(0, 2).map((achievement, idx) => (
-                    <span key={idx} className="bg-white dark:bg-gray-800 px-2 py-1 rounded-full">
-                      {achievement.icon} {achievement.title}
-                    </span>
-                  ))}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <span className="text-3xl">🏆</span>
+                <div>
+                  <div className="font-bold text-lg text-gray-700 dark:text-gray-300">
+                    Achievements
+                  </div>
+                  <div className="text-xs text-gray-600 dark:text-gray-400">
+                    Start tracking to unlock achievements
+                  </div>
                 </div>
-              )}
-            </div>
-            <button
-              onClick={() => setShowAchievements(true)}
-              className="btn-secondary text-sm whitespace-nowrap"
-            >
-              View All
-            </button>
+              </div>
+            )}
+            {recentAchievements.length > 0 && (
+              <div className="flex items-center gap-2 text-sm mt-2">
+                <span>Recent:</span>
+                {recentAchievements.slice(0, 2).map((achievement, idx) => (
+                  <span key={idx} className="bg-white dark:bg-gray-800 px-2 py-1 rounded-full">
+                    {achievement.icon} {achievement.title}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
+          <button
+            onClick={() => setShowAchievements(true)}
+            className="btn-secondary text-sm whitespace-nowrap"
+          >
+            🏆 View All
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Motivational Nudge */}
       {motivationalNudge && (
@@ -263,13 +279,19 @@ export default function Dashboard({ onRefresh }) {
                   <div className="text-gray-600 dark:text-gray-400 mb-1">
                     {day.label}
                   </div>
-                  <div className={`font-bold text-lg ${
-                    day.netCal >= 0
-                      ? 'text-blue-600 dark:text-blue-400'
-                      : 'text-emerald-600 dark:text-emerald-400'
-                  }`}>
-                    {day.netCal >= 0 ? '+' : ''}{day.netCal}
-                  </div>
+                  {day.hasData ? (
+                    <div className={`font-bold text-lg ${
+                      day.netCal >= 0
+                        ? 'text-blue-600 dark:text-blue-400'
+                        : 'text-emerald-600 dark:text-emerald-400'
+                    }`}>
+                      {day.netCal >= 0 ? '+' : ''}{day.netCal}
+                    </div>
+                  ) : (
+                    <div className="font-bold text-lg text-gray-400 dark:text-gray-500">
+                      N/A
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
