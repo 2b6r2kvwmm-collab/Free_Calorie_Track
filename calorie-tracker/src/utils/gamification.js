@@ -9,98 +9,98 @@ export const ACHIEVEMENTS = {
     id: 'first_day',
     title: 'Getting Started',
     description: 'Log your first day of tracking',
-    icon: '🌱',
+    icon: 'ðŸŒ±',
     category: 'milestone',
   },
   STREAK_3: {
     id: 'streak_3',
     title: '3 Day Streak',
     description: 'Hit your NET calorie goal 3 days in a row',
-    icon: '🔥',
+    icon: 'ðŸ”¥',
     category: 'streak',
   },
   STREAK_7: {
     id: 'streak_7',
     title: 'Week Warrior',
     description: 'Hit your NET calorie goal 7 days in a row',
-    icon: '⚡',
+    icon: 'âš¡',
     category: 'streak',
   },
   STREAK_30: {
     id: 'streak_30',
     title: 'Monthly Master',
     description: 'Hit your NET calorie goal 30 days in a row',
-    icon: '🏆',
+    icon: 'ðŸ†',
     category: 'streak',
   },
   STREAK_100: {
     id: 'streak_100',
     title: 'Century Club',
     description: 'Hit your NET calorie goal 100 days in a row',
-    icon: '👑',
+    icon: 'ðŸ‘‘',
     category: 'streak',
   },
   WORKOUTS_10: {
     id: 'workouts_10',
     title: 'Gym Regular',
     description: 'Log 10 workouts',
-    icon: '💪',
+    icon: 'ðŸ’ª',
     category: 'fitness',
   },
   WORKOUTS_50: {
     id: 'workouts_50',
     title: 'Fitness Enthusiast',
     description: 'Log 50 workouts',
-    icon: '🏋️',
+    icon: 'ðŸ‹ï¸',
     category: 'fitness',
   },
   WORKOUTS_100: {
     id: 'workouts_100',
     title: 'Iron Warrior',
     description: 'Log 100 workouts',
-    icon: '🦾',
+    icon: 'ðŸ¦¾',
     category: 'fitness',
   },
   FOODS_100: {
     id: 'foods_100',
     title: 'Nutrition Tracker',
     description: 'Log 100 food entries',
-    icon: '📊',
+    icon: 'ðŸ“Š',
     category: 'tracking',
   },
   FOODS_500: {
     id: 'foods_500',
     title: 'Tracking Pro',
     description: 'Log 500 food entries',
-    icon: '📈',
+    icon: 'ðŸ“ˆ',
     category: 'tracking',
   },
   PROTEIN_GOAL_10: {
     id: 'protein_goal_10',
     title: 'Protein Powered',
     description: 'Hit your protein goal 10 times',
-    icon: '🥩',
+    icon: 'ðŸ¥©',
     category: 'nutrition',
   },
   PERFECT_WEEK: {
     id: 'perfect_week',
     title: 'Perfect Week',
     description: 'Hit all macro goals for 7 days straight',
-    icon: '⭐',
+    icon: 'â­',
     category: 'nutrition',
   },
   EARLY_LOGGER: {
     id: 'early_logger',
     title: 'Early Bird',
     description: 'Log breakfast before 9am for 7 days',
-    icon: '🌅',
+    icon: 'ðŸŒ…',
     category: 'habits',
   },
   CONSISTENT_TRACKER: {
     id: 'consistent_tracker',
     title: 'Consistency King',
     description: 'Log food every day for 30 days',
-    icon: '📅',
+    icon: 'ðŸ“…',
     category: 'habits',
   },
 };
@@ -264,14 +264,14 @@ export function getMotivationalNudge(netCalories, dailyGoal, totalProtein, prote
   // Streak-based encouragement
   if (data.currentStreak > 0 && data.currentStreak % 7 === 0) {
     return {
-      message: `Amazing! You're on a ${data.currentStreak} day streak! 🔥`,
+      message: `Amazing! You're on a ${data.currentStreak} day streak! ðŸ”¥`,
       type: 'success',
     };
   }
 
   if (data.currentStreak >= 3) {
     return {
-      message: `${data.currentStreak} day streak - keep it going! 💪`,
+      message: `${data.currentStreak} day streak - keep it going! ðŸ’ª`,
       type: 'info',
     };
   }
@@ -279,7 +279,7 @@ export function getMotivationalNudge(netCalories, dailyGoal, totalProtein, prote
   // Protein progress nudges
   if (proteinGoal > 0 && proteinProgress >= 80 && proteinProgress < 100) {
     return {
-      message: `You're ${Math.round(proteinProgress)}% to your protein goal! Almost there! 🥩`,
+      message: `You're ${Math.round(proteinProgress)}% to your protein goal! Almost there! ðŸ¥©`,
       type: 'info',
     };
   }
@@ -290,37 +290,21 @@ export function getMotivationalNudge(netCalories, dailyGoal, totalProtein, prote
 
     if (remaining <= 100 && remaining > 0) {
       return {
-        message: `Only ${remaining} calories from your target - you're killing it! 🎯`,
+        message: `Only ${remaining} calories from your target - you're killing it! ðŸŽ¯`,
         type: 'info',
       };
     }
 
     if (Math.abs(netCalories - dailyGoal) <= 50) {
       return {
-        message: `Perfect! You hit your NET calorie goal! 🎉`,
+        message: `Perfect! You hit your NET calorie goal! ðŸŽ‰`,
         type: 'success',
       };
     }
   }
 
-  // Time-based nudges
-  const hour = new Date().getHours();
-  if (hour < 12) {
-    return {
-      message: `Good morning! Track your meals today to build your streak 🌅`,
-      type: 'neutral',
-    };
-  } else if (hour < 18) {
-    return {
-      message: `Keep up the great tracking! Every meal counts 📊`,
-      type: 'neutral',
-    };
-  } else {
-    return {
-      message: `Evening check-in: How's your day looking? 🌙`,
-      type: 'neutral',
-    };
-  }
+  // No default message - only show nudges when there's something meaningful to say
+  return null;
 }
 
 // Get recently unlocked achievements (last 3)
