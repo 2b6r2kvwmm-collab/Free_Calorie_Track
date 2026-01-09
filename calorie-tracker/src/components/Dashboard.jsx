@@ -18,8 +18,8 @@ import {
 } from '../utils/calculations';
 import {
   updateDailyStreak,
-  updateWorkoutCount,
-  updateFoodCount,
+  trackWorkout,
+  trackFoodEntry,
   getMotivationalNudge,
   getGamificationData,
   getRecentAchievements,
@@ -140,14 +140,14 @@ export default function Dashboard({ onRefresh }) {
       fat: food.fat || 0,
     };
     addFoodEntry(entry);
-    updateFoodCount();
+    trackFoodEntry();
     loadEntries();
     onRefresh();
   };
 
   const handleAddExercise = (exercise) => {
     addExerciseEntry(exercise);
-    updateWorkoutCount();
+    trackWorkout();
     loadEntries();
     onRefresh();
   };

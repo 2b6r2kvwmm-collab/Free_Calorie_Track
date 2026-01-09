@@ -5,6 +5,7 @@ import { getFoodByBarcode } from '../utils/openfoodfacts';
 export default function BarcodeScanner({ onAddFood, onClose }) {
   const scannerRef = useRef(null);
   const scanProcessedRef = useRef(false); // Track if a scan has been processed
+  const mediaStreamRef = useRef(null); // Track the media stream for cleanup
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -59,8 +60,13 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   const stopScanner = async () => {
     if (scannerRef.current) {
       try {
-        // Always try to stop, regardless of scanning state
-        await scannerRef.current.stop();
+        // Get the camera state before stopping
+        const state = scannerRef.current.getState();
+
+        // Stop the scanner if it's running
+        if (state === Html5Qrcode.SCANNING) {
+          await scannerRef.current.stop();
+        }
 
         // Clear the scanner completely
         await scannerRef.current.clear();
@@ -77,6 +83,48 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
         scannerRef.current = null;
         setScanning(false);
       }
+    }
+
+    // CRITICAL for Safari on Mac: Force stop ALL video tracks
+    // This runs after scanner cleanup to ensure camera releases
+    try {
+      // Stop any stored media stream
+      if (mediaStreamRef.current) {
+        mediaStreamRef.current.getTracks().forEach(track => {
+          track.stop();
+          console.log('Stopped track:', track.label);
+        });
+        mediaStreamRef.current = null;
+      }
+
+      // Safari-specific: Find and stop all active video tracks
+      // This is a more aggressive cleanup for stubborn browsers
+      if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
+        // Give the scanner a moment to release resources
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Get all media devices and check for active video inputs
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const videoDevices = devices.filter(d => d.kind === 'videoinput');
+
+        if (videoDevices.length > 0) {
+          // Try to get current media stream tracks and stop them
+          // This is a fallback for Safari which sometimes doesn't release properly
+          const videoElements = document.querySelectorAll('video');
+          videoElements.forEach(video => {
+            if (video.srcObject) {
+              const stream = video.srcObject;
+              stream.getTracks().forEach(track => {
+                track.stop();
+                console.log('Force stopped video track:', track.label);
+              });
+              video.srcObject = null;
+            }
+          });
+        }
+      }
+    } catch (cleanupErr) {
+      console.error('Error in final cleanup:', cleanupErr);
     }
   };
 

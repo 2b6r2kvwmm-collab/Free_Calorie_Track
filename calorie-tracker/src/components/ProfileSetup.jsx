@@ -9,7 +9,7 @@ export default function ProfileSetup({ onComplete }) {
     height: '',
     weight: '',
     activityLevel: 'moderate',
-    unit: 'metric', // metric or imperial
+    unit: 'imperial', // metric or imperial
     fitnessGoal: FITNESS_GOALS.MAINTENANCE,
   });
 

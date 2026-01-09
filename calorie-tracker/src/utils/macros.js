@@ -29,12 +29,12 @@ export const GOAL_INFO = {
   [FITNESS_GOALS.FAT_LOSS]: {
     label: 'Lose Fat',
     description: 'Preserve muscle while creating caloric deficit',
-    calorieAdjustmentPercent: -0.20, // -20% deficit (scales with body size)
-    minAdjustment: -1000, // Most aggressive
-    maxAdjustment: -500, // Minimum safe deficit
+    calorieAdjustmentPercent: -0.15, // -15% deficit (scales with body size)
+    minAdjustment: -700, // Conservative max deficit
+    maxAdjustment: -300, // Minimum safe deficit
     proteinPerKg: 2.2, // 2.2g per kg bodyweight (higher during deficit)
     fatPercent: 25, // 25% of total calories
-    explanation: 'Higher protein (2.2g/kg) during deficit helps preserve lean mass. Moderate deficit allows sustainable fat loss scaled to your size.',
+    explanation: 'Higher protein (2.2g/kg) during deficit helps preserve lean mass. Conservative deficit allows sustainable fat loss while preserving muscle, especially for leaner individuals.',
   },
   [FITNESS_GOALS.MAINTENANCE]: {
     label: 'Maintain Weight',

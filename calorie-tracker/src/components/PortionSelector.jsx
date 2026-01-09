@@ -1,26 +1,64 @@
 import { useState } from 'react';
+import { supportsToppings, sandwichToppings } from '../utils/commonFoods';
 
 export default function PortionSelector({ food, onConfirm, onCancel }) {
   const [servings, setServings] = useState('1');
+  const [selectedToppings, setSelectedToppings] = useState([]);
+
+  const hasToppings = supportsToppings(food.name);
 
   const multiplier = parseFloat(servings) || 0;
-  const adjustedCalories = Math.round(food.calories * multiplier);
-  const adjustedProtein = Math.round((food.protein || 0) * multiplier * 10) / 10;
-  const adjustedCarbs = Math.round((food.carbs || 0) * multiplier * 10) / 10;
-  const adjustedFat = Math.round((food.fat || 0) * multiplier * 10) / 10;
+
+  // Calculate totals including toppings
+  const toppingsTotal = selectedToppings.reduce(
+    (totals, topping) => ({
+      calories: totals.calories + topping.calories,
+      protein: totals.protein + topping.protein,
+      carbs: totals.carbs + topping.carbs,
+      fat: totals.fat + topping.fat,
+    }),
+    { calories: 0, protein: 0, carbs: 0, fat: 0 }
+  );
+
+  const baseCalories = food.calories * multiplier;
+  const baseProtein = (food.protein || 0) * multiplier;
+  const baseCarbs = (food.carbs || 0) * multiplier;
+  const baseFat = (food.fat || 0) * multiplier;
+
+  const adjustedCalories = Math.round(baseCalories + toppingsTotal.calories);
+  const adjustedProtein = Math.round((baseProtein + toppingsTotal.protein) * 10) / 10;
+  const adjustedCarbs = Math.round((baseCarbs + toppingsTotal.carbs) * 10) / 10;
+  const adjustedFat = Math.round((baseFat + toppingsTotal.fat) * 10) / 10;
 
   const handleConfirm = () => {
     if (multiplier <= 0) return;
 
+    let name = food.name;
+    if (selectedToppings.length > 0) {
+      const toppingNames = selectedToppings.map((t) => t.name).join(', ');
+      name = `${food.name} + ${toppingNames}`;
+    }
+
     onConfirm({
       ...food,
+      name,
       calories: adjustedCalories,
       protein: adjustedProtein,
       carbs: adjustedCarbs,
       fat: adjustedFat,
-      servingSize: multiplier === 1
-        ? food.servingSize
-        : `${multiplier}x ${food.servingSize}`,
+      servingSize:
+        multiplier === 1 ? food.servingSize : `${multiplier}x ${food.servingSize}`,
+    });
+  };
+
+  const toggleTopping = (topping) => {
+    setSelectedToppings((prev) => {
+      const exists = prev.find((t) => t.name === topping.name);
+      if (exists) {
+        return prev.filter((t) => t.name !== topping.name);
+      } else {
+        return [...prev, topping];
+      }
     });
   };
 
@@ -28,8 +66,8 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
   const quickOptions = [0.5, 1, 1.5, 2, 2.5, 3];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="card max-w-md w-full">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="card max-w-md w-full mt-4 mb-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Select Portion Size</h2>
           <button
@@ -98,7 +136,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
         )}
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 mb-6">
           <button onClick={onCancel} className="btn-secondary flex-1">
             Cancel
           </button>
@@ -110,6 +148,59 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
             Add to Log
           </button>
         </div>
+
+        {/* Toppings Selection */}
+        {hasToppings && (
+          <div className="border-t border-gray-300 dark:border-gray-600 pt-6">
+            <h3 className="font-semibold text-lg mb-3">Add Toppings (Optional)</h3>
+
+            {/* Group by category */}
+            {['protein', 'cheese', 'vegetable', 'sauce'].map((category) => {
+              const categoryToppings = sandwichToppings.filter(
+                (t) => t.category === category
+              );
+              if (categoryToppings.length === 0) return null;
+
+              const categoryLabel = {
+                protein: 'Extra Protein',
+                cheese: 'Cheese',
+                vegetable: 'Veggies',
+                sauce: 'Sauces',
+              }[category];
+
+              return (
+                <div key={category} className="mb-4">
+                  <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 capitalize">
+                    {categoryLabel}
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {categoryToppings.map((topping) => {
+                      const isSelected = selectedToppings.find(
+                        (t) => t.name === topping.name
+                      );
+                      return (
+                        <button
+                          key={topping.name}
+                          onClick={() => toggleTopping(topping)}
+                          className={`py-2 px-3 rounded-lg text-sm border-2 transition-colors text-left ${
+                            isSelected
+                              ? 'bg-emerald-500 text-white border-emerald-500'
+                              : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                          }`}
+                        >
+                          <div className="font-semibold">{topping.name}</div>
+                          <div className="text-xs opacity-80">
+                            +{topping.calories} cal
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

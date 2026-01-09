@@ -174,7 +174,7 @@ export const commonFoods = [
   { name: 'Onion (1 slice)', calories: 5, protein: 0.1, carbs: 1.2, fat: 0, servingSize: '1 slice (13g)', category: 'Vegetables' },
   { name: 'Pickles (dill, 3 slices)', calories: 5, protein: 0.2, carbs: 1, fat: 0, servingSize: '3 slices (30g)', category: 'Vegetables' },
   { name: 'Pickles (sweet, 3 slices)', calories: 30, protein: 0.1, carbs: 8, fat: 0, servingSize: '3 slices (30g)', category: 'Vegetables' },
-  { name: 'JalapeÃ±os (sliced, 2 tbsp)', calories: 4, protein: 0.1, carbs: 1, fat: 0, servingSize: '2 tbsp (14g)', category: 'Vegetables' },
+  { name: 'Jalapeños (sliced, 2 tbsp)', calories: 4, protein: 0.1, carbs: 1, fat: 0, servingSize: '2 tbsp (14g)', category: 'Vegetables' },
   { name: 'Mushrooms (raw)', calories: 22, protein: 3.1, carbs: 3.3, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
   { name: 'Zucchini (raw)', calories: 17, protein: 1.2, carbs: 3.1, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
   { name: 'Green Beans (cooked)', calories: 31, protein: 1.8, carbs: 7, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
@@ -729,7 +729,137 @@ export const commonFoods = [
   { name: 'Cheese and Crackers', calories: 200, protein: 8, carbs: 18, fat: 11, servingSize: '1 serving', category: 'Snacks' },
   { name: 'Fruit Cup', calories: 80, protein: 1, carbs: 20, fat: 0, servingSize: '1 cup', category: 'Snacks' },
   { name: 'Applesauce (unsweetened, 1 cup)', calories: 100, protein: 0, carbs: 26, fat: 0, servingSize: '1 cup', category: 'Snacks' },
+
+  // More Vegetables
+  { name: 'Broccoli (cooked)', calories: 55, protein: 3.7, carbs: 11, fat: 0.6, servingSize: '1 cup (156g)', category: 'Snacks' },
+  { name: 'Cauliflower (cooked)', calories: 29, protein: 2.3, carbs: 5.7, fat: 0.6, servingSize: '1 cup (124g)', category: 'Snacks' },
+  { name: 'Green Beans (cooked)', calories: 44, protein: 2.4, carbs: 10, fat: 0.4, servingSize: '1 cup (125g)', category: 'Snacks' },
+  { name: 'Asparagus (cooked)', calories: 40, protein: 4.3, carbs: 7.6, fat: 0.4, servingSize: '1 cup (180g)', category: 'Snacks' },
+  { name: 'Brussels Sprouts (cooked)', calories: 56, protein: 4, carbs: 11, fat: 0.8, servingSize: '1 cup (156g)', category: 'Snacks' },
+  { name: 'Spinach (cooked)', calories: 41, protein: 5, carbs: 7, fat: 0.5, servingSize: '1 cup (180g)', category: 'Snacks' },
+  { name: 'Kale (cooked)', calories: 36, protein: 2.5, carbs: 7, fat: 0.5, servingSize: '1 cup (130g)', category: 'Snacks' },
+  { name: 'Bell Pepper (raw)', calories: 30, protein: 1, carbs: 7, fat: 0.2, servingSize: '1 medium (119g)', category: 'Snacks' },
+  { name: 'Zucchini (cooked)', calories: 27, protein: 2, carbs: 7, fat: 0.3, servingSize: '1 cup (180g)', category: 'Snacks' },
+  { name: 'Mushrooms (cooked)', calories: 44, protein: 3.4, carbs: 8, fat: 0.7, servingSize: '1 cup (156g)', category: 'Snacks' },
+  { name: 'Sweet Potato (baked)', calories: 180, protein: 4, carbs: 41, fat: 0.3, servingSize: '1 medium (150g)', category: 'Snacks' },
+  { name: 'Regular Potato (baked)', calories: 163, protein: 4.3, carbs: 37, fat: 0.2, servingSize: '1 medium (173g)', category: 'Snacks' },
+
+  // More Fruits
+  { name: 'Mango', calories: 99, protein: 1.4, carbs: 25, fat: 0.6, servingSize: '1 cup (165g)', category: 'Snacks' },
+  { name: 'Pineapple', calories: 82, protein: 0.9, carbs: 22, fat: 0.2, servingSize: '1 cup (165g)', category: 'Snacks' },
+  { name: 'Kiwi', calories: 61, protein: 1.1, carbs: 15, fat: 0.5, servingSize: '1 fruit (100g)', category: 'Snacks' },
+  { name: 'Cantaloupe', calories: 54, protein: 1.3, carbs: 13, fat: 0.3, servingSize: '1 cup (177g)', category: 'Snacks' },
+  { name: 'Honeydew Melon', calories: 61, protein: 0.9, carbs: 15, fat: 0.2, servingSize: '1 cup (170g)', category: 'Snacks' },
+  { name: 'Peach', calories: 59, protein: 1.4, carbs: 14, fat: 0.4, servingSize: '1 medium (150g)', category: 'Snacks' },
+  { name: 'Plum', calories: 46, protein: 0.7, carbs: 11, fat: 0.3, servingSize: '1 fruit (66g)', category: 'Snacks' },
+
+  // Condiments & Sauces
+  { name: 'Ketchup (1 tbsp)', calories: 17, protein: 0.2, carbs: 4.5, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Mustard (1 tbsp)', calories: 10, protein: 0.6, carbs: 1, fat: 0.6, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Mayonnaise (1 tbsp)', calories: 94, protein: 0.1, carbs: 0.1, fat: 10, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Ranch Dressing (2 tbsp)', calories: 145, protein: 0.5, carbs: 2, fat: 15, servingSize: '2 tbsp', category: 'Condiments' },
+  { name: 'Caesar Dressing (2 tbsp)', calories: 160, protein: 1, carbs: 1, fat: 17, servingSize: '2 tbsp', category: 'Condiments' },
+  { name: 'Italian Dressing (2 tbsp)', calories: 80, protein: 0, carbs: 3, fat: 7, servingSize: '2 tbsp', category: 'Condiments' },
+  { name: 'Balsamic Vinaigrette (2 tbsp)', calories: 90, protein: 0, carbs: 4, fat: 8, servingSize: '2 tbsp', category: 'Condiments' },
+  { name: 'Thousand Island (2 tbsp)', calories: 120, protein: 0.3, carbs: 5, fat: 11, servingSize: '2 tbsp', category: 'Condiments' },
+  { name: 'BBQ Sauce (2 tbsp)', calories: 60, protein: 0.5, carbs: 14, fat: 0.5, servingSize: '2 tbsp', category: 'Condiments' },
+  { name: 'Hot Sauce (1 tbsp)', calories: 5, protein: 0.2, carbs: 1, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Soy Sauce (1 tbsp)', calories: 9, protein: 1.3, carbs: 0.8, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Teriyaki Sauce (1 tbsp)', calories: 16, protein: 0.5, carbs: 3, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Sriracha (1 tsp)', calories: 5, protein: 0.1, carbs: 1, fat: 0, servingSize: '1 tsp', category: 'Condiments' },
+  { name: 'Honey (1 tbsp)', calories: 64, protein: 0.1, carbs: 17, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Maple Syrup (1 tbsp)', calories: 52, protein: 0, carbs: 13, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Butter (1 tbsp)', calories: 102, protein: 0.1, carbs: 0, fat: 11.5, servingSize: '1 tbsp', category: 'Condiments' },
+  { name: 'Olive Oil (1 tbsp)', calories: 119, protein: 0, carbs: 0, fat: 13.5, servingSize: '1 tbsp', category: 'Condiments' },
+
+  // Smoothies & Drinks
+  { name: 'Protein Shake (whey, 1 scoop)', calories: 120, protein: 24, carbs: 3, fat: 1.5, servingSize: '1 scoop (30g)', category: 'Drinks' },
+  { name: 'Green Smoothie', calories: 180, protein: 4, carbs: 38, fat: 2, servingSize: '16 oz', category: 'Drinks' },
+  { name: 'Fruit Smoothie', calories: 220, protein: 3, carbs: 52, fat: 1.5, servingSize: '16 oz', category: 'Drinks' },
+  { name: 'Protein Smoothie', calories: 280, protein: 25, carbs: 32, fat: 6, servingSize: '16 oz', category: 'Drinks' },
+  { name: 'Lemonade (8 oz)', calories: 99, protein: 0, carbs: 26, fat: 0, servingSize: '8 oz', category: 'Drinks' },
+  { name: 'Iced Tea (unsweetened, 8 oz)', calories: 2, protein: 0, carbs: 0.5, fat: 0, servingSize: '8 oz', category: 'Drinks' },
+  { name: 'Sweet Tea (8 oz)', calories: 90, protein: 0, carbs: 24, fat: 0, servingSize: '8 oz', category: 'Drinks' },
+
+  // More Breakfast Items
+  { name: 'Avocado Toast', calories: 280, protein: 8, carbs: 28, fat: 16, servingSize: '1 slice', category: 'Breakfast' },
+  { name: 'Breakfast Burrito', calories: 520, protein: 24, carbs: 48, fat: 26, servingSize: '1 burrito', category: 'Breakfast' },
+  { name: 'Yogurt Parfait', calories: 220, protein: 12, carbs: 38, fat: 3, servingSize: '1 cup', category: 'Breakfast' },
+  { name: 'Breakfast Bowl', calories: 380, protein: 18, carbs: 42, fat: 16, servingSize: '1 bowl', category: 'Breakfast' },
+  { name: 'Acai Bowl', calories: 320, protein: 6, carbs: 58, fat: 8, servingSize: '1 bowl', category: 'Breakfast' },
 ];
+
+// Toppings for sandwiches and burgers
+export const sandwichToppings = [
+  // Proteins
+  { name: 'Bacon (2 strips)', calories: 90, protein: 6, carbs: 0, fat: 7, category: 'protein' },
+  { name: 'Fried Egg', calories: 90, protein: 6, carbs: 0.5, fat: 7, category: 'protein' },
+  { name: 'Ham', calories: 60, protein: 10, carbs: 1, fat: 2, category: 'protein' },
+  { name: 'Turkey', calories: 50, protein: 10, carbs: 1, fat: 0.5, category: 'protein' },
+  { name: 'Grilled Chicken', calories: 110, protein: 22, carbs: 0, fat: 2, category: 'protein' },
+  { name: 'Extra Beef Patty', calories: 220, protein: 20, carbs: 0, fat: 15, category: 'protein' },
+
+  // Cheese
+  { name: 'American Cheese', calories: 96, protein: 5, carbs: 2, fat: 7, category: 'cheese' },
+  { name: 'Cheddar Cheese', calories: 113, protein: 7, carbs: 0.4, fat: 9.3, category: 'cheese' },
+  { name: 'Swiss Cheese', calories: 106, protein: 8, carbs: 1.5, fat: 8, category: 'cheese' },
+  { name: 'Provolone', calories: 98, protein: 7, carbs: 0.6, fat: 7.5, category: 'cheese' },
+  { name: 'Pepper Jack', calories: 110, protein: 6.5, carbs: 0.5, fat: 9, category: 'cheese' },
+  { name: 'Mozzarella', calories: 85, protein: 6, carbs: 1, fat: 6, category: 'cheese' },
+
+  // Vegetables
+  { name: 'Lettuce', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Tomato', calories: 10, protein: 0.5, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Onion', calories: 12, protein: 0.3, carbs: 3, fat: 0, category: 'vegetable' },
+  { name: 'Pickles', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Jalapeños', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Avocado', calories: 120, protein: 1.5, carbs: 6, fat: 11, category: 'vegetable' },
+  { name: 'Mushrooms (sautéed)', calories: 28, protein: 2, carbs: 4, fat: 0.5, category: 'vegetable' },
+  { name: 'Bell Peppers', calories: 10, protein: 0.3, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Spinach', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+
+  // Condiments & Sauces (common burger/sandwich additions)
+  { name: 'Ketchup', calories: 17, protein: 0.2, carbs: 4.5, fat: 0, category: 'sauce' },
+  { name: 'Mustard', calories: 10, protein: 0.6, carbs: 1, fat: 0.6, category: 'sauce' },
+  { name: 'Mayo', calories: 94, protein: 0.1, carbs: 0.1, fat: 10, category: 'sauce' },
+  { name: 'Ranch', calories: 73, protein: 0.3, carbs: 1, fat: 7.5, category: 'sauce' },
+  { name: 'BBQ Sauce', calories: 30, protein: 0.3, carbs: 7, fat: 0.3, category: 'sauce' },
+  { name: 'Hot Sauce', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'sauce' },
+  { name: 'Chipotle Mayo', calories: 100, protein: 0.2, carbs: 1, fat: 11, category: 'sauce' },
+  { name: 'Honey Mustard', calories: 50, protein: 0.3, carbs: 5, fat: 3.5, category: 'sauce' },
+];
+
+// Mark which foods support toppings
+export const foodsWithToppings = [
+  'Hamburger (fast food)',
+  'Cheeseburger (fast food)',
+  'Double Cheeseburger',
+  'Grilled Cheese',
+  'BLT (bacon, lettuce, tomato)',
+  'Club Sandwich',
+  'Ham and Cheese',
+  'Turkey Sandwich',
+  'Turkey and Avocado',
+  'Roast Beef Sandwich',
+  'Tuna Salad Sandwich',
+  'Chicken Salad Sandwich',
+  'Egg Salad Sandwich',
+  'Reuben Sandwich',
+  'Philly Cheesesteak',
+  'Patty Melt',
+  'Pulled Pork Sandwich',
+  'Bacon, Egg, and Cheese',
+  'Sausage, Egg, and Cheese',
+  'Egg and Cheese',
+  'Veggie Sandwich',
+  'Chicken Sandwich (grilled)',
+  'Chicken Sandwich (fried)',
+];
+
+// Helper to check if food supports toppings
+export function supportsToppings(foodName) {
+  return foodsWithToppings.includes(foodName);
+}
 
 // Improved search function with flexible word matching
 export function searchCommonFoods(query) {
