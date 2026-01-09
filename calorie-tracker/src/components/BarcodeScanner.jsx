@@ -59,15 +59,21 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   const stopScanner = async () => {
     if (scannerRef.current) {
       try {
-        if (scanning) {
-          await scannerRef.current.stop();
-        }
-        // Clear the scanner reference
-        scannerRef.current = null;
-        setScanning(false);
+        // Always try to stop, regardless of scanning state
+        await scannerRef.current.stop();
+
+        // Clear the scanner completely
+        await scannerRef.current.clear();
       } catch (err) {
         console.error('Error stopping scanner:', err);
-        // Force cleanup even if stop fails
+        // Try to force clear even if stop failed
+        try {
+          await scannerRef.current.clear();
+        } catch (clearErr) {
+          console.error('Error clearing scanner:', clearErr);
+        }
+      } finally {
+        // Always cleanup references and state
         scannerRef.current = null;
         setScanning(false);
       }
@@ -82,8 +88,18 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
     scanProcessedRef.current = true;
     setLoading(true);
 
-    // Stop scanner immediately to turn off camera
-    await stopScanner();
+    // CRITICAL: Stop scanner IMMEDIATELY before any async operations
+    // This ensures camera turns off right away
+    try {
+      if (scannerRef.current) {
+        await scannerRef.current.stop();
+        await scannerRef.current.clear();
+        scannerRef.current = null;
+        setScanning(false);
+      }
+    } catch (err) {
+      console.error('Error stopping camera:', err);
+    }
 
     // Look up the barcode
     const food = await getFoodByBarcode(decodedText);
