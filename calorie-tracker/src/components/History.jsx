@@ -1,10 +1,15 @@
 import { useState, useEffect } from 'react';
-import { getFoodLog, getExerciseLog, getProfile, deleteFoodEntry, deleteExerciseEntry } from '../utils/storage';
+import { getFoodLog, getExerciseLog, getProfile, deleteFoodEntry, deleteExerciseEntry, addFoodEntry, addExerciseEntry } from '../utils/storage';
 import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
+import FoodInput from './FoodInput';
+import ExerciseLog from './ExerciseLog';
 
 export default function History({ onRefresh }) {
   const [expandedDate, setExpandedDate] = useState(null);
   const [historyData, setHistoryData] = useState([]);
+  const [showFoodInput, setShowFoodInput] = useState(false);
+  const [showExerciseLog, setShowExerciseLog] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const profile = getProfile();
   const bmr = calculateBMR(profile);
@@ -79,6 +84,32 @@ export default function History({ onRefresh }) {
     onRefresh();
   };
 
+  const handleAddFoodToDate = (date) => {
+    setSelectedDate(date);
+    setShowFoodInput(true);
+  };
+
+  const handleAddExerciseToDate = (date) => {
+    setSelectedDate(date);
+    setShowExerciseLog(true);
+  };
+
+  const handleFoodAdded = (food) => {
+    addFoodEntry(food, selectedDate);
+    setShowFoodInput(false);
+    setSelectedDate(null);
+    loadHistory();
+    onRefresh();
+  };
+
+  const handleExerciseAdded = (exercise) => {
+    addExerciseEntry(exercise, selectedDate);
+    setShowExerciseLog(false);
+    setSelectedDate(null);
+    loadHistory();
+    onRefresh();
+  };
+
   const toggleDate = (date) => {
     setExpandedDate(expandedDate === date ? null : date);
   };
@@ -133,6 +164,22 @@ export default function History({ onRefresh }) {
               {/* Expanded Details */}
               {expandedDate === day.date && (
                 <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 space-y-6">
+                  {/* Add Entry Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => handleAddFoodToDate(day.date)}
+                      className="btn-primary flex-1"
+                    >
+                      + Food
+                    </button>
+                    <button
+                      onClick={() => handleAddExerciseToDate(day.date)}
+                      className="btn-secondary flex-1"
+                    >
+                      + Exercise
+                    </button>
+                  </div>
+
                   {/* Calorie Breakdown */}
                   <div className="grid grid-cols-3 gap-3">
                     <div className="text-center">
@@ -256,6 +303,28 @@ export default function History({ onRefresh }) {
             </div>
           ))}
         </div>
+      )}
+
+      {/* Food Input Modal */}
+      {showFoodInput && (
+        <FoodInput
+          onAddFood={handleFoodAdded}
+          onClose={() => {
+            setShowFoodInput(false);
+            setSelectedDate(null);
+          }}
+        />
+      )}
+
+      {/* Exercise Log Modal */}
+      {showExerciseLog && (
+        <ExerciseLog
+          onAddExercise={handleExerciseAdded}
+          onClose={() => {
+            setShowExerciseLog(false);
+            setSelectedDate(null);
+          }}
+        />
       )}
     </div>
   );

@@ -12,7 +12,18 @@ const STORAGE_KEYS = {
   DARK_MODE: 'darkMode',
   CUSTOM_FOODS: 'customFoods',
   MEAL_TEMPLATES: 'mealTemplates',
+  CUSTOM_MACROS: 'customMacros',
+  CUSTOM_CALORIE_GOAL: 'customCalorieGoal',
 };
+
+// Get local date string (YYYY-MM-DD) in user's timezone, not UTC
+// This ensures day boundaries happen at midnight local time, not UTC midnight
+export function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
 // Generic get/set functions
 export function getData(key) {
@@ -49,12 +60,12 @@ export function getFoodLog() {
   return getData(STORAGE_KEYS.FOOD_LOG) || [];
 }
 
-export function addFoodEntry(entry) {
+export function addFoodEntry(entry, customDate = null) {
   const log = getFoodLog();
   const newEntry = {
     ...entry,
     timestamp: Date.now(),
-    date: new Date().toISOString().split('T')[0],
+    date: customDate || getLocalDateString(),
   };
   log.push(newEntry);
   setData(STORAGE_KEYS.FOOD_LOG, log);
@@ -76,12 +87,12 @@ export function getExerciseLog() {
   return getData(STORAGE_KEYS.EXERCISE_LOG) || [];
 }
 
-export function addExerciseEntry(entry) {
+export function addExerciseEntry(entry, customDate = null) {
   const log = getExerciseLog();
   const newEntry = {
     ...entry,
     timestamp: Date.now(),
-    date: new Date().toISOString().split('T')[0],
+    date: customDate || getLocalDateString(),
   };
   log.push(newEntry);
   setData(STORAGE_KEYS.EXERCISE_LOG, log);
@@ -143,6 +154,32 @@ export function saveDailyGoal(goal) {
   setData(STORAGE_KEYS.DAILY_GOAL, goal);
 }
 
+// Custom Macros - { protein, carbs, fat } in grams, or null if using auto-calculated
+export function getCustomMacros() {
+  return getData(STORAGE_KEYS.CUSTOM_MACROS);
+}
+
+export function saveCustomMacros(macros) {
+  setData(STORAGE_KEYS.CUSTOM_MACROS, macros);
+}
+
+export function clearCustomMacros() {
+  setData(STORAGE_KEYS.CUSTOM_MACROS, null);
+}
+
+// Custom Calorie Goal - number or null if using auto-calculated
+export function getCustomCalorieGoal() {
+  return getData(STORAGE_KEYS.CUSTOM_CALORIE_GOAL);
+}
+
+export function saveCustomCalorieGoal(goal) {
+  setData(STORAGE_KEYS.CUSTOM_CALORIE_GOAL, goal);
+}
+
+export function clearCustomCalorieGoal() {
+  setData(STORAGE_KEYS.CUSTOM_CALORIE_GOAL, null);
+}
+
 // Weight Log - array of { date, weight }
 export function getWeightLog() {
   return getData(STORAGE_KEYS.WEIGHT_LOG) || [];
@@ -150,7 +187,7 @@ export function getWeightLog() {
 
 export function addWeightEntry(weight) {
   const log = getWeightLog();
-  const date = new Date().toISOString().split('T')[0];
+  const date = getLocalDateString();
 
   // Update or add today's weight
   const existingIndex = log.findIndex(entry => entry.date === date);
@@ -192,7 +229,7 @@ export function getEntriesForDate(date) {
 
 // Get today's entries
 export function getTodayEntries() {
-  const today = new Date().toISOString().split('T')[0];
+  const today = getLocalDateString();
   return getEntriesForDate(today);
 }
 

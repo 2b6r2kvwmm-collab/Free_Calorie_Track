@@ -1,10 +1,39 @@
 import { calculateMacroTargets } from '../utils/macros';
 import { calculateBMR, calculateTDEE } from '../utils/calculations';
 
-export default function MacroTracker({ profile, currentProtein, currentCarbs, currentFat }) {
-  const bmr = calculateBMR(profile);
-  const tdee = calculateTDEE(bmr, profile.activityLevel);
-  const macroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal);
+export default function MacroTracker({
+  profile,
+  currentProtein,
+  currentCarbs,
+  currentFat,
+  proteinGoal,
+  carbsGoal,
+  fatGoal,
+  isCustomGoals = false
+}) {
+  // Use provided goals if available (for custom macros), otherwise calculate
+  let macroTargets;
+  if (isCustomGoals) {
+    // Custom macros provided
+    const totalCals = (proteinGoal * 4) + (carbsGoal * 4) + (fatGoal * 9);
+    macroTargets = {
+      protein: proteinGoal,
+      carbs: carbsGoal,
+      fat: fatGoal,
+      goalLabel: 'Custom Goals',
+      explanation: 'Using your custom calorie and macro targets.',
+      breakdown: {
+        proteinPercent: Math.round((proteinGoal * 4 / totalCals) * 100),
+        carbPercent: Math.round((carbsGoal * 4 / totalCals) * 100),
+        fatPercent: Math.round((fatGoal * 9 / totalCals) * 100),
+      }
+    };
+  } else {
+    // Calculate based on fitness goal
+    const bmr = calculateBMR(profile);
+    const tdee = calculateTDEE(bmr, profile.activityLevel);
+    macroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal);
+  }
 
   const totalCurrentCal = (currentProtein * 4) + (currentCarbs * 4) + (currentFat * 9);
 

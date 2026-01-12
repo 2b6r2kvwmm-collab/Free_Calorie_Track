@@ -7,6 +7,7 @@ import Trends from './components/Trends';
 import History from './components/History';
 import Settings from './components/Settings';
 import UserManager from './components/UserManager';
+import UpdateNotification from './components/UpdateNotification';
 
 function App() {
   const [profile, setProfile] = useState(null);
@@ -164,6 +165,9 @@ function App() {
           onClose={() => setShowUserManager(false)}
         />
       )}
+
+      {/* Update Notification */}
+      <UpdateNotification />
     </div>
   );
 }

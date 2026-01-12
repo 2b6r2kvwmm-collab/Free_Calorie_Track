@@ -2,12 +2,29 @@ import { useState } from 'react';
 import { supportsToppings, sandwichToppings } from '../utils/commonFoods';
 
 export default function PortionSelector({ food, onConfirm, onCancel }) {
+  const [inputMode, setInputMode] = useState('servings'); // 'servings' or 'weight'
   const [servings, setServings] = useState('1');
+  const [exactWeight, setExactWeight] = useState('');
   const [selectedToppings, setSelectedToppings] = useState([]);
 
   const hasToppings = supportsToppings(food.name);
 
-  const multiplier = parseFloat(servings) || 0;
+  // Parse base serving size to extract weight if possible
+  const baseServingWeight = (() => {
+    const match = food.servingSize.match(/(\d+\.?\d*)\s*g/i);
+    return match ? parseFloat(match[1]) : null;
+  })();
+
+  // Calculate multiplier based on input mode
+  const multiplier = (() => {
+    if (inputMode === 'servings') {
+      return parseFloat(servings) || 0;
+    } else if (inputMode === 'weight' && baseServingWeight) {
+      const weight = parseFloat(exactWeight) || 0;
+      return weight / baseServingWeight;
+    }
+    return 0;
+  })();
 
   // Calculate totals including toppings
   const toppingsTotal = selectedToppings.reduce(
@@ -39,6 +56,16 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
       name = `${food.name} + ${toppingNames}`;
     }
 
+    // Determine serving size display
+    let servingSizeDisplay;
+    if (inputMode === 'weight' && exactWeight) {
+      servingSizeDisplay = `${exactWeight}g`;
+    } else if (multiplier === 1) {
+      servingSizeDisplay = food.servingSize;
+    } else {
+      servingSizeDisplay = `${multiplier}x ${food.servingSize}`;
+    }
+
     onConfirm({
       ...food,
       name,
@@ -46,8 +73,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
       protein: adjustedProtein,
       carbs: adjustedCarbs,
       fat: adjustedFat,
-      servingSize:
-        multiplier === 1 ? food.servingSize : `${multiplier}x ${food.servingSize}`,
+      servingSize: servingSizeDisplay,
     });
   };
 
@@ -86,38 +112,89 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
           </div>
         </div>
 
-        {/* Servings Input */}
-        <div className="mb-4">
-          <label className="block text-lg font-semibold mb-3">
-            Number of Servings
-          </label>
-          <input
-            type="number"
-            min="0.1"
-            step="0.1"
-            value={servings}
-            onChange={(e) => setServings(e.target.value)}
-            className="input-field text-center text-2xl"
-            autoFocus
-          />
+        {/* Input Mode Toggle */}
+        <div className="flex gap-2 mb-6">
+          <button
+            onClick={() => setInputMode('servings')}
+            className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+              inputMode === 'servings'
+                ? 'bg-emerald-500 text-white border-emerald-500'
+                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+            }`}
+          >
+            Servings
+          </button>
+          <button
+            onClick={() => setInputMode('weight')}
+            className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+              inputMode === 'weight'
+                ? 'bg-emerald-500 text-white border-emerald-500'
+                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+            }`}
+            disabled={!baseServingWeight}
+          >
+            Exact Weight
+          </button>
         </div>
 
-        {/* Quick Options */}
-        <div className="grid grid-cols-6 gap-2 mb-6">
-          {quickOptions.map((option) => (
-            <button
-              key={option}
-              onClick={() => setServings(option.toString())}
-              className={`py-2 px-3 rounded-lg font-semibold border-2 transition-colors ${
-                parseFloat(servings) === option
-                  ? 'bg-emerald-500 text-white border-emerald-500'
-                  : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
-              }`}
-            >
-              {option}x
-            </button>
-          ))}
-        </div>
+        {/* Servings Input */}
+        {inputMode === 'servings' && (
+          <>
+            <div className="mb-4">
+              <label className="block text-lg font-semibold mb-3">
+                Number of Servings
+              </label>
+              <input
+                type="number"
+                min="0.1"
+                step="0.1"
+                value={servings}
+                onChange={(e) => setServings(e.target.value)}
+                className="input-field text-center text-2xl"
+                autoFocus
+              />
+            </div>
+
+            {/* Quick Options */}
+            <div className="grid grid-cols-6 gap-2 mb-6">
+              {quickOptions.map((option) => (
+                <button
+                  key={option}
+                  onClick={() => setServings(option.toString())}
+                  className={`py-2 px-3 rounded-lg font-semibold border-2 transition-colors ${
+                    parseFloat(servings) === option
+                      ? 'bg-emerald-500 text-white border-emerald-500'
+                      : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                  }`}
+                >
+                  {option}x
+                </button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Exact Weight Input */}
+        {inputMode === 'weight' && (
+          <div className="mb-6">
+            <label className="block text-lg font-semibold mb-3">
+              Weight in Grams
+            </label>
+            <input
+              type="number"
+              min="1"
+              step="1"
+              value={exactWeight}
+              onChange={(e) => setExactWeight(e.target.value)}
+              placeholder="Enter weight in grams"
+              className="input-field text-center text-2xl"
+              autoFocus
+            />
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
+              Base: {baseServingWeight}g = {food.calories} cal
+            </div>
+          </div>
+        )}
 
         {/* Preview */}
         {multiplier > 0 && (
@@ -130,7 +207,9 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
               P: {adjustedProtein}g • C: {adjustedCarbs}g • F: {adjustedFat}g
             </div>
             <div className="text-xs text-gray-500 mt-2">
-              {multiplier}x {food.servingSize}
+              {inputMode === 'weight' && exactWeight
+                ? `${exactWeight}g`
+                : `${multiplier}x ${food.servingSize}`}
             </div>
           </div>
         )}

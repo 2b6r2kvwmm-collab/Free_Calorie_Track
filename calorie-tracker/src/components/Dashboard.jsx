@@ -10,10 +10,11 @@ import {
   getExerciseLog,
   addFoodEntry,
   addExerciseEntry,
+  getCustomMacros,
+  getCustomCalorieGoal,
 } from '../utils/storage';
 import {
   calculateBMR,
-  getBaselineTDEE,
   calculateTDEE,
 } from '../utils/calculations';
 import {
@@ -50,8 +51,8 @@ export default function Dashboard({ onRefresh }) {
   }, []);
 
   const bmr = calculateBMR(profile);
-  const baselineTDEE = getBaselineTDEE(bmr); // Use sedentary baseline to avoid overestimating
-  const restingBurned = baselineTDEE; // Full day's resting calories (end-of-day calculation)
+  const tdee = calculateTDEE(bmr, profile.activityLevel); // Lifestyle TDEE with activity level
+  const restingBurned = tdee; // Full day's resting calories (end-of-day calculation)
 
   const caloriesEaten = entries.food.reduce((sum, entry) => sum + entry.calories, 0);
   const exerciseBurned = entries.exercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
@@ -65,12 +66,23 @@ export default function Dashboard({ onRefresh }) {
 
   // Gamification
   const gamificationData = getGamificationData();
-  const tdee = calculateTDEE(bmr, profile.activityLevel);
-  const macroTargets = profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null;
-  const proteinGoal = macroTargets?.protein || 0;
+  const customMacros = getCustomMacros();
+  const customCalorieGoal = getCustomCalorieGoal();
 
-  // Use calculated goal from profile settings, fallback to stored goal for backwards compatibility
-  const dailyGoal = macroTargets?.calorieAdjustment ?? getDailyGoal();
+  // Determine if using custom goals (both custom macros AND custom calorie goal must be set)
+  const usingCustomGoals = !!(customMacros && customCalorieGoal !== null);
+
+  const macroTargets = usingCustomGoals
+    ? customMacros
+    : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null);
+  const proteinGoal = macroTargets?.protein || 0;
+  const carbsGoal = macroTargets?.carbs || 0;
+  const fatGoal = macroTargets?.fat || 0;
+
+  // Use custom calorie goal if set, otherwise use calculated goal from fitness goal
+  const dailyGoal = usingCustomGoals
+    ? customCalorieGoal
+    : (macroTargets?.calorieAdjustment ?? getDailyGoal());
 
   const motivationalNudge = getMotivationalNudge(netCalories, dailyGoal, totalProtein, proteinGoal);
   const recentAchievements = getRecentAchievements();
@@ -96,7 +108,7 @@ export default function Dashboard({ onRefresh }) {
     const dayExercise = exerciseLog.filter(entry => entry.date === dateStr);
 
     const eaten = dayFood.reduce((sum, entry) => sum + entry.calories, 0);
-    const burned = baselineTDEE + // Full day's resting calories
+    const burned = tdee + // Full day's resting calories (lifestyle TDEE)
                    dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
 
     // Only calculate net calories if there's data for the day (food or exercise logged)
@@ -258,17 +270,35 @@ export default function Dashboard({ onRefresh }) {
           <div className={`text-6xl font-bold ${statusColor} mb-4`}>
             {netCalories >= 0 ? '+' : ''}{netCalories}
           </div>
-          <div className="flex justify-center items-center gap-2 text-sm mb-4">
-            <span>Net Goal: {dailyGoal} cal</span>
-            <button
-              onClick={() => {
-                setGoalInput(dailyGoal.toString());
-                setShowGoalEdit(true);
-              }}
-              className="text-emerald-600 dark:text-emerald-400 hover:underline"
-            >
-              Edit
-            </button>
+
+          {/* Net Goal and Calories to Goal on same line */}
+          <div className="flex items-center justify-center gap-4 mb-4 text-sm flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="text-gray-600 dark:text-gray-400">Net Goal: {dailyGoal} cal</span>
+              <button
+                onClick={() => {
+                  setGoalInput(dailyGoal.toString());
+                  setShowGoalEdit(true);
+                }}
+                className="text-emerald-600 dark:text-emerald-400 hover:underline"
+              >
+                Edit
+              </button>
+            </div>
+            <span className="text-gray-400 dark:text-gray-600">•</span>
+            <div className="text-gray-600 dark:text-gray-400">
+              {dailyGoal - netCalories > 0 ? (
+                <>
+                  <span className="font-bold">{dailyGoal - netCalories}</span> cal to goal
+                </>
+              ) : dailyGoal - netCalories < 0 ? (
+                <>
+                  <span className="font-bold">{Math.abs(dailyGoal - netCalories)}</span> cal over goal
+                </>
+              ) : (
+                <span>Goal reached! 🎯</span>
+              )}
+            </div>
           </div>
 
           {/* Previous 3 Days */}
@@ -354,18 +384,22 @@ export default function Dashboard({ onRefresh }) {
         </div>
 
         <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-          <span className="font-semibold">💡 How NET works:</span> Resting calories ({baselineTDEE} cal/day) use sedentary baseline.
+          <span className="font-semibold">💡 How NET works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
           NET = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
         </div>
       </div>
 
       {/* Macros Breakdown with Goals */}
-      {profile.fitnessGoal && (
+      {(profile.fitnessGoal || usingCustomGoals) && (
         <MacroTracker
           profile={profile}
           currentProtein={totalProtein}
           currentCarbs={totalCarbs}
           currentFat={totalFat}
+          proteinGoal={proteinGoal}
+          carbsGoal={carbsGoal}
+          fatGoal={fatGoal}
+          isCustomGoals={usingCustomGoals}
         />
       )}
 
