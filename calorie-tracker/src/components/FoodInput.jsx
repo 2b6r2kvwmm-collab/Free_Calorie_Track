@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getFavorites, getRecentFoods, addFavorite, removeFavorite } from '../utils/storage';
 import FoodSearch from './FoodSearch';
 import BarcodeScanner from './BarcodeScanner';
@@ -11,6 +11,22 @@ export default function FoodInput({ onAddFood, onClose }) {
   const [mode, setMode] = useState('menu'); // menu, search, barcode, quick, favorites, recent, common, custom, templates
   const favorites = getFavorites();
   const recentFoods = getRecentFoods();
+  const modalRef = useRef(null);
+
+  // Lock body scroll when modal opens
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Scroll to top when mode changes
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [mode]);
 
   const handleAddFood = (food) => {
     onAddFood(food);
@@ -52,8 +68,8 @@ export default function FoodInput({ onAddFood, onClose }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="card max-w-2xl w-full my-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Add Food</h2>
           <button
@@ -66,6 +82,13 @@ export default function FoodInput({ onAddFood, onClose }) {
 
         {mode === 'menu' && (
           <div className="space-y-4">
+            <button
+              onClick={() => setMode('barcode')}
+              className="btn-primary w-full text-left"
+            >
+              📷 Scan Barcode
+            </button>
+
             <button
               onClick={() => setMode('common')}
               className="btn-primary w-full text-left flex items-center justify-between"
@@ -83,16 +106,20 @@ export default function FoodInput({ onAddFood, onClose }) {
             </button>
 
             <button
-              onClick={() => setMode('barcode')}
-              className="btn-primary w-full text-left flex items-center justify-between"
+              onClick={() => setMode('favorites')}
+              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors w-full text-left flex items-center justify-between"
             >
-              <span>📷 Scan Barcode</span>
-              <span className="text-sm opacity-75">Or Enter Manually</span>
+              <span>⭐ Favorites</span>
+              {favorites.length > 0 && (
+                <span className="bg-yellow-500 text-white text-sm px-2 py-1 rounded-full">
+                  {favorites.length}
+                </span>
+              )}
             </button>
 
             <button
               onClick={() => setMode('quick')}
-              className="btn-primary w-full text-left"
+              className="bg-gray-400 hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors w-full text-left"
             >
               ⚡ Quick Add Calories
             </button>
@@ -119,18 +146,6 @@ export default function FoodInput({ onAddFood, onClose }) {
               {recentFoods.length > 0 && (
                 <span className="bg-emerald-500 text-white text-sm px-2 py-1 rounded-full">
                   {recentFoods.length}
-                </span>
-              )}
-            </button>
-
-            <button
-              onClick={() => setMode('favorites')}
-              className="btn-secondary w-full text-left flex items-center justify-between"
-            >
-              <span>⭐ Favorites</span>
-              {favorites.length > 0 && (
-                <span className="bg-yellow-500 text-white text-sm px-2 py-1 rounded-full">
-                  {favorites.length}
                 </span>
               )}
             </button>

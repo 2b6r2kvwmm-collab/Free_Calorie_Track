@@ -3,6 +3,8 @@ import {
   getTodayEntries,
   deleteFoodEntry,
   deleteExerciseEntry,
+  updateFoodEntry,
+  updateExerciseEntry,
   getProfile,
   getDailyGoal,
   saveDailyGoal,
@@ -39,6 +41,9 @@ export default function Dashboard({ onRefresh }) {
   const [goalInput, setGoalInput] = useState('');
   const [showAchievements, setShowAchievements] = useState(false);
   const [showNewAchievement, setShowNewAchievement] = useState(null);
+  const [editingFood, setEditingFood] = useState(null); // timestamp of food entry being edited
+  const [editingExercise, setEditingExercise] = useState(null); // timestamp of exercise entry being edited
+  const [editFormData, setEditFormData] = useState({});
 
   const profile = getProfile();
 
@@ -150,6 +155,12 @@ export default function Dashboard({ onRefresh }) {
       protein: food.protein || 0,
       carbs: food.carbs || 0,
       fat: food.fat || 0,
+      // Store base values for quantity-based editing
+      baseCalories: food.calories,
+      baseProtein: food.protein || 0,
+      baseCarbs: food.carbs || 0,
+      baseFat: food.fat || 0,
+      quantity: 1, // Default multiplier
     };
     addFoodEntry(entry);
     trackFoodEntry();
@@ -174,6 +185,103 @@ export default function Dashboard({ onRefresh }) {
     deleteExerciseEntry(timestamp);
     loadEntries();
     onRefresh();
+  };
+
+  // Helper function to extract grams from serving size
+  const extractGrams = (servingSize) => {
+    if (!servingSize) return 100;
+    // Match patterns like "100g", "(50g)", "100ml"
+    const match = servingSize.match(/(\d+(?:\.\d+)?)\s*(g|ml)/i);
+    return match ? parseFloat(match[1]) : 100;
+  };
+
+  const handleEditFood = (entry) => {
+    setEditingFood(entry.timestamp);
+    // Extract base grams from serving size
+    const baseGrams = extractGrams(entry.servingSize);
+    // Calculate current grams from quantity
+    const currentQuantity = entry.quantity || 1;
+    const currentGrams = baseGrams * currentQuantity;
+
+    setEditFormData({
+      grams: currentGrams,
+      baseGrams: baseGrams,
+      baseCalories: entry.baseCalories || entry.calories,
+      baseProtein: entry.baseProtein || entry.protein || 0,
+      baseCarbs: entry.baseCarbs || entry.carbs || 0,
+      baseFat: entry.baseFat || entry.fat || 0,
+    });
+  };
+
+  const handleSaveFood = (timestamp) => {
+    const grams = parseFloat(editFormData.grams);
+    const quantity = grams / editFormData.baseGrams;
+
+    updateFoodEntry(timestamp, {
+      quantity: quantity,
+      grams: grams, // Store the actual grams consumed
+      calories: Math.round(editFormData.baseCalories * quantity),
+      protein: Math.round(editFormData.baseProtein * quantity * 10) / 10,
+      carbs: Math.round(editFormData.baseCarbs * quantity * 10) / 10,
+      fat: Math.round(editFormData.baseFat * quantity * 10) / 10,
+      // Preserve base values
+      baseCalories: editFormData.baseCalories,
+      baseProtein: editFormData.baseProtein,
+      baseCarbs: editFormData.baseCarbs,
+      baseFat: editFormData.baseFat,
+    });
+    setEditingFood(null);
+    setEditFormData({});
+    loadEntries();
+    onRefresh();
+  };
+
+  const handleCancelFoodEdit = () => {
+    setEditingFood(null);
+    setEditFormData({});
+  };
+
+  const handleEditExercise = (entry) => {
+    setEditingExercise(entry.timestamp);
+    if (entry.sets && entry.reps) {
+      setEditFormData({
+        sets: entry.sets,
+        reps: entry.reps,
+        weight: entry.weight || 0,
+        caloriesBurned: entry.caloriesBurned,
+      });
+    } else {
+      setEditFormData({
+        duration: entry.duration,
+        caloriesBurned: entry.caloriesBurned,
+      });
+    }
+  };
+
+  const handleSaveExercise = (timestamp) => {
+    const entry = entries.exercise.find(e => e.timestamp === timestamp);
+    if (entry.sets && entry.reps) {
+      updateExerciseEntry(timestamp, {
+        sets: parseInt(editFormData.sets),
+        reps: parseInt(editFormData.reps),
+        weight: parseFloat(editFormData.weight),
+        caloriesBurned: parseInt(editFormData.caloriesBurned),
+      });
+    } else {
+      updateExerciseEntry(timestamp, {
+        duration: parseInt(editFormData.duration),
+        caloriesBurned: parseInt(editFormData.caloriesBurned),
+      });
+    }
+    setEditingExercise(null);
+    setEditFormData({});
+    loadEntries();
+    onRefresh();
+  };
+
+  const handleCancelExerciseEdit = () => {
+    setEditingExercise(null);
+    setEditFormData({});
   };
 
   const handleSaveGoal = () => {
@@ -261,18 +369,28 @@ export default function Dashboard({ onRefresh }) {
         </div>
       )}
 
-      {/* Net Calories Display */}
+      {/* Calories to Goal Display */}
       <div className={`card ${statusBg}`}>
         <div className="text-center">
           <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
-            NET CALORIES TODAY
+            CALORIES TO GOAL
           </div>
           <div className={`text-6xl font-bold ${statusColor} mb-4`}>
-            {netCalories >= 0 ? '+' : ''}{netCalories}
+            {dailyGoal - netCalories > 0 ? (
+              dailyGoal - netCalories
+            ) : dailyGoal - netCalories < 0 ? (
+              <>-{Math.abs(dailyGoal - netCalories)}</>
+            ) : (
+              <>0</>
+            )}
           </div>
 
-          {/* Net Goal and Calories to Goal on same line */}
+          {/* Net Calories and Net Goal on same line */}
           <div className="flex items-center justify-center gap-4 mb-4 text-sm flex-wrap">
+            <div className="text-gray-600 dark:text-gray-400">
+              Net Calories Today: {netCalories >= 0 ? '+' : ''}{netCalories} cal
+            </div>
+            <span className="text-gray-400 dark:text-gray-600">•</span>
             <div className="flex items-center gap-2">
               <span className="text-gray-600 dark:text-gray-400">Net Goal: {dailyGoal} cal</span>
               <button
@@ -285,20 +403,11 @@ export default function Dashboard({ onRefresh }) {
                 Edit
               </button>
             </div>
-            <span className="text-gray-400 dark:text-gray-600">•</span>
-            <div className="text-gray-600 dark:text-gray-400">
-              {dailyGoal - netCalories > 0 ? (
-                <>
-                  <span className="font-bold">{dailyGoal - netCalories}</span> cal to goal
-                </>
-              ) : dailyGoal - netCalories < 0 ? (
-                <>
-                  <span className="font-bold">{Math.abs(dailyGoal - netCalories)}</span> cal over goal
-                </>
-              ) : (
-                <span>Goal reached! 🎯</span>
-              )}
-            </div>
+          </div>
+
+          {/* Subtle daily notice */}
+          <div className="text-xs text-gray-500 dark:text-gray-500 text-center italic">
+            Goals and totals reflect end-of-day targets
           </div>
 
           {/* Previous 3 Days */}
@@ -421,29 +530,101 @@ export default function Dashboard({ onRefresh }) {
             {entries.food.map((entry) => (
               <div
                 key={entry.timestamp}
-                className="flex justify-between items-start border-b border-gray-200 dark:border-gray-700 pb-3 last:border-0 last:pb-0"
+                className="border-b border-gray-200 dark:border-gray-700 pb-3 last:border-0 last:pb-0"
               >
-                <div>
-                  <div className="font-semibold">{entry.name}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
-                    {entry.calories} cal
-                    {entry.servingSize && ` • ${entry.servingSize}`}
-                  </div>
-                  {(entry.protein || entry.carbs || entry.fat) && (
-                    <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                      P: {Math.round(entry.protein || 0)}g • C: {Math.round(entry.carbs || 0)}g • F: {Math.round(entry.fat || 0)}g
+                {editingFood === entry.timestamp ? (
+                  // Edit mode - grams-based
+                  <div className="space-y-3">
+                    <div className="font-semibold">{entry.name}</div>
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-semibold mb-1">Amount (grams)</label>
+                        <input
+                          type="number"
+                          value={editFormData.grams}
+                          onChange={(e) => setEditFormData({ ...editFormData, grams: e.target.value })}
+                          className="input-field text-sm py-1"
+                          min="1"
+                          step="1"
+                          placeholder={editFormData.baseGrams}
+                        />
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                          Original serving: {entry.servingSize || '100g'} ({editFormData.baseGrams}g)
+                        </div>
+                      </div>
+
+                      {/* Real-time preview of calculated values */}
+                      <div className="bg-gray-50 dark:bg-gray-700 rounded p-3">
+                        <div className="text-xs font-semibold mb-2">Preview:</div>
+                        <div className="text-sm space-y-1">
+                          <div>
+                            <span className="font-semibold">Calories:</span> {Math.round(editFormData.baseCalories * (parseFloat(editFormData.grams) || 0) / editFormData.baseGrams)}
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-xs">
+                            <div>
+                              <span className="font-semibold">P:</span> {Math.round(editFormData.baseProtein * (parseFloat(editFormData.grams) || 0) / editFormData.baseGrams * 10) / 10}g
+                            </div>
+                            <div>
+                              <span className="font-semibold">C:</span> {Math.round(editFormData.baseCarbs * (parseFloat(editFormData.grams) || 0) / editFormData.baseGrams * 10) / 10}g
+                            </div>
+                            <div>
+                              <span className="font-semibold">F:</span> {Math.round(editFormData.baseFat * (parseFloat(editFormData.grams) || 0) / editFormData.baseGrams * 10) / 10}g
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                  <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
-                    {new Date(entry.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleSaveFood(entry.timestamp)}
+                        className="btn-primary text-sm py-1 px-3"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={handleCancelFoodEdit}
+                        className="btn-secondary text-sm py-1 px-3"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <button
-                  onClick={() => handleDeleteFood(entry.timestamp)}
-                  className="text-red-600 hover:text-red-700 dark:text-red-400 font-bold text-xl"
-                >
-                  ×
-                </button>
+                ) : (
+                  // View mode
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="font-semibold">{entry.name}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        {entry.calories} cal
+                        {entry.grams ? ` • ${Math.round(entry.grams)}g` : (entry.servingSize && ` • ${entry.servingSize}`)}
+                      </div>
+                      {(entry.protein || entry.carbs || entry.fat) && (
+                        <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                          P: {Math.round(entry.protein || 0)}g • C: {Math.round(entry.carbs || 0)}g • F: {Math.round(entry.fat || 0)}g
+                        </div>
+                      )}
+                      <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
+                        {new Date(entry.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEditFood(entry)}
+                        className="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-bold text-xl"
+                        title="Edit"
+                      >
+                        ✎
+                      </button>
+                      <button
+                        onClick={() => handleDeleteFood(entry.timestamp)}
+                        className="text-red-600 hover:text-red-700 dark:text-red-400 font-bold text-xl"
+                        title="Delete"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -458,31 +639,135 @@ export default function Dashboard({ onRefresh }) {
             {entries.exercise.map((entry) => (
               <div
                 key={entry.timestamp}
-                className="flex justify-between items-start border-b border-gray-200 dark:border-gray-700 pb-3 last:border-0 last:pb-0"
+                className="border-b border-gray-200 dark:border-gray-700 pb-3 last:border-0 last:pb-0"
               >
-                <div>
-                  <div className="font-semibold">{entry.name}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                {editingExercise === entry.timestamp ? (
+                  // Edit mode
+                  <div className="space-y-3">
+                    <div className="font-semibold">{entry.name}</div>
                     {entry.sets && entry.reps ? (
-                      <>
-                        {entry.sets} sets × {entry.reps} reps
-                        {entry.weight > 0 && ` @ ${entry.weight}${profile.unit === 'metric' ? 'kg' : 'lbs'}`}
-                        {' • '}{entry.caloriesBurned} cal burned
-                      </>
+                      // Strength training exercise
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-semibold mb-1">Sets</label>
+                          <input
+                            type="number"
+                            value={editFormData.sets}
+                            onChange={(e) => setEditFormData({ ...editFormData, sets: e.target.value })}
+                            className="input-field text-sm py-1"
+                            min="1"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold mb-1">Reps</label>
+                          <input
+                            type="number"
+                            value={editFormData.reps}
+                            onChange={(e) => setEditFormData({ ...editFormData, reps: e.target.value })}
+                            className="input-field text-sm py-1"
+                            min="1"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold mb-1">Weight ({profile.unit === 'metric' ? 'kg' : 'lbs'})</label>
+                          <input
+                            type="number"
+                            value={editFormData.weight}
+                            onChange={(e) => setEditFormData({ ...editFormData, weight: e.target.value })}
+                            className="input-field text-sm py-1"
+                            min="0"
+                            step="0.5"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold mb-1">Calories Burned</label>
+                          <input
+                            type="number"
+                            value={editFormData.caloriesBurned}
+                            onChange={(e) => setEditFormData({ ...editFormData, caloriesBurned: e.target.value })}
+                            className="input-field text-sm py-1"
+                            min="0"
+                          />
+                        </div>
+                      </div>
                     ) : (
-                      <>{entry.duration} min • {entry.caloriesBurned} cal burned</>
+                      // Cardio exercise
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-semibold mb-1">Duration (min)</label>
+                          <input
+                            type="number"
+                            value={editFormData.duration}
+                            onChange={(e) => setEditFormData({ ...editFormData, duration: e.target.value })}
+                            className="input-field text-sm py-1"
+                            min="1"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold mb-1">Calories Burned</label>
+                          <input
+                            type="number"
+                            value={editFormData.caloriesBurned}
+                            onChange={(e) => setEditFormData({ ...editFormData, caloriesBurned: e.target.value })}
+                            className="input-field text-sm py-1"
+                            min="0"
+                          />
+                        </div>
+                      </div>
                     )}
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleSaveExercise(entry.timestamp)}
+                        className="btn-primary text-sm py-1 px-3"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={handleCancelExerciseEdit}
+                        className="btn-secondary text-sm py-1 px-3"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                  <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
-                    {new Date(entry.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                ) : (
+                  // View mode
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <div className="font-semibold">{entry.name}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">
+                        {entry.sets && entry.reps ? (
+                          <>
+                            {entry.sets} sets × {entry.reps} reps
+                            {entry.weight > 0 && ` @ ${entry.weight}${profile.unit === 'metric' ? 'kg' : 'lbs'}`}
+                            {' • '}{entry.caloriesBurned} cal burned
+                          </>
+                        ) : (
+                          <>{entry.duration} min • {entry.caloriesBurned} cal burned</>
+                        )}
+                      </div>
+                      <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
+                        {new Date(entry.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEditExercise(entry)}
+                        className="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-bold text-xl"
+                        title="Edit"
+                      >
+                        ✎
+                      </button>
+                      <button
+                        onClick={() => handleDeleteExercise(entry.timestamp)}
+                        className="text-red-600 hover:text-red-700 dark:text-red-400 font-bold text-xl"
+                        title="Delete"
+                      >
+                        ×
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <button
-                  onClick={() => handleDeleteExercise(entry.timestamp)}
-                  className="text-red-600 hover:text-red-700 dark:text-red-400 font-bold text-xl"
-                >
-                  ×
-                </button>
+                )}
               </div>
             ))}
           </div>

@@ -24,4 +24,19 @@
   .card {
     @apply bg-white dark:bg-gray-800 rounded-xl shadow-md p-6;
   }
+
+  /* iOS: Ensure content scrolls properly when keyboard appears */
+  @supports (-webkit-touch-callout: none) {
+    /* iOS Safari - prevent keyboard from blocking content */
+    input:focus,
+    textarea:focus {
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+
+    /* Add extra padding to bottom of modals on iOS */
+    .fixed.inset-0 > div {
+      padding-bottom: 100px;
+    }
+  }
 }

@@ -11,15 +11,26 @@ export default function UpdateNotification() {
   } = useRegisterSW({
     onRegistered(r) {
       console.log('SW Registered: ' + r);
-      // Check for updates every hour
+      // Check for updates more frequently on initial load
       if (r) {
-        setInterval(() => {
+        // Check immediately after 1 second
+        setTimeout(() => {
+          console.log('Initial update check...');
           r.update();
-        }, 60 * 60 * 1000); // Check every hour
+        }, 1000);
+
+        // Then check every 30 minutes for better update detection
+        setInterval(() => {
+          console.log('Periodic update check...');
+          r.update();
+        }, 30 * 60 * 1000); // Check every 30 minutes
       }
     },
     onRegisterError(error) {
       console.log('SW registration error', error);
+    },
+    onNeedRefresh() {
+      console.log('SW needs refresh - update available!');
     },
   });
 
@@ -32,8 +43,13 @@ export default function UpdateNotification() {
   const handleUpdate = () => {
     // Skip waiting and activate new service worker immediately
     updateServiceWorker(true).then(() => {
-      // Force a hard reload to ensure all cached assets are refreshed
-      window.location.reload(true);
+      // Modern way to force a hard reload
+      // Works better on Safari/iOS than the deprecated reload(true)
+      window.location.href = window.location.href;
+    }).catch((err) => {
+      console.error('Update failed:', err);
+      // Fallback: just reload normally
+      window.location.reload();
     });
   };
 

@@ -14,9 +14,12 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
 
   useEffect(() => {
     startScanner();
+    // Lock body scroll when modal opens
+    document.body.style.overflow = 'hidden';
 
     return () => {
       stopScanner();
+      document.body.style.overflow = 'unset';
     };
   }, []);
 
@@ -203,8 +206,8 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-4 z-50">
-      <div className="card max-w-2xl w-full">
+    <div className="fixed inset-0 bg-black bg-opacity-95 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Scan Barcode</h2>
           <button
@@ -265,6 +268,10 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
                   placeholder="e.g., 012345678910"
                   className="input-field mb-4"
                   autoFocus
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="none"
+                  spellCheck="false"
                 />
                 <div className="flex gap-3 mb-4">
                   {!error && (

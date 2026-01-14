@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { exercises, calculateExerciseCalories, calculateWeightedVestMET, getRunningMET, getCyclingMET, calculatePace } from '../utils/calculations';
 import { getProfile } from '../utils/storage';
 
@@ -14,8 +14,24 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
   const [vestWeight, setVestWeight] = useState('10-15');
   const [distance, setDistance] = useState('');
   const [distanceUnit, setDistanceUnit] = useState('miles');
+  const modalRef = useRef(null);
 
   const profile = getProfile();
+
+  // Lock body scroll when modal opens
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Scroll to top when exercise is selected/deselected
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [selectedExercise]);
 
   const filteredExercises = searchQuery
     ? exercises.filter(ex =>
@@ -95,8 +111,8 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="card max-w-2xl w-full my-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Log Exercise</h2>
           <button
@@ -116,6 +132,10 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
               placeholder="Search exercises..."
               className="input-field mb-6"
               autoFocus
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck="false"
             />
 
             <div className="space-y-2 max-h-96 overflow-y-auto">

@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getMealTemplates, addMealTemplate, deleteMealTemplate, getTodayEntries } from '../utils/storage';
 
 export default function MealTemplates({ onAddMeal, onClose }) {
   const [showCreate, setShowCreate] = useState(false);
   const [templateName, setTemplateName] = useState('');
+  const modalRef = useRef(null);
 
   const templates = getMealTemplates();
   const todayEntries = getTodayEntries();
+
+  // Lock body scroll when modal opens
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Scroll to top when switching between views
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [showCreate]);
 
   const handleCreateTemplate = () => {
     if (!templateName.trim()) {
@@ -58,8 +74,8 @@ export default function MealTemplates({ onAddMeal, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="card max-w-2xl w-full my-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Meal Templates</h2>
           <button
@@ -154,6 +170,10 @@ export default function MealTemplates({ onAddMeal, onClose }) {
                 placeholder="e.g., Typical Breakfast, Post-Workout Meal"
                 className="input-field"
                 autoFocus
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck="false"
               />
             </div>
 

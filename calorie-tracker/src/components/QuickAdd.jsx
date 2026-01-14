@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function QuickAdd({ onAddFood, onClose }) {
   const [calories, setCalories] = useState('');
@@ -6,6 +6,14 @@ export default function QuickAdd({ onAddFood, onClose }) {
   const [protein, setProtein] = useState('');
   const [carbs, setCarbs] = useState('');
   const [fat, setFat] = useState('');
+
+  // Lock body scroll when modal opens
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,8 +29,8 @@ export default function QuickAdd({ onAddFood, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="card max-w-md w-full">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+      <div className="card max-w-md w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Quick Add Calories</h2>
           <button
@@ -61,6 +69,10 @@ export default function QuickAdd({ onAddFood, onClose }) {
               onChange={(e) => setName(e.target.value)}
               placeholder="Quick Add"
               className="input-field"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck="false"
             />
           </div>
 

@@ -1,11 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { searchCommonFoods, getCategories } from '../utils/commonFoods';
+import { getFavorites, addFavorite, removeFavorite } from '../utils/storage';
 import PortionSelector from './PortionSelector';
 
 export default function CommonFoods({ onAddFood, onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedFood, setSelectedFood] = useState(null);
+  const [favorites, setFavorites] = useState(getFavorites());
+  const modalRef = useRef(null);
+
+  // Lock body scroll when modal opens
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Scroll to top when search or category changes
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [searchQuery, selectedCategory]);
 
   const categories = ['All', ...getCategories()];
   const allFoods = searchCommonFoods(searchQuery);
@@ -28,9 +46,26 @@ export default function CommonFoods({ onAddFood, onClose }) {
     setSelectedFood(null);
   };
 
+  const toggleFavorite = (food, e) => {
+    e.stopPropagation(); // Prevent triggering parent click
+    const isFav = favorites.some(f => f.name === food.name && f.calories === food.calories);
+
+    if (isFav) {
+      removeFavorite(food);
+    } else {
+      addFavorite(food);
+    }
+
+    setFavorites(getFavorites()); // Refresh favorites list
+  };
+
+  const isFavoriteFood = (food) => {
+    return favorites.some(f => f.name === food.name && f.calories === food.calories);
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Common Foods</h2>
           <button
@@ -49,6 +84,10 @@ export default function CommonFoods({ onAddFood, onClose }) {
           placeholder="Search foods..."
           className="input-field mb-4"
           autoFocus
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="none"
+          spellCheck="false"
         />
 
         {/* Category Filter */}
@@ -98,12 +137,21 @@ export default function CommonFoods({ onAddFood, onClose }) {
                       <div className="text-xs">{food.servingSize}</div>
                     </div>
                   </div>
-                  <button
-                    onClick={() => handleFoodClick(food)}
-                    className="btn-primary whitespace-nowrap"
-                  >
-                    Add
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={(e) => toggleFavorite(food, e)}
+                      className="text-2xl hover:scale-110 transition-transform"
+                      title={isFavoriteFood(food) ? "Remove from favorites" : "Add to favorites"}
+                    >
+                      {isFavoriteFood(food) ? '⭐' : '☆'}
+                    </button>
+                    <button
+                      onClick={() => handleFoodClick(food)}
+                      className="btn-primary whitespace-nowrap"
+                    >
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

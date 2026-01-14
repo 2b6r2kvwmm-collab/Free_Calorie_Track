@@ -14,7 +14,9 @@ export default defineConfig({
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       devOptions: {
         enabled: true,
+        type: 'module',
       },
+      injectRegister: 'auto',
       manifest: {
         name: 'Calorie Tracker',
         short_name: 'Calories',

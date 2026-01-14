@@ -82,6 +82,16 @@ export function deleteFoodEntry(timestamp) {
   setData(STORAGE_KEYS.FOOD_LOG, filtered);
 }
 
+export function updateFoodEntry(timestamp, updatedFields) {
+  const log = getFoodLog();
+  const updatedLog = log.map(entry =>
+    entry.timestamp === timestamp
+      ? { ...entry, ...updatedFields }
+      : entry
+  );
+  setData(STORAGE_KEYS.FOOD_LOG, updatedLog);
+}
+
 // Exercise Log - array of { date, timestamp, name, duration, caloriesBurned }
 export function getExerciseLog() {
   return getData(STORAGE_KEYS.EXERCISE_LOG) || [];
@@ -103,6 +113,16 @@ export function deleteExerciseEntry(timestamp) {
   const log = getExerciseLog();
   const filtered = log.filter(entry => entry.timestamp !== timestamp);
   setData(STORAGE_KEYS.EXERCISE_LOG, filtered);
+}
+
+export function updateExerciseEntry(timestamp, updatedFields) {
+  const log = getExerciseLog();
+  const updatedLog = log.map(entry =>
+    entry.timestamp === timestamp
+      ? { ...entry, ...updatedFields }
+      : entry
+  );
+  setData(STORAGE_KEYS.EXERCISE_LOG, updatedLog);
 }
 
 // Favorites

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getCustomFoods, addCustomFood, deleteCustomFood } from '../utils/storage';
+import RecipeBuilder from './RecipeBuilder';
 
 export default function CustomFoodManager({ onAddFood, onClose }) {
   const [showForm, setShowForm] = useState(false);
+  const [showRecipeBuilder, setShowRecipeBuilder] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     calories: '',
@@ -11,6 +13,22 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
     fat: '',
     servingSize: '',
   });
+  const modalRef = useRef(null);
+
+  // Lock body scroll when modal opens
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Scroll to top when form state changes
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [showForm]);
 
   const customFoods = getCustomFoods();
 
@@ -53,8 +71,8 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-      <div className="card max-w-2xl w-full my-8">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Custom Foods</h2>
           <button
@@ -67,12 +85,20 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
 
         {!showForm ? (
           <>
-            <button
-              onClick={() => setShowForm(true)}
-              className="btn-primary w-full mb-6"
-            >
-              + Create Custom Food
-            </button>
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <button
+                onClick={() => setShowRecipeBuilder(true)}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+              >
+                🍳 Build Recipe
+              </button>
+              <button
+                onClick={() => setShowForm(true)}
+                className="btn-primary"
+              >
+                + Create Custom Food
+              </button>
+            </div>
 
             {customFoods.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
@@ -134,6 +160,10 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
                 placeholder="e.g., Homemade Protein Shake"
                 className="input-field"
                 autoFocus
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck="false"
               />
             </div>
 
@@ -146,6 +176,10 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
                 onChange={(e) => updateField('servingSize', e.target.value)}
                 placeholder="e.g., 1 cup, 100g, 1 serving"
                 className="input-field"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck="false"
               />
             </div>
 
@@ -221,6 +255,17 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
               </button>
             </div>
           </form>
+        )}
+
+        {/* Recipe Builder */}
+        {showRecipeBuilder && (
+          <RecipeBuilder
+            onSave={(recipe) => {
+              setShowRecipeBuilder(false);
+              // Refresh the custom foods list (it will automatically include the new recipe)
+            }}
+            onClose={() => setShowRecipeBuilder(false)}
+          />
         )}
       </div>
     </div>

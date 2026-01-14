@@ -87,6 +87,10 @@ export default function UserManager({ onUserSwitch, onClose }) {
                         onChange={(e) => setEditName(e.target.value)}
                         className="input-field flex-1"
                         autoFocus
+                        autoComplete="off"
+                        autoCorrect="off"
+                        autoCapitalize="none"
+                        spellCheck="false"
                       />
                       <button type="submit" className="btn-primary">
                         Save
@@ -156,6 +160,10 @@ export default function UserManager({ onUserSwitch, onClose }) {
                 placeholder="e.g., John, Mom, Partner"
                 className="input-field"
                 autoFocus
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck="false"
               />
             </div>
 

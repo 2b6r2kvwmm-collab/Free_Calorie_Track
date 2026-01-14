@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { searchFoods } from '../utils/openfoodfacts';
 
 export default function FoodSearch({ onAddFood, onClose }) {
@@ -6,6 +6,22 @@ export default function FoodSearch({ onAddFood, onClose }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const modalRef = useRef(null);
+
+  // Lock body scroll when modal opens
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Scroll to top when results change
+  useEffect(() => {
+    if (modalRef.current && searched) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [results, searched]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -31,8 +47,8 @@ export default function FoodSearch({ onAddFood, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="card max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Search Foods</h2>
           <button
@@ -52,6 +68,10 @@ export default function FoodSearch({ onAddFood, onClose }) {
               placeholder="Search for food..."
               className="input-field flex-1"
               autoFocus
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="none"
+              spellCheck="false"
             />
             <button type="submit" className="btn-primary" disabled={loading}>
               {loading ? 'Searching...' : 'Search'}
