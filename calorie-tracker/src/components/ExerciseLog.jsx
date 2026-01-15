@@ -407,7 +407,8 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
               </div>
             )}
 
-            {trackingMode === 'duration' && !(isWalkingExercise && (walkingTrackingMode === 'steps' || walkingTrackingMode === 'distance')) ? (
+            {/* Duration Input - for duration mode AND not walking with steps/distance */}
+            {trackingMode === 'duration' && !(isWalkingExercise && (walkingTrackingMode === 'steps' || walkingTrackingMode === 'distance')) && (
               <div>
                 <label className="block text-lg font-semibold mb-3">
                   Duration (minutes) *
@@ -462,7 +463,10 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
                   </div>
                 )}
               </div>
-            ) : (
+            )}
+
+            {/* Sets & Reps Input - ONLY for strength exercises in reps mode */}
+            {trackingMode === 'reps' && isStrengthExercise && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
