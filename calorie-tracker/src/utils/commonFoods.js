@@ -55,6 +55,22 @@ export const commonFoods = [
   { name: 'Cottage Cheese (1/2 cup)', calories: 90, protein: 12, carbs: 4, fat: 2.5, servingSize: '1/2 cup (113g)', category: 'Protein' },
   { name: 'String Cheese (1 stick)', calories: 80, protein: 6, carbs: 1, fat: 6, servingSize: '1 stick (28g)', category: 'Protein' },
 
+  // Artisanal & Specialty Cheeses
+  { name: 'Humboldt Fog (1 oz)', calories: 90, protein: 6, carbs: 0.5, fat: 7, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'La Tur (1 oz)', calories: 100, protein: 6, carbs: 0.5, fat: 8.5, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Époisses (1 oz)', calories: 95, protein: 6, carbs: 0.2, fat: 8, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Délice de Bourgogne (1 oz)', calories: 110, protein: 5, carbs: 0.5, fat: 11, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Comté (1 oz)', calories: 114, protein: 8, carbs: 0.5, fat: 9, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Manchego (1 oz)', calories: 107, protein: 7, carbs: 0.5, fat: 8.5, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Gruyère (1 oz)', calories: 117, protein: 8.5, carbs: 0.1, fat: 9, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Camembert (1 oz)', calories: 85, protein: 6, carbs: 0.1, fat: 7, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Taleggio (1 oz)', calories: 89, protein: 6, carbs: 0.2, fat: 7, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Roquefort (1 oz)', calories: 105, protein: 6, carbs: 0.6, fat: 9, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Aged Gouda (1 oz)', calories: 101, protein: 7, carbs: 0.6, fat: 8, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Pecorino Romano (1 oz)', calories: 110, protein: 9, carbs: 1, fat: 8, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Burrata (1 oz)', calories: 90, protein: 5, carbs: 1, fat: 7, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Mimolette (1 oz)', calories: 100, protein: 7, carbs: 0.5, fat: 8, servingSize: '1 oz (28g)', category: 'Protein' },
+
   // Proteins - Plant-based
   { name: 'Tofu (firm)', calories: 144, protein: 17, carbs: 3, fat: 9, servingSize: '100g', category: 'Protein' },
   { name: 'Black Beans (cooked)', calories: 132, protein: 9, carbs: 24, fat: 0.5, servingSize: '100g', category: 'Protein' },
@@ -248,7 +264,6 @@ export const commonFoods = [
 
   // Fats & Oils
   { name: 'Olive Oil (1 tbsp)', calories: 119, protein: 0, carbs: 0, fat: 13.5, servingSize: '1 tbsp (13.5g)', category: 'Fats' },
-  { name: 'Butter (1 tbsp)', calories: 102, protein: 0.1, carbs: 0, fat: 11.5, servingSize: '1 tbsp (14g)', category: 'Fats' },
   { name: 'Coconut Oil (1 tbsp)', calories: 121, protein: 0, carbs: 0, fat: 13.6, servingSize: '1 tbsp (13.6g)', category: 'Fats' },
 
   // Condiments
@@ -454,7 +469,6 @@ export const commonFoods = [
   { name: 'Buffalo Wings (8 pieces)', calories: 680, protein: 48, carbs: 6, fat: 52, servingSize: '8 wings', category: 'Lunch & Dinner' },
   { name: 'Chicken Teriyaki Bowl', calories: 560, protein: 38, carbs: 76, fat: 10, servingSize: '1 bowl', category: 'Lunch & Dinner' },
   { name: 'Orange Chicken (with rice)', calories: 820, protein: 28, carbs: 116, fat: 26, servingSize: '1 plate', category: 'Lunch & Dinner' },
-  { name: 'General Tso\'s Chicken (with rice)', calories: 880, protein: 32, carbs: 120, fat: 30, servingSize: '1 plate', category: 'Lunch & Dinner' },
   { name: 'Chicken Fried Rice', calories: 540, protein: 22, carbs: 72, fat: 16, servingSize: '1 plate', category: 'Lunch & Dinner' },
   { name: 'Sesame Chicken (with rice)', calories: 840, protein: 30, carbs: 114, fat: 28, servingSize: '1 plate', category: 'Lunch & Dinner' },
 
@@ -476,8 +490,6 @@ export const commonFoods = [
 
   // Lunch & Dinner - Rice & Grain Bowls
   { name: 'Fried Rice (vegetable)', calories: 420, protein: 10, carbs: 68, fat: 12, servingSize: '1 plate', category: 'Lunch & Dinner' },
-  { name: 'Fried Rice (chicken)', calories: 540, protein: 22, carbs: 72, fat: 16, servingSize: '1 plate', category: 'Lunch & Dinner' },
-  { name: 'Fried Rice (shrimp)', calories: 520, protein: 24, carbs: 70, fat: 14, servingSize: '1 plate', category: 'Lunch & Dinner' },
   { name: 'Rice & Beans', calories: 380, protein: 14, carbs: 72, fat: 4, servingSize: '1 serving', category: 'Lunch & Dinner' },
   { name: 'Chicken & Rice', calories: 520, protein: 38, carbs: 64, fat: 10, servingSize: '1 plate', category: 'Lunch & Dinner' },
   { name: 'Buddha Bowl', calories: 480, protein: 16, carbs: 72, fat: 14, servingSize: '1 bowl', category: 'Lunch & Dinner' },
@@ -627,8 +639,6 @@ export const commonFoods = [
   { name: 'Bruschetta (2 pieces)', calories: 150, protein: 5, carbs: 22, fat: 5, servingSize: '2 pieces', category: 'Italian' },
 
   // French
-  { name: 'Croissant', calories: 231, protein: 5, carbs: 26, fat: 12, servingSize: '1 croissant (50g)', category: 'French' },
-  { name: 'Pain au Chocolat', calories: 280, protein: 5, carbs: 33, fat: 14, servingSize: '1 pastry', category: 'French' },
   { name: 'Quiche Lorraine', calories: 350, protein: 14, carbs: 20, fat: 24, servingSize: '1 slice', category: 'French' },
   { name: 'French Onion Soup', calories: 190, protein: 8, carbs: 16, fat: 10, servingSize: '1 bowl', category: 'French' },
   { name: 'Croque Monsieur', calories: 450, protein: 22, carbs: 35, fat: 24, servingSize: '1 sandwich', category: 'French' },
@@ -669,7 +679,6 @@ export const commonFoods = [
   { name: 'Lemon Herb Roasted Chicken', calories: 380, protein: 42, carbs: 4, fat: 21, servingSize: '1 serving', category: 'Homemade' },
 
   // Homemade Recipes - Pasta & Casseroles
-  { name: 'Baked Ziti', calories: 380, protein: 18, carbs: 42, fat: 15, servingSize: '1 serving', category: 'Homemade' },
   { name: 'Eggplant Parmesan', calories: 360, protein: 16, carbs: 32, fat: 18, servingSize: '1 serving', category: 'Homemade' },
   { name: 'Chicken Parmesan', calories: 480, protein: 38, carbs: 28, fat: 22, servingSize: '1 serving', category: 'Homemade' },
   { name: 'Mac and Cheese (homemade)', calories: 420, protein: 18, carbs: 42, fat: 20, servingSize: '1 cup', category: 'Homemade' },
@@ -717,10 +726,8 @@ export const commonFoods = [
 
   // Homemade Recipes - Breakfast/Brunch
   { name: 'Shakshuka', calories: 280, protein: 16, carbs: 18, fat: 16, servingSize: '1 serving', category: 'Homemade' },
-  { name: 'Eggs Benedict (1 serving)', calories: 440, protein: 22, carbs: 32, fat: 25, servingSize: '1 serving', category: 'Homemade' },
   { name: 'Frittata (1 slice)', calories: 220, protein: 14, carbs: 8, fat: 15, servingSize: '1 slice', category: 'Homemade' },
   { name: 'Dutch Baby Pancake', calories: 320, protein: 10, carbs: 38, fat: 14, servingSize: '1 serving', category: 'Homemade' },
-  { name: 'French Toast (2 slices)', calories: 360, protein: 12, carbs: 48, fat: 14, servingSize: '2 slices', category: 'Homemade' },
   { name: 'Pancakes (3 pancakes)', calories: 340, protein: 10, carbs: 52, fat: 10, servingSize: '3 pancakes', category: 'Homemade' },
   { name: 'Eggs Florentine', calories: 380, protein: 20, carbs: 28, fat: 22, servingSize: '1 serving', category: 'Homemade' },
 
@@ -772,8 +779,6 @@ export const commonFoods = [
   // Sandwiches - Paninis & Wraps
   { name: 'Chicken Panini', calories: 480, protein: 32, carbs: 40, fat: 20, servingSize: '1 panini', category: 'Sandwiches' },
   { name: 'Turkey Panini', calories: 450, protein: 28, carbs: 42, fat: 18, servingSize: '1 panini', category: 'Sandwiches' },
-  { name: 'Chicken Caesar Wrap', calories: 480, protein: 28, carbs: 42, fat: 22, servingSize: '1 wrap', category: 'Sandwiches' },
-  { name: 'Buffalo Chicken Wrap', calories: 520, protein: 30, carbs: 44, fat: 24, servingSize: '1 wrap', category: 'Sandwiches' },
 
   // Desserts - Cookies & Bars
   { name: 'Chocolate Chip Cookie (1 cookie)', calories: 140, protein: 2, carbs: 18, fat: 7, servingSize: '1 cookie (30g)', category: 'Desserts' },
@@ -794,8 +799,6 @@ export const commonFoods = [
   { name: 'Cupcake (with frosting)', calories: 240, protein: 2, carbs: 36, fat: 10, servingSize: '1 cupcake', category: 'Desserts' },
   { name: 'Donut (glazed)', calories: 260, protein: 3, carbs: 31, fat: 14, servingSize: '1 donut', category: 'Desserts' },
   { name: 'Donut (chocolate)', calories: 280, protein: 3, carbs: 33, fat: 15, servingSize: '1 donut', category: 'Desserts' },
-  { name: 'Cinnamon Roll', calories: 420, protein: 7, carbs: 58, fat: 18, servingSize: '1 roll', category: 'Desserts' },
-  { name: 'Danish Pastry', calories: 340, protein: 5, carbs: 42, fat: 17, servingSize: '1 pastry', category: 'Desserts' },
   { name: 'Eclair', calories: 290, protein: 6, carbs: 28, fat: 16, servingSize: '1 eclair', category: 'Desserts' },
 
   // Desserts - Pies & Tarts
@@ -858,11 +861,7 @@ export const commonFoods = [
   { name: 'Pistachios (1 oz, ~49 nuts)', calories: 159, protein: 6, carbs: 8, fat: 13, servingSize: '1 oz / 49 pistachios (28g)', category: 'Snacks' },
   { name: 'Pistachios (1/4 cup)', calories: 170, protein: 6, carbs: 8, fat: 14, servingSize: '1/4 cup (30g)', category: 'Snacks' },
   { name: 'Trail Mix (1/4 cup)', calories: 140, protein: 4, carbs: 16, fat: 8, servingSize: '1/4 cup (38g)', category: 'Snacks' },
-  { name: 'Sunflower Seeds (1 oz)', calories: 165, protein: 6, carbs: 7, fat: 14, servingSize: '1 oz (28g)', category: 'Snacks' },
-  { name: 'Pumpkin Seeds (1 oz)', calories: 151, protein: 7, carbs: 5, fat: 13, servingSize: '1 oz (28g)', category: 'Snacks' },
-  { name: 'Walnuts (1 oz, ~14 halves)', calories: 185, protein: 4, carbs: 4, fat: 18, servingSize: '1 oz / 14 halves (28g)', category: 'Snacks' },
   { name: 'Pecans (1 oz, ~19 halves)', calories: 196, protein: 3, carbs: 4, fat: 20, servingSize: '1 oz / 19 halves (28g)', category: 'Snacks' },
-  { name: 'Chia Seeds (1 tbsp)', calories: 58, protein: 2, carbs: 5, fat: 3.5, servingSize: '1 tbsp (12g)', category: 'Snacks' },
   { name: 'Flax Seeds (1 tbsp)', calories: 37, protein: 1.3, carbs: 2, fat: 3, servingSize: '1 tbsp (7g)', category: 'Snacks' },
 
   // Snacks - Granola & Bars
@@ -870,10 +869,8 @@ export const commonFoods = [
   { name: 'Nature Valley Bar (crunchy)', calories: 190, protein: 4, carbs: 29, fat: 7, servingSize: '2 bars', category: 'Snacks' },
   { name: 'Clif Bar', calories: 250, protein: 9, carbs: 45, fat: 5, servingSize: '1 bar (68g)', category: 'Snacks' },
   { name: 'Kind Bar', calories: 200, protein: 6, carbs: 17, fat: 13, servingSize: '1 bar (40g)', category: 'Snacks' },
-  { name: 'Granola (1/2 cup)', calories: 220, protein: 5, carbs: 38, fat: 6, servingSize: '1/2 cup', category: 'Snacks' },
 
   // Snacks - Other
-  { name: 'String Cheese (1 stick)', calories: 80, protein: 7, carbs: 1, fat: 6, servingSize: '1 stick (28g)', category: 'Snacks' },
   { name: 'Beef Jerky (1 oz)', calories: 116, protein: 9, carbs: 3, fat: 7, servingSize: '1 oz (28g)', category: 'Snacks' },
   { name: 'Rice Cakes (1 cake)', calories: 35, protein: 1, carbs: 7, fat: 0.3, servingSize: '1 cake', category: 'Snacks' },
   { name: 'Apple with Peanut Butter (2 tbsp)', calories: 285, protein: 8, carbs: 33, fat: 16, servingSize: '1 apple + 2 tbsp PB', category: 'Snacks' },
@@ -885,20 +882,12 @@ export const commonFoods = [
   { name: 'Edamame (1/2 cup, shelled)', calories: 95, protein: 9, carbs: 7, fat: 4, servingSize: '1/2 cup (75g)', category: 'Snacks' },
   { name: 'Greek Yogurt with Berries', calories: 150, protein: 12, carbs: 20, fat: 2, servingSize: '1 cup yogurt + 1/2 cup berries', category: 'Snacks' },
   { name: 'Hard Boiled Egg', calories: 78, protein: 6, carbs: 0.6, fat: 5, servingSize: '1 large egg', category: 'Snacks' },
-  { name: 'Cottage Cheese (1/2 cup)', calories: 110, protein: 14, carbs: 5, fat: 2.5, servingSize: '1/2 cup (113g)', category: 'Snacks' },
 
   // More Vegetables
-  { name: 'Broccoli (cooked)', calories: 55, protein: 3.7, carbs: 11, fat: 0.6, servingSize: '1 cup (156g)', category: 'Snacks' },
   { name: 'Cauliflower (cooked)', calories: 29, protein: 2.3, carbs: 5.7, fat: 0.6, servingSize: '1 cup (124g)', category: 'Snacks' },
-  { name: 'Green Beans (cooked)', calories: 44, protein: 2.4, carbs: 10, fat: 0.4, servingSize: '1 cup (125g)', category: 'Snacks' },
-  { name: 'Asparagus (cooked)', calories: 40, protein: 4.3, carbs: 7.6, fat: 0.4, servingSize: '1 cup (180g)', category: 'Snacks' },
-  { name: 'Brussels Sprouts (cooked)', calories: 56, protein: 4, carbs: 11, fat: 0.8, servingSize: '1 cup (156g)', category: 'Snacks' },
-  { name: 'Spinach (cooked)', calories: 41, protein: 5, carbs: 7, fat: 0.5, servingSize: '1 cup (180g)', category: 'Snacks' },
   { name: 'Kale (cooked)', calories: 36, protein: 2.5, carbs: 7, fat: 0.5, servingSize: '1 cup (130g)', category: 'Snacks' },
-  { name: 'Bell Pepper (raw)', calories: 30, protein: 1, carbs: 7, fat: 0.2, servingSize: '1 medium (119g)', category: 'Snacks' },
   { name: 'Zucchini (cooked)', calories: 27, protein: 2, carbs: 7, fat: 0.3, servingSize: '1 cup (180g)', category: 'Snacks' },
   { name: 'Mushrooms (cooked)', calories: 44, protein: 3.4, carbs: 8, fat: 0.7, servingSize: '1 cup (156g)', category: 'Snacks' },
-  { name: 'Sweet Potato (baked)', calories: 180, protein: 4, carbs: 41, fat: 0.3, servingSize: '1 medium (150g)', category: 'Snacks' },
   { name: 'Regular Potato (baked)', calories: 163, protein: 4.3, carbs: 37, fat: 0.2, servingSize: '1 medium (173g)', category: 'Snacks' },
 
   // More Fruits
@@ -911,9 +900,7 @@ export const commonFoods = [
   { name: 'Plum', calories: 46, protein: 0.7, carbs: 11, fat: 0.3, servingSize: '1 fruit (66g)', category: 'Snacks' },
 
   // Condiments & Sauces
-  { name: 'Ketchup (1 tbsp)', calories: 17, protein: 0.2, carbs: 4.5, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
   { name: 'Mustard (1 tbsp)', calories: 10, protein: 0.6, carbs: 1, fat: 0.6, servingSize: '1 tbsp', category: 'Condiments' },
-  { name: 'Mayonnaise (1 tbsp)', calories: 94, protein: 0.1, carbs: 0.1, fat: 10, servingSize: '1 tbsp', category: 'Condiments' },
   { name: 'Ranch Dressing (2 tbsp)', calories: 145, protein: 0.5, carbs: 2, fat: 15, servingSize: '2 tbsp', category: 'Condiments' },
   { name: 'Caesar Dressing (2 tbsp)', calories: 160, protein: 1, carbs: 1, fat: 17, servingSize: '2 tbsp', category: 'Condiments' },
   { name: 'Italian Dressing (2 tbsp)', calories: 80, protein: 0, carbs: 3, fat: 7, servingSize: '2 tbsp', category: 'Condiments' },
@@ -923,11 +910,7 @@ export const commonFoods = [
   { name: 'Hot Sauce (1 tbsp)', calories: 5, protein: 0.2, carbs: 1, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
   { name: 'Soy Sauce (1 tbsp)', calories: 9, protein: 1.3, carbs: 0.8, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
   { name: 'Teriyaki Sauce (1 tbsp)', calories: 16, protein: 0.5, carbs: 3, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
-  { name: 'Sriracha (1 tsp)', calories: 5, protein: 0.1, carbs: 1, fat: 0, servingSize: '1 tsp', category: 'Condiments' },
-  { name: 'Honey (1 tbsp)', calories: 64, protein: 0.1, carbs: 17, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
   { name: 'Maple Syrup (1 tbsp)', calories: 52, protein: 0, carbs: 13, fat: 0, servingSize: '1 tbsp', category: 'Condiments' },
-  { name: 'Butter (1 tbsp)', calories: 102, protein: 0.1, carbs: 0, fat: 11.5, servingSize: '1 tbsp', category: 'Condiments' },
-  { name: 'Olive Oil (1 tbsp)', calories: 119, protein: 0, carbs: 0, fat: 13.5, servingSize: '1 tbsp', category: 'Condiments' },
   { name: 'Marinara Sauce (1/2 cup)', calories: 60, protein: 2, carbs: 11, fat: 1.5, servingSize: '1/2 cup (125g)', category: 'Condiments' },
   { name: 'Marinara Sauce (1 cup)', calories: 120, protein: 4, carbs: 22, fat: 3, servingSize: '1 cup (250g)', category: 'Condiments' },
   { name: 'Alfredo Sauce (1/4 cup)', calories: 110, protein: 3, carbs: 3, fat: 10, servingSize: '1/4 cup (60g)', category: 'Condiments' },
@@ -952,11 +935,8 @@ export const commonFoods = [
   { name: 'Sweet Tea (8 oz)', calories: 90, protein: 0, carbs: 24, fat: 0, servingSize: '8 oz', category: 'Drinks' },
 
   // More Breakfast Items
-  { name: 'Avocado Toast', calories: 280, protein: 8, carbs: 28, fat: 16, servingSize: '1 slice', category: 'Breakfast' },
-  { name: 'Breakfast Burrito', calories: 520, protein: 24, carbs: 48, fat: 26, servingSize: '1 burrito', category: 'Breakfast' },
   { name: 'Yogurt Parfait', calories: 220, protein: 12, carbs: 38, fat: 3, servingSize: '1 cup', category: 'Breakfast' },
   { name: 'Breakfast Bowl', calories: 380, protein: 18, carbs: 42, fat: 16, servingSize: '1 bowl', category: 'Breakfast' },
-  { name: 'Acai Bowl', calories: 320, protein: 6, carbs: 58, fat: 8, servingSize: '1 bowl', category: 'Breakfast' },
 ];
 
 // Toppings for sandwiches and burgers
@@ -971,7 +951,6 @@ export const sandwichToppings = [
 
   // Cheese
   { name: 'American Cheese', calories: 96, protein: 5, carbs: 2, fat: 7, category: 'cheese' },
-  { name: 'Cheddar Cheese', calories: 113, protein: 7, carbs: 0.4, fat: 9.3, category: 'cheese' },
   { name: 'Swiss Cheese', calories: 106, protein: 8, carbs: 1.5, fat: 8, category: 'cheese' },
   { name: 'Provolone', calories: 98, protein: 7, carbs: 0.6, fat: 7.5, category: 'cheese' },
   { name: 'Pepper Jack', calories: 110, protein: 6.5, carbs: 0.5, fat: 9, category: 'cheese' },
