@@ -2,6 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <!-- HTTPS Enforcement -->
+    <script>
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        location.replace('https:' + window.location.href.substring(window.location.protocol.length));
+      }
+    </script>
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://world.openfoodfacts.org https://vitals.vercel-insights.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="canonical" href="https://freecalorietrack.com/" />
@@ -212,14 +223,14 @@
       <span class="disclaimer">As an Amazon Associate I earn from qualifying purchases.</span>
     </div>
     <div id="ios-install-prompt" class="ios-prompt">
-      <button class="close-btn" onclick="document.getElementById('ios-install-prompt').style.display='none'">×</button>
+      <button class="close-btn" id="ios-close-btn">×</button>
       <p><strong>Install as an App:</strong></p>
       <p>1. Tap the <strong>Share</strong> icon <span style="font-size:20px">⎋</span> below.<br>
       2. Select <strong>"Add to Home Screen"</strong> <span style="font-size:20px">⊞</span>.</p>
     </div>
 
     <div id="desktop-install-banner" class="desktop-install-banner">
-      <button class="close-btn" onclick="closeDesktopBanner()">×</button>
+      <button class="close-btn" id="desktop-close-btn">×</button>
       <p style="margin: 0;">
         📱 <strong>Install this app on your phone</strong> for the best experience!
         Open this page on your mobile device and add it to your home screen.
@@ -227,11 +238,19 @@
     </div>
 
     <script>
-      // Check if banner was previously dismissed
-      function closeDesktopBanner() {
-        document.getElementById('desktop-install-banner').style.display = 'none';
-        localStorage.setItem('desktopBannerDismissed', 'true');
-      }
+      // Add event listeners for close buttons
+      document.addEventListener('DOMContentLoaded', function() {
+        // iOS prompt close button
+        document.getElementById('ios-close-btn')?.addEventListener('click', function() {
+          document.getElementById('ios-install-prompt').style.display = 'none';
+        });
+
+        // Desktop banner close button
+        document.getElementById('desktop-close-btn')?.addEventListener('click', function() {
+          document.getElementById('desktop-install-banner').style.display = 'none';
+          localStorage.setItem('desktopBannerDismissed', 'true');
+        });
+      });
 
       // 1. Check if user is on iOS
       const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
