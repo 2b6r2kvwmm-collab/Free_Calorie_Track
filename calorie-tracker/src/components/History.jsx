@@ -48,9 +48,13 @@ export default function History({ onRefresh }) {
       const totalCarbs = dayFood.reduce((sum, entry) => sum + (entry.carbs || 0), 0);
       const totalFat = dayFood.reduce((sum, entry) => sum + (entry.fat || 0), 0);
 
+      // Parse date string (YYYY-MM-DD) and create Date object in local timezone
+      const [year, month, day] = date.split('-').map(Number);
+      const dateObj = new Date(year, month - 1, day); // month is 0-indexed
+
       return {
         date,
-        dateFormatted: new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
+        dateFormatted: dateObj.toLocaleDateString('en-US', {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
