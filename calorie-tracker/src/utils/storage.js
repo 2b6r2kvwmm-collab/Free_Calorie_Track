@@ -228,8 +228,8 @@ export function getDarkMode() {
   const stored = getData(STORAGE_KEYS.DARK_MODE);
   if (stored !== null) return stored;
 
-  // Default to system preference
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // Default to dark mode
+  return true;
 }
 
 export function saveDarkMode(isDark) {
