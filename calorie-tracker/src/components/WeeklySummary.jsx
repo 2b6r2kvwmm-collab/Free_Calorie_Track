@@ -23,7 +23,7 @@ export default function WeeklySummary() {
   let totalProtein = 0;
   let totalCarbs = 0;
   let totalFat = 0;
-  let totalExerciseMinutes = 0;
+  let totalExerciseCalories = 0;
   let daysWithData = 0;
 
   for (let i = daysToShow - 1; i >= 0; i--) {
@@ -40,7 +40,7 @@ export default function WeeklySummary() {
     const netCal = eaten - burned;
 
     const dayMacros = getCurrentMacros(dayFood);
-    const exerciseMinutes = dayExercise.reduce((sum, entry) => sum + (entry.duration || 0), 0);
+    const exerciseCalories = dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
 
     if (dayFood.length > 0 || dayExercise.length > 0) {
       daysWithData++;
@@ -48,7 +48,7 @@ export default function WeeklySummary() {
       totalProtein += dayMacros.protein;
       totalCarbs += dayMacros.carbs;
       totalFat += dayMacros.fat;
-      totalExerciseMinutes += exerciseMinutes;
+      totalExerciseCalories += exerciseCalories;
     }
 
     chartData.push({
@@ -66,7 +66,7 @@ export default function WeeklySummary() {
   const avgProtein = daysWithData > 0 ? Math.round(totalProtein / daysWithData) : 0;
   const avgCarbs = daysWithData > 0 ? Math.round(totalCarbs / daysWithData) : 0;
   const avgFat = daysWithData > 0 ? Math.round(totalFat / daysWithData) : 0;
-  const avgExerciseMinutes = daysWithData > 0 ? Math.round(totalExerciseMinutes / daysWithData) : 0;
+  const avgExerciseCalories = daysWithData > 0 ? Math.round(totalExerciseCalories / daysWithData) : 0;
 
   // Calculate expected weight change (3500 cal = 1 lb = 0.45 kg)
   const totalDeficit = totalNetCal;
@@ -115,9 +115,9 @@ export default function WeeklySummary() {
         <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
           <div className="text-sm text-gray-600 dark:text-gray-400">Avg Exercise</div>
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-            {avgExerciseMinutes}
+            {avgExerciseCalories}
           </div>
-          <div className="text-xs text-gray-500">min/day</div>
+          <div className="text-xs text-gray-500">cal/day</div>
         </div>
 
         <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-lg">

@@ -340,15 +340,8 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <option value="active">Active - Construction, farm work, very physical job</option>
             </select>
 
-            <div className="mt-4 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-sm">
-              <p className="font-semibold mb-2">💡 How to Choose:</p>
-              <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-                <li><strong>Sedentary:</strong> Desk job, mostly sitting all day</li>
-                <li><strong>Light:</strong> Standing/walking occasionally during work</li>
-                <li><strong>Moderate:</strong> On your feet most of the day</li>
-                <li><strong>Active:</strong> Heavy lifting or very physical work daily</li>
-              </ul>
-              <p className="mt-3 text-xs italic">
+            <div className="mt-4 text-sm">
+              <p className="mt-3 text-xs italic text-gray-600 dark:text-gray-400">
                 Most people choose Sedentary or Light. Log your workouts separately in the Exercise section!
               </p>
             </div>

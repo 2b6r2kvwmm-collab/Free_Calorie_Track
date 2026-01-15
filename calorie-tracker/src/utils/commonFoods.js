@@ -222,6 +222,29 @@ export const commonFoods = [
   { name: 'Mushrooms (raw)', calories: 22, protein: 3.1, carbs: 3.3, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
   { name: 'Zucchini (raw)', calories: 17, protein: 1.2, carbs: 3.1, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
   { name: 'Green Beans (cooked)', calories: 31, protein: 1.8, carbs: 7, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Celery (raw)', calories: 14, protein: 0.7, carbs: 3, fat: 0.2, servingSize: '100g (2 medium stalks)', category: 'Vegetables' },
+  { name: 'Radishes (raw)', calories: 16, protein: 0.7, carbs: 3.4, fat: 0.1, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Snap Peas (raw)', calories: 42, protein: 2.8, carbs: 7.6, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Cherry Tomatoes (raw)', calories: 18, protein: 0.9, carbs: 3.9, fat: 0.2, servingSize: '100g (6-7 tomatoes)', category: 'Vegetables' },
+  { name: 'Cauliflower (raw)', calories: 25, protein: 1.9, carbs: 5, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Asparagus (cooked)', calories: 22, protein: 2.4, carbs: 4.1, fat: 0.2, servingSize: '100g (5-6 spears)', category: 'Vegetables' },
+  { name: 'Brussels Sprouts (cooked)', calories: 43, protein: 3.4, carbs: 8.9, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Kale (raw)', calories: 33, protein: 2.9, carbs: 6, fat: 0.9, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Arugula (raw)', calories: 25, protein: 2.6, carbs: 3.7, fat: 0.7, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Cabbage (raw)', calories: 25, protein: 1.3, carbs: 5.8, fat: 0.1, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Eggplant (cooked)', calories: 35, protein: 0.8, carbs: 8.7, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
+
+  // Healthy Dips & Spreads
+  { name: 'Hummus (2 tbsp)', calories: 70, protein: 2, carbs: 6, fat: 4.5, servingSize: '2 tbsp (30g)', category: 'Protein' },
+  { name: 'Guacamole (2 tbsp)', calories: 50, protein: 0.6, carbs: 3, fat: 4.5, servingSize: '2 tbsp (30g)', category: 'Fats' },
+  { name: 'Tzatziki (2 tbsp)', calories: 30, protein: 1, carbs: 2, fat: 2, servingSize: '2 tbsp (30g)', category: 'Protein' },
+  { name: 'Baba Ganoush (2 tbsp)', calories: 40, protein: 1, carbs: 4, fat: 2.5, servingSize: '2 tbsp (30g)', category: 'Vegetables' },
+  { name: 'Salsa (2 tbsp)', calories: 10, protein: 0.3, carbs: 2, fat: 0, servingSize: '2 tbsp (30g)', category: 'Vegetables' },
+
+  // Olives & Pickled
+  { name: 'Olives (green, 5 olives)', calories: 25, protein: 0.2, carbs: 1.4, fat: 2.3, servingSize: '5 olives (20g)', category: 'Fats' },
+  { name: 'Olives (black, 5 olives)', calories: 30, protein: 0.2, carbs: 1.5, fat: 2.7, servingSize: '5 olives (20g)', category: 'Fats' },
+  { name: 'Kalamata Olives (5 olives)', calories: 45, protein: 0.3, carbs: 1, fat: 4.5, servingSize: '5 olives (20g)', category: 'Fats' },
 
   // Fats & Oils
   { name: 'Olive Oil (1 tbsp)', calories: 119, protein: 0, carbs: 0, fat: 13.5, servingSize: '1 tbsp (13.5g)', category: 'Fats' },
@@ -837,6 +860,10 @@ export const commonFoods = [
   { name: 'Trail Mix (1/4 cup)', calories: 140, protein: 4, carbs: 16, fat: 8, servingSize: '1/4 cup (38g)', category: 'Snacks' },
   { name: 'Sunflower Seeds (1 oz)', calories: 165, protein: 6, carbs: 7, fat: 14, servingSize: '1 oz (28g)', category: 'Snacks' },
   { name: 'Pumpkin Seeds (1 oz)', calories: 151, protein: 7, carbs: 5, fat: 13, servingSize: '1 oz (28g)', category: 'Snacks' },
+  { name: 'Walnuts (1 oz, ~14 halves)', calories: 185, protein: 4, carbs: 4, fat: 18, servingSize: '1 oz / 14 halves (28g)', category: 'Snacks' },
+  { name: 'Pecans (1 oz, ~19 halves)', calories: 196, protein: 3, carbs: 4, fat: 20, servingSize: '1 oz / 19 halves (28g)', category: 'Snacks' },
+  { name: 'Chia Seeds (1 tbsp)', calories: 58, protein: 2, carbs: 5, fat: 3.5, servingSize: '1 tbsp (12g)', category: 'Snacks' },
+  { name: 'Flax Seeds (1 tbsp)', calories: 37, protein: 1.3, carbs: 2, fat: 3, servingSize: '1 tbsp (7g)', category: 'Snacks' },
 
   // Snacks - Granola & Bars
   { name: 'Granola Bar (chewy)', calories: 120, protein: 2, carbs: 20, fat: 4, servingSize: '1 bar (28g)', category: 'Snacks' },
@@ -855,6 +882,10 @@ export const commonFoods = [
   { name: 'Cheese and Crackers', calories: 200, protein: 8, carbs: 18, fat: 11, servingSize: '1 serving', category: 'Snacks' },
   { name: 'Fruit Cup', calories: 80, protein: 1, carbs: 20, fat: 0, servingSize: '1 cup', category: 'Snacks' },
   { name: 'Applesauce (unsweetened, 1 cup)', calories: 100, protein: 0, carbs: 26, fat: 0, servingSize: '1 cup', category: 'Snacks' },
+  { name: 'Edamame (1/2 cup, shelled)', calories: 95, protein: 9, carbs: 7, fat: 4, servingSize: '1/2 cup (75g)', category: 'Snacks' },
+  { name: 'Greek Yogurt with Berries', calories: 150, protein: 12, carbs: 20, fat: 2, servingSize: '1 cup yogurt + 1/2 cup berries', category: 'Snacks' },
+  { name: 'Hard Boiled Egg', calories: 78, protein: 6, carbs: 0.6, fat: 5, servingSize: '1 large egg', category: 'Snacks' },
+  { name: 'Cottage Cheese (1/2 cup)', calories: 110, protein: 14, carbs: 5, fat: 2.5, servingSize: '1/2 cup (113g)', category: 'Snacks' },
 
   // More Vegetables
   { name: 'Broccoli (cooked)', calories: 55, protein: 3.7, carbs: 11, fat: 0.6, servingSize: '1 cup (156g)', category: 'Snacks' },

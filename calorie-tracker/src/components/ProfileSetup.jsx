@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { FITNESS_GOALS, GOAL_INFO } from '../utils/macros';
+import { saveCustomMacros, clearCustomMacros, saveCustomCalorieGoal, clearCustomCalorieGoal } from '../utils/storage';
+import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
 
 export default function ProfileSetup({ onComplete }) {
   const [step, setStep] = useState(1); // 1: basic info, 2: fitness goal
+  const [useCustomGoals, setUseCustomGoals] = useState(false);
+  const [customMacros, setCustomMacros] = useState({ protein: 150, carbs: 200, fat: 65 });
   const [formData, setFormData] = useState({
     age: '',
     sex: 'male',
@@ -41,6 +45,20 @@ export default function ProfileSetup({ onComplete }) {
       unit: formData.unit,
       fitnessGoal: formData.fitnessGoal,
     };
+
+    // Save or clear custom goals
+    if (useCustomGoals) {
+      saveCustomMacros(customMacros);
+      // Calculate NET goal: Total Calories from Macros - Lifestyle TDEE
+      const totalCaloriesFromMacros = (customMacros.protein * 4) + (customMacros.carbs * 4) + (customMacros.fat * 9);
+      const bmr = calculateBMR(profile);
+      const baselineTDEE = getBaselineTDEE(bmr);
+      const netGoal = Math.round(totalCaloriesFromMacros - baselineTDEE);
+      saveCustomCalorieGoal(netGoal);
+    } else {
+      clearCustomMacros();
+      clearCustomCalorieGoal();
+    }
 
     onComplete(profile);
   };
@@ -207,15 +225,8 @@ export default function ProfileSetup({ onComplete }) {
               <option value="veryActive">Very Active - Professional athlete, extremely physical job</option>
             </select>
 
-            <div className="mt-4 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-sm">
-              <p className="font-semibold mb-2">💡 Quick Guide:</p>
-              <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-                <li><strong>Sedentary:</strong> Desk job, mostly sitting</li>
-                <li><strong>Light:</strong> Some standing/walking at work</li>
-                <li><strong>Moderate:</strong> On feet most of the day</li>
-                <li><strong>Active:</strong> Very physical job (construction, etc.)</li>
-              </ul>
-              <p className="mt-3 text-xs italic">
+            <div className="mt-4 text-sm">
+              <p className="mt-3 text-xs italic text-gray-600 dark:text-gray-400">
                 Most people choose Sedentary or Light. Your workouts will be logged separately!
               </p>
             </div>
@@ -226,9 +237,72 @@ export default function ProfileSetup({ onComplete }) {
 
           {step === 2 && (
             <>
-              {/* Fitness Goal Selection */}
-              <div className="space-y-4">
-                {Object.values(FITNESS_GOALS).map((goalKey) => {
+              {/* Custom Goals Toggle */}
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <input
+                    type="checkbox"
+                    id="useCustomGoals"
+                    checked={useCustomGoals}
+                    onChange={(e) => setUseCustomGoals(e.target.checked)}
+                    className="w-5 h-5 text-emerald-500 rounded"
+                  />
+                  <label htmlFor="useCustomGoals" className="text-lg font-semibold cursor-pointer">
+                    Custom Calories & Macros (Advanced)
+                  </label>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  {useCustomGoals
+                    ? "Set your own calorie and macro targets instead of using preset goals."
+                    : "Choose from research-based fitness goals with automatic calorie and macro calculations."}
+                </p>
+              </div>
+
+              {/* Custom Macros Input - Only shown when using custom goals */}
+              {useCustomGoals && (
+                <div className="space-y-4 mb-6">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Protein (g)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={customMacros.protein}
+                        onChange={(e) => setCustomMacros({ ...customMacros, protein: parseInt(e.target.value) || 0 })}
+                        className="input-field"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Carbs (g)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={customMacros.carbs}
+                        onChange={(e) => setCustomMacros({ ...customMacros, carbs: parseInt(e.target.value) || 0 })}
+                        className="input-field"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Fat (g)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        value={customMacros.fat}
+                        onChange={(e) => setCustomMacros({ ...customMacros, fat: parseInt(e.target.value) || 0 })}
+                        className="input-field"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Total: {(customMacros.protein * 4) + (customMacros.carbs * 4) + (customMacros.fat * 9)} calories from macros
+                  </div>
+                </div>
+              )}
+
+              {/* Fitness Goal Selection - Only shown when NOT using custom goals */}
+              {!useCustomGoals && (
+                <div className="space-y-4">
+                  {Object.values(FITNESS_GOALS).map((goalKey) => {
                   const goal = GOAL_INFO[goalKey];
                   return (
                     <button
@@ -252,7 +326,8 @@ export default function ProfileSetup({ onComplete }) {
                     </button>
                   );
                 })}
-              </div>
+                </div>
+              )}
 
               <button
                 type="button"

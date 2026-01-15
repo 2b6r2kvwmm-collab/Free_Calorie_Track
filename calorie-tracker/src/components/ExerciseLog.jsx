@@ -7,6 +7,7 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
   const [duration, setDuration] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [trackingMode, setTrackingMode] = useState('duration'); // 'duration' or 'reps'
+  const [walkingTrackingMode, setWalkingTrackingMode] = useState('duration'); // 'duration', 'steps', or 'distance'
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
   const [weight, setWeight] = useState('');
@@ -14,6 +15,9 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
   const [vestWeight, setVestWeight] = useState('10-15');
   const [distance, setDistance] = useState('');
   const [distanceUnit, setDistanceUnit] = useState('miles');
+  const [steps, setSteps] = useState('');
+  const [walkingDistance, setWalkingDistance] = useState('');
+  const [walkingDistanceUnit, setWalkingDistanceUnit] = useState('miles');
   const modalRef = useRef(null);
 
   const profile = getProfile();
@@ -51,6 +55,42 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Handle walking with steps or distance
+    if (isWalkingExercise && walkingTrackingMode === 'steps') {
+      const numSteps = parseInt(steps);
+      // Convert steps to miles (avg 2,000 steps per mile)
+      const miles = numSteps / 2000;
+      // Estimate calories: ~0.57 calories per step per kg of body weight
+      const caloriesBurned = Math.round(numSteps * 0.04 * profile.weight);
+      // Estimate duration: ~2,000 steps per 20 minutes = 100 steps/min
+      const estimatedDuration = Math.round(numSteps / 100);
+
+      onAddExercise({
+        name: `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi)`,
+        duration: estimatedDuration,
+        caloriesBurned,
+      });
+      return;
+    }
+
+    if (isWalkingExercise && walkingTrackingMode === 'distance') {
+      let distanceMiles = parseFloat(walkingDistance);
+      if (walkingDistanceUnit === 'km') {
+        distanceMiles = distanceMiles * 0.621371; // Convert km to miles
+      }
+      // Estimate calories: ~100 calories per mile (varies by weight, using body weight factor)
+      const caloriesBurned = Math.round(distanceMiles * 100 * (profile.weight / 70)); // Adjusted for weight
+      // Estimate duration: average walking speed of 3.5 mph
+      const estimatedDuration = Math.round((distanceMiles / 3.5) * 60);
+
+      onAddExercise({
+        name: `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi)`,
+        duration: estimatedDuration,
+        caloriesBurned,
+      });
+      return;
+    }
 
     if (trackingMode === 'duration') {
       // Calculate MET value (adjust for weighted vest if applicable)
@@ -201,8 +241,52 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
               </div>
             )}
 
-            {/* Weighted Vest Options (only for walking exercises) */}
+            {/* Walking Tracking Mode */}
             {isWalkingExercise && (
+              <div>
+                <label className="block text-lg font-semibold mb-3">
+                  Track By
+                </label>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => setWalkingTrackingMode('duration')}
+                    className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                      walkingTrackingMode === 'duration'
+                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                    }`}
+                  >
+                    Duration
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setWalkingTrackingMode('steps')}
+                    className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                      walkingTrackingMode === 'steps'
+                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                    }`}
+                  >
+                    Steps
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setWalkingTrackingMode('distance')}
+                    className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                      walkingTrackingMode === 'distance'
+                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                    }`}
+                  >
+                    Distance
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Weighted Vest Options (only for walking exercises with duration mode) */}
+            {isWalkingExercise && walkingTrackingMode === 'duration' && (
               <div>
                 <div className="flex items-center mb-3">
                   <input
@@ -237,6 +321,62 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
               </div>
             )}
 
+            {/* Walking Steps Input */}
+            {isWalkingExercise && walkingTrackingMode === 'steps' && (
+              <div>
+                <label className="block text-lg font-semibold mb-3">
+                  Number of Steps *
+                </label>
+                <input
+                  type="number"
+                  required
+                  min="1"
+                  step="1"
+                  value={steps}
+                  onChange={(e) => setSteps(e.target.value)}
+                  placeholder="10000"
+                  className="input-field"
+                  autoFocus
+                />
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  Average: 2,000 steps = 1 mile, ~100 cal/mile
+                </p>
+              </div>
+            )}
+
+            {/* Walking Distance Input */}
+            {isWalkingExercise && walkingTrackingMode === 'distance' && (
+              <div>
+                <label className="block text-lg font-semibold mb-3">
+                  Distance *
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <input
+                    type="number"
+                    required
+                    min="0.01"
+                    step="0.01"
+                    value={walkingDistance}
+                    onChange={(e) => setWalkingDistance(e.target.value)}
+                    placeholder="3.0"
+                    className="input-field"
+                    autoFocus
+                  />
+                  <select
+                    value={walkingDistanceUnit}
+                    onChange={(e) => setWalkingDistanceUnit(e.target.value)}
+                    className="input-field"
+                  >
+                    <option value="miles">Miles</option>
+                    <option value="km">Kilometers</option>
+                  </select>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  Average walking speed: 3-4 mph (~100 cal/mile)
+                </p>
+              </div>
+            )}
+
             {/* Distance Input for Running/Cycling */}
             {requiresDistance && (
               <div>
@@ -267,7 +407,7 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
               </div>
             )}
 
-            {trackingMode === 'duration' ? (
+            {trackingMode === 'duration' && !(isWalkingExercise && (walkingTrackingMode === 'steps' || walkingTrackingMode === 'distance')) ? (
               <div>
                 <label className="block text-lg font-semibold mb-3">
                   Duration (minutes) *
