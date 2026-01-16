@@ -284,20 +284,20 @@ export const commonFoods = [
   // Drinks - Coffee & Espresso
   { name: 'Coffee (black)', calories: 2, protein: 0.3, carbs: 0, fat: 0, servingSize: '8 oz (240ml)', category: 'Drinks' },
   { name: 'Espresso (single shot)', calories: 3, protein: 0.2, carbs: 0.5, fat: 0, servingSize: '1 oz (30ml)', category: 'Drinks' },
-  { name: 'Latte (whole milk)', calories: 150, protein: 8, carbs: 14, fat: 6, servingSize: '12 oz', category: 'Drinks' },
-  { name: 'Latte (skim milk)', calories: 100, protein: 10, carbs: 15, fat: 0.5, servingSize: '12 oz', category: 'Drinks' },
-  { name: 'Cappuccino (whole milk)', calories: 120, protein: 6, carbs: 10, fat: 6, servingSize: '12 oz', category: 'Drinks' },
-  { name: 'Cappuccino (skim milk)', calories: 80, protein: 8, carbs: 12, fat: 0.5, servingSize: '12 oz', category: 'Drinks' },
+  { name: 'Latte (whole milk)', calories: 120, protein: 6, carbs: 10, fat: 5, servingSize: '8 oz', category: 'Drinks' },
+  { name: 'Latte (skim milk)', calories: 70, protein: 7, carbs: 10, fat: 0, servingSize: '8 oz', category: 'Drinks' },
+  { name: 'Cappuccino (whole milk)', calories: 80, protein: 4, carbs: 6, fat: 4, servingSize: '6 oz', category: 'Drinks' },
+  { name: 'Cappuccino (skim milk)', calories: 50, protein: 5, carbs: 7, fat: 0, servingSize: '6 oz', category: 'Drinks' },
   { name: 'Americano', calories: 15, protein: 1, carbs: 3, fat: 0, servingSize: '12 oz', category: 'Drinks' },
-  { name: 'Mocha (whole milk)', calories: 260, protein: 10, carbs: 34, fat: 10, servingSize: '12 oz', category: 'Drinks' },
+  { name: 'Mocha (whole milk)', calories: 200, protein: 7, carbs: 26, fat: 8, servingSize: '8 oz', category: 'Drinks' },
   { name: 'Flat White (whole milk)', calories: 180, protein: 10, carbs: 16, fat: 8, servingSize: '12 oz', category: 'Drinks' },
   { name: 'Macchiato (espresso)', calories: 13, protein: 0.5, carbs: 2, fat: 0.5, servingSize: '3 oz', category: 'Drinks' },
 
   // Drinks - Tea
   { name: 'Tea (black, unsweetened)', calories: 2, protein: 0, carbs: 0.7, fat: 0, servingSize: '8 oz', category: 'Drinks' },
   { name: 'Tea (green, unsweetened)', calories: 2, protein: 0.5, carbs: 0, fat: 0, servingSize: '8 oz', category: 'Drinks' },
-  { name: 'Chai Latte (whole milk)', calories: 190, protein: 7, carbs: 32, fat: 5, servingSize: '12 oz', category: 'Drinks' },
-  { name: 'Matcha Latte (whole milk)', calories: 170, protein: 7, carbs: 21, fat: 6, servingSize: '12 oz', category: 'Drinks' },
+  { name: 'Chai Latte (whole milk)', calories: 130, protein: 5, carbs: 22, fat: 3, servingSize: '8 oz', category: 'Drinks' },
+  { name: 'Matcha Latte (whole milk)', calories: 120, protein: 5, carbs: 15, fat: 4, servingSize: '8 oz', category: 'Drinks' },
 
   // Drinks - Other Hot Beverages
   { name: 'Hot Chocolate (whole milk)', calories: 200, protein: 8, carbs: 26, fat: 7, servingSize: '8 oz', category: 'Drinks' },
@@ -549,19 +549,115 @@ export const commonFoods = [
   { name: 'Pizza (deep dish cheese, 1 slice)', calories: 380, protein: 15, carbs: 42, fat: 16, servingSize: '1 slice (150g)', category: 'Pizza' },
   { name: 'Pizza (deep dish pepperoni, 1 slice)', calories: 420, protein: 17, carbs: 42, fat: 20, servingSize: '1 slice (160g)', category: 'Pizza' },
 
-  // Japanese Cuisine
-  { name: 'Sushi Roll (California)', calories: 255, protein: 9, carbs: 38, fat: 7, servingSize: '6 pieces', category: 'Japanese' },
-  { name: 'Sushi Roll (Spicy Tuna)', calories: 290, protein: 24, carbs: 26, fat: 11, servingSize: '6 pieces', category: 'Japanese' },
-  { name: 'Sushi Roll (Salmon)', calories: 304, protein: 13, carbs: 42, fat: 9, servingSize: '6 pieces', category: 'Japanese' },
-  { name: 'Nigiri (Salmon, 2 pieces)', calories: 140, protein: 10, carbs: 16, fat: 4, servingSize: '2 pieces', category: 'Japanese' },
-  { name: 'Nigiri (Tuna, 2 pieces)', calories: 110, protein: 12, carbs: 14, fat: 1, servingSize: '2 pieces', category: 'Japanese' },
-  { name: 'Sashimi (Salmon, 3 pieces)', calories: 104, protein: 12, carbs: 0, fat: 6, servingSize: '3 pieces (75g)', category: 'Japanese' },
-  { name: 'Sashimi (Tuna, 3 pieces)', calories: 92, protein: 20, carbs: 0, fat: 1, servingSize: '3 pieces (75g)', category: 'Japanese' },
-  { name: 'Edamame', calories: 122, protein: 11, carbs: 10, fat: 5, servingSize: '100g', category: 'Japanese' },
-  { name: 'Miso Soup', calories: 40, protein: 3, carbs: 5, fat: 1, servingSize: '1 cup', category: 'Japanese' },
-  { name: 'Ramen (chicken)', calories: 436, protein: 23, carbs: 65, fat: 10, servingSize: '1 bowl', category: 'Japanese' },
-  { name: 'Ramen (pork)', calories: 500, protein: 25, carbs: 66, fat: 15, servingSize: '1 bowl', category: 'Japanese' },
-  { name: 'Teriyaki Chicken Bowl', calories: 430, protein: 28, carbs: 62, fat: 7, servingSize: '1 bowl', category: 'Japanese' },
+  // Japanese Cuisine - Sushi & Sashimi
+  // Nigiri (2 pieces with rice)
+  { name: 'Nigiri (Salmon)', calories: 140, protein: 10, carbs: 16, fat: 4, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Tuna)', calories: 110, protein: 12, carbs: 14, fat: 1, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Yellowtail)', calories: 130, protein: 11, carbs: 14, fat: 3, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Eel/Unagi)', calories: 150, protein: 9, carbs: 16, fat: 5, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Shrimp/Ebi)', calories: 90, protein: 10, carbs: 14, fat: 0.5, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Octopus/Tako)', calories: 95, protein: 11, carbs: 14, fat: 0.5, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Squid/Ika)', calories: 100, protein: 11, carbs: 14, fat: 1, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Scallop/Hotate)', calories: 105, protein: 10, carbs: 15, fat: 1, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Mackerel/Saba)', calories: 145, protein: 10, carbs: 14, fat: 5, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Surf Clam/Hokkigai)', calories: 90, protein: 9, carbs: 14, fat: 0.5, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Sweet Shrimp/Amaebi)', calories: 85, protein: 9, carbs: 14, fat: 0.5, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Egg/Tamago)', calories: 120, protein: 7, carbs: 16, fat: 3, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Flying Fish Roe/Tobiko)', calories: 110, protein: 8, carbs: 15, fat: 2, servingSize: '2 pieces', category: 'Japanese' },
+  { name: 'Nigiri (Salmon Roe/Ikura)', calories: 130, protein: 9, carbs: 14, fat: 4, servingSize: '2 pieces', category: 'Japanese' },
+
+  // Sashimi (3 pieces, no rice)
+  { name: 'Sashimi (Salmon)', calories: 104, protein: 12, carbs: 0, fat: 6, servingSize: '3 pieces (75g)', category: 'Japanese' },
+  { name: 'Sashimi (Tuna)', calories: 92, protein: 20, carbs: 0, fat: 1, servingSize: '3 pieces (75g)', category: 'Japanese' },
+  { name: 'Sashimi (Yellowtail)', calories: 100, protein: 16, carbs: 0, fat: 4, servingSize: '3 pieces (75g)', category: 'Japanese' },
+  { name: 'Sashimi (Eel/Unagi)', calories: 140, protein: 15, carbs: 0, fat: 9, servingSize: '3 pieces (75g)', category: 'Japanese' },
+  { name: 'Sashimi (Octopus/Tako)', calories: 70, protein: 15, carbs: 0, fat: 1, servingSize: '3 pieces (75g)', category: 'Japanese' },
+  { name: 'Sashimi (Mackerel/Saba)', calories: 130, protein: 14, carbs: 0, fat: 8, servingSize: '3 pieces (75g)', category: 'Japanese' },
+
+  // Maki Rolls (6-8 pieces)
+  { name: 'California Roll', calories: 255, protein: 9, carbs: 38, fat: 7, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Spicy Tuna Roll', calories: 290, protein: 24, carbs: 26, fat: 11, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Spicy Salmon Roll', calories: 300, protein: 18, carbs: 28, fat: 13, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Philadelphia Roll', calories: 320, protein: 12, carbs: 30, fat: 16, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Salmon Roll', calories: 304, protein: 13, carbs: 42, fat: 9, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Tuna Roll', calories: 184, protein: 14, carbs: 27, fat: 2, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Yellowtail Roll', calories: 220, protein: 15, carbs: 27, fat: 5, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Eel Avocado Roll', calories: 372, protein: 12, carbs: 38, fat: 19, servingSize: '8 pieces', category: 'Japanese' },
+  { name: 'Shrimp Tempura Roll', calories: 508, protein: 20, carbs: 64, fat: 18, servingSize: '8 pieces', category: 'Japanese' },
+  { name: 'Spider Roll (Soft Shell Crab)', calories: 380, protein: 15, carbs: 42, fat: 16, servingSize: '8 pieces', category: 'Japanese' },
+  { name: 'Dragon Roll', calories: 420, protein: 18, carbs: 52, fat: 15, servingSize: '8 pieces', category: 'Japanese' },
+  { name: 'Rainbow Roll', calories: 350, protein: 22, carbs: 38, fat: 12, servingSize: '8 pieces', category: 'Japanese' },
+  { name: 'Caterpillar Roll', calories: 390, protein: 14, carbs: 48, fat: 16, servingSize: '8 pieces', category: 'Japanese' },
+  { name: 'Volcano Roll', calories: 450, protein: 20, carbs: 46, fat: 21, servingSize: '8 pieces', category: 'Japanese' },
+  { name: 'Alaska Roll', calories: 280, protein: 16, carbs: 32, fat: 10, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Boston Roll', calories: 290, protein: 12, carbs: 34, fat: 12, servingSize: '6 pieces', category: 'Japanese' },
+
+  // Vegetable Rolls
+  { name: 'Cucumber Roll', calories: 136, protein: 3, carbs: 30, fat: 0, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Avocado Roll', calories: 140, protein: 2, carbs: 28, fat: 6, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Vegetable Roll', calories: 170, protein: 4, carbs: 34, fat: 3, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Asparagus Roll', calories: 150, protein: 4, carbs: 30, fat: 2, servingSize: '6 pieces', category: 'Japanese' },
+  { name: 'Sweet Potato Roll', calories: 220, protein: 3, carbs: 45, fat: 4, servingSize: '6 pieces', category: 'Japanese' },
+
+  // Hand Rolls (Temaki)
+  { name: 'Salmon Hand Roll', calories: 180, protein: 12, carbs: 20, fat: 6, servingSize: '1 roll', category: 'Japanese' },
+  { name: 'Tuna Hand Roll', calories: 150, protein: 15, carbs: 18, fat: 2, servingSize: '1 roll', category: 'Japanese' },
+  { name: 'Spicy Tuna Hand Roll', calories: 200, protein: 16, carbs: 18, fat: 8, servingSize: '1 roll', category: 'Japanese' },
+  { name: 'California Hand Roll', calories: 170, protein: 7, carbs: 22, fat: 6, servingSize: '1 roll', category: 'Japanese' },
+
+  // Special Rolls & Sushi
+  { name: 'Chirashi Bowl (assorted sashimi over rice)', calories: 560, protein: 38, carbs: 72, fat: 12, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Poke Bowl (Salmon)', calories: 480, protein: 32, carbs: 58, fat: 12, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Poke Bowl (Tuna)', calories: 450, protein: 36, carbs: 56, fat: 8, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Inari (Sweet Tofu Pouch)', calories: 130, protein: 5, carbs: 20, fat: 3, servingSize: '2 pieces', category: 'Japanese' },
+
+  // Japanese Appetizers & Sides
+  { name: 'Edamame', calories: 122, protein: 11, carbs: 10, fat: 5, servingSize: '1 cup (155g)', category: 'Japanese' },
+  { name: 'Gyoza (Pan-Fried Dumplings)', calories: 200, protein: 10, carbs: 24, fat: 8, servingSize: '5 pieces', category: 'Japanese' },
+  { name: 'Agedashi Tofu', calories: 180, protein: 10, carbs: 12, fat: 11, servingSize: '1 serving', category: 'Japanese' },
+  { name: 'Seaweed Salad', calories: 70, protein: 2, carbs: 12, fat: 2, servingSize: '1 cup', category: 'Japanese' },
+  { name: 'Sunomono (Cucumber Salad)', calories: 45, protein: 1, carbs: 10, fat: 0, servingSize: '1 cup', category: 'Japanese' },
+  { name: 'Hijiki Salad', calories: 80, protein: 2, carbs: 14, fat: 2, servingSize: '1 cup', category: 'Japanese' },
+  { name: 'Takoyaki (Octopus Balls)', calories: 280, protein: 10, carbs: 32, fat: 12, servingSize: '6 balls', category: 'Japanese' },
+  { name: 'Yakitori (Chicken Skewers)', calories: 180, protein: 22, carbs: 6, fat: 7, servingSize: '2 skewers', category: 'Japanese' },
+  { name: 'Kushikatsu (Fried Skewers)', calories: 320, protein: 16, carbs: 28, fat: 16, servingSize: '4 skewers', category: 'Japanese' },
+
+  // Japanese Soups
+  { name: 'Miso Soup', calories: 40, protein: 3, carbs: 5, fat: 1, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Clear Soup (Osumashi)', calories: 25, protein: 2, carbs: 3, fat: 0.5, servingSize: '1 bowl', category: 'Japanese' },
+
+  // Japanese Noodles
+  { name: 'Ramen (Tonkotsu)', calories: 500, protein: 25, carbs: 66, fat: 15, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Ramen (Shoyu)', calories: 450, protein: 23, carbs: 65, fat: 12, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Ramen (Miso)', calories: 480, protein: 24, carbs: 64, fat: 14, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Ramen (Chicken)', calories: 436, protein: 23, carbs: 65, fat: 10, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Udon Noodle Soup', calories: 360, protein: 14, carbs: 68, fat: 4, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Soba Noodle Soup', calories: 320, protein: 16, carbs: 60, fat: 3, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Yakisoba (Stir-Fried Noodles)', calories: 450, protein: 18, carbs: 64, fat: 14, servingSize: '1 serving', category: 'Japanese' },
+  { name: 'Yakiudon', calories: 420, protein: 16, carbs: 70, fat: 10, servingSize: '1 serving', category: 'Japanese' },
+
+  // Japanese Main Dishes
+  { name: 'Teriyaki Chicken Bowl', calories: 560, protein: 38, carbs: 76, fat: 10, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Teriyaki Salmon Bowl', calories: 620, protein: 42, carbs: 74, fat: 16, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Chicken Katsu', calories: 580, protein: 36, carbs: 52, fat: 24, servingSize: '1 serving', category: 'Japanese' },
+  { name: 'Tonkatsu (Pork Cutlet)', calories: 620, protein: 32, carbs: 54, fat: 28, servingSize: '1 serving', category: 'Japanese' },
+  { name: 'Tempura (Mixed)', calories: 420, protein: 16, carbs: 48, fat: 18, servingSize: '1 serving', category: 'Japanese' },
+  { name: 'Shrimp Tempura', calories: 350, protein: 20, carbs: 38, fat: 14, servingSize: '5 pieces', category: 'Japanese' },
+  { name: 'Vegetable Tempura', calories: 280, protein: 6, carbs: 42, fat: 10, servingSize: '1 serving', category: 'Japanese' },
+  { name: 'Okonomiyaki (Japanese Pancake)', calories: 420, protein: 16, carbs: 52, fat: 16, servingSize: '1 serving', category: 'Japanese' },
+  { name: 'Donburi (Beef Bowl)', calories: 680, protein: 38, carbs: 84, fat: 20, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Oyakodon (Chicken & Egg Bowl)', calories: 560, protein: 32, carbs: 76, fat: 14, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Katsudon (Pork Cutlet Bowl)', calories: 720, protein: 36, carbs: 82, fat: 28, servingSize: '1 bowl', category: 'Japanese' },
+  { name: 'Unagi Don (Eel Bowl)', calories: 640, protein: 32, carbs: 78, fat: 22, servingSize: '1 bowl', category: 'Japanese' },
+
+  // Japanese Condiments & Extras
+  { name: 'Soy Sauce', calories: 8, protein: 1.3, carbs: 0.8, fat: 0, servingSize: '1 tbsp', category: 'Japanese' },
+  { name: 'Wasabi', calories: 15, protein: 0.6, carbs: 3, fat: 0.2, servingSize: '1 tsp', category: 'Japanese' },
+  { name: 'Pickled Ginger (Gari)', calories: 10, protein: 0.2, carbs: 2, fat: 0, servingSize: '1 tbsp', category: 'Japanese' },
+  { name: 'Ponzu Sauce', calories: 10, protein: 0.5, carbs: 2, fat: 0, servingSize: '1 tbsp', category: 'Japanese' },
+  { name: 'Teriyaki Sauce', calories: 35, protein: 1, carbs: 7, fat: 0, servingSize: '1 tbsp', category: 'Japanese' },
+  { name: 'Eel Sauce (Unagi Sauce)', calories: 50, protein: 0.5, carbs: 11, fat: 0, servingSize: '1 tbsp', category: 'Japanese' },
+  { name: 'Spicy Mayo', calories: 90, protein: 0.2, carbs: 1, fat: 10, servingSize: '1 tbsp', category: 'Japanese' },
 
   // Thai Cuisine
   { name: 'Pad Thai (chicken)', calories: 355, protein: 18, carbs: 40, fat: 13, servingSize: '1 plate (350g)', category: 'Thai' },

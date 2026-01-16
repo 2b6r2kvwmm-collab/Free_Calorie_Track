@@ -1,3 +1,3 @@
 // App version - update this whenever you deploy changes
-export const APP_VERSION = '1.5.4';
-export const VERSION_DATE = '2026-01-15';
+export const APP_VERSION = '1.5.5';
+export const VERSION_DATE = '2026-01-16';
