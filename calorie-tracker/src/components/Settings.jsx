@@ -119,7 +119,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
       weightLog: getData('weightLog'),
       darkMode: getData('darkMode'),
       customFoods: getData('customFoods'),
-      mealTemplates: getData('mealTemplates'),
       customMacros: getData('customMacros'),
       exportDate: new Date().toISOString(),
       version: '1.0',
@@ -169,7 +168,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
           if (importData.weightLog) setData('weightLog', importData.weightLog);
           if (importData.darkMode !== undefined) setData('darkMode', importData.darkMode);
           if (importData.customFoods) setData('customFoods', importData.customFoods);
-          if (importData.mealTemplates) setData('mealTemplates', importData.mealTemplates);
           if (importData.customMacros) setData('customMacros', importData.customMacros);
 
           setImportMessage('Data imported successfully! Refreshing...');

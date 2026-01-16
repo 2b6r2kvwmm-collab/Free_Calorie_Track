@@ -5,10 +5,9 @@ import BarcodeScanner from './BarcodeScanner';
 import QuickAdd from './QuickAdd';
 import CommonFoods from './CommonFoods';
 import CustomFoodManager from './CustomFoodManager';
-import MealTemplates from './MealTemplates';
 
 export default function FoodInput({ onAddFood, onClose }) {
-  const [mode, setMode] = useState('menu'); // menu, search, barcode, quick, favorites, recent, common, custom, templates
+  const [mode, setMode] = useState('menu'); // menu, search, barcode, quick, favorites, recent, common, custom
   const favorites = getFavorites();
   const recentFoods = getRecentFoods();
   const modalRef = useRef(null);
@@ -61,10 +60,6 @@ export default function FoodInput({ onAddFood, onClose }) {
 
   if (mode === 'custom') {
     return <CustomFoodManager onAddFood={handleAddFood} onClose={() => setMode('menu')} />;
-  }
-
-  if (mode === 'templates') {
-    return <MealTemplates onAddMeal={handleAddFood} onClose={() => setMode('menu')} />;
   }
 
   return (
@@ -128,14 +123,7 @@ export default function FoodInput({ onAddFood, onClose }) {
               onClick={() => setMode('custom')}
               className="btn-secondary w-full text-left"
             >
-              ✏️ Custom Foods
-            </button>
-
-            <button
-              onClick={() => setMode('templates')}
-              className="btn-secondary w-full text-left"
-            >
-              📋 Meal Templates
+              ✏️ Recipes & Custom Foods
             </button>
 
             <button

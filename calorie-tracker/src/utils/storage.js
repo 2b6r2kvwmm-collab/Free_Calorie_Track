@@ -11,7 +11,6 @@ const STORAGE_KEYS = {
   WEIGHT_LOG: 'weightLog',
   DARK_MODE: 'darkMode',
   CUSTOM_FOODS: 'customFoods',
-  MEAL_TEMPLATES: 'mealTemplates',
   CUSTOM_MACROS: 'customMacros',
   CUSTOM_CALORIE_GOAL: 'customCalorieGoal',
 };
@@ -274,26 +273,4 @@ export function deleteCustomFood(id) {
   const customFoods = getCustomFoods();
   const filtered = customFoods.filter(food => food.id !== id);
   setData(STORAGE_KEYS.CUSTOM_FOODS, filtered);
-}
-
-// Meal Templates
-export function getMealTemplates() {
-  return getData(STORAGE_KEYS.MEAL_TEMPLATES) || [];
-}
-
-export function addMealTemplate(template) {
-  const templates = getMealTemplates();
-  const newTemplate = {
-    ...template,
-    id: Date.now(),
-  };
-  templates.push(newTemplate);
-  setData(STORAGE_KEYS.MEAL_TEMPLATES, templates);
-  return newTemplate;
-}
-
-export function deleteMealTemplate(id) {
-  const templates = getMealTemplates();
-  const filtered = templates.filter(template => template.id !== id);
-  setData(STORAGE_KEYS.MEAL_TEMPLATES, filtered);
 }
