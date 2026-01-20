@@ -10,6 +10,17 @@
       ],
       "destination": "https://freecalorietrack.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.freecalorietrack.com"
+        }
+      ],
+      "destination": "https://freecalorietrack.com/:path*",
+      "permanent": true
     }
   ],
   "headers": [
