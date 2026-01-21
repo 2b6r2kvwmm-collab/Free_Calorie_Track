@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { exercises, calculateExerciseCalories, calculateWeightedVestMET, getRunningMET, getCyclingMET, calculatePace } from '../utils/calculations';
-import { getProfile } from '../utils/storage';
+import { getProfile, addExerciseEntry } from '../utils/storage';
+import WorkoutTemplates from './WorkoutTemplates';
+import { trackWorkout } from '../utils/gamification';
 
-export default function ExerciseLog({ onAddExercise, onClose }) {
+export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [duration, setDuration] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +20,7 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
   const [steps, setSteps] = useState('');
   const [walkingDistance, setWalkingDistance] = useState('');
   const [walkingDistanceUnit, setWalkingDistanceUnit] = useState('miles');
+  const [showWorkoutTemplates, setShowWorkoutTemplates] = useState(false);
   const modalRef = useRef(null);
 
   const profile = getProfile();
@@ -150,6 +153,27 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
     onClose();
   };
 
+  const handleAddExercises = (exercisesList) => {
+    exercisesList.forEach(exercise => {
+      addExerciseEntry(exercise);
+      trackWorkout();
+    });
+    if (onRefresh) {
+      onRefresh();
+    }
+    onClose();
+  };
+
+  // Show workout templates modal
+  if (showWorkoutTemplates) {
+    return (
+      <WorkoutTemplates
+        onAddExercises={handleAddExercises}
+        onClose={() => setShowWorkoutTemplates(false)}
+      />
+    );
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
       <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
@@ -165,6 +189,13 @@ export default function ExerciseLog({ onAddExercise, onClose }) {
 
         {!selectedExercise ? (
           <div>
+            <button
+              onClick={() => setShowWorkoutTemplates(true)}
+              className="btn-secondary w-full mb-4 text-left"
+            >
+              📋 Workout Templates
+            </button>
+
             <input
               type="text"
               value={searchQuery}

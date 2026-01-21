@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal } from '../utils/storage';
+import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
@@ -11,6 +11,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const [useCustomGoals, setUseCustomGoals] = useState(!!(getCustomMacros() || getCustomCalorieGoal()));
   const currentCustomMacros = getCustomMacros() || { protein: 150, carbs: 200, fat: 65 };
   const [customMacros, setCustomMacros] = useState(currentCustomMacros);
+  const [waterTrackerEnabled, setWaterTrackerEnabled] = useState(getWaterTrackerEnabled());
 
   // Convert stored metric values to user's preferred unit for display
   const displayHeight = currentProfile.unit === 'imperial'
@@ -604,6 +605,34 @@ export default function Settings({ onUpdateProfile, onClose }) {
               {importMessage}
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Dashboard Customization */}
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-4">Dashboard Customization</h2>
+
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="waterTrackerEnabled"
+              checked={waterTrackerEnabled}
+              onChange={(e) => {
+                setWaterTrackerEnabled(e.target.checked);
+                saveWaterTrackerEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div>
+              <label htmlFor="waterTrackerEnabled" className="text-lg font-semibold cursor-pointer">
+                Show Water Intake Tracker
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Display the water intake tracker on your dashboard to track daily hydration.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 

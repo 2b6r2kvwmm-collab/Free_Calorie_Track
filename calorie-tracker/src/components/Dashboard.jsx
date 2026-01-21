@@ -14,8 +14,8 @@ import {
   addExerciseEntry,
   getCustomMacros,
   getCustomCalorieGoal,
-  copyYesterdaysMeals,
   getLocalDateString,
+  getWaterTrackerEnabled,
 } from '../utils/storage';
 import {
   calculateBMR,
@@ -35,7 +35,6 @@ import ExerciseLog from './ExerciseLog';
 import MacroTracker from './MacroTracker';
 import Achievements from './Achievements';
 import WaterTracker from './WaterTracker';
-import WorkoutTemplates from './WorkoutTemplates';
 
 export default function Dashboard({ onRefresh }) {
   const [entries, setEntries] = useState({ food: [], exercise: [] });
@@ -48,8 +47,7 @@ export default function Dashboard({ onRefresh }) {
   const [editingFood, setEditingFood] = useState(null); // timestamp of food entry being edited
   const [editingExercise, setEditingExercise] = useState(null); // timestamp of exercise entry being edited
   const [editFormData, setEditFormData] = useState({});
-  const [copyMessage, setCopyMessage] = useState('');
-  const [showWorkoutTemplates, setShowWorkoutTemplates] = useState(false);
+  const waterTrackerEnabled = getWaterTrackerEnabled();
 
   const profile = getProfile();
 
@@ -299,25 +297,6 @@ export default function Dashboard({ onRefresh }) {
     }
   };
 
-  const handleCopyYesterday = () => {
-    const result = copyYesterdaysMeals();
-    setCopyMessage(result.message);
-    if (result.success) {
-      loadEntries();
-      onRefresh();
-    }
-    setTimeout(() => setCopyMessage(''), 3000);
-  };
-
-  const handleAddExercises = (exercisesList) => {
-    exercisesList.forEach(exercise => {
-      addExerciseEntry(exercise);
-      trackWorkout();
-    });
-    loadEntries();
-    onRefresh();
-  };
-
   // Group foods by meal type
   const mealCategories = ['Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Unspecified'];
   const groupedFoods = entries.food.reduce((acc, entry) => {
@@ -556,35 +535,8 @@ export default function Dashboard({ onRefresh }) {
         </button>
       </div>
 
-      {/* Secondary Actions */}
-      <div className="grid grid-cols-2 gap-4">
-        <button
-          onClick={handleCopyYesterday}
-          className="btn-secondary flex items-center justify-center gap-2"
-        >
-          <span>Copy Yesterday's Meals</span>
-        </button>
-        <button
-          onClick={() => setShowWorkoutTemplates(true)}
-          className="btn-secondary flex items-center justify-center gap-2"
-        >
-          <span>Workout Templates</span>
-        </button>
-      </div>
-
-      {/* Copy Message */}
-      {copyMessage && (
-        <div className={`p-3 rounded-lg text-center font-semibold ${
-          copyMessage.includes('No meals')
-            ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300'
-            : 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
-        }`}>
-          {copyMessage}
-        </div>
-      )}
-
       {/* Water Tracker */}
-      <WaterTracker onRefresh={onRefresh} />
+      {waterTrackerEnabled && <WaterTracker onRefresh={onRefresh} />}
 
       {/* Food Log - Grouped by Meal Type */}
       {entries.food.length > 0 && (
@@ -867,6 +819,7 @@ export default function Dashboard({ onRefresh }) {
         <FoodInput
           onAddFood={handleAddFood}
           onClose={() => setShowFoodInput(false)}
+          onRefresh={onRefresh}
         />
       )}
 
@@ -874,18 +827,12 @@ export default function Dashboard({ onRefresh }) {
         <ExerciseLog
           onAddExercise={handleAddExercise}
           onClose={() => setShowExerciseLog(false)}
+          onRefresh={onRefresh}
         />
       )}
 
       {showAchievements && (
         <Achievements onClose={() => setShowAchievements(false)} />
-      )}
-
-      {showWorkoutTemplates && (
-        <WorkoutTemplates
-          onAddExercises={handleAddExercises}
-          onClose={() => setShowWorkoutTemplates(false)}
-        />
       )}
     </div>
   );

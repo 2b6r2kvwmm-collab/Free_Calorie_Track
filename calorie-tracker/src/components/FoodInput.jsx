@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getFavorites, getRecentFoods, addFavorite, removeFavorite } from '../utils/storage';
+import { getFavorites, getRecentFoods, addFavorite, removeFavorite, copyYesterdaysMeals } from '../utils/storage';
 import FoodSearch from './FoodSearch';
 import BarcodeScanner from './BarcodeScanner';
 import QuickAdd from './QuickAdd';
@@ -8,10 +8,11 @@ import CustomFoodManager from './CustomFoodManager';
 
 const MEAL_TYPES = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
 
-export default function FoodInput({ onAddFood, onClose }) {
+export default function FoodInput({ onAddFood, onClose, onRefresh }) {
   const [mode, setMode] = useState('menu'); // menu, search, barcode, quick, favorites, recent, common, custom
   const [selectedMealType, setSelectedMealType] = useState(null); // null = Unspecified
   const [pendingFood, setPendingFood] = useState(null); // Food waiting for meal type selection
+  const [copyMessage, setCopyMessage] = useState('');
   const favorites = getFavorites();
   const recentFoods = getRecentFoods();
   const modalRef = useRef(null);
@@ -60,6 +61,16 @@ export default function FoodInput({ onAddFood, onClose }) {
     }
     // Force re-render
     setMode(mode);
+  };
+
+  const handleCopyYesterday = () => {
+    const result = copyYesterdaysMeals();
+    setCopyMessage(result.message);
+    if (result.success && onRefresh) {
+      onRefresh();
+    }
+    // Clear message after 3 seconds
+    setTimeout(() => setCopyMessage(''), 3000);
   };
 
   if (mode === 'search') {
@@ -157,6 +168,24 @@ export default function FoodInput({ onAddFood, onClose }) {
                 </span>
               )}
             </button>
+
+            <button
+              onClick={handleCopyYesterday}
+              className="btn-secondary w-full text-left"
+            >
+              📋 Copy Yesterday's Meals
+            </button>
+
+            {/* Copy Message */}
+            {copyMessage && (
+              <div className={`p-3 rounded-lg text-center font-semibold ${
+                copyMessage.includes('No meals')
+                  ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-300'
+                  : 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
+              }`}>
+                {copyMessage}
+              </div>
+            )}
           </div>
         )}
 

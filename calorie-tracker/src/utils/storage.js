@@ -314,6 +314,16 @@ export function saveWaterUnit(unit) {
   setData(STORAGE_KEYS.WATER_UNIT, unit);
 }
 
+// Water Tracker Enabled - boolean for showing water tracker on dashboard
+export function getWaterTrackerEnabled() {
+  const enabled = getData('waterTrackerEnabled');
+  return enabled !== null ? enabled : false; // Default to false (opt-in)
+}
+
+export function saveWaterTrackerEnabled(enabled) {
+  setData('waterTrackerEnabled', enabled);
+}
+
 // Convert between oz and mL
 export function ozToMl(oz) {
   return Math.round(oz * 29.5735);
