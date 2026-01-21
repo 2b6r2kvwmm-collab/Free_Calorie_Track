@@ -3,11 +3,15 @@ import {
   getFoodLog,
   getExerciseLog,
   getProfile,
+  getCustomMacros,
+  getCustomCalorieGoal,
 } from '../utils/storage';
 import {
   calculateBMR,
   getBaselineTDEE,
+  calculateTDEE,
 } from '../utils/calculations';
+import { calculateMacroTargets } from '../utils/macros';
 import {
   LineChart,
   Line,
@@ -82,11 +86,195 @@ export default function Trends() {
     return { ...day, average };
   });
 
+  // Calculate macro targets
+  const customMacros = getCustomMacros();
+  const customCalorieGoal = getCustomCalorieGoal();
+  const usingCustomGoals = !!(customMacros && customCalorieGoal !== null);
+  const tdee = calculateTDEE(bmr, profile.activityLevel);
+  const macroTargets = usingCustomGoals
+    ? customMacros
+    : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null);
+
+  // Calculate weekly macro averages (last 7 days)
+  const weeklyMacros = (() => {
+    const weekStart = new Date();
+    weekStart.setDate(weekStart.getDate() - 6);
+    const weekDates = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(weekStart);
+      d.setDate(d.getDate() + i);
+      weekDates.push(d.toISOString().split('T')[0]);
+    }
+
+    let totalProtein = 0;
+    let totalCarbs = 0;
+    let totalFat = 0;
+    let daysWithData = 0;
+
+    weekDates.forEach(date => {
+      const dayFood = foodLog.filter(entry => entry.date === date);
+      if (dayFood.length > 0) {
+        totalProtein += dayFood.reduce((sum, e) => sum + (e.protein || 0), 0);
+        totalCarbs += dayFood.reduce((sum, e) => sum + (e.carbs || 0), 0);
+        totalFat += dayFood.reduce((sum, e) => sum + (e.fat || 0), 0);
+        daysWithData++;
+      }
+    });
+
+    if (daysWithData === 0) return null;
+
+    return {
+      avgProtein: Math.round(totalProtein / daysWithData),
+      avgCarbs: Math.round(totalCarbs / daysWithData),
+      avgFat: Math.round(totalFat / daysWithData),
+      daysWithData,
+    };
+  })();
+
+  // Calculate monthly macro averages (last 30 days)
+  const monthlyMacros = (() => {
+    const monthStart = new Date();
+    monthStart.setDate(monthStart.getDate() - 29);
+    const monthDates = [];
+    for (let i = 0; i < 30; i++) {
+      const d = new Date(monthStart);
+      d.setDate(d.getDate() + i);
+      monthDates.push(d.toISOString().split('T')[0]);
+    }
+
+    let totalProtein = 0;
+    let totalCarbs = 0;
+    let totalFat = 0;
+    let daysWithData = 0;
+
+    monthDates.forEach(date => {
+      const dayFood = foodLog.filter(entry => entry.date === date);
+      if (dayFood.length > 0) {
+        totalProtein += dayFood.reduce((sum, e) => sum + (e.protein || 0), 0);
+        totalCarbs += dayFood.reduce((sum, e) => sum + (e.carbs || 0), 0);
+        totalFat += dayFood.reduce((sum, e) => sum + (e.fat || 0), 0);
+        daysWithData++;
+      }
+    });
+
+    if (daysWithData === 0) return null;
+
+    return {
+      avgProtein: Math.round(totalProtein / daysWithData),
+      avgCarbs: Math.round(totalCarbs / daysWithData),
+      avgFat: Math.round(totalFat / daysWithData),
+      daysWithData,
+    };
+  })();
+
 
   return (
     <div className="space-y-6">
       {/* Weekly/Monthly Summary */}
       <WeeklySummary />
+
+      {/* Macro Averages Section */}
+      {(weeklyMacros || monthlyMacros) && (
+        <div className="card">
+          <h2 className="text-2xl font-bold mb-4">Macro Averages</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Weekly Averages */}
+            {weeklyMacros && (
+              <div className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                <h3 className="font-semibold text-lg mb-3 text-emerald-600 dark:text-emerald-400">
+                  Weekly Average (Last 7 Days)
+                </h3>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  Based on {weeklyMacros.daysWithData} day{weeklyMacros.daysWithData !== 1 ? 's' : ''} with data
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-red-600 dark:text-red-400 font-semibold">Protein</span>
+                    <span>
+                      {weeklyMacros.avgProtein}g/day
+                      {macroTargets && (
+                        <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                          (target: {macroTargets.protein}g)
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-600 dark:text-blue-400 font-semibold">Carbs</span>
+                    <span>
+                      {weeklyMacros.avgCarbs}g/day
+                      {macroTargets && (
+                        <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                          (target: {macroTargets.carbs}g)
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-amber-600 dark:text-amber-400 font-semibold">Fat</span>
+                    <span>
+                      {weeklyMacros.avgFat}g/day
+                      {macroTargets && (
+                        <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                          (target: {macroTargets.fat}g)
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Monthly Averages */}
+            {monthlyMacros && (
+              <div className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                <h3 className="font-semibold text-lg mb-3 text-blue-600 dark:text-blue-400">
+                  Monthly Average (Last 30 Days)
+                </h3>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  Based on {monthlyMacros.daysWithData} day{monthlyMacros.daysWithData !== 1 ? 's' : ''} with data
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-red-600 dark:text-red-400 font-semibold">Protein</span>
+                    <span>
+                      {monthlyMacros.avgProtein}g/day
+                      {macroTargets && (
+                        <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                          (target: {macroTargets.protein}g)
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-600 dark:text-blue-400 font-semibold">Carbs</span>
+                    <span>
+                      {monthlyMacros.avgCarbs}g/day
+                      {macroTargets && (
+                        <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                          (target: {macroTargets.carbs}g)
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-amber-600 dark:text-amber-400 font-semibold">Fat</span>
+                    <span>
+                      {monthlyMacros.avgFat}g/day
+                      {macroTargets && (
+                        <span className="text-gray-500 dark:text-gray-400 text-sm ml-2">
+                          (target: {macroTargets.fat}g)
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Weight Tracker */}
       <WeightTracker />

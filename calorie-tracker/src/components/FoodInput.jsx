@@ -6,8 +6,12 @@ import QuickAdd from './QuickAdd';
 import CommonFoods from './CommonFoods';
 import CustomFoodManager from './CustomFoodManager';
 
+const MEAL_TYPES = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
+
 export default function FoodInput({ onAddFood, onClose }) {
   const [mode, setMode] = useState('menu'); // menu, search, barcode, quick, favorites, recent, common, custom
+  const [selectedMealType, setSelectedMealType] = useState(null); // null = Unspecified
+  const [pendingFood, setPendingFood] = useState(null); // Food waiting for meal type selection
   const favorites = getFavorites();
   const recentFoods = getRecentFoods();
   const modalRef = useRef(null);
@@ -28,8 +32,24 @@ export default function FoodInput({ onAddFood, onClose }) {
   }, [mode]);
 
   const handleAddFood = (food) => {
-    onAddFood(food);
-    onClose();
+    // Show meal type selector before adding
+    setPendingFood(food);
+  };
+
+  const confirmAddFood = (mealType) => {
+    if (pendingFood) {
+      onAddFood({ ...pendingFood, mealType: mealType || 'Unspecified' });
+      setPendingFood(null);
+      onClose();
+    }
+  };
+
+  const skipMealType = () => {
+    if (pendingFood) {
+      onAddFood({ ...pendingFood, mealType: 'Unspecified' });
+      setPendingFood(null);
+      onClose();
+    }
   };
 
   const toggleFavorite = (food, isFavorite) => {
@@ -249,6 +269,37 @@ export default function FoodInput({ onAddFood, onClose }) {
                 })}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Meal Type Selector Overlay */}
+        {pendingFood && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-60">
+            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full shadow-xl">
+              <h3 className="text-lg font-bold mb-2">Add to which meal?</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                {pendingFood.name} - {pendingFood.calories} cal
+              </p>
+
+              <div className="space-y-2 mb-4">
+                {MEAL_TYPES.map((mealType) => (
+                  <button
+                    key={mealType}
+                    onClick={() => confirmAddFood(mealType)}
+                    className="w-full py-3 px-4 text-left font-semibold rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+                  >
+                    {mealType}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={skipMealType}
+                className="w-full py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-sm"
+              >
+                Skip (don't categorize)
+              </button>
+            </div>
           </div>
         )}
       </div>

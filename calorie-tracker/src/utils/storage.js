@@ -13,6 +13,9 @@ const STORAGE_KEYS = {
   CUSTOM_FOODS: 'customFoods',
   CUSTOM_MACROS: 'customMacros',
   CUSTOM_CALORIE_GOAL: 'customCalorieGoal',
+  WATER_LOG: 'waterLog',
+  WATER_UNIT: 'waterUnit',
+  WORKOUT_TEMPLATES: 'workoutTemplates',
 };
 
 // Get local date string (YYYY-MM-DD) in user's timezone, not UTC
@@ -273,4 +276,113 @@ export function deleteCustomFood(id) {
   const customFoods = getCustomFoods();
   const filtered = customFoods.filter(food => food.id !== id);
   setData(STORAGE_KEYS.CUSTOM_FOODS, filtered);
+}
+
+// Water Log - { date: amount in mL }
+export function getWaterLog() {
+  return getData(STORAGE_KEYS.WATER_LOG) || {};
+}
+
+export function getWaterForDate(date = null) {
+  const log = getWaterLog();
+  const dateStr = date || getLocalDateString();
+  return log[dateStr] || 0;
+}
+
+export function addWater(amountMl, date = null) {
+  const log = getWaterLog();
+  const dateStr = date || getLocalDateString();
+  log[dateStr] = (log[dateStr] || 0) + amountMl;
+  setData(STORAGE_KEYS.WATER_LOG, log);
+  return log[dateStr];
+}
+
+export function setWaterForDate(amountMl, date = null) {
+  const log = getWaterLog();
+  const dateStr = date || getLocalDateString();
+  log[dateStr] = amountMl;
+  setData(STORAGE_KEYS.WATER_LOG, log);
+  return log[dateStr];
+}
+
+// Water Unit Preference - 'oz' or 'mL'
+export function getWaterUnit() {
+  return getData(STORAGE_KEYS.WATER_UNIT) || null; // null means use profile unit preference
+}
+
+export function saveWaterUnit(unit) {
+  setData(STORAGE_KEYS.WATER_UNIT, unit);
+}
+
+// Convert between oz and mL
+export function ozToMl(oz) {
+  return Math.round(oz * 29.5735);
+}
+
+export function mlToOz(ml) {
+  return Math.round(ml / 29.5735 * 10) / 10;
+}
+
+// Workout Templates - array of { id, name, exercises: [...] }
+export function getWorkoutTemplates() {
+  return getData(STORAGE_KEYS.WORKOUT_TEMPLATES) || [];
+}
+
+export function addWorkoutTemplate(template) {
+  const templates = getWorkoutTemplates();
+  const newTemplate = {
+    ...template,
+    id: Date.now(),
+    createdAt: Date.now(),
+  };
+  templates.push(newTemplate);
+  setData(STORAGE_KEYS.WORKOUT_TEMPLATES, templates);
+  return newTemplate;
+}
+
+export function updateWorkoutTemplate(id, updatedFields) {
+  const templates = getWorkoutTemplates();
+  const updatedTemplates = templates.map(t =>
+    t.id === id ? { ...t, ...updatedFields } : t
+  );
+  setData(STORAGE_KEYS.WORKOUT_TEMPLATES, updatedTemplates);
+}
+
+export function deleteWorkoutTemplate(id) {
+  const templates = getWorkoutTemplates();
+  const filtered = templates.filter(t => t.id !== id);
+  setData(STORAGE_KEYS.WORKOUT_TEMPLATES, filtered);
+}
+
+// Copy yesterday's meals to today
+export function copyYesterdaysMeals() {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = getLocalDateString(yesterday);
+  const todayStr = getLocalDateString();
+
+  const foodLog = getFoodLog();
+  const yesterdayEntries = foodLog.filter(entry => entry.date === yesterdayStr);
+
+  if (yesterdayEntries.length === 0) {
+    return { success: false, count: 0, message: 'No meals found from yesterday' };
+  }
+
+  // Copy each entry with new timestamps and today's date
+  let count = 0;
+  yesterdayEntries.forEach(entry => {
+    const newEntry = {
+      ...entry,
+      timestamp: Date.now() + count, // Ensure unique timestamps
+      date: todayStr,
+    };
+    delete newEntry.id; // Remove any existing id
+    const log = getFoodLog();
+    log.push(newEntry);
+    setData(STORAGE_KEYS.FOOD_LOG, log);
+    count++;
+  });
+
+  return { success: true, count, message: `Copied ${count} meal(s) from yesterday` };
 }

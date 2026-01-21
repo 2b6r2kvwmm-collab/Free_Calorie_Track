@@ -120,8 +120,11 @@ export default function Settings({ onUpdateProfile, onClose }) {
       darkMode: getData('darkMode'),
       customFoods: getData('customFoods'),
       customMacros: getData('customMacros'),
+      waterLog: getData('waterLog'),
+      waterUnit: getData('waterUnit'),
+      workoutTemplates: getData('workoutTemplates'),
       exportDate: new Date().toISOString(),
-      version: '1.0',
+      version: '1.1',
     };
 
     const dataStr = JSON.stringify(exportData, null, 2);
@@ -169,6 +172,9 @@ export default function Settings({ onUpdateProfile, onClose }) {
           if (importData.darkMode !== undefined) setData('darkMode', importData.darkMode);
           if (importData.customFoods) setData('customFoods', importData.customFoods);
           if (importData.customMacros) setData('customMacros', importData.customMacros);
+          if (importData.waterLog) setData('waterLog', importData.waterLog);
+          if (importData.waterUnit) setData('waterUnit', importData.waterUnit);
+          if (importData.workoutTemplates) setData('workoutTemplates', importData.workoutTemplates);
 
           setImportMessage('Data imported successfully! Refreshing...');
           setTimeout(() => {
@@ -599,6 +605,37 @@ export default function Settings({ onUpdateProfile, onClose }) {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Share Section */}
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-4">Share Free Calorie Track</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Help others discover a truly free calorie tracker with no paywalls!
+        </p>
+
+        <button
+          onClick={() => {
+            if (navigator.share) {
+              navigator.share({
+                title: 'Free Calorie Track',
+                text: 'Check out this completely free calorie and macro tracker - no paywalls, no ads, just simple tracking!',
+                url: 'https://freecalorietrack.com'
+              }).catch(() => {
+                // User cancelled share, do nothing
+              });
+            } else {
+              // Fallback: copy link to clipboard
+              navigator.clipboard.writeText('https://freecalorietrack.com').then(() => {
+                setImportMessage('Link copied to clipboard!');
+                setTimeout(() => setImportMessage(''), 3000);
+              });
+            }
+          }}
+          className="btn-primary w-full"
+        >
+          📤 Share This App
+        </button>
       </div>
 
       {/* Version Info */}
