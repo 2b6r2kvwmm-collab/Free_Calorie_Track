@@ -335,7 +335,7 @@
         text-align: center;
         padding: 40px 20px 80px 20px;
         font-family: sans-serif;
-        color: #666;
+        color: #999;
         font-size: 14px;
         background-color: #f9fafb;
         border-top: 1px solid #e5e7eb;
@@ -373,17 +373,51 @@
       .dark .footer-link {
         color: #34d399;
       }
-      .bmc-button {
+      .support-button {
         display: inline-block;
-        background-color: #FFDD00;
-        color: #000000;
+        background-color: #10b981;
+        color: #ffffff;
         text-decoration: none;
-        font-weight: bold;
-        padding: 10px 20px;
-        border-radius: 25px;
-        font-size: 14px;
+        font-weight: 600;
+        padding: 12px 32px;
+        border-radius: 8px;
+        font-size: 15px;
         margin-top: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        transition: background-color 0.2s ease;
+      }
+      .support-button:hover {
+        background-color: #059669;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+      }
+      .footer-heading {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #999;
+      }
+      .dark .footer-heading {
+        color: #9ca3af;
+      }
+      .gear-header {
+        font-size: 16px;
+      }
+      .gear-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px 20px;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+      @media (max-width: 640px) {
+        .gear-grid {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        .support-button {
+          width: 100%;
+          max-width: 300px;
+        }
       }
       .disclaimer {
         font-size: 11px;
@@ -593,31 +627,47 @@
 
     <div class="app-footer">
 
-      <div class="gear-section">
-        <strong>Top gear picks:</strong><br><br>
-
-        <a href="https://amzn.to/4qNU4Ko" target="_blank" class="footer-link">
-          ⚖️ Best Digital Food Scale
-        </a>
-
-        <span style="color:#ccc">|</span>
-
-        <a href="https://amzn.to/4bquRRF" target="_blank" class="footer-link">
-          🍱 Best Meal Prep Containers
+      <div style="margin-bottom: 25px;">
+        <h3 class="footer-heading">
+          Help keep Free Calorie Track free
+        </h3>
+        <p style="font-size: 14px; line-height: 1.5; color: #999; max-width: 500px; margin: 0 auto 15px;">
+          No ads. No paywalls. Funded by donations and commissions on gear I actually use and love.
+        </p>
+        <a href="https://buymeacoffee.com/griffs" target="_blank" class="support-button">
+          Chip in $5
         </a>
       </div>
 
-      <div style="margin-bottom: 10px; color: #666;">
-        <strong>Liking this app?</strong>
+      <div style="margin-top: 35px; margin-bottom: 20px;">
+        <p class="gear-header" style="color: #999; margin-bottom: 15px;">
+          <strong>My favorite health and fitness gear</strong>
+        </p>
+        <div class="gear-grid">
+          <a href="https://amzn.to/4qNU4Ko" target="_blank" class="footer-link">
+            ⚖️ Favorite Digital Food Scale
+          </a>
+          <a href="https://amzn.to/4bquRRF" target="_blank" class="footer-link">
+            🫙 Favorite Meal Prep Containers
+          </a>
+          <a href="https://amzn.to/45ORPhU" target="_blank" class="footer-link">
+            💧 Favorite Insulated Water Bottle
+          </a>
+          <a href="https://amzn.to/4txlhTV" target="_blank" class="footer-link">
+            🏋️ Favorite Small Dumbbells
+          </a>
+          <a href="https://amzn.to/4qU7fJY" target="_blank" class="footer-link">
+            💪 Favorite Adjustable Dumbbells
+          </a>
+          <a href="https://amzn.to/3Mc65KN" target="_blank" class="footer-link">
+            🥤 Favorite Smoothie & Protein Blender
+          </a>
+        </div>
       </div>
 
-      <a href="https://buymeacoffee.com/griffs" target="_blank" class="bmc-button">
-        ☕ Buy me a coffee
-      </a>
-
-      <div style="margin-top: 20px;">
+      <div style="margin-top: 30px;">
         <a href="https://tally.so/r/YOUR_LINK_HERE" target="_blank" style="color: #999; text-decoration: none; font-size: 12px;">
-          Found a bug? Have an idea?
+          Feedback? We'd love to hear from you.
         </a>
       </div>
 
