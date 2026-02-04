@@ -325,6 +325,16 @@ export function saveWaterTrackerEnabled(enabled) {
   setData('waterTrackerEnabled', enabled);
 }
 
+// Meal Type Categorization - boolean for prompting meal type when logging food
+export function getMealTypeEnabled() {
+  const enabled = getData('mealTypeEnabled');
+  return enabled !== null ? enabled : false; // Default to false (opt-in)
+}
+
+export function saveMealTypeEnabled(enabled) {
+  setData('mealTypeEnabled', enabled);
+}
+
 // Convert between oz and mL
 export function ozToMl(oz) {
   return Math.round(oz * 29.5735);

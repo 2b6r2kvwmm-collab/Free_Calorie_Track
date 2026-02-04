@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getFavorites, getRecentFoods, addFavorite, removeFavorite, copyYesterdaysMeals } from '../utils/storage';
+import { getFavorites, getRecentFoods, addFavorite, removeFavorite, copyYesterdaysMeals, getMealTypeEnabled, saveMealTypeEnabled } from '../utils/storage';
 import FoodSearch from './FoodSearch';
 import BarcodeScanner from './BarcodeScanner';
 import QuickAdd from './QuickAdd';
@@ -32,9 +32,16 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
     }
   }, [mode]);
 
+  const mealTypeEnabled = getMealTypeEnabled();
+
   const handleAddFood = (food) => {
-    // Show meal type selector before adding
+    if (!mealTypeEnabled) {
+      onAddFood({ ...food, mealType: 'Unspecified' });
+      onClose();
+      return;
+    }
     setPendingFood(food);
+    setMode('menu'); // ensure meal selector overlay renders from any sub-menu
   };
 
   const confirmAddFood = (mealType) => {
@@ -327,6 +334,16 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                 className="w-full py-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 text-sm"
               >
                 Skip (don't categorize)
+              </button>
+
+              <button
+                onClick={() => {
+                  saveMealTypeEnabled(false);
+                  skipMealType();
+                }}
+                className="w-full pt-3 mt-2 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                Turn off meal categories
               </button>
             </div>
           </div>

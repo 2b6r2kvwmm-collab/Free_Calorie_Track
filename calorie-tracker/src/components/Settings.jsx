@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, calculateUserStats } from '../utils/storage';
+import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getMealTypeEnabled, saveMealTypeEnabled, calculateUserStats } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
@@ -13,6 +13,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const currentCustomMacros = getCustomMacros() || { protein: 150, carbs: 200, fat: 65 };
   const [customMacros, setCustomMacros] = useState(currentCustomMacros);
   const [waterTrackerEnabled, setWaterTrackerEnabled] = useState(getWaterTrackerEnabled());
+  const [mealTypeEnabled, setMealTypeEnabled] = useState(getMealTypeEnabled());
 
   // Convert stored metric values to user's preferred unit for display
   const displayHeight = currentProfile.unit === 'imperial'
@@ -657,6 +658,27 @@ export default function Settings({ onUpdateProfile, onClose }) {
               </label>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Display the water intake tracker on your dashboard to track daily hydration.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="mealTypeEnabled"
+              checked={mealTypeEnabled}
+              onChange={(e) => {
+                setMealTypeEnabled(e.target.checked);
+                saveMealTypeEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div>
+              <label htmlFor="mealTypeEnabled" className="text-lg font-semibold cursor-pointer">
+                Categorize meals by type
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Prompt to assign each food to Breakfast, Lunch, Dinner, or Snacks when logging.
               </p>
             </div>
           </div>
