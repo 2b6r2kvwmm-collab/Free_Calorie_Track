@@ -528,44 +528,23 @@ export default function Dashboard({ onRefresh }) {
         />
       )}
 
-      {/* Streak & Achievements Bar */}
+      {/* Achievements Bar */}
       <div
-        className="flex items-center justify-between bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg px-4 py-2 cursor-pointer hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors"
+        className="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg px-4 py-3 cursor-pointer hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors"
         onClick={() => setShowAchievements(true)}
       >
-        <div className="flex items-center gap-3 text-sm flex-wrap">
-          {gamificationData.currentStreak > 0 && (
-            <span className="font-semibold text-emerald-700 dark:text-emerald-400">
-              🔥 {gamificationData.currentStreak} Day Streak
-            </span>
-          )}
-          {gamificationData.currentStreak > 0 && gamificationData.longestStreak > 0 && (
-            <span className="text-gray-400 dark:text-gray-600">•</span>
-          )}
-          {gamificationData.longestStreak > 0 && (
-            <span className="text-gray-600 dark:text-gray-400">
-              Best: {gamificationData.longestStreak} days
-            </span>
-          )}
-          {recentAchievements.length > 0 && (
-            <>
-              <span className="text-gray-400 dark:text-gray-600">•</span>
-              {recentAchievements.slice(0, 2).map((achievement, idx) => (
-                <span key={idx} className="text-gray-600 dark:text-gray-400">
-                  {achievement.icon} {achievement.title}
-                </span>
-              ))}
-            </>
-          )}
-          {gamificationData.currentStreak === 0 && gamificationData.unlockedAchievements.length === 0 && (
-            <span className="text-gray-500 dark:text-gray-400">
-              🏆 Start tracking to unlock achievements
-            </span>
-          )}
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400">Achievements</span>
+          <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">View All →</span>
         </div>
-        <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold whitespace-nowrap ml-3">
-          View All →
-        </span>
+        <div className="text-sm text-gray-600 dark:text-gray-400">
+          {recentAchievements.length > 0
+            ? <>{recentAchievements[0].icon} {recentAchievements[0].title}</>
+            : gamificationData.currentStreak > 0
+              ? <span className="font-semibold text-emerald-700 dark:text-emerald-400">🔥 {gamificationData.currentStreak} Day Streak</span>
+              : <>Start tracking to unlock achievements</>
+          }
+        </div>
       </div>
 
       {/* Action Buttons */}
