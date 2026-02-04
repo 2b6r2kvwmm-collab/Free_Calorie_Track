@@ -90,15 +90,71 @@
           "name": "Is Free Calorie Track really free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, completely free forever. No 'free tier' with premium upgrades, no subscription walls, no ads. All features are unlocked including calorie tracking, macro tracking, barcode scanning, trends, history editing, and data export. Built by someone who believes nutrition tracking should be accessible to everyone."
+            "text": "Yes. Every feature in the app is free, forever. There is no premium tier, no upgrade wall, and no free-trial period that expires. Barcode scanning, macro tracking, trends, history editing, exercise logging — all of it is included. The app is funded by optional donations, not by gating features behind a paywall."
           }
         },
         {
           "@type": "Question",
-          "name": "Do I need to create an account?",
+          "name": "Do I need to create an account or sign up?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "No account required. Free Calorie Track is privacy-first - all your data is stored locally on your device, not on cloud servers. Start tracking immediately without email signup, passwords, or personal information."
+            "text": "No. There is no account, no email, no password. You open the app and start tracking immediately. Your data is stored locally on your device, so there is nothing to sign into. If you use multiple devices, you can export and import your data as a backup file."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does barcode scanning work, and is it really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, barcode scanning is completely free with no daily or monthly limit. Point your camera at any product barcode and the app looks it up instantly using the Open Food Facts database, which contains over 220,000 products. If a product is not in the database, you can manually enter the nutrition info and save it as a custom food."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I track macros (protein, carbs, and fat) for free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Macro tracking is fully included. The app shows real-time progress bars for protein, carbs, and fat alongside your calorie count. You can use the automatically calculated macro targets based on your fitness goal, or set your own custom macro goals in settings. No paywall, no premium required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are NET calories, and why do they matter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "NET calories represent your true energy balance for the day: the calories you ate, minus the calories your body burned at rest (TDEE), minus the calories you burned exercising. A NET of zero means maintenance. Negative NET means a deficit and you will lose weight over time. Positive NET means a surplus and you will gain weight. Most apps show gross calories eaten without factoring in what your body burns, which makes the number misleading. Free Calorie Track shows the real picture."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between BMR and TDEE?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BMR (Basal Metabolic Rate) is how many calories your body burns doing absolutely nothing — just keeping you alive. TDEE (Total Daily Energy Expenditure) is your total daily burn, which includes BMR plus the energy spent on daily movement, activity, and digestion. TDEE is the number that actually matters for tracking, because it is the baseline your food intake gets compared against. Free Calorie Track calculates both using the Mifflin-St Jeor equation, which is one of the most clinically validated formulas available."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Free Calorie Track different from MyFitnessPal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MyFitnessPal requires a free account and gates several key features — including barcode scanning, macro tracking, and trend insights — behind a $20/month or $80/year premium subscription. It also shows ads to free-tier users. Free Calorie Track offers all of those features for free, requires no account, shows no ads, and stores your data locally rather than on MyFitnessPal's servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Free Calorie Track different from Lose It?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lose It also requires an account and paywalls barcode scanning and macro tracking behind a $10/month or $40/year subscription. Free Calorie Track includes barcode scanning and macro tracking for free, with no account required and no ads."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is this app free when others charge for the same features?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Free Calorie Track is a single-developer project with no investors, no ad network, and no company overhead to fund. It runs as a Progressive Web App, which means no app store fees. It is kept alive by optional donations from people who find it useful. The goal was never to build a business — it was to build the calorie tracker that the developer wished existed."
           }
         },
         {
@@ -106,223 +162,23 @@
           "name": "Where is my data stored?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "All data is stored locally on your device using browser storage. Your nutrition data, exercise logs, and personal information never leave your device unless you choose to export it. This ensures complete privacy and works offline."
+            "text": "All data is stored locally on your device using browser storage (localStorage). Nothing is sent to a server. No cloud account, no syncing, no data collection. Your meal logs, exercise history, weight entries, and personal profile information stay entirely on the device you are using."
           }
         },
         {
           "@type": "Question",
-          "name": "Does it work offline?",
+          "name": "Does the app work without an internet connection?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, Free Calorie Track is a Progressive Web App (PWA) that works completely offline. Access 2000+ common foods, log meals, track exercise, and view your history without internet. Only barcode scanning and branded food search require internet."
+            "text": "Yes. Once installed, the app works fully offline. The thousands of common foods in the database, your saved favorites, recipes, and all logged data are available without internet. The only feature that requires a connection is searching the branded food database or scanning barcodes for products not already cached on your device."
           }
         },
         {
           "@type": "Question",
-          "name": "Can I scan barcodes for free?",
+          "name": "Will tracking calories actually help me lose weight?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, barcode scanning is completely free and unlimited. Scan UPC codes on any food product to instantly look up nutrition information from a database of 220,000+ branded products. No premium subscription required."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I track protein, carbs, and fat?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Macros are automatically tracked when you log food. Free Calorie Track displays real-time progress bars for protein, carbs, and fat with customizable targets based on your fitness goals (muscle gain, fat loss, maintenance, or athletic performance). Set custom macro goals or use science-backed presets."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I edit past days?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, full history editing is included. Forgot to log a meal? Made a mistake? Edit any day without losing streaks or facing restrictions. Free Calorie Track treats you like an adult - fix mistakes without punishment."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What makes this different from MyFitnessPal?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Free Calorie Track has no paywalls (barcode scanning is free), no account required (privacy-first), no ads, and all features unlocked. It's faster, respects your privacy, and doesn't gate essential features behind premium subscriptions. Built by someone frustrated with 'freemium' calorie trackers."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does it have trends and charts?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, comprehensive trends included for free. View weekly and monthly charts showing NET calories, macro averages, exercise burned, weight progress, and 7-day rolling averages. Unlike competitors, trends aren't locked behind premium."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Is there a mobile app?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Free Calorie Track is a Progressive Web App (PWA) that installs on iPhone, Android, and desktop without app stores. Add it to your home screen for app-like experience with instant loading, offline access, and no downloads. No platform lock-in, no update delays."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I track exercise?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, track workouts with 250+ exercises including cardio (running, cycling, swimming), strength training (80+ exercises), sports, HIIT, yoga, and more. Exercise calories are integrated into NET calorie calculations to show true energy balance. Save workout templates for quick logging."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I export my data?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, full data export/import included. Download all your tracking history as JSON backup file including food logs, exercise logs, weight data, custom foods, and settings. Import on any device to restore your data."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does it sync between devices?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Data is stored locally per device for privacy. To sync, export from one device and import on another. This privacy-first approach means your nutrition data isn't stored on cloud servers or shared with third parties."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How many foods are in the database?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "2000+ common foods built-in (fruits, vegetables, proteins, grains, dairy, snacks, meals, sushi, condiments) with complete macro data. Plus search 220,000+ branded products via barcode scanning or text search. Add unlimited custom foods and recipes."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What are NET calories?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "NET calories = Food eaten - Lifestyle activity (TDEE) - Exercise logged. This shows your true calorie surplus or deficit. Zero = maintenance, negative = weight loss, positive = weight gain. Most apps obscure energy balance, but Free Calorie Track makes it the core metric."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I track water intake?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, water tracking is built-in with quick-add buttons for 8oz/250mL, 16oz/500mL, and custom amounts. Toggle between oz and mL units. Track daily hydration with progress bar showing percentage of 64oz/2000mL daily goal."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I create recipes?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, build custom recipes from ingredients with automatic per-serving nutrition calculations. Search common foods or scan barcodes to add ingredients. Save recipes for quick logging. Create unlimited recipes for free."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does it have meal planning?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, copy yesterday's meals with one click, save favorite foods for quick access, view recent foods, organize meals by category (breakfast, lunch, dinner, snacks), and create custom recipes. Simple meal planning without the complexity."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I track weight loss progress?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, log daily weight with trend charts showing progress over time. View weight change calculations and see how your NET calories correlate with weight changes. All weight tracking is free and includes historical charts."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does it require internet?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No, works completely offline. Access 2000+ common foods, log meals and exercise, edit history, and view trends without internet. Only barcode scanning and branded food search require connectivity. Perfect for gym tracking or travel."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Are there ads or paywalls?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Zero ads, zero paywalls, zero premium features. All functionality is unlocked forever. No dark patterns, no upsells, no 'upgrade to pro' popups. Built by someone who believes calorie tracking should be free and respectful."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I use it on iPhone and Android?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, works on any device with a modern browser (iPhone, Android, Windows, Mac, Linux). Install as Progressive Web App for native app experience. No separate iOS/Android apps needed - one web app works everywhere."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I set macro targets?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Choose from 4 science-backed fitness goals (muscle gain, fat loss, maintenance, athletic performance) for automatic macro calculations based on your body stats. Or set custom protein/carbs/fat targets. Calculations use Mifflin-St Jeor BMR formula and research-based protein targets (1.6-2.2g/kg)."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I scan barcodes without premium?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, barcode scanning is 100% free with no limits. Unlike MyFitnessPal which locks barcode scanning behind premium, Free Calorie Track includes unlimited barcode scanning for everyone. Scan any food product to instantly add nutrition info."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How accurate is the calorie tracking?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Nutrition data comes from verified sources (OpenFoodFacts for branded products, USDA data for common foods). Exercise calories use MET (Metabolic Equivalent) values from the Compendium of Physical Activities. BMR calculations use the clinically-validated Mifflin-St Jeor equation."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I track multiple users?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, multi-user support included. Create separate profiles for family members with isolated data. Switch between users easily. Each user gets their own food logs, exercise logs, settings, and custom foods."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What features are included?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "All features free: calorie & macro tracking, barcode scanning, 2000+ food database, branded food search, exercise logging (250+ exercises), water tracking, weight tracking, NET calorie calculations, editable history, weekly/monthly trends, custom foods & recipes, workout templates, meal categories, favorites, data export/import, offline mode, dark mode, multi-user support."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "How is this free? What's the catch?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "No catch. Built by someone frustrated with subscription fatigue who believes calorie tracking should be accessible. Funded by optional Buy Me a Coffee donations and affiliate links for fitness gear. No data selling, no forced ads, no premium upsells. Privacy-first, user-first."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I edit portion sizes?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, edit portions in grams, adjust serving multipliers (0.5x, 2x, etc.), and modify any logged food entry. All nutrition recalculates automatically. Edit past entries anytime without restrictions."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Does it have dark mode?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes, beautiful dark mode included. Toggle between light and dark themes in settings. Dark mode works across all screens and is optimized for nighttime tracking. Respects your eyes and battery life."
+            "text": "Calorie tracking is one of the most well-studied tools for weight loss. Awareness of what and how much you eat is consistently linked to better outcomes than diet plans alone. Free Calorie Track is designed to make tracking fast and low-friction so you will actually stick with it. No ads interrupting you, no paywalls forcing upgrades, and full history editing so one missed day does not derail your streak."
           }
         }
       ]
