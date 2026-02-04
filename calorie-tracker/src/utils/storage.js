@@ -423,6 +423,15 @@ export function hasExported() {
   return getData('hasExported') === true;
 }
 
+// Landing page - shown once to first-time users
+export function getLandingPageShown() {
+  return getData('landingPageShown') === true;
+}
+
+export function markLandingPageShown() {
+  setData('landingPageShown', true);
+}
+
 // Milestone tracking - { days60: true, days180: false, days365: false }
 export function getMilestonesShown() {
   return getData(STORAGE_KEYS.MILESTONES_SHOWN) || {

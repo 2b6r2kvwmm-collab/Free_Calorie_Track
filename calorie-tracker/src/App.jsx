@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
+import LandingPage from './components/LandingPage';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
 import Trends from './components/Trends';
@@ -16,6 +17,7 @@ function App() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [showUserManager, setShowUserManager] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(getCurrentUserId());
+  const [landingPageShown, setLandingPageShown] = useState(getLandingPageShown());
 
   useEffect(() => {
     const savedProfile = getProfile();
@@ -55,6 +57,15 @@ function App() {
   };
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';
+
+  if (!landingPageShown && !profile) {
+    return (
+      <LandingPage onGetStarted={() => {
+        markLandingPageShown();
+        setLandingPageShown(true);
+      }} />
+    );
+  }
 
   if (!profile) {
     return <ProfileSetup onComplete={handleProfileComplete} />;
