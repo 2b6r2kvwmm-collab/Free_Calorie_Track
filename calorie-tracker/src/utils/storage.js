@@ -451,15 +451,24 @@ export function calculateUserStats() {
   const mealsLogged = foodLog.length;
   const workouts = exerciseLog.length;
 
-  // Calculate savings vs MyFitnessPal Premium ($80/year)
-  // Base calculation on days tracked
-  const daysInYear = 365;
-  const savedVsCompetitors = Math.round((daysTracked / daysInYear) * 80);
+  // Calculate months since first use (earliest food log entry)
+  let monthsUsing = 0;
+  if (foodLog.length > 0) {
+    const sortedDates = foodLog.map(entry => entry.date).sort();
+    const firstDate = new Date(sortedDates[0] + 'T12:00:00'); // noon to avoid timezone edge cases
+    const today = new Date();
+    const diffDays = Math.floor((today - firstDate) / (1000 * 60 * 60 * 24));
+    monthsUsing = Math.max(1, Math.round(diffDays / 30.44));
+  }
+
+  // Calculate savings vs MyFitnessPal Premium monthly plan ($20/month)
+  const savedVsCompetitors = monthsUsing * 20;
 
   return {
     daysTracked,
     mealsLogged,
     workouts,
+    monthsUsing,
     savedVsCompetitors,
   };
 }

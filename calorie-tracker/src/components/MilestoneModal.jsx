@@ -61,7 +61,7 @@ export default function MilestoneModal({ milestone, stats, onClose, onDonate }) 
                 <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
                   ${stats.savedVsCompetitors}
                 </div>
-                <div className="text-gray-600 dark:text-gray-300">Saved</div>
+                <div className="text-gray-600 dark:text-gray-300">Saved vs $20/mo</div>
               </div>
             </div>
           </div>

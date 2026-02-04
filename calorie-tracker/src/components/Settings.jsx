@@ -190,6 +190,125 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
   return (
     <div className="space-y-6">
+      {/* Dashboard Customization */}
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-4">Dashboard Customization</h2>
+
+        <div className="space-y-4">
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="waterTrackerEnabled"
+              checked={waterTrackerEnabled}
+              onChange={(e) => {
+                setWaterTrackerEnabled(e.target.checked);
+                saveWaterTrackerEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div>
+              <label htmlFor="waterTrackerEnabled" className="text-lg font-semibold cursor-pointer">
+                Show Water Intake Tracker
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Display the water intake tracker on your dashboard to track daily hydration.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="mealTypeEnabled"
+              checked={mealTypeEnabled}
+              onChange={(e) => {
+                setMealTypeEnabled(e.target.checked);
+                saveMealTypeEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div>
+              <label htmlFor="mealTypeEnabled" className="text-lg font-semibold cursor-pointer">
+                Categorize meals by type
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Prompt to assign each food to Breakfast, Lunch, Dinner, or Snacks when logging.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Data Management Section */}
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-4">Data Management</h2>
+
+        {/* Warning Banner */}
+        <div className="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-500 p-4 rounded-lg mb-6">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <p className="font-semibold text-amber-900 dark:text-amber-100 mb-2">
+                Important: Your Data is Stored Locally
+              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-200 mb-2">
+                All your data is stored in your browser's local storage. If you clear your browser cache or data,
+                <strong> all your tracking data will be permanently deleted</strong>.
+              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-200">
+                <strong>Recommendation:</strong> Export your data regularly to create backups. You can import it later
+                if you need to restore or transfer your data.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Export/Import Buttons */}
+        <div className="space-y-4">
+          <div>
+            <button
+              onClick={onExport}
+              className="w-full py-3 px-6 rounded-lg font-semibold border-2 border-emerald-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+            >
+              📥 Export Data (Download Backup)
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Download all your data as a JSON file. Keep this file safe as a backup.
+            </p>
+          </div>
+
+          <div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleImport}
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="btn-secondary w-full"
+            >
+              📤 Import Data (Restore from Backup)
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Upload a previously exported backup file. This will replace all current data.
+            </p>
+          </div>
+
+          {/* Import/Export Message */}
+          {importMessage && (
+            <div className={`p-3 rounded-lg text-center font-semibold ${
+              importMessage.includes('Error')
+                ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300'
+                : 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
+            }`}>
+              {importMessage}
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="card">
         <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
 
@@ -512,118 +631,55 @@ export default function Settings({ onUpdateProfile, onClose }) {
         </form>
       </div>
 
-      {/* Data Management Section */}
-      <div className="card">
-        <h2 className="text-2xl font-bold mb-4">Data Management</h2>
-
-        {/* Warning Banner */}
-        <div className="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-500 p-4 rounded-lg mb-6">
-          <div className="flex items-start gap-3">
-            <span className="text-2xl">⚠️</span>
-            <div>
-              <p className="font-semibold text-amber-900 dark:text-amber-100 mb-2">
-                Important: Your Data is Stored Locally
-              </p>
-              <p className="text-sm text-amber-800 dark:text-amber-200 mb-2">
-                All your data is stored in your browser's local storage. If you clear your browser cache or data,
-                <strong> all your tracking data will be permanently deleted</strong>.
-              </p>
-              <p className="text-sm text-amber-800 dark:text-amber-200">
-                <strong>Recommendation:</strong> Export your data regularly to create backups. You can import it later
-                if you need to restore or transfer your data.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Export/Import Buttons */}
-        <div className="space-y-4">
-          <div>
-            <button
-              onClick={onExport}
-              className="w-full py-3 px-6 rounded-lg font-semibold border-2 border-emerald-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
-            >
-              📥 Export Data (Download Backup)
-            </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              Download all your data as a JSON file. Keep this file safe as a backup.
-            </p>
-          </div>
-
-          <div>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".json"
-              onChange={handleImport}
-              className="hidden"
-            />
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="btn-secondary w-full"
-            >
-              📤 Import Data (Restore from Backup)
-            </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              Upload a previously exported backup file. This will replace all current data.
-            </p>
-          </div>
-
-          {/* Import/Export Message */}
-          {importMessage && (
-            <div className={`p-3 rounded-lg text-center font-semibold ${
-              importMessage.includes('Error')
-                ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300'
-                : 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
-            }`}>
-              {importMessage}
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* Support Free Calorie Track */}
       <div className="card bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 border-2 border-emerald-200 dark:border-emerald-800">
         <h2 className="text-2xl font-bold mb-4">Support Free Calorie Track</h2>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
-            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-              {calculateUserStats().daysTracked}
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Days Tracked</div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
-            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-              {calculateUserStats().mealsLogged}
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Meals Logged</div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
-            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-              {calculateUserStats().workouts}
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Workouts</div>
-          </div>
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
-            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
-              ${calculateUserStats().savedVsCompetitors}
-            </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Saved</div>
-          </div>
-        </div>
+        {(() => {
+          const stats = calculateUserStats();
+          return (
+            <>
+              {/* Stats */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+                  <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                    {stats.monthsUsing}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Months Using</div>
+                </div>
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+                  <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                    {stats.mealsLogged}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Meals Logged</div>
+                </div>
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+                  <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                    {stats.workouts}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Workouts</div>
+                </div>
+                <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+                  <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                    ${stats.savedVsCompetitors}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Saved</div>
+                </div>
+              </div>
 
-        {/* Message */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4">
-          <p className="text-gray-700 dark:text-gray-300 mb-2">
-            <strong>You've saved ${calculateUserStats().savedVsCompetitors}</strong> vs MyFitnessPal Premium!
-          </p>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Free Calorie Track has no ads, no paywalls, and no premium tiers.
-            If it's helping you hit your goals, consider chipping in to keep it free for everyone.
-          </p>
-        </div>
+              {/* Message */}
+              <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4">
+                <p className="text-gray-700 dark:text-gray-300 mb-2">
+                  <strong>You've saved ${stats.savedVsCompetitors}</strong> vs MyFitnessPal's $20/mo plan!
+                </p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Free Calorie Track has no ads, no paywalls, and no premium tiers.
+                  If it's helping you hit your goals, consider chipping in to keep it free for everyone.
+                </p>
+              </div>
+            </>
+          );
+        })()}
 
         {/* Donation Button */}
         <a
@@ -634,55 +690,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
         >
           Chip in $5
         </a>
-      </div>
-
-      {/* Dashboard Customization */}
-      <div className="card">
-        <h2 className="text-2xl font-bold mb-4">Dashboard Customization</h2>
-
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <input
-              type="checkbox"
-              id="waterTrackerEnabled"
-              checked={waterTrackerEnabled}
-              onChange={(e) => {
-                setWaterTrackerEnabled(e.target.checked);
-                saveWaterTrackerEnabled(e.target.checked);
-              }}
-              className="w-5 h-5 text-emerald-500 rounded mt-1"
-            />
-            <div>
-              <label htmlFor="waterTrackerEnabled" className="text-lg font-semibold cursor-pointer">
-                Show Water Intake Tracker
-              </label>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Display the water intake tracker on your dashboard to track daily hydration.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <input
-              type="checkbox"
-              id="mealTypeEnabled"
-              checked={mealTypeEnabled}
-              onChange={(e) => {
-                setMealTypeEnabled(e.target.checked);
-                saveMealTypeEnabled(e.target.checked);
-              }}
-              className="w-5 h-5 text-emerald-500 rounded mt-1"
-            />
-            <div>
-              <label htmlFor="mealTypeEnabled" className="text-lg font-semibold cursor-pointer">
-                Categorize meals by type
-              </label>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Prompt to assign each food to Breakfast, Lunch, Dinner, or Snacks when logging.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Share Section */}
