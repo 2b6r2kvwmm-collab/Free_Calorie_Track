@@ -595,14 +595,16 @@ export default function Dashboard({ onRefresh }) {
               return (
                 <div key={mealType} className="space-y-2">
                   {/* Meal Type Header */}
-                  <div className="flex justify-between items-center border-b-2 border-gray-200 dark:border-gray-700 pb-2">
-                    <span className="font-semibold text-gray-700 dark:text-gray-300">
-                      {mealType}
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {mealCalories} cal
-                    </span>
-                  </div>
+                  {mealType !== 'Unspecified' && (
+                    <div className="flex justify-between items-center border-b-2 border-gray-200 dark:border-gray-700 pb-2">
+                      <span className="font-semibold text-gray-700 dark:text-gray-300">
+                        {mealType}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {mealCalories} cal
+                      </span>
+                    </div>
+                  )}
 
                   {/* Foods in this meal */}
                   <div className="space-y-3 pl-2">
