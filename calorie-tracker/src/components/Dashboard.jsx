@@ -16,6 +16,12 @@ import {
   getCustomCalorieGoal,
   getLocalDateString,
   getWaterTrackerEnabled,
+  getMilestonesShown,
+  markMilestoneShown,
+  calculateUserStats,
+  getBackupReminderState,
+  markBackupReminderShown,
+  hasExported,
 } from '../utils/storage';
 import {
   calculateBMR,
@@ -35,6 +41,8 @@ import ExerciseLog from './ExerciseLog';
 import MacroTracker from './MacroTracker';
 import Achievements from './Achievements';
 import WaterTracker from './WaterTracker';
+import MilestoneModal from './MilestoneModal';
+import BackupReminderModal from './BackupReminderModal';
 
 export default function Dashboard({ onRefresh }) {
   const [entries, setEntries] = useState({ food: [], exercise: [] });
@@ -47,6 +55,8 @@ export default function Dashboard({ onRefresh }) {
   const [editingFood, setEditingFood] = useState(null); // timestamp of food entry being edited
   const [editingExercise, setEditingExercise] = useState(null); // timestamp of exercise entry being edited
   const [editFormData, setEditFormData] = useState({});
+  const [showMilestone, setShowMilestone] = useState(null);
+  const [showBackupReminder, setShowBackupReminder] = useState(false);
   const waterTrackerEnabled = getWaterTrackerEnabled();
 
   const profile = getProfile();
@@ -100,6 +110,48 @@ export default function Dashboard({ onRefresh }) {
   useEffect(() => {
     updateDailyStreak(netCalories, dailyGoal);
   }, [netCalories, dailyGoal]);
+
+  // Check for milestone celebrations and backup reminders
+  useEffect(() => {
+    const stats = calculateUserStats();
+    const milestonesShown = getMilestonesShown();
+    const { daysTracked } = stats;
+
+    // Check 365-day milestone first (highest priority)
+    if (daysTracked >= 365 && !milestonesShown.days365) {
+      setShowMilestone(365);
+      return;
+    }
+
+    // Check 180-day milestone
+    if (daysTracked >= 180 && !milestonesShown.days180) {
+      setShowMilestone(180);
+      return;
+    }
+
+    // Check 60-day milestone
+    if (daysTracked >= 60 && !milestonesShown.days60) {
+      setShowMilestone(60);
+      return;
+    }
+
+    // Backup reminder: only if no milestone is showing and user hasn't exported
+    if (!hasExported()) {
+      const backupState = getBackupReminderState();
+
+      if (daysTracked >= 30 && !backupState.day30) {
+        setShowBackupReminder(true);
+        markBackupReminderShown('day30');
+        return;
+      }
+
+      if (daysTracked >= 10 && !backupState.day10) {
+        setShowBackupReminder(true);
+        markBackupReminderShown('day10');
+        return;
+      }
+    }
+  }, []); // Only run once on mount
 
   // Get previous 3 days net calories
   const foodLog = getFoodLog();
@@ -315,55 +367,6 @@ export default function Dashboard({ onRefresh }) {
         </div>
       </div>
 
-      {/* Streak & Achievements Banner */}
-      <div className="card bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 border-2 border-emerald-300 dark:border-emerald-700">
-        <div className="flex justify-between items-center">
-          <div className="flex-1">
-            {gamificationData.currentStreak > 0 ? (
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-3xl">🔥</span>
-                <div>
-                  <div className="font-bold text-lg text-emerald-600 dark:text-emerald-400">
-                    {gamificationData.currentStreak} Day Streak!
-                  </div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">
-                    Best: {gamificationData.longestStreak} days
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <span className="text-3xl">🏆</span>
-                <div>
-                  <div className="font-bold text-lg text-gray-700 dark:text-gray-300">
-                    Achievements
-                  </div>
-                  <div className="text-xs text-gray-600 dark:text-gray-400">
-                    Start tracking to unlock achievements
-                  </div>
-                </div>
-              </div>
-            )}
-            {recentAchievements.length > 0 && (
-              <div className="flex items-center gap-2 text-sm mt-2">
-                <span>Recent:</span>
-                {recentAchievements.slice(0, 2).map((achievement, idx) => (
-                  <span key={idx} className="bg-white dark:bg-gray-800 px-2 py-1 rounded-full">
-                    {achievement.icon} {achievement.title}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-          <button
-            onClick={() => setShowAchievements(true)}
-            className="btn-secondary text-sm whitespace-nowrap"
-          >
-            🏆 View All
-          </button>
-        </div>
-      </div>
-
       {/* Motivational Nudge */}
       {motivationalNudge && (
         <div className={`p-4 rounded-lg border-2 ${
@@ -524,6 +527,46 @@ export default function Dashboard({ onRefresh }) {
           isCustomGoals={usingCustomGoals}
         />
       )}
+
+      {/* Streak & Achievements Bar */}
+      <div
+        className="flex items-center justify-between bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg px-4 py-2 cursor-pointer hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors"
+        onClick={() => setShowAchievements(true)}
+      >
+        <div className="flex items-center gap-3 text-sm flex-wrap">
+          {gamificationData.currentStreak > 0 && (
+            <span className="font-semibold text-emerald-700 dark:text-emerald-400">
+              🔥 {gamificationData.currentStreak} Day Streak
+            </span>
+          )}
+          {gamificationData.currentStreak > 0 && gamificationData.longestStreak > 0 && (
+            <span className="text-gray-400 dark:text-gray-600">•</span>
+          )}
+          {gamificationData.longestStreak > 0 && (
+            <span className="text-gray-600 dark:text-gray-400">
+              Best: {gamificationData.longestStreak} days
+            </span>
+          )}
+          {recentAchievements.length > 0 && (
+            <>
+              <span className="text-gray-400 dark:text-gray-600">•</span>
+              {recentAchievements.slice(0, 2).map((achievement, idx) => (
+                <span key={idx} className="text-gray-600 dark:text-gray-400">
+                  {achievement.icon} {achievement.title}
+                </span>
+              ))}
+            </>
+          )}
+          {gamificationData.currentStreak === 0 && gamificationData.unlockedAchievements.length === 0 && (
+            <span className="text-gray-500 dark:text-gray-400">
+              🏆 Start tracking to unlock achievements
+            </span>
+          )}
+        </div>
+        <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold whitespace-nowrap ml-3">
+          View All →
+        </span>
+      </div>
 
       {/* Action Buttons */}
       <div className="grid grid-cols-2 gap-4">
@@ -833,6 +876,28 @@ export default function Dashboard({ onRefresh }) {
 
       {showAchievements && (
         <Achievements onClose={() => setShowAchievements(false)} />
+      )}
+
+      {showMilestone && (
+        <MilestoneModal
+          milestone={showMilestone}
+          stats={calculateUserStats()}
+          onClose={() => {
+            markMilestoneShown(showMilestone);
+            setShowMilestone(null);
+          }}
+          onDonate={() => {
+            markMilestoneShown(showMilestone);
+            setShowMilestone(null);
+            window.open('https://buymeacoffee.com/griffs', '_blank');
+          }}
+        />
+      )}
+
+      {showBackupReminder && (
+        <BackupReminderModal
+          onClose={() => setShowBackupReminder(false)}
+        />
       )}
     </div>
   );

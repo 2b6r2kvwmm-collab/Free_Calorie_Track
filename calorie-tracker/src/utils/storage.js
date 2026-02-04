@@ -16,6 +16,7 @@ const STORAGE_KEYS = {
   WATER_LOG: 'waterLog',
   WATER_UNIT: 'waterUnit',
   WORKOUT_TEMPLATES: 'workoutTemplates',
+  MILESTONES_SHOWN: 'milestonesShown',
 };
 
 // Get local date string (YYYY-MM-DD) in user's timezone, not UTC
@@ -395,4 +396,60 @@ export function copyYesterdaysMeals() {
   });
 
   return { success: true, count, message: `Copied ${count} meal(s) from yesterday` };
+}
+
+// Backup reminder tracking - { day10: true, day30: false }
+export function getBackupReminderState() {
+  return getData('backupReminderState') || { day10: false, day30: false };
+}
+
+export function markBackupReminderShown(stage) {
+  const state = getBackupReminderState();
+  state[stage] = true;
+  setData('backupReminderState', state);
+}
+
+export function hasExported() {
+  return getData('hasExported') === true;
+}
+
+// Milestone tracking - { days60: true, days180: false, days365: false }
+export function getMilestonesShown() {
+  return getData(STORAGE_KEYS.MILESTONES_SHOWN) || {
+    days60: false,
+    days180: false,
+    days365: false,
+  };
+}
+
+export function markMilestoneShown(milestone) {
+  const milestones = getMilestonesShown();
+  milestones[`days${milestone}`] = true;
+  setData(STORAGE_KEYS.MILESTONES_SHOWN, milestones);
+}
+
+// Calculate user stats for milestone celebrations and settings
+export function calculateUserStats() {
+  const foodLog = getFoodLog();
+  const exerciseLog = getExerciseLog();
+
+  // Get unique days tracked
+  const uniqueDays = new Set(foodLog.map(entry => entry.date));
+  const daysTracked = uniqueDays.size;
+
+  // Count meals and workouts
+  const mealsLogged = foodLog.length;
+  const workouts = exerciseLog.length;
+
+  // Calculate savings vs MyFitnessPal Premium ($80/year)
+  // Base calculation on days tracked
+  const daysInYear = 365;
+  const savedVsCompetitors = Math.round((daysTracked / daysInYear) * 80);
+
+  return {
+    daysTracked,
+    mealsLogged,
+    workouts,
+    savedVsCompetitors,
+  };
 }

@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react';
-import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled } from '../utils/storage';
+import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, calculateUserStats } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
+import { handleExport } from '../utils/backupExport';
 
 export default function Settings({ onUpdateProfile, onClose }) {
   const currentProfile = getProfile();
@@ -109,36 +110,8 @@ export default function Settings({ onUpdateProfile, onClose }) {
   };
 
   // Export all data as JSON
-  const handleExport = () => {
-    const exportData = {
-      profile: getData('profile'),
-      foodLog: getData('foodLog'),
-      exerciseLog: getData('exerciseLog'),
-      favorites: getData('favorites'),
-      recentFoods: getData('recentFoods'),
-      dailyGoal: getData('dailyGoal'),
-      weightLog: getData('weightLog'),
-      darkMode: getData('darkMode'),
-      customFoods: getData('customFoods'),
-      customMacros: getData('customMacros'),
-      waterLog: getData('waterLog'),
-      waterUnit: getData('waterUnit'),
-      workoutTemplates: getData('workoutTemplates'),
-      exportDate: new Date().toISOString(),
-      version: '1.1',
-    };
-
-    const dataStr = JSON.stringify(exportData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `calorie-tracker-backup-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-
+  const onExport = () => {
+    handleExport();
     setImportMessage('Data exported successfully!');
     setTimeout(() => setImportMessage(''), 3000);
   };
@@ -566,7 +539,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
         <div className="space-y-4">
           <div>
             <button
-              onClick={handleExport}
+              onClick={onExport}
               className="w-full py-3 px-6 rounded-lg font-semibold border-2 border-emerald-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
             >
               📥 Export Data (Download Backup)
@@ -606,6 +579,60 @@ export default function Settings({ onUpdateProfile, onClose }) {
             </div>
           )}
         </div>
+      </div>
+
+      {/* Support Free Calorie Track */}
+      <div className="card bg-gradient-to-br from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 border-2 border-emerald-200 dark:border-emerald-800">
+        <h2 className="text-2xl font-bold mb-4">Support Free Calorie Track</h2>
+
+        {/* Stats */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              {calculateUserStats().daysTracked}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Days Tracked</div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              {calculateUserStats().mealsLogged}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Meals Logged</div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              {calculateUserStats().workouts}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Workouts</div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-3 text-center">
+            <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              ${calculateUserStats().savedVsCompetitors}
+            </div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">Saved</div>
+          </div>
+        </div>
+
+        {/* Message */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4">
+          <p className="text-gray-700 dark:text-gray-300 mb-2">
+            <strong>You've saved ${calculateUserStats().savedVsCompetitors}</strong> vs MyFitnessPal Premium!
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Free Calorie Track has no ads, no paywalls, and no premium tiers.
+            If it's helping you hit your goals, consider chipping in to keep it free for everyone.
+          </p>
+        </div>
+
+        {/* Donation Button */}
+        <a
+          href="https://buymeacoffee.com/griffs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full py-3 px-6 rounded-lg font-semibold text-center bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+        >
+          Chip in $5
+        </a>
       </div>
 
       {/* Dashboard Customization */}
