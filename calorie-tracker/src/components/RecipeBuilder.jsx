@@ -302,7 +302,11 @@ export default function RecipeBuilder({ onSave, onClose }) {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
+                      <label htmlFor={`quantity-${index}`} className="sr-only">
+                        Quantity in grams for {ing.name}
+                      </label>
                       <input
+                        id={`quantity-${index}`}
                         type="number"
                         min="1"
                         step="1"

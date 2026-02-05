@@ -464,7 +464,9 @@ export default function Dashboard({ onRefresh }) {
               This is your target NET calories (food eaten minus calories burned).
               Use 0 for maintenance, negative for weight loss, positive for weight gain.
             </p>
+            <label htmlFor="goal-input" className="sr-only">Daily NET calorie goal</label>
             <input
+              id="goal-input"
               type="number"
               value={goalInput}
               onChange={(e) => setGoalInput(e.target.value)}

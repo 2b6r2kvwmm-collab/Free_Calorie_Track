@@ -78,7 +78,9 @@ export default function CommonFoods({ onAddFood, onClose }) {
         </div>
 
         {/* Search */}
+        <label htmlFor="common-foods-search" className="sr-only">Search common foods</label>
         <input
+          id="common-foods-search"
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

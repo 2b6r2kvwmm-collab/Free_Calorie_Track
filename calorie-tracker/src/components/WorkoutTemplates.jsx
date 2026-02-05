@@ -284,7 +284,9 @@ export default function WorkoutTemplates({ onAddExercises, onClose }) {
                 </button>
               ) : (
                 <div className="border-2 border-emerald-500 rounded-lg p-4">
+                  <label htmlFor="template-exercise-search" className="sr-only">Search exercises to add to template</label>
                   <input
+                    id="template-exercise-search"
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}

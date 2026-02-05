@@ -278,7 +278,9 @@ export default function Settings({ onUpdateProfile, onClose }) {
           </div>
 
           <div>
+            <label htmlFor="import-file-input" className="sr-only">Import backup file</label>
             <input
+              id="import-file-input"
               ref={fileInputRef}
               type="file"
               accept=".json"

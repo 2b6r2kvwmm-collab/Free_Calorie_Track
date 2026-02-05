@@ -62,7 +62,9 @@ export default function FoodSearch({ onAddFood, onClose }) {
 
         <form onSubmit={handleSearch} className="mb-6">
           <div className="flex gap-3">
+            <label htmlFor="food-search-input" className="sr-only">Search for food in database</label>
             <input
+              id="food-search-input"
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}

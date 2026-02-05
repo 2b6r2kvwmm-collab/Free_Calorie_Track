@@ -197,7 +197,9 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
               📋 Workout Templates
             </button>
 
+            <label htmlFor="exercise-search-input" className="sr-only">Search for exercises</label>
             <input
+              id="exercise-search-input"
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}

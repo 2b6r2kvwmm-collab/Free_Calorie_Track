@@ -142,7 +142,9 @@ export default function WaterTracker({ onRefresh }) {
         </button>
       ) : (
         <div className="flex gap-2">
+          <label htmlFor="custom-water-input" className="sr-only">Custom water amount in {unit}</label>
           <input
+            id="custom-water-input"
             type="number"
             value={customAmount}
             onChange={(e) => setCustomAmount(e.target.value)}
