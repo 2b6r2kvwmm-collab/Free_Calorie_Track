@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { getFavorites, getRecentFoods, addFavorite, removeFavorite, copyYesterdaysMeals, getMealTypeEnabled, saveMealTypeEnabled } from '../utils/storage';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import FoodSearch from './FoodSearch';
 import BarcodeScanner from './BarcodeScanner';
 import QuickAdd from './QuickAdd';
@@ -15,7 +16,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
   const [copyMessage, setCopyMessage] = useState('');
   const favorites = getFavorites();
   const recentFoods = getRecentFoods();
-  const modalRef = useRef(null);
+  const modalRef = useModalAccessibility(true, onClose);
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -101,7 +102,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Add Food</h2>
