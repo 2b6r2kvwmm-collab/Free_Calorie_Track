@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { calculateMacroTargets } from '../utils/macros';
 import { calculateBMR, calculateTDEE } from '../utils/calculations';
 
@@ -35,6 +36,7 @@ export default function MacroTracker({
     macroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal);
   }
 
+  const [showGoalDetails, setShowGoalDetails] = useState(false);
   const totalCurrentCal = (currentProtein * 4) + (currentCarbs * 4) + (currentFat * 9);
 
   // Calculate progress percentages
@@ -47,14 +49,26 @@ export default function MacroTracker({
       <h2 className="text-2xl font-bold mb-4">Macro Nutrition</h2>
 
       <div className="mb-6 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-        <div className="font-semibold mb-2">Goal: {macroTargets.goalLabel}</div>
-        <div className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-          {macroTargets.explanation}
+        <div className="flex items-center justify-between">
+          <div className="font-semibold">Goal: {macroTargets.goalLabel}</div>
+          <button
+            onClick={() => setShowGoalDetails(prev => !prev)}
+            className="text-xs text-emerald-600 dark:text-emerald-400 hover:underline"
+          >
+            {showGoalDetails ? 'Less ▴' : 'More ▾'}
+          </button>
         </div>
-        {totalCurrentCal > 0 && (
-          <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-            Today's total: {Math.round(totalCurrentCal)} calories
-          </div>
+        {showGoalDetails && (
+          <>
+            <div className="text-sm text-gray-700 dark:text-gray-300 mt-2">
+              {macroTargets.explanation}
+            </div>
+            {totalCurrentCal > 0 && (
+              <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">
+                Today's total: {Math.round(totalCurrentCal)} calories
+              </div>
+            )}
+          </>
         )}
       </div>
 

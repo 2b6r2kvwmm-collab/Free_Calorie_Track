@@ -156,6 +156,7 @@ export default function Dashboard({ onRefresh }) {
   // Get previous 3 days net calories
   const foodLog = getFoodLog();
   const exerciseLog = getExerciseLog();
+  const daysTracked = new Set(foodLog.map(e => e.date)).size;
 
   const today = new Date();
   const previousDays = [];
@@ -508,10 +509,12 @@ export default function Dashboard({ onRefresh }) {
           </div>
         </div>
 
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-          <span className="font-semibold">💡 How NET works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
-          NET = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
-        </div>
+        {daysTracked < 5 && (
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+            <span className="font-semibold">💡 How NET works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
+            NET = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
+          </div>
+        )}
       </div>
 
       {/* Macros Breakdown with Goals */}
