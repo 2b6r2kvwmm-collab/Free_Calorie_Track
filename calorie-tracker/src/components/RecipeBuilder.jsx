@@ -3,8 +3,10 @@ import { commonFoods } from '../utils/commonFoods';
 import { addCustomFood } from '../utils/storage';
 import { getFoodByBarcode } from '../utils/openfoodfacts';
 import BarcodeScanner from './BarcodeScanner';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function RecipeBuilder({ onSave, onClose }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [recipeName, setRecipeName] = useState('');
   const [servings, setServings] = useState(1);
   const [ingredients, setIngredients] = useState([]);
@@ -14,7 +16,7 @@ export default function RecipeBuilder({ onSave, onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [barcodeInput, setBarcodeInput] = useState('');
   const [loadingBarcode, setLoadingBarcode] = useState(false);
-  const modalRef = useRef(null);
+  const scrollRef = useRef(null);
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -26,8 +28,8 @@ export default function RecipeBuilder({ onSave, onClose }) {
 
   // Scroll to top when opening/closing selectors
   useEffect(() => {
-    if (modalRef.current) {
-      modalRef.current.scrollTop = 0;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
     }
   }, [showFoodSelector, showBarcodeManual]);
 
@@ -129,8 +131,8 @@ export default function RecipeBuilder({ onSave, onClose }) {
   const totals = calculateTotals();
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
-      <div className="card max-w-4xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
+      <div className="card max-w-4xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto" ref={scrollRef}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Recipe Builder</h2>
           <button

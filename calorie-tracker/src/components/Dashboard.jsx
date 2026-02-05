@@ -23,6 +23,7 @@ import {
   markBackupReminderShown,
   hasExported,
 } from '../utils/storage';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import {
   calculateBMR,
   calculateTDEE,
@@ -49,6 +50,7 @@ export default function Dashboard({ onRefresh }) {
   const [showFoodInput, setShowFoodInput] = useState(false);
   const [showExerciseLog, setShowExerciseLog] = useState(false);
   const [showGoalEdit, setShowGoalEdit] = useState(false);
+  const goalModalRef = useModalAccessibility(showGoalEdit, () => setShowGoalEdit(false));
   const [goalInput, setGoalInput] = useState('');
   const [showAchievements, setShowAchievements] = useState(false);
   const [showNewAchievement, setShowNewAchievement] = useState(null);
@@ -457,7 +459,7 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Goal Edit Modal */}
       {showGoalEdit && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" ref={goalModalRef}>
           <div className="card max-w-md w-full">
             <h3 className="text-xl font-bold mb-4">Set Daily NET Calorie Goal</h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">

@@ -3,8 +3,10 @@ import { exercises, calculateExerciseCalories, calculateWeightedVestMET, getRunn
 import { getProfile, addExerciseEntry } from '../utils/storage';
 import WorkoutTemplates from './WorkoutTemplates';
 import { trackWorkout } from '../utils/gamification';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [duration, setDuration] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +23,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [walkingDistance, setWalkingDistance] = useState('');
   const [walkingDistanceUnit, setWalkingDistanceUnit] = useState('miles');
   const [showWorkoutTemplates, setShowWorkoutTemplates] = useState(false);
-  const modalRef = useRef(null);
+  const scrollRef = useRef(null);
 
   const profile = getProfile();
 
@@ -35,8 +37,8 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
 
   // Scroll to top when exercise is selected/deselected
   useEffect(() => {
-    if (modalRef.current) {
-      modalRef.current.scrollTop = 0;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
     }
   }, [selectedExercise]);
 
@@ -175,8 +177,8 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
-      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto" ref={scrollRef}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Log Exercise</h2>
           <button

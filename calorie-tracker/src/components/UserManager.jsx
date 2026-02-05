@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { getAllUsers, getCurrentUserId, setCurrentUser, addUser, deleteUser, renameUser } from '../utils/users';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function UserManager({ onUserSwitch, onClose }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [users, setUsers] = useState(getAllUsers());
   const [currentUserId, setCurrentUserIdState] = useState(getCurrentUserId());
   const [showAddUser, setShowAddUser] = useState(false);
@@ -48,7 +50,7 @@ export default function UserManager({ onUserSwitch, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="card max-w-2xl w-full my-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Manage Users</h2>

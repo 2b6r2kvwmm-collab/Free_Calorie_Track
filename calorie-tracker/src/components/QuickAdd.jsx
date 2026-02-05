@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function QuickAdd({ onAddFood, onClose }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [calories, setCalories] = useState('');
   const [name, setName] = useState('');
   const [protein, setProtein] = useState('');
@@ -29,7 +31,7 @@ export default function QuickAdd({ onAddFood, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="card max-w-md w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Quick Add Calories</h2>

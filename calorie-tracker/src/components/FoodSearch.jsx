@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { searchFoods } from '../utils/openfoodfacts';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function FoodSearch({ onAddFood, onClose }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
-  const modalRef = useRef(null);
+  const scrollRef = useRef(null);
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -18,8 +20,8 @@ export default function FoodSearch({ onAddFood, onClose }) {
 
   // Scroll to top when results change
   useEffect(() => {
-    if (modalRef.current && searched) {
-      modalRef.current.scrollTop = 0;
+    if (scrollRef.current && searched) {
+      scrollRef.current.scrollTop = 0;
     }
   }, [results, searched]);
 
@@ -47,8 +49,8 @@ export default function FoodSearch({ onAddFood, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
-      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto" ref={scrollRef}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Search Foods</h2>
           <button

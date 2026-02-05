@@ -6,15 +6,17 @@ import {
   getProfile,
 } from '../utils/storage';
 import { exercises, calculateExerciseCalories } from '../utils/calculations';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function WorkoutTemplates({ onAddExercises, onClose }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [templates, setTemplates] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [templateName, setTemplateName] = useState('');
   const [selectedExercises, setSelectedExercises] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showExerciseSearch, setShowExerciseSearch] = useState(false);
-  const modalRef = useRef(null);
+  const scrollRef = useRef(null);
   const profile = getProfile();
 
   useEffect(() => {
@@ -29,8 +31,8 @@ export default function WorkoutTemplates({ onAddExercises, onClose }) {
   }, []);
 
   useEffect(() => {
-    if (modalRef.current) {
-      modalRef.current.scrollTop = 0;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
     }
   }, [showCreateForm, showExerciseSearch]);
 
@@ -118,8 +120,8 @@ export default function WorkoutTemplates({ onAddExercises, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
-      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto" ref={scrollRef}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Workout Templates</h2>
           <button

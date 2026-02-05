@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { getGamificationData, ACHIEVEMENTS, getAchievementProgress } from '../utils/gamification';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function Achievements({ onClose }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [activeTab, setActiveTab] = useState('unlocked');
   const data = getGamificationData();
   const progressData = getAchievementProgress();
@@ -42,7 +44,7 @@ export default function Achievements({ onClose }) {
   });
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="card max-w-3xl w-full my-8 max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6 sticky top-0 bg-white dark:bg-gray-800 pb-4 border-b border-gray-200 dark:border-gray-700 z-10">
           <div>

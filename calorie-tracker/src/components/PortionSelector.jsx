@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { supportsToppings, sandwichToppings } from '../utils/commonFoods';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function PortionSelector({ food, onConfirm, onCancel }) {
+  const modalRef = useModalAccessibility(true, onCancel);
   const [inputMode, setInputMode] = useState('servings'); // 'servings' or 'weight'
   const [servings, setServings] = useState('1');
   const [exactWeight, setExactWeight] = useState('');
@@ -100,7 +102,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
   const quickOptions = [0.5, 1, 1.5, 2, 2.5, 3];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="card max-w-md w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Select Portion Size</h2>

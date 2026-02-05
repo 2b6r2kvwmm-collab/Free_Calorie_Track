@@ -2,13 +2,15 @@ import { useState, useEffect, useRef } from 'react';
 import { searchCommonFoods, getCategories } from '../utils/commonFoods';
 import { getFavorites, addFavorite, removeFavorite } from '../utils/storage';
 import PortionSelector from './PortionSelector';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function CommonFoods({ onAddFood, onClose }) {
+  const modalRef = useModalAccessibility(true, onClose);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedFood, setSelectedFood] = useState(null);
   const [favorites, setFavorites] = useState(getFavorites());
-  const modalRef = useRef(null);
+  const scrollRef = useRef(null);
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -20,8 +22,8 @@ export default function CommonFoods({ onAddFood, onClose }) {
 
   // Scroll to top when search or category changes
   useEffect(() => {
-    if (modalRef.current) {
-      modalRef.current.scrollTop = 0;
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
     }
   }, [searchQuery, selectedCategory]);
 
@@ -64,8 +66,8 @@ export default function CommonFoods({ onAddFood, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" ref={modalRef}>
-      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
+      <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto" ref={scrollRef}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Common Foods</h2>
           <button
