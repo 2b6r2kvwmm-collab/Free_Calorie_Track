@@ -196,13 +196,19 @@ export default function Dashboard({ onRefresh }) {
   // Color coding based on NET calories vs NET goal
   let statusColor = 'text-emerald-600 dark:text-emerald-400';
   let statusBg = 'bg-emerald-50 dark:bg-emerald-900/20';
+  let statusText = '✓ Under Goal';
+  let statusIcon = '✓';
 
   if (netCalories > dailyGoal) {
     statusColor = 'text-red-600 dark:text-red-400';
     statusBg = 'bg-red-50 dark:bg-red-900/20';
+    statusText = '✗ Over Goal';
+    statusIcon = '✗';
   } else if (netCalories > dailyGoal * 0.9) {
     statusColor = 'text-yellow-600 dark:text-yellow-400';
     statusBg = 'bg-yellow-50 dark:bg-yellow-900/20';
+    statusText = '⚠ Approaching Goal';
+    statusIcon = '⚠';
   }
 
   const handleAddFood = (food) => {
@@ -394,7 +400,7 @@ export default function Dashboard({ onRefresh }) {
           <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
             CALORIES TO GOAL
           </div>
-          <div className={`text-6xl font-bold ${statusColor} mb-4`}>
+          <div className={`text-6xl font-bold ${statusColor} mb-2`}>
             {dailyGoal - netCalories > 0 ? (
               dailyGoal - netCalories
             ) : dailyGoal - netCalories < 0 ? (
@@ -402,6 +408,11 @@ export default function Dashboard({ onRefresh }) {
             ) : (
               <>0</>
             )}
+          </div>
+
+          {/* Status indicator for accessibility */}
+          <div className={`text-sm font-semibold ${statusColor} mb-4`}>
+            {statusText}
           </div>
 
           {/* Net Calories and Net Goal on same line */}
