@@ -511,7 +511,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               })}
             </div>
               <div className="mt-4 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-                <p className="font-semibold mb-1">💡 Science-Backed Recommendations:</p>
+                <p className="font-semibold mb-1">💡 Based on standard nutrition formulas:</p>
                 <p className="text-xs">
                   Your NET calorie goal will be automatically set based on your fitness goal.
                   You can still adjust it manually from the Dashboard if needed.
@@ -670,7 +670,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               {/* Message */}
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4">
                 <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  <strong>You've saved ${stats.savedVsCompetitors}</strong> vs MyFitnessPal's $20/mo plan!
+                  You've saved about $20 compared to other subscription-based trackers!
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   Free Calorie Track has no ads, no paywalls, and no premium tiers.

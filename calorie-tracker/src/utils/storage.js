@@ -470,7 +470,7 @@ export function calculateUserStats() {
     monthsUsing = Math.max(1, Math.round(diffDays / 30.44));
   }
 
-  // Calculate savings vs MyFitnessPal Premium monthly plan ($20/month)
+  // Calculate savings vs typical subscription-based trackers
   const savedVsCompetitors = monthsUsing * 20;
 
   return {

@@ -31,12 +31,12 @@ const FAQ_SECTIONS = [
     title: 'Compared to Other Apps',
     items: [
       {
-        q: 'How is Free Calorie Track different from MyFitnessPal?',
-        a: 'MyFitnessPal requires a free account and gates several key features — including barcode scanning, macro tracking, and trend insights — behind a $20/month or $80/year premium subscription. It also shows ads to free-tier users. Free Calorie Track offers all of those features for free, requires no account, shows no ads, and stores your data locally rather than on MyFitnessPal\'s servers.',
+        q: 'How is Free Calorie Track different from MyFitnessPal®?',
+        a: 'MyFitnessPal® requires a free account and limits full access to several features — including barcode scanning, macro tracking, and trend insights — without a premium subscription. It may show ads to free-tier users. Free Calorie Track includes these features for free, requires no account, shows no ads, and stores nutrition data locally on your device rather than requiring a cloud-based account.',
       },
       {
-        q: 'How is Free Calorie Track different from Lose It?',
-        a: 'Lose It also requires an account and paywalls barcode scanning and macro tracking behind a $10/month or $40/year subscription. Free Calorie Track includes barcode scanning and macro tracking for free, with no account required and no ads.',
+        q: 'How is Free Calorie Track different from Lose It!™?',
+        a: 'Lose It!™ requires an account and requires a premium subscription for full access to barcode scanning and macro tracking. Free Calorie Track includes barcode scanning and macro tracking for free, with no account required and no ads.',
       },
       {
         q: 'Why is this app free when others charge for the same features?',
@@ -86,7 +86,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'What is the difference between BMR and TDEE?',
-        a: 'BMR (Basal Metabolic Rate) is how many calories your body burns doing absolutely nothing — just keeping you alive. TDEE (Total Daily Energy Expenditure) is your total daily burn, which includes BMR plus the energy spent on daily movement, activity, and digestion. TDEE is the number that actually matters for tracking, because it\'s the baseline your food intake gets compared against. Free Calorie Track calculates both using the Mifflin-St Jeor equation, which is one of the most clinically validated formulas available.',
+        a: 'BMR (Basal Metabolic Rate) is how many calories your body burns doing absolutely nothing — just keeping you alive. TDEE (Total Daily Energy Expenditure) is your total daily burn, which includes BMR plus the energy spent on daily movement, activity, and digestion. TDEE is the number that actually matters for tracking, because it\'s the baseline your food intake gets compared against. Free Calorie Track calculates both using the widely used Mifflin-St Jeor equation.',
       },
       {
         q: 'How does the app calculate my calorie goal?',
@@ -98,7 +98,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Will tracking calories actually help me lose weight?',
-        a: 'Calorie tracking is one of the most well-studied tools for weight loss. Awareness of what and how much you eat is consistently linked to better outcomes than diet plans alone. That said, tracking is a tool — it works best when it\'s sustainable. Free Calorie Track is designed to make tracking fast and low-friction so you\'ll actually stick with it. No ads interrupting you, no paywalls forcing upgrades, and full history editing so one missed day doesn\'t derail your streak.',
+        a: 'Research suggests that calorie awareness is a useful tool for many people managing their weight. That said, tracking is a tool — it works best when it\'s sustainable. Free Calorie Track is designed to make tracking fast and low-friction so you\'ll actually stick with it. No ads interrupting you, no paywalls forcing upgrades, and full history editing so one missed day doesn\'t derail your streak. Individual results vary.',
       },
       {
         q: 'Can I use this app for muscle gain, not just fat loss?',
@@ -152,7 +152,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'Where is my data stored?',
-        a: 'All data is stored locally on your device using browser storage (localStorage). Nothing is sent to a server. No cloud account, no syncing, no data collection. Your meal logs, exercise history, weight entries, and personal profile information stay entirely on the device you\'re using.',
+        a: 'Your nutrition data and personal information are stored locally on your device using browser storage (localStorage). No cloud account is required and no syncing takes place. Your meal logs, exercise history, weight entries, and profile information stay entirely on the device you\'re using.',
       },
       {
         q: 'Does the app work without an internet connection?',
@@ -219,13 +219,12 @@ const HOMESCREEN_STEPS = [
 ];
 
 const COMPARISON_ROWS = [
-  { feature: 'Price', fct: 'Free, forever', mfp: 'Premium: $20/mo or $80/yr', li: 'Premium: $10/mo or $40/yr' },
-  { feature: 'Barcode Scanning', fct: 'Free', mfp: 'Premium', li: 'Premium' },
-  { feature: 'Macro Tracking', fct: 'Free', mfp: 'Limited free', li: 'Limited free' },
-  { feature: 'Trends & Insights', fct: 'Free', mfp: 'Limited free', li: 'Limited free' },
-  { feature: 'Ad-Free', fct: 'Yes', mfp: 'Premium', li: 'Premium' },
-  { feature: 'Account Required', fct: 'No', mfp: 'Yes', li: 'Yes' },
-  { feature: 'Data Stays on Device', fct: 'Yes', mfp: 'No', li: 'No' },
+  { feature: 'Barcode scanning', fct: 'Included', mfp: 'Requires subscription', li: 'Requires subscription' },
+  { feature: 'Macro tracking', fct: 'Included', mfp: 'Free tier limited', li: 'Free tier limited' },
+  { feature: 'Trends & insights', fct: 'Included', mfp: 'Free tier limited', li: 'Free tier limited' },
+  { feature: 'Ad-free', fct: 'Included', mfp: 'Requires subscription', li: 'Requires subscription' },
+  { feature: 'Account required', fct: 'No', mfp: 'Yes', li: 'Yes' },
+  { feature: 'Data storage', fct: 'Stored locally', mfp: 'Cloud-based', li: 'Cloud-based' },
 ];
 
 function FAQAccordion({ sections }) {
@@ -375,15 +374,15 @@ export default function LandingPage({ onGetStarted }) {
       {/* Comparison Table */}
       <div className="max-w-2xl mx-auto px-4 py-12">
         <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">See how we compare</h2>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Features that others charge for — all free here.</p>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Everything free. Always.</p>
         <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-emerald-600 text-white">
                 <th className="text-left px-4 py-3 font-semibold">Feature</th>
                 <th className="text-left px-4 py-3 font-semibold">Free Calorie Track</th>
-                <th className="text-left px-4 py-3 font-semibold">MyFitnessPal</th>
-                <th className="text-left px-4 py-3 font-semibold">Lose It</th>
+                <th className="text-left px-4 py-3 font-semibold">MyFitnessPal®</th>
+                <th className="text-left px-4 py-3 font-semibold">Lose It!™</th>
               </tr>
             </thead>
             <tbody>
@@ -398,6 +397,9 @@ export default function LandingPage({ onGetStarted }) {
             </tbody>
           </table>
         </div>
+        <p className="text-xs text-gray-400 dark:text-gray-500 mt-4 leading-relaxed">
+          Feature availability is based on publicly available information and typical free-tier usage as of February 2026. Competitor products may change over time. Trademarks are the property of their respective owners.
+        </p>
       </div>
 
       {/* CTA */}
@@ -418,13 +420,16 @@ export default function LandingPage({ onGetStarted }) {
         <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Everything you need to know</h2>
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Tap a section to expand.</p>
         <FAQAccordion sections={FAQ_SECTIONS} />
+        <p className="text-xs text-gray-400 dark:text-gray-500 mt-6 leading-relaxed">
+          MyFitnessPal® and Lose It!™ are trademarks of their respective owners. Feature availability is based on typical free-tier usage and may change over time. No affiliation or endorsement is implied.
+        </p>
       </div>
 
       {/* Footer */}
       <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-8">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Free Calorie Track is open source and funded by optional donations.
+            Free Calorie Track is free and funded by optional donations.
           </p>
           <a
             href="https://buymeacoffee.com/griffs"
