@@ -107,6 +107,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
           <button
             onClick={onCancel}
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-3xl font-bold"
+            aria-label="Close portion selector"
           >
             ×
           </button>

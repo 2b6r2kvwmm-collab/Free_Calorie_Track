@@ -26,6 +26,7 @@ export default function MilestoneModal({ milestone, stats, onClose, onDonate }) 
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-2xl"
+          aria-label="Close milestone celebration"
         >
           ×
         </button>

@@ -136,6 +136,7 @@ export default function RecipeBuilder({ onSave, onClose }) {
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-3xl font-bold"
+            aria-label="Close recipe builder"
           >
             ×
           </button>
@@ -199,6 +200,7 @@ export default function RecipeBuilder({ onSave, onClose }) {
                   setSearchQuery('');
                 }}
                 className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+                aria-label="Close food selector"
               >
                 ×
               </button>
@@ -253,6 +255,7 @@ export default function RecipeBuilder({ onSave, onClose }) {
                   setBarcodeInput('');
                 }}
                 className="text-gray-500 hover:text-gray-700 text-2xl font-bold"
+                aria-label="Close barcode entry"
               >
                 ×
               </button>
@@ -311,6 +314,7 @@ export default function RecipeBuilder({ onSave, onClose }) {
                       <button
                         onClick={() => removeIngredient(index)}
                         className="text-red-600 hover:text-red-700 dark:text-red-400 text-xl font-bold"
+                        aria-label="Remove ingredient"
                       >
                         ×
                       </button>

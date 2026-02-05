@@ -54,6 +54,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-3xl font-bold"
+            aria-label="Close food search"
           >
             ×
           </button>

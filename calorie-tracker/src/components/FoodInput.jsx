@@ -108,6 +108,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-3xl font-bold"
+            aria-label="Close add food dialog"
           >
             ×
           </button>
@@ -231,6 +232,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                         <button
                           onClick={() => toggleFavorite(food, true)}
                           className="text-2xl"
+                          aria-label="Remove from favorites"
                         >
                           ⭐
                         </button>
@@ -289,6 +291,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                           <button
                             onClick={() => toggleFavorite(food, isFavorite)}
                             className="text-2xl"
+                            aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                           >
                             {isFavorite ? '⭐' : '☆'}
                           </button>
