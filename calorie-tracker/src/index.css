@@ -25,6 +25,32 @@
     @apply bg-white dark:bg-gray-800 rounded-xl shadow-md p-6;
   }
 
+  /* Accessibility: Visible focus indicators for keyboard navigation */
+  /* Uses :focus-visible to only show on keyboard nav, not mouse clicks */
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible {
+    @apply outline-none ring-4 ring-emerald-500 ring-opacity-50;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    @apply outline-none ring-4 ring-emerald-500 ring-opacity-50 border-emerald-500;
+  }
+
+  /* Ensure interactive elements have visible focus in high contrast mode */
+  @media (prefers-contrast: high) {
+    button:focus-visible,
+    a:focus-visible,
+    [role="button"]:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible {
+      @apply outline outline-4 outline-offset-2 outline-black dark:outline-white;
+    }
+  }
+
   /* iOS: Ensure content scrolls properly when keyboard appears */
   @supports (-webkit-touch-callout: none) {
     /* iOS Safari - prevent keyboard from blocking content */
