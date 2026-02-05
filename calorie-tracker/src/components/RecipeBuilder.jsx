@@ -4,6 +4,7 @@ import { addCustomFood } from '../utils/storage';
 import { getFoodByBarcode } from '../utils/openfoodfacts';
 import BarcodeScanner from './BarcodeScanner';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import AlertModal from './AlertModal';
 
 export default function RecipeBuilder({ onSave, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -16,6 +17,8 @@ export default function RecipeBuilder({ onSave, onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [barcodeInput, setBarcodeInput] = useState('');
   const [loadingBarcode, setLoadingBarcode] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const scrollRef = useRef(null);
 
   // Lock body scroll when modal opens
@@ -78,7 +81,8 @@ export default function RecipeBuilder({ onSave, onClose }) {
       setBarcodeInput('');
       setShowBarcodeManual(false);
     } else {
-      alert('Product not found. Please try another barcode.');
+      setAlertMessage('Product not found. Please try another barcode.');
+      setShowAlert(true);
     }
     setLoadingBarcode(false);
   };
@@ -95,12 +99,14 @@ export default function RecipeBuilder({ onSave, onClose }) {
 
   const handleSaveRecipe = () => {
     if (!recipeName.trim()) {
-      alert('Please enter a recipe name');
+      setAlertMessage('Please enter a recipe name');
+      setShowAlert(true);
       return;
     }
 
     if (ingredients.length === 0) {
-      alert('Please add at least one ingredient');
+      setAlertMessage('Please add at least one ingredient');
+      setShowAlert(true);
       return;
     }
 
@@ -378,6 +384,14 @@ export default function RecipeBuilder({ onSave, onClose }) {
             Save Recipe
           </button>
         </div>
+
+        <AlertModal
+          isOpen={showAlert}
+          onClose={() => setShowAlert(false)}
+          title="Recipe Builder"
+          message={alertMessage}
+          type="warning"
+        />
       </div>
     </div>
   );

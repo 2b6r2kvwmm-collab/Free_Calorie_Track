@@ -5,6 +5,17 @@ import WorkoutTemplates from './WorkoutTemplates';
 import { trackWorkout } from '../utils/gamification';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
+// Helper function to calculate weighted vest calorie multiplier
+function getVestCalorieMultiplier(vestWeight) {
+  const weightMap = {
+    '10-15': 1.15,  // 15% increase
+    '20': 1.25,     // 25% increase
+    '30': 1.35,     // 35% increase
+    '40+': 1.50,    // 50% increase
+  };
+  return weightMap[vestWeight] || 1.0;
+}
+
 export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const modalRef = useModalAccessibility(true, onClose);
   const [selectedExercise, setSelectedExercise] = useState(null);
@@ -67,12 +78,22 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       // Convert steps to miles (avg 2,000 steps per mile)
       const miles = numSteps / 2000;
       // Estimate calories: ~0.57 calories per step per kg of body weight
-      const caloriesBurned = Math.round(numSteps * 0.04 * profile.weight);
+      let caloriesBurned = Math.round(numSteps * 0.04 * profile.weight);
       // Estimate duration: ~2,000 steps per 20 minutes = 100 steps/min
       const estimatedDuration = Math.round(numSteps / 100);
 
+      // Apply weighted vest bonus if enabled
+      if (useWeightedVest) {
+        const vestBonus = getVestCalorieMultiplier(vestWeight);
+        caloriesBurned = Math.round(caloriesBurned * vestBonus);
+      }
+
+      const exerciseName = useWeightedVest
+        ? `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi, ${vestWeight} lb vest)`
+        : `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi)`;
+
       onAddExercise({
-        name: `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi)`,
+        name: exerciseName,
         duration: estimatedDuration,
         caloriesBurned,
       });
@@ -85,12 +106,22 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
         distanceMiles = distanceMiles * 0.621371; // Convert km to miles
       }
       // Estimate calories: ~100 calories per mile (varies by weight, using body weight factor)
-      const caloriesBurned = Math.round(distanceMiles * 100 * (profile.weight / 70)); // Adjusted for weight
+      let caloriesBurned = Math.round(distanceMiles * 100 * (profile.weight / 70)); // Adjusted for weight
       // Estimate duration: average walking speed of 3.5 mph
       const estimatedDuration = Math.round((distanceMiles / 3.5) * 60);
 
+      // Apply weighted vest bonus if enabled
+      if (useWeightedVest) {
+        const vestBonus = getVestCalorieMultiplier(vestWeight);
+        caloriesBurned = Math.round(caloriesBurned * vestBonus);
+      }
+
+      const exerciseName = useWeightedVest
+        ? `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi, ${vestWeight} lb vest)`
+        : `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi)`;
+
       onAddExercise({
-        name: `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi)`,
+        name: exerciseName,
         duration: estimatedDuration,
         caloriesBurned,
       });
@@ -321,8 +352,8 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
               </div>
             )}
 
-            {/* Weighted Vest Options (only for walking exercises with duration mode) */}
-            {isWalkingExercise && walkingTrackingMode === 'duration' && (
+            {/* Weighted Vest Options (for all walking tracking modes) */}
+            {isWalkingExercise && (
               <div>
                 <div className="flex items-center mb-3">
                   <input

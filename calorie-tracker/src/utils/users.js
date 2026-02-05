@@ -1,4 +1,5 @@
 // User management utilities
+import { sanitizeInput } from './sanitize';
 
 const USER_STORAGE_KEY = 'calorieTracker_users';
 const CURRENT_USER_KEY = 'calorieTracker_currentUser';
@@ -29,7 +30,7 @@ export function addUser(name) {
   const users = getAllUsers();
   const newUser = {
     id: `user_${Date.now()}`,
-    name,
+    name: sanitizeInput(name),
     createdAt: Date.now(),
   };
   users.push(newUser);
@@ -40,7 +41,6 @@ export function addUser(name) {
 // Delete user (and all their data)
 export function deleteUser(userId) {
   if (userId === 'default') {
-    alert('Cannot delete default user');
     return false;
   }
 
@@ -71,7 +71,7 @@ export function renameUser(userId, newName) {
   const users = getAllUsers();
   const user = users.find(u => u.id === userId);
   if (user) {
-    user.name = newName;
+    user.name = sanitizeInput(newName);
     localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(users));
     return true;
   }

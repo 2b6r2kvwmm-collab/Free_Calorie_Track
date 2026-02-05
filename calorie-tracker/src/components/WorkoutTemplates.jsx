@@ -7,6 +7,7 @@ import {
 } from '../utils/storage';
 import { exercises, calculateExerciseCalories } from '../utils/calculations';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function WorkoutTemplates({ onAddExercises, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -16,6 +17,8 @@ export default function WorkoutTemplates({ onAddExercises, onClose }) {
   const [selectedExercises, setSelectedExercises] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showExerciseSearch, setShowExerciseSearch] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [pendingDeleteTemplateId, setPendingDeleteTemplateId] = useState(null);
   const scrollRef = useRef(null);
   const profile = getProfile();
 
@@ -89,11 +92,19 @@ export default function WorkoutTemplates({ onAddExercises, onClose }) {
     setSelectedExercises([]);
   };
 
+  const performDelete = () => {
+    if (!pendingDeleteTemplateId) return;
+
+    deleteWorkoutTemplate(pendingDeleteTemplateId);
+    setTemplates(getWorkoutTemplates());
+
+    setShowDeleteConfirm(false);
+    setPendingDeleteTemplateId(null);
+  };
+
   const handleDeleteTemplate = (id) => {
-    if (confirm('Delete this workout template?')) {
-      deleteWorkoutTemplate(id);
-      setTemplates(getWorkoutTemplates());
-    }
+    setPendingDeleteTemplateId(id);
+    setShowDeleteConfirm(true);
   };
 
   const handleUseTemplate = (template) => {
@@ -344,6 +355,20 @@ export default function WorkoutTemplates({ onAddExercises, onClose }) {
             </div>
           </div>
         )}
+
+        <ConfirmationModal
+          isOpen={showDeleteConfirm}
+          onConfirm={performDelete}
+          onCancel={() => {
+            setShowDeleteConfirm(false);
+            setPendingDeleteTemplateId(null);
+          }}
+          title="Delete Template"
+          message="Delete this workout template? This cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          danger={true}
+        />
       </div>
     </div>
   );

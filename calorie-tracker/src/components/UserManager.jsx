@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { getAllUsers, getCurrentUserId, setCurrentUser, addUser, deleteUser, renameUser } from '../utils/users';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import ConfirmationModal from './ConfirmationModal';
+import AlertModal from './AlertModal';
 
 export default function UserManager({ onUserSwitch, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -10,6 +12,10 @@ export default function UserManager({ onUserSwitch, onClose }) {
   const [newUserName, setNewUserName] = useState('');
   const [editingUser, setEditingUser] = useState(null);
   const [editName, setEditName] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [pendingDeleteUserId, setPendingDeleteUserId] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
 
   const handleSwitchUser = (userId) => {
     setCurrentUser(userId);
@@ -28,15 +34,33 @@ export default function UserManager({ onUserSwitch, onClose }) {
     handleSwitchUser(newUser.id);
   };
 
-  const handleDeleteUser = (userId) => {
-    if (confirm(`Delete this user and all their data? This cannot be undone.`)) {
-      deleteUser(userId);
-      setUsers(getAllUsers());
-      setCurrentUserIdState(getCurrentUserId());
-      if (userId === currentUserId) {
-        onUserSwitch(getCurrentUserId());
-      }
+  const performDelete = () => {
+    if (!pendingDeleteUserId) return;
+
+    const success = deleteUser(pendingDeleteUserId);
+
+    if (!success) {
+      // Failed to delete (probably default user)
+      setShowDeleteConfirm(false);
+      setPendingDeleteUserId(null);
+      setAlertMessage('Cannot delete the default user. Create another user first, then try deleting this one.');
+      setShowAlert(true);
+      return;
     }
+
+    setUsers(getAllUsers());
+    setCurrentUserIdState(getCurrentUserId());
+    if (pendingDeleteUserId === currentUserId) {
+      onUserSwitch(getCurrentUserId());
+    }
+
+    setShowDeleteConfirm(false);
+    setPendingDeleteUserId(null);
+  };
+
+  const handleDeleteUser = (userId) => {
+    setPendingDeleteUserId(userId);
+    setShowDeleteConfirm(true);
   };
 
   const handleRenameUser = (e) => {
@@ -187,6 +211,28 @@ export default function UserManager({ onUserSwitch, onClose }) {
             </div>
           </form>
         )}
+
+        <ConfirmationModal
+          isOpen={showDeleteConfirm}
+          onConfirm={performDelete}
+          onCancel={() => {
+            setShowDeleteConfirm(false);
+            setPendingDeleteUserId(null);
+          }}
+          title="Delete User"
+          message="Delete this user and all their data? This cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          danger={true}
+        />
+
+        <AlertModal
+          isOpen={showAlert}
+          onClose={() => setShowAlert(false)}
+          title="Cannot Delete User"
+          message={alertMessage}
+          type="error"
+        />
       </div>
     </div>
   );

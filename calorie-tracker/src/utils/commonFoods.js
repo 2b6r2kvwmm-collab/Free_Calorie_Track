@@ -2341,7 +2341,47 @@ export const sandwichToppings = [
   { name: 'Chipotle Mayo', calories: 100, protein: 0.2, carbs: 1, fat: 11, category: 'sauce' },
 ];
 
-// Mark which foods support toppings
+// Toppings for pasta dishes
+export const pastaToppings = [
+  // Sauces
+  { name: 'Marinara (1/2 cup)', calories: 70, protein: 2, carbs: 12, fat: 2, category: 'sauce' },
+  { name: 'Pesto (2 tbsp)', calories: 120, protein: 2, carbs: 2, fat: 12, category: 'sauce' },
+  { name: 'Alfredo (1/2 cup)', calories: 220, protein: 4, carbs: 6, fat: 20, category: 'sauce' },
+  { name: 'Vodka Sauce (1/2 cup)', calories: 150, protein: 3, carbs: 10, fat: 11, category: 'sauce' },
+  { name: 'Bolognese (1/2 cup)', calories: 180, protein: 12, carbs: 10, fat: 10, category: 'sauce' },
+  { name: 'Arrabbiata (1/2 cup)', calories: 80, protein: 2, carbs: 12, fat: 3, category: 'sauce' },
+  { name: 'Carbonara Sauce (1/2 cup)', calories: 200, protein: 8, carbs: 4, fat: 16, category: 'sauce' },
+  { name: 'Aglio e Olio (2 tbsp)', calories: 120, protein: 0, carbs: 1, fat: 14, category: 'sauce' },
+  { name: 'Butter & Garlic (2 tbsp)', calories: 200, protein: 0, carbs: 1, fat: 22, category: 'sauce' },
+  { name: 'Olive Oil (1 tbsp)', calories: 120, protein: 0, carbs: 0, fat: 14, category: 'sauce' },
+
+  // Cheese
+  { name: 'Parmesan (2 tbsp)', calories: 42, protein: 4, carbs: 0.4, fat: 2.8, category: 'cheese' },
+  { name: 'Mozzarella (1 oz)', calories: 70, protein: 7, carbs: 0.5, fat: 4.3, category: 'cheese' },
+  { name: 'Ricotta (1/4 cup)', calories: 90, protein: 7, carbs: 3, fat: 6, category: 'cheese' },
+  { name: 'Pecorino Romano (2 tbsp)', calories: 44, protein: 3.6, carbs: 0.4, fat: 3.2, category: 'cheese' },
+  { name: 'Gorgonzola (1 oz)', calories: 100, protein: 6, carbs: 0.7, fat: 8, category: 'cheese' },
+
+  // Proteins
+  { name: 'Grilled Chicken (3 oz)', calories: 140, protein: 26, carbs: 0, fat: 3, category: 'protein' },
+  { name: 'Meatballs (3 pieces)', calories: 240, protein: 18, carbs: 6, fat: 16, category: 'protein' },
+  { name: 'Italian Sausage (1 link)', calories: 230, protein: 13, carbs: 2, fat: 19, category: 'protein' },
+  { name: 'Shrimp (4 oz)', calories: 120, protein: 24, carbs: 0, fat: 1.5, category: 'protein' },
+  { name: 'Pancetta (1 oz)', calories: 150, protein: 8, carbs: 0, fat: 13, category: 'protein' },
+  { name: 'Prosciutto (2 slices)', calories: 60, protein: 8, carbs: 0, fat: 3, category: 'protein' },
+
+  // Vegetables
+  { name: 'Spinach (sautéed)', calories: 20, protein: 2, carbs: 2, fat: 0.5, category: 'vegetable' },
+  { name: 'Mushrooms (sautéed)', calories: 28, protein: 2, carbs: 4, fat: 0.5, category: 'vegetable' },
+  { name: 'Broccoli (steamed)', calories: 31, protein: 2.5, carbs: 6, fat: 0.3, category: 'vegetable' },
+  { name: 'Cherry Tomatoes', calories: 20, protein: 1, carbs: 4, fat: 0, category: 'vegetable' },
+  { name: 'Roasted Red Peppers', calories: 30, protein: 1, carbs: 7, fat: 0, category: 'vegetable' },
+  { name: 'Sun-dried Tomatoes (2 tbsp)', calories: 35, protein: 1, carbs: 7, fat: 0.5, category: 'vegetable' },
+  { name: 'Basil (fresh)', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Arugula', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+];
+
+// Mark which foods support sandwich toppings
 export const foodsWithToppings = [
   'Hamburger (fast food)',
   'Cheeseburger (fast food)',
@@ -2368,9 +2408,26 @@ export const foodsWithToppings = [
   'Chicken Sandwich (fried)',
 ];
 
+// Mark which foods support pasta toppings (plain pasta only)
+export const foodsWithPastaToppings = [
+  'Pasta (cooked)',
+  'Whole Wheat Pasta (cooked)',
+  'Spaghetti (cooked)',
+  'Penne (cooked)',
+  'Fettuccine (cooked)',
+  'Linguine (cooked)',
+  'Rigatoni (cooked)',
+  'Macaroni (cooked)',
+];
+
 // Helper to check if food supports toppings
 export function supportsToppings(foodName) {
   return foodsWithToppings.includes(foodName);
+}
+
+// Helper to check if food supports pasta toppings
+export function supportsPastaToppings(foodName) {
+  return foodsWithPastaToppings.includes(foodName);
 }
 
 // Improved search function with flexible word matching

@@ -4,11 +4,15 @@ import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculati
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
 import { handleExport } from '../utils/backupExport';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function Settings({ onUpdateProfile, onClose }) {
   const currentProfile = getProfile();
   const fileInputRef = useRef(null);
   const [importMessage, setImportMessage] = useState('');
+  const [showImportConfirm, setShowImportConfirm] = useState(false);
+  const [pendingImportData, setPendingImportData] = useState(null);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [useCustomGoals, setUseCustomGoals] = useState(!!(getCustomMacros() || getCustomCalorieGoal()));
   const currentCustomMacros = getCustomMacros() || { protein: 150, carbs: 200, fat: 65 };
   const [customMacros, setCustomMacros] = useState(currentCustomMacros);
@@ -117,6 +121,43 @@ export default function Settings({ onUpdateProfile, onClose }) {
     setTimeout(() => setImportMessage(''), 3000);
   };
 
+  // Perform the actual import after confirmation
+  const handleDeleteAllData = () => {
+    // Clear all localStorage
+    localStorage.clear();
+
+    // Reload the page to reset to profile setup
+    window.location.reload();
+  };
+
+  const performImport = () => {
+    if (!pendingImportData) return;
+
+    const importData = pendingImportData;
+
+    // Import each data type
+    if (importData.profile) setData('profile', importData.profile);
+    if (importData.foodLog) setData('foodLog', importData.foodLog);
+    if (importData.exerciseLog) setData('exerciseLog', importData.exerciseLog);
+    if (importData.favorites) setData('favorites', importData.favorites);
+    if (importData.recentFoods) setData('recentFoods', importData.recentFoods);
+    if (importData.dailyGoal !== undefined) setData('dailyGoal', importData.dailyGoal);
+    if (importData.weightLog) setData('weightLog', importData.weightLog);
+    if (importData.darkMode !== undefined) setData('darkMode', importData.darkMode);
+    if (importData.customFoods) setData('customFoods', importData.customFoods);
+    if (importData.customMacros) setData('customMacros', importData.customMacros);
+    if (importData.waterLog) setData('waterLog', importData.waterLog);
+    if (importData.waterUnit) setData('waterUnit', importData.waterUnit);
+    if (importData.workoutTemplates) setData('workoutTemplates', importData.workoutTemplates);
+
+    setShowImportConfirm(false);
+    setPendingImportData(null);
+    setImportMessage('Data imported successfully! Refreshing...');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+  };
+
   // Import data from JSON file
   const handleImport = (event) => {
     const file = event.target.files?.[0];
@@ -134,28 +175,9 @@ export default function Settings({ onUpdateProfile, onClose }) {
           return;
         }
 
-        // Confirm before importing
-        if (window.confirm('This will replace all your current data. Are you sure you want to import?')) {
-          // Import each data type
-          if (importData.profile) setData('profile', importData.profile);
-          if (importData.foodLog) setData('foodLog', importData.foodLog);
-          if (importData.exerciseLog) setData('exerciseLog', importData.exerciseLog);
-          if (importData.favorites) setData('favorites', importData.favorites);
-          if (importData.recentFoods) setData('recentFoods', importData.recentFoods);
-          if (importData.dailyGoal !== undefined) setData('dailyGoal', importData.dailyGoal);
-          if (importData.weightLog) setData('weightLog', importData.weightLog);
-          if (importData.darkMode !== undefined) setData('darkMode', importData.darkMode);
-          if (importData.customFoods) setData('customFoods', importData.customFoods);
-          if (importData.customMacros) setData('customMacros', importData.customMacros);
-          if (importData.waterLog) setData('waterLog', importData.waterLog);
-          if (importData.waterUnit) setData('waterUnit', importData.waterUnit);
-          if (importData.workoutTemplates) setData('workoutTemplates', importData.workoutTemplates);
-
-          setImportMessage('Data imported successfully! Refreshing...');
-          setTimeout(() => {
-            window.location.reload();
-          }, 1500);
-        }
+        // Show confirmation modal before importing
+        setPendingImportData(importData);
+        setShowImportConfirm(true);
       } catch (error) {
         setImportMessage('Error: Failed to parse backup file');
         setTimeout(() => setImportMessage(''), 5000);
@@ -308,6 +330,29 @@ export default function Settings({ onUpdateProfile, onClose }) {
               {importMessage}
             </div>
           )}
+
+          {/* Delete All Data Section */}
+          <div className="border-t-2 border-gray-200 dark:border-gray-700 pt-6 mt-6">
+            <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg mb-4">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">🗑️</span>
+                <div>
+                  <p className="font-semibold text-red-900 dark:text-red-100 mb-2">
+                    Delete All Data
+                  </p>
+                  <p className="text-sm text-red-800 dark:text-red-200">
+                    This will permanently delete all your data including food logs, exercise logs, weight history, custom foods, recipes, and profile information. This action cannot be undone and there is no way to recover your data after deletion.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="w-full py-3 px-6 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 transition-colors"
+            >
+              🗑️ Delete All Data Permanently
+            </button>
+          </div>
         </div>
       </div>
 
@@ -736,6 +781,33 @@ export default function Settings({ onUpdateProfile, onClose }) {
           </p>
         </div>
       </div>
+
+      {/* Import Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={showImportConfirm}
+        onConfirm={performImport}
+        onCancel={() => {
+          setShowImportConfirm(false);
+          setPendingImportData(null);
+        }}
+        title="Replace All Data?"
+        message="This will permanently replace all your current data with the imported backup. This action cannot be undone. Are you sure?"
+        confirmText="Yes, Import Data"
+        cancelText="Cancel"
+        danger={true}
+      />
+
+      {/* Delete All Data Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={showDeleteConfirm}
+        onConfirm={handleDeleteAllData}
+        onCancel={() => setShowDeleteConfirm(false)}
+        title="Delete All Data?"
+        message="This will PERMANENTLY DELETE all your data including food logs, exercise logs, weight history, custom foods, recipes, and profile. This action CANNOT be undone. Are you absolutely sure you want to delete everything?"
+        confirmText="Yes, Delete Everything"
+        cancelText="Cancel"
+        danger={true}
+      />
     </div>
   );
 }

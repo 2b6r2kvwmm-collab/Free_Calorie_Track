@@ -1,5 +1,6 @@
 // LocalStorage utility functions
 import { getUserStorageKey } from './users';
+import { sanitizeInput } from './sanitize';
 
 const STORAGE_KEYS = {
   PROFILE: 'profile',
@@ -67,6 +68,8 @@ export function addFoodEntry(entry, customDate = null) {
   const log = getFoodLog();
   const newEntry = {
     ...entry,
+    name: sanitizeInput(entry.name),
+    servingSize: entry.servingSize ? sanitizeInput(entry.servingSize) : entry.servingSize,
     timestamp: Date.now(),
     date: customDate || getLocalDateString(),
   };
@@ -74,7 +77,7 @@ export function addFoodEntry(entry, customDate = null) {
   setData(STORAGE_KEYS.FOOD_LOG, log);
 
   // Update recent foods
-  updateRecentFoods(entry);
+  updateRecentFoods(newEntry);
 
   return newEntry;
 }
@@ -104,6 +107,7 @@ export function addExerciseEntry(entry, customDate = null) {
   const log = getExerciseLog();
   const newEntry = {
     ...entry,
+    name: sanitizeInput(entry.name),
     timestamp: Date.now(),
     date: customDate || getLocalDateString(),
   };
@@ -265,6 +269,8 @@ export function addCustomFood(food) {
   const customFoods = getCustomFoods();
   const newFood = {
     ...food,
+    name: sanitizeInput(food.name),
+    servingSize: food.servingSize ? sanitizeInput(food.servingSize) : food.servingSize,
     id: Date.now(),
     isCustom: true,
   };
@@ -353,6 +359,11 @@ export function addWorkoutTemplate(template) {
   const templates = getWorkoutTemplates();
   const newTemplate = {
     ...template,
+    name: sanitizeInput(template.name),
+    exercises: template.exercises.map(ex => ({
+      ...ex,
+      name: sanitizeInput(ex.name),
+    })),
     id: Date.now(),
     createdAt: Date.now(),
   };

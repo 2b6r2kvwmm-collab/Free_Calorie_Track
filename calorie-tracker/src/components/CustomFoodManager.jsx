@@ -2,11 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { getCustomFoods, addCustomFood, deleteCustomFood } from '../utils/storage';
 import RecipeBuilder from './RecipeBuilder';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function CustomFoodManager({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
   const [showForm, setShowForm] = useState(false);
   const [showRecipeBuilder, setShowRecipeBuilder] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [pendingDeleteFoodId, setPendingDeleteFoodId] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     calories: '',
@@ -61,11 +64,19 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
     setShowForm(false);
   };
 
+  const performDelete = () => {
+    if (!pendingDeleteFoodId) return;
+
+    deleteCustomFood(pendingDeleteFoodId);
+    window.location.reload(); // Refresh to show updated list
+
+    setShowDeleteConfirm(false);
+    setPendingDeleteFoodId(null);
+  };
+
   const handleDelete = (id) => {
-    if (confirm('Delete this custom food?')) {
-      deleteCustomFood(id);
-      window.location.reload(); // Refresh to show updated list
-    }
+    setPendingDeleteFoodId(id);
+    setShowDeleteConfirm(true);
   };
 
   const updateField = (field, value) => {
@@ -270,6 +281,20 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
             onClose={() => setShowRecipeBuilder(false)}
           />
         )}
+
+        <ConfirmationModal
+          isOpen={showDeleteConfirm}
+          onConfirm={performDelete}
+          onCancel={() => {
+            setShowDeleteConfirm(false);
+            setPendingDeleteFoodId(null);
+          }}
+          title="Delete Custom Food"
+          message="Delete this custom food? This cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          danger={true}
+        />
       </div>
     </div>
   );

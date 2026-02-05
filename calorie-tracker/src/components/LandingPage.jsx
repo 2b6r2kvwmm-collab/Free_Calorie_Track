@@ -425,22 +425,6 @@ export default function LandingPage({ onGetStarted }) {
         </p>
       </div>
 
-      {/* Footer */}
-      <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-8">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Free Calorie Track is free and funded by optional donations.
-          </p>
-          <a
-            href="https://buymeacoffee.com/griffs"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-3 text-sm text-emerald-600 dark:text-emerald-400 font-semibold hover:underline"
-          >
-            Chip in $5 to keep it free
-          </a>
-        </div>
-      </div>
     </div>
   );
 }

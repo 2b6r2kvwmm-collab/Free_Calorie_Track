@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supportsToppings, sandwichToppings } from '../utils/commonFoods';
+import { supportsToppings, sandwichToppings, supportsPastaToppings, pastaToppings } from '../utils/commonFoods';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function PortionSelector({ food, onConfirm, onCancel }) {
@@ -17,7 +17,12 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     };
   }, []);
 
-  const hasToppings = supportsToppings(food.name);
+  const hasSandwichToppings = supportsToppings(food.name);
+  const hasPastaToppings = supportsPastaToppings(food.name);
+  const hasToppings = hasSandwichToppings || hasPastaToppings;
+
+  // Select the appropriate toppings array
+  const toppingsArray = hasPastaToppings ? pastaToppings : sandwichToppings;
 
   // Parse base serving size to extract weight if possible
   const baseServingWeight = (() => {
@@ -242,19 +247,21 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
         {/* Toppings Selection */}
         {hasToppings && (
           <div className="border-t border-gray-300 dark:border-gray-600 pt-6">
-            <h3 className="font-semibold text-lg mb-3">Add Toppings (Optional)</h3>
+            <h3 className="font-semibold text-lg mb-3">
+              {hasPastaToppings ? 'Add Sauce & Toppings (Optional)' : 'Add Toppings (Optional)'}
+            </h3>
 
             {/* Group by category */}
-            {['protein', 'cheese', 'vegetable', 'sauce'].map((category) => {
-              const categoryToppings = sandwichToppings.filter(
+            {['sauce', 'cheese', 'protein', 'vegetable'].map((category) => {
+              const categoryToppings = toppingsArray.filter(
                 (t) => t.category === category
               );
               if (categoryToppings.length === 0) return null;
 
               const categoryLabel = {
-                protein: 'Extra Protein',
+                protein: hasPastaToppings ? 'Protein' : 'Extra Protein',
                 cheese: 'Cheese',
-                vegetable: 'Veggies',
+                vegetable: hasPastaToppings ? 'Vegetables' : 'Veggies',
                 sauce: 'Sauces',
               }[category];
 

@@ -10,14 +10,15 @@ export default function MacroTracker({
   proteinGoal,
   carbsGoal,
   fatGoal,
-  isCustomGoals = false
+  isCustomGoals = false,
+  exerciseBurned = 0
 }) {
   // Use provided goals if available (for custom macros), otherwise calculate
-  let macroTargets;
+  let baseMacroTargets;
   if (isCustomGoals) {
     // Custom macros provided
     const totalCals = (proteinGoal * 4) + (carbsGoal * 4) + (fatGoal * 9);
-    macroTargets = {
+    baseMacroTargets = {
       protein: proteinGoal,
       carbs: carbsGoal,
       fat: fatGoal,
@@ -33,7 +34,30 @@ export default function MacroTracker({
     // Calculate based on fitness goal
     const bmr = calculateBMR(profile);
     const tdee = calculateTDEE(bmr, profile.activityLevel);
-    macroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal);
+    baseMacroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal);
+  }
+
+  // Adjust macro targets based on exercise
+  let macroTargets = { ...baseMacroTargets };
+  if (exerciseBurned > 0) {
+    // Calculate additional macros proportionally based on the macro split
+    const baseTotalCals = (baseMacroTargets.protein * 4) + (baseMacroTargets.carbs * 4) + (baseMacroTargets.fat * 9);
+    const proteinPercent = (baseMacroTargets.protein * 4) / baseTotalCals;
+    const carbPercent = (baseMacroTargets.carbs * 4) / baseTotalCals;
+    const fatPercent = (baseMacroTargets.fat * 9) / baseTotalCals;
+
+    // Calculate additional grams for each macro
+    const additionalProtein = Math.round((exerciseBurned * proteinPercent) / 4);
+    const additionalCarbs = Math.round((exerciseBurned * carbPercent) / 4);
+    const additionalFat = Math.round((exerciseBurned * fatPercent) / 9);
+
+    macroTargets = {
+      ...baseMacroTargets,
+      protein: baseMacroTargets.protein + additionalProtein,
+      carbs: baseMacroTargets.carbs + additionalCarbs,
+      fat: baseMacroTargets.fat + additionalFat,
+      explanation: `${baseMacroTargets.explanation} Adjusted for ${exerciseBurned} calories burned from exercise today (+${additionalProtein}g protein, +${additionalCarbs}g carbs, +${additionalFat}g fat).`,
+    };
   }
 
   const [showGoalDetails, setShowGoalDetails] = useState(false);
