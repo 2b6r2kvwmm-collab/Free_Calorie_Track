@@ -83,7 +83,7 @@ export default function WeeklySummary() {
             onClick={() => setViewMode('week')}
             className={`px-4 py-2 rounded-lg font-semibold ${
               viewMode === 'week'
-                ? 'bg-emerald-500 text-white'
+                ? 'bg-emerald-600 text-white'
                 : 'bg-gray-200 dark:bg-gray-700'
             }`}
           >
@@ -93,7 +93,7 @@ export default function WeeklySummary() {
             onClick={() => setViewMode('month')}
             className={`px-4 py-2 rounded-lg font-semibold ${
               viewMode === 'month'
-                ? 'bg-emerald-500 text-white'
+                ? 'bg-emerald-600 text-white'
                 : 'bg-gray-200 dark:bg-gray-700'
             }`}
           >

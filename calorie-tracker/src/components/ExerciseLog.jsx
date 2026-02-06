@@ -287,7 +287,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     onClick={() => setTrackingMode('duration')}
                     className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                       trackingMode === 'duration'
-                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
                         : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                     }`}
                   >
@@ -298,7 +298,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     onClick={() => setTrackingMode('reps')}
                     className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                       trackingMode === 'reps'
-                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
                         : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                     }`}
                   >
@@ -320,7 +320,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     onClick={() => setWalkingTrackingMode('duration')}
                     className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
                       walkingTrackingMode === 'duration'
-                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
                         : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                     }`}
                   >
@@ -331,7 +331,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     onClick={() => setWalkingTrackingMode('steps')}
                     className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
                       walkingTrackingMode === 'steps'
-                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
                         : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                     }`}
                   >
@@ -342,7 +342,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     onClick={() => setWalkingTrackingMode('distance')}
                     className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
                       walkingTrackingMode === 'distance'
-                        ? 'bg-emerald-500 text-white border-emerald-500'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
                         : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                     }`}
                   >

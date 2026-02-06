@@ -83,13 +83,13 @@ export default function ProfileSetup({ onComplete }) {
         {/* Step indicator */}
         <div className="flex items-center justify-center mb-8">
           <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-            step === 1 ? 'bg-emerald-500 text-white' : 'bg-emerald-500 text-white'
+            step === 1 ? 'bg-emerald-600 text-white' : 'bg-emerald-600 text-white'
           }`}>
             1
           </div>
           <div className={`w-16 h-1 ${step === 2 ? 'bg-emerald-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
           <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
-            step === 2 ? 'bg-emerald-500 text-white' : 'bg-gray-300 dark:bg-gray-600 text-gray-600'
+            step === 2 ? 'bg-emerald-600 text-white' : 'bg-gray-300 dark:bg-gray-600 text-gray-600'
           }`}>
             2
           </div>
@@ -107,7 +107,7 @@ export default function ProfileSetup({ onComplete }) {
                 onClick={() => updateField('unit', 'metric')}
                 className={`py-4 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.unit === 'metric'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -118,7 +118,7 @@ export default function ProfileSetup({ onComplete }) {
                 onClick={() => updateField('unit', 'imperial')}
                 className={`py-4 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.unit === 'imperial'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -151,7 +151,7 @@ export default function ProfileSetup({ onComplete }) {
                 onClick={() => updateField('sex', 'male')}
                 className={`py-4 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.sex === 'male'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -162,7 +162,7 @@ export default function ProfileSetup({ onComplete }) {
                 onClick={() => updateField('sex', 'female')}
                 className={`py-4 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.sex === 'female'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -343,6 +343,13 @@ export default function ProfileSetup({ onComplete }) {
             {step === 1 ? 'Continue' : 'Complete Setup'}
           </button>
         </form>
+
+        {/* Medical Disclaimer */}
+        <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+          <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
+            <strong className="font-semibold">Disclaimer:</strong> This app provides estimates for informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Consult a doctor or registered dietitian before starting any diet or exercise program, especially if you have any pre-existing health conditions.
+          </p>
+        </div>
       </div>
     </div>
   );

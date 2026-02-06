@@ -2,6 +2,12 @@
 
 A simple, mobile-first web app for tracking NET calories (food eaten minus calories burned).
 
+## Privacy Notice
+
+**Your Data Stays Local:** All your personal tracking data (food logs, weight, exercise, etc.) is stored only in your browser's localStorage and never sent to any servers.
+
+**Anonymous Analytics:** This app uses Vercel Analytics to collect anonymous usage statistics (page views, feature usage) to help improve the app. No personal tracking data is sent to analytics. See our [Privacy Policy](/privacy-policy.html) for full details.
+
 ## Features
 
 ### Food Input
@@ -45,6 +51,7 @@ A simple, mobile-first web app for tracking NET calories (food eaten minus calor
 - **html5-qrcode** - Barcode scanning
 - **localStorage** - Data persistence (all data stored locally)
 - **PWA** - Progressive Web App support
+- **Vercel Analytics** - Anonymous usage analytics (no personal data sent)
 
 ## Getting Started
 
@@ -118,13 +125,19 @@ The app currently uses placeholder PWA icons. To create proper icons:
 - Update your weight, activity level, and other details in Settings
 - BMR and TDEE are automatically recalculated
 
-## Data Storage
+## Data Storage & Privacy
 
-All data is stored locally in your browser's localStorage:
+All your personal data is stored locally in your browser's localStorage:
 - No account required
-- No data sent to servers (except Open Food Facts API searches)
+- Your food logs, weight, and exercise data never leave your device
 - Data persists between sessions
 - Clearing browser data will delete your logs
+
+**Analytics:** This app uses Vercel Analytics to collect anonymous usage statistics (page views, feature usage) to help improve the app. This data is aggregated and does not identify individual users. No personal information (food logs, weight, etc.) is sent to analytics. See our [Privacy Policy](/privacy-policy.html) for details.
+
+**External APIs:**
+- Open Food Facts API - Used only for food database searches when you search for foods
+- No tracking or user data is sent to Open Food Facts
 
 ## Offline Support
 

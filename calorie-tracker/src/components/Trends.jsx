@@ -288,7 +288,7 @@ export default function Trends() {
             onClick={() => setPeriod('week')}
             className={`flex-1 py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
               period === 'week'
-                ? 'bg-emerald-500 text-white border-emerald-500'
+                ? 'bg-emerald-600 text-white border-emerald-500'
                 : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
             }`}
           >
@@ -298,7 +298,7 @@ export default function Trends() {
             onClick={() => setPeriod('month')}
             className={`flex-1 py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
               period === 'month'
-                ? 'bg-emerald-500 text-white border-emerald-500'
+                ? 'bg-emerald-600 text-white border-emerald-500'
                 : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
             }`}
           >

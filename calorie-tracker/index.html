@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
 
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://world.openfoodfacts.org https://va.vercel-scripts.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://world.openfoodfacts.org https://va.vercel-scripts.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -100,7 +100,7 @@
           "name": "How does barcode scanning work, and is it really free?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes, barcode scanning is completely free with no daily or monthly limit. Point your camera at any product barcode and the app looks it up instantly using the Open Food Facts database, which contains over 220,000 products. If a product is not in the database, you can manually enter the nutrition info and save it as a custom food."
+            "text": "Yes, barcode scanning is completely free with no daily or monthly limit. Point your camera at any product barcode and the app looks it up instantly using the Open Food Facts database, which contains over 3 million products. If a product is not in the database, you can manually enter the nutrition info and save it as a custom food."
           }
         },
         {
@@ -156,7 +156,7 @@
           "name": "Where is my data stored?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Your nutrition data and personal information are stored locally on your device using browser storage (localStorage). No cloud account is required and no syncing takes place. Your meal logs, exercise history, weight entries, and profile information stay entirely on the device you are using."
+            "text": "Your nutrition data and personal information are stored locally on your device using browser storage (localStorage). No cloud account is required. Your meal logs, exercise history, weight entries, and profile information never leave your device. Only anonymous usage statistics (page views, feature usage) are collected to improve the app."
           }
         },
         {
@@ -275,6 +275,17 @@
         margin-top: 15px;
         display: block;
       }
+      .footer-divider {
+        width: 60%;
+        max-width: 400px;
+        height: 1px;
+        background-color: #e5e7eb;
+        margin: 30px auto;
+        border: none;
+      }
+      .dark .footer-divider {
+        background-color: #374151;
+      }
 
       /* iOS Popup Styles */
       .ios-prompt {
@@ -363,42 +374,48 @@
         <p style="font-size: 14px; line-height: 1.5; color: #999; max-width: 500px; margin: 0 auto 15px;">
           No ads. No paywalls. Funded by donations and commissions on gear I actually use and love.
         </p>
-        <a href="https://buymeacoffee.com/griffs" target="_blank" class="support-button">
+        <a href="https://buymeacoffee.com/griffs" target="_blank" rel="noopener noreferrer" class="support-button">
           Chip in $5
         </a>
       </div>
+
+      <hr class="footer-divider">
 
       <div style="margin-top: 35px; margin-bottom: 20px;">
         <p class="gear-header" style="color: #999; margin-bottom: 15px;">
           <strong>My favorite health and fitness gear</strong>
         </p>
         <div class="gear-grid">
-          <a href="https://amzn.to/4qNU4Ko" target="_blank" class="footer-link">
+          <a href="https://amzn.to/4qNU4Ko" target="_blank" rel="noopener noreferrer" class="footer-link">
             ⚖️ Favorite Digital Food Scale
           </a>
-          <a href="https://amzn.to/4bquRRF" target="_blank" class="footer-link">
+          <a href="https://amzn.to/4bquRRF" target="_blank" rel="noopener noreferrer" class="footer-link">
             🫙 Favorite Meal Prep Containers
           </a>
-          <a href="https://amzn.to/45ORPhU" target="_blank" class="footer-link">
+          <a href="https://amzn.to/45ORPhU" target="_blank" rel="noopener noreferrer" class="footer-link">
             💧 Favorite Insulated Water Bottle
           </a>
-          <a href="https://amzn.to/4txlhTV" target="_blank" class="footer-link">
+          <a href="https://amzn.to/4txlhTV" target="_blank" rel="noopener noreferrer" class="footer-link">
             🏋️ Favorite Small Dumbbells
           </a>
-          <a href="https://amzn.to/4qU7fJY" target="_blank" class="footer-link">
+          <a href="https://amzn.to/4qU7fJY" target="_blank" rel="noopener noreferrer" class="footer-link">
             💪 Favorite Adjustable Dumbbells
           </a>
-          <a href="https://amzn.to/3Mc65KN" target="_blank" class="footer-link">
+          <a href="https://amzn.to/3Mc65KN" target="_blank" rel="noopener noreferrer" class="footer-link">
             🥤 Favorite Smoothie & Protein Blender
           </a>
         </div>
       </div>
 
+      <hr class="footer-divider">
+
       <div style="margin-top: 30px;">
-        <a href="https://tally.so/r/VLQOJv" target="_blank" style="color: #999; text-decoration: none; font-size: 12px;">
+        <a href="https://tally.so/r/VLQOJv" target="_blank" rel="noopener noreferrer" style="color: #999; text-decoration: none; font-size: 12px;">
           Feedback? We'd love to hear from you.
         </a>
       </div>
+
+      <hr class="footer-divider">
 
       <div style="margin-top: 25px; font-size: 12px; color: #999; line-height: 1.8;">
         <div style="margin-bottom: 8px;">
@@ -410,6 +427,9 @@
         </div>
         <div style="font-size: 11px; color: #888;">
           As an Amazon Associate I earn from qualifying purchases.
+        </div>
+        <div style="font-size: 11px; color: #888; margin-top: 8px; line-height: 1.5;">
+          <strong>Disclaimer:</strong> This app provides estimates for informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Consult a doctor or registered dietitian before starting any diet or exercise program.
         </div>
       </div>
     </div>
@@ -428,49 +448,7 @@
       </p>
     </div>
 
-    <script>
-      // Add event listeners for close buttons
-      document.addEventListener('DOMContentLoaded', function() {
-        // iOS prompt close button
-        document.getElementById('ios-close-btn')?.addEventListener('click', function() {
-          document.getElementById('ios-install-prompt').style.display = 'none';
-        });
-
-        // Desktop banner close button
-        document.getElementById('desktop-close-btn')?.addEventListener('click', function() {
-          document.getElementById('desktop-install-banner').style.display = 'none';
-          localStorage.setItem('desktopBannerDismissed', 'true');
-        });
-      });
-
-      // 1. Check if user is on iOS
-      const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-
-      // 2. Check if user is on Android
-      const isAndroid = /android/.test(window.navigator.userAgent.toLowerCase());
-
-      // 3. Check if on mobile (iOS or Android)
-      const isMobile = isIos || isAndroid;
-
-      // 4. Check if app is already installed (standalone mode)
-      const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
-
-      // 5. Check if desktop banner was dismissed
-      const desktopBannerDismissed = localStorage.getItem('desktopBannerDismissed');
-
-      // Show iOS popup ONLY if on iOS and NOT installed
-      if (isIos && !isStandalone) {
-        setTimeout(() => {
-            document.getElementById('ios-install-prompt').style.display = 'block';
-        }, 2000);
-      }
-
-      // Show desktop banner ONLY if on desktop (not mobile) and not dismissed
-      if (!isMobile && !desktopBannerDismissed) {
-        setTimeout(() => {
-            document.getElementById('desktop-install-banner').style.display = 'block';
-        }, 1000);
-      }
-    </script>
+    <!-- Load install prompt logic from external file for CSP compliance -->
+    <script src="/install-prompt.js"></script>
     </body>
 </html>

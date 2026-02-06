@@ -336,7 +336,7 @@ export default function LandingPage({ onGetStarted }) {
             { step: '3', title: 'See your NET calories', desc: 'The honest number. Food eaten minus your body\'s burn minus exercise. That\'s it.' },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
                 {item.step}
               </div>
               <div className="pt-1">

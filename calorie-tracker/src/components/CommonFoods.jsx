@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { searchCommonFoods, getCategories } from '../utils/commonFoods';
 import { getFavorites, addFavorite, removeFavorite } from '../utils/storage';
 import PortionSelector from './PortionSelector';
@@ -28,7 +28,11 @@ export default function CommonFoods({ onAddFood, onClose }) {
   }, [searchQuery, selectedCategory]);
 
   const categories = ['All', ...getCategories()];
-  const allFoods = searchCommonFoods(searchQuery);
+
+  // Memoize search results to prevent re-filtering on every render
+  const allFoods = useMemo(() => {
+    return searchCommonFoods(searchQuery);
+  }, [searchQuery]);
 
   // Filter by category if not "All"
   const filteredFoods = selectedCategory === 'All'
@@ -104,7 +108,7 @@ export default function CommonFoods({ onAddFood, onClose }) {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-colors ${
                   selectedCategory === category
-                    ? 'bg-emerald-500 text-white'
+                    ? 'bg-emerald-600 text-white'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
                 }`}
               >

@@ -142,7 +142,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
 
             <button
               onClick={() => setMode('favorites')}
-              className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors w-full text-left flex items-center justify-between"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors w-full text-left flex items-center justify-between"
             >
               <span>⭐ Favorites</span>
               {favorites.length > 0 && (
@@ -172,7 +172,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
             >
               <span>🕐 Recent Foods</span>
               {recentFoods.length > 0 && (
-                <span className="bg-emerald-500 text-white text-sm px-2 py-1 rounded-full">
+                <span className="bg-emerald-600 text-white text-sm px-2 py-1 rounded-full">
                   {recentFoods.length}
                 </span>
               )}

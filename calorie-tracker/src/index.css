@@ -10,7 +10,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded-lg text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-secondary {

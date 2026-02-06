@@ -10,6 +10,7 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
   const [showRecipeBuilder, setShowRecipeBuilder] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [pendingDeleteFoodId, setPendingDeleteFoodId] = useState(null);
+  const [customFoods, setCustomFoods] = useState(getCustomFoods());
   const [formData, setFormData] = useState({
     name: '',
     calories: '',
@@ -35,14 +36,17 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
     }
   }, [showForm]);
 
-  const customFoods = getCustomFoods();
+  // Helper to refresh the custom foods list from storage
+  const refreshCustomFoods = () => {
+    setCustomFoods(getCustomFoods());
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const newFood = {
       name: formData.name,
-      calories: parseInt(formData.calories),
+      calories: parseInt(formData.calories) || 0,
       protein: parseFloat(formData.protein) || 0,
       carbs: parseFloat(formData.carbs) || 0,
       fat: parseFloat(formData.fat) || 0,
@@ -50,6 +54,7 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
     };
 
     addCustomFood(newFood);
+    refreshCustomFoods(); // Update list immediately
 
     // Reset form
     setFormData({
@@ -68,7 +73,7 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
     if (!pendingDeleteFoodId) return;
 
     deleteCustomFood(pendingDeleteFoodId);
-    window.location.reload(); // Refresh to show updated list
+    refreshCustomFoods(); // Update list without page reload
 
     setShowDeleteConfirm(false);
     setPendingDeleteFoodId(null);
@@ -276,7 +281,7 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
           <RecipeBuilder
             onSave={(recipe) => {
               setShowRecipeBuilder(false);
-              // Refresh the custom foods list (it will automatically include the new recipe)
+              refreshCustomFoods(); // Update list to include the new recipe
             }}
             onClose={() => setShowRecipeBuilder(false)}
           />

@@ -100,12 +100,21 @@ export default function Dashboard({ onRefresh }) {
   const carbsGoal = macroTargets?.carbs || 0;
   const fatGoal = macroTargets?.fat || 0;
 
+  // Adjust protein goal based on exercise (same logic as MacroTracker)
+  let adjustedProteinGoal = proteinGoal;
+  if (exerciseBurned > 0 && macroTargets) {
+    const baseTotalCals = (macroTargets.protein * 4) + (macroTargets.carbs * 4) + (macroTargets.fat * 9);
+    const proteinPercent = (macroTargets.protein * 4) / baseTotalCals;
+    const additionalProtein = Math.round((exerciseBurned * proteinPercent) / 4);
+    adjustedProteinGoal = proteinGoal + additionalProtein;
+  }
+
   // Use custom calorie goal if set, otherwise use calculated goal from fitness goal
   const dailyGoal = usingCustomGoals
     ? customCalorieGoal
     : (macroTargets?.calorieAdjustment ?? getDailyGoal());
 
-  const motivationalNudge = getMotivationalNudge(netCalories, dailyGoal, totalProtein, proteinGoal);
+  const motivationalNudge = getMotivationalNudge(netCalories, dailyGoal, totalProtein, adjustedProteinGoal);
   const recentAchievements = getRecentAchievements();
 
   // Update streak when component loads

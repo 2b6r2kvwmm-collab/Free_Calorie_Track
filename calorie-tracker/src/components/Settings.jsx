@@ -331,8 +331,72 @@ export default function Settings({ onUpdateProfile, onClose }) {
             </div>
           )}
 
-          {/* Delete All Data Section */}
+          {/* Storage Usage Indicator */}
           <div className="border-t-2 border-gray-200 dark:border-gray-700 pt-6 mt-6">
+            {(() => {
+              // Calculate localStorage usage
+              let totalSize = 0;
+              for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                  totalSize += localStorage[key].length + key.length;
+                }
+              }
+              const sizeInKB = (totalSize / 1024).toFixed(2);
+              const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
+              const maxSizeMB = 5; // Typical localStorage limit
+              const percentUsed = ((totalSize / (maxSizeMB * 1024 * 1024)) * 100).toFixed(1);
+
+              const isWarning = percentUsed >= 90 && percentUsed < 95;
+              const isDanger = percentUsed >= 95;
+
+              return (
+                <div className={`p-4 rounded-lg mb-6 border-2 ${
+                  isDanger
+                    ? 'bg-red-50 dark:bg-red-900/20 border-red-500'
+                    : isWarning
+                      ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500'
+                      : 'bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600'
+                }`}>
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">{isDanger ? '⚠️' : isWarning ? '📊' : '💾'}</span>
+                    <div className="flex-1">
+                      <p className="font-semibold mb-2">Storage Usage</p>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                          <div
+                            className={`h-full transition-all ${
+                              isDanger
+                                ? 'bg-red-600'
+                                : isWarning
+                                  ? 'bg-yellow-500'
+                                  : 'bg-emerald-500'
+                            }`}
+                            style={{ width: `${Math.min(percentUsed, 100)}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-sm font-semibold min-w-[60px] text-right">
+                          {percentUsed}%
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Using {sizeInMB} MB of ~{maxSizeMB} MB available ({sizeInKB} KB)
+                      </p>
+                      {isWarning && (
+                        <p className="text-sm mt-2 text-yellow-800 dark:text-yellow-200">
+                          {isDanger
+                            ? '⚠️ Storage almost full! Consider exporting and deleting old data.'
+                            : '💡 Tip: Export your data periodically to free up space.'}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Delete All Data Section */}
+          <div>
             <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg mb-4">
               <div className="flex items-start gap-3">
                 <span className="text-2xl">🗑️</span>
@@ -369,7 +433,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 onClick={() => handleUnitChange('metric')}
                 className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.unit === 'metric'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -380,7 +444,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 onClick={() => handleUnitChange('imperial')}
                 className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.unit === 'imperial'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -412,7 +476,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 onClick={() => updateField('sex', 'male')}
                 className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.sex === 'male'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -423,7 +487,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 onClick={() => updateField('sex', 'female')}
                 className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
                   formData.sex === 'female'
-                    ? 'bg-emerald-500 text-white border-emerald-500'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
                 }`}
               >
@@ -716,13 +780,26 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
               {/* Message */}
               <div className="bg-white dark:bg-gray-800 rounded-lg p-4 mb-4">
-                <p className="text-gray-700 dark:text-gray-300 mb-2">
-                  You've saved about $20 compared to other subscription-based trackers!
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Free Calorie Track has no ads, no paywalls, and no premium tiers.
-                  If it's helping you hit your goals, consider chipping in to keep it free for everyone.
-                </p>
+                {stats.foodLogs > 0 || stats.workouts > 0 ? (
+                  <>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2">
+                      You've saved about ${stats.savedVsCompetitors} compared to other subscription-based trackers!
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Free Calorie Track has no ads, no paywalls, and no premium tiers.
+                      If it's helping you hit your goals, consider chipping in to keep it free for everyone.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-gray-700 dark:text-gray-300 mb-2">
+                      Free Calorie Track has no ads, no paywalls, and no premium tiers.
+                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                      Everything is free forever. If you find this useful, consider supporting it with a small donation to keep it free for everyone.
+                    </p>
+                  </>
+                )}
               </div>
             </>
           );
@@ -768,6 +845,22 @@ export default function Settings({ onUpdateProfile, onClose }) {
         >
           📤 Share This App
         </button>
+      </div>
+
+      {/* Medical Disclaimer */}
+      <div className="card bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800">
+        <h3 className="font-semibold text-sm mb-2 text-gray-900 dark:text-gray-100">⚠️ Medical Disclaimer</h3>
+        <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
+          This app provides estimates for informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Consult a doctor or registered dietitian before starting any diet or exercise program, especially if you have any pre-existing health conditions.
+        </p>
+      </div>
+
+      {/* Trademark Disclaimer */}
+      <div className="card bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+        <h3 className="font-semibold text-sm mb-2 text-gray-900 dark:text-gray-100">Trademarks</h3>
+        <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+          Product names, logos, and brands are property of their respective owners. All company, product and service names used in this app are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.
+        </p>
       </div>
 
       {/* Version Info */}

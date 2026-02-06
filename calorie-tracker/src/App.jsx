@@ -129,7 +129,7 @@ function App() {
               onClick={() => setCurrentView('dashboard')}
               className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
                 currentView === 'dashboard'
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-emerald-600 text-white'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >
@@ -139,7 +139,7 @@ function App() {
               onClick={() => setCurrentView('trends')}
               className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
                 currentView === 'trends'
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-emerald-600 text-white'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >
@@ -149,7 +149,7 @@ function App() {
               onClick={() => setCurrentView('history')}
               className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
                 currentView === 'history'
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-emerald-600 text-white'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >
@@ -159,7 +159,7 @@ function App() {
               onClick={() => setCurrentView('settings')}
               className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
                 currentView === 'settings'
-                  ? 'bg-emerald-500 text-white'
+                  ? 'bg-emerald-600 text-white'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >

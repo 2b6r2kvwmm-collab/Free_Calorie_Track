@@ -31,7 +31,7 @@ export const GOAL_INFO = {
     description: 'Preserve muscle while creating caloric deficit',
     calorieAdjustmentPercent: -0.15, // -15% deficit (scales with body size)
     minAdjustment: -700, // Conservative max deficit
-    maxAdjustment: -300, // Minimum safe deficit
+    maxAdjustment: -300, // Recommended lower limit
     proteinPerKg: 2.2, // 2.2g per kg bodyweight (higher during deficit)
     fatPercent: 25, // 25% of total calories
     explanation: 'Higher protein (2.2g/kg) during deficit helps preserve lean mass. Conservative deficit allows sustainable fat loss while preserving muscle, especially for leaner individuals.',

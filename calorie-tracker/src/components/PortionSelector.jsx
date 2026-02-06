@@ -134,7 +134,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
             onClick={() => setInputMode('servings')}
             className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
               inputMode === 'servings'
-                ? 'bg-emerald-500 text-white border-emerald-500'
+                ? 'bg-emerald-600 text-white border-emerald-500'
                 : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
             }`}
           >
@@ -144,7 +144,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
             onClick={() => setInputMode('weight')}
             className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
               inputMode === 'weight'
-                ? 'bg-emerald-500 text-white border-emerald-500'
+                ? 'bg-emerald-600 text-white border-emerald-500'
                 : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
             }`}
             disabled={!baseServingWeight}
@@ -179,7 +179,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
                   onClick={() => setServings(option.toString())}
                   className={`py-2 px-3 rounded-lg font-semibold border-2 transition-colors ${
                     parseFloat(servings) === option
-                      ? 'bg-emerald-500 text-white border-emerald-500'
+                      ? 'bg-emerald-600 text-white border-emerald-500'
                       : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
                   }`}
                 >
@@ -281,7 +281,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
                           onClick={() => toggleTopping(topping)}
                           className={`py-2 px-3 rounded-lg text-sm border-2 transition-colors text-left ${
                             isSelected
-                              ? 'bg-emerald-500 text-white border-emerald-500'
+                              ? 'bg-emerald-600 text-white border-emerald-500'
                               : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
                           }`}
                         >
