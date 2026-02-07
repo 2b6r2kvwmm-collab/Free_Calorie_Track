@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const FAQ_SECTIONS = [
   {
@@ -6,7 +6,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'Is Free Calorie Track really free?',
-        a: 'Yes. Every feature in the app is free, forever. There is no premium tier, no upgrade wall, and no free-trial period that expires. Barcode scanning, macro tracking, trends, history editing, exercise logging — all of it is included. The app is funded by optional donations, not by gating features behind a paywall.',
+        a: 'Yes. All core features in the app are free to use. There is currently no premium tier, no upgrade wall, and no free-trial period that expires. Barcode scanning, macro tracking, trends, history editing, exercise logging — all of it is included. The app is funded by optional donations, not by gating features behind a paywall. While the core features will remain free, optional features may be introduced in the future.',
       },
       {
         q: 'Do I need to create an account or sign up?',
@@ -31,12 +31,8 @@ const FAQ_SECTIONS = [
     title: 'Compared to Other Apps',
     items: [
       {
-        q: 'How is Free Calorie Track different from MyFitnessPal®?',
-        a: 'MyFitnessPal® requires a free account and limits full access to several features — including barcode scanning, macro tracking, and trend insights — without a premium subscription. It may show ads to free-tier users. Free Calorie Track includes these features for free, requires no account, shows no ads, and stores nutrition data locally on your device rather than requiring a cloud-based account.',
-      },
-      {
-        q: 'How is Free Calorie Track different from Lose It!™?',
-        a: 'Lose It!™ requires an account and requires a premium subscription for full access to barcode scanning and macro tracking. Free Calorie Track includes barcode scanning and macro tracking for free, with no account required and no ads.',
+        q: 'How is Free Calorie Track different from other popular calorie trackers?',
+        a: 'Most popular calorie tracking apps require account creation and limit essential features — like barcode scanning, macro tracking, and trend insights — behind premium subscriptions. They may also show ads to free-tier users. Free Calorie Track includes these features at no cost, requires no account, shows no ads, and stores your data locally on your device rather than requiring cloud storage.',
       },
       {
         q: 'Why is this app free when others charge for the same features?',
@@ -44,7 +40,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Is a free calorie tracker as good as a paid one?',
-        a: 'For core calorie and macro tracking, yes. The features that matter most — accurate food logging, barcode scanning, macro goals, trends, and history editing — are all here and all free. What paid apps often add on top is social features, coaching, and meal planning services. If you want a reliable tool for tracking nutrition, Free Calorie Track covers the fundamentals without asking you to pay.',
+        a: 'For core calorie and macro tracking, yes. The features that matter most — accurate food logging, barcode scanning, macro goals, trends, and history editing — are all here and free to use. What paid apps often add on top is social features, coaching, and meal planning services. If you want a reliable tool for tracking nutrition, Free Calorie Track covers the fundamentals.',
       },
     ],
   },
@@ -219,12 +215,12 @@ const HOMESCREEN_STEPS = [
 ];
 
 const COMPARISON_ROWS = [
-  { feature: 'Barcode scanning', fct: 'Included', mfp: 'Requires subscription', li: 'Requires subscription' },
-  { feature: 'Macro tracking', fct: 'Included', mfp: 'Free tier limited', li: 'Free tier limited' },
-  { feature: 'Trends & insights', fct: 'Included', mfp: 'Free tier limited', li: 'Free tier limited' },
-  { feature: 'Ad-free', fct: 'Included', mfp: 'Requires subscription', li: 'Requires subscription' },
-  { feature: 'Account required', fct: 'No', mfp: 'Yes', li: 'Yes' },
-  { feature: 'Data storage', fct: 'Stored locally', mfp: 'Cloud-based', li: 'Cloud-based' },
+  { feature: 'Barcode scanning', fct: '✅', other: '💰 Requires subscription' },
+  { feature: 'Macro tracking', fct: '✅', other: '⚠️ Free tier limited' },
+  { feature: 'Trends & insights', fct: '✅', other: '⚠️ Free tier limited' },
+  { feature: 'Ad-free', fct: '✅', other: '💰 Requires subscription' },
+  { feature: 'Account required', fct: '❌ No', other: '✓ Yes' },
+  { feature: 'Data storage', fct: 'Stored locally', other: 'Cloud-based' },
 ];
 
 function FAQAccordion({ sections }) {
@@ -309,20 +305,83 @@ function FAQAccordion({ sections }) {
 }
 
 export default function LandingPage({ onGetStarted }) {
+  // Hide the universal footer from index.html when landing page is shown
+  useEffect(() => {
+    const footer = document.querySelector('.app-footer');
+    if (footer) {
+      footer.style.display = 'none';
+    }
+    return () => {
+      if (footer) {
+        footer.style.display = 'block';
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Hero */}
-      <div className="bg-gradient-to-b from-emerald-600 to-emerald-700 dark:from-emerald-700 dark:to-emerald-800 text-white px-4 pt-16 pb-14">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-4xl font-bold tracking-tight mb-3">Free Calorie Track</h1>
-          <p className="text-xl font-semibold text-emerald-100 mb-2">The calorie tracker that stayed free.</p>
-          <p className="text-emerald-200 text-base mb-8">No paywalls. No account. No ads. Just track.</p>
-          <button
-            onClick={onGetStarted}
-            className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95"
-          >
-            Get Started — it's free
-          </button>
+      <div className="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+            {/* Left: Text */}
+            <div className="flex-1 text-center md:text-left max-w-xl">
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">Free Calorie Track</h1>
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                Track calories & macros with <span className="font-bold text-emerald-600 dark:text-emerald-400">no paywalls, no ads, no account.</span>
+              </p>
+              <button
+                onClick={onGetStarted}
+                className="bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+                aria-label="Start tracking calories and macros now"
+              >
+                Start Tracking Now
+              </button>
+            </div>
+
+            {/* Right: App Screenshot */}
+            <div className="flex-1 w-full max-w-sm md:max-w-3xl">
+              <picture>
+                {/* Desktop: Multi-phone composite */}
+                <source
+                  srcSet="/hero-screenshot.webp"
+                  type="image/webp"
+                  media="(min-width: 768px)"
+                />
+                <source
+                  srcSet="/hero-screenshot.png"
+                  type="image/png"
+                  media="(min-width: 768px)"
+                />
+
+                {/* Mobile: Single phone */}
+                <source
+                  srcSet="/hero-mobile.webp"
+                  type="image/webp"
+                  media="(max-width: 767px)"
+                />
+                <source
+                  srcSet="/hero-mobile.png"
+                  type="image/png"
+                  media="(max-width: 767px)"
+                />
+
+                {/* Fallback */}
+                <img
+                  src="/hero-screenshot.png"
+                  alt="Free Calorie Track app dashboard showing NET calorie circle in green, macro tracking, and food logging interface"
+                  className="w-full h-auto rounded-xl shadow-2xl"
+                  loading="eager"
+                  style={{
+                    imageRendering: 'high-quality',
+                    transform: 'translateZ(0)',
+                    willChange: 'transform'
+                  }}
+                  decoding="sync"
+                />
+              </picture>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -331,9 +390,9 @@ export default function LandingPage({ onGetStarted }) {
         <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">How it works</h2>
         <div className="space-y-6">
           {[
-            { step: '1', title: 'Set up your profile', desc: 'Enter your age, height, weight, and activity level. We calculate your TDEE automatically.' },
-            { step: '2', title: 'Log your food', desc: 'Scan barcodes, pick from thousands of common foods, search branded products, or build custom recipes.' },
-            { step: '3', title: 'See your NET calories', desc: 'The honest number. Food eaten minus your body\'s burn minus exercise. That\'s it.' },
+            { step: '1', title: 'Set up your profile', desc: 'Enter your age, height, weight, and activity level. We calculate your TDEE automatically.*', note: true },
+            { step: '2', title: 'Log your food and exercise', desc: 'Scan barcodes, pick from thousands of common foods, search branded products, build custom recipes, and track workouts from 250+ exercises.' },
+            { step: '3', title: 'See your NET calories and macros', desc: 'Food eaten minus your body\'s burn minus exercise. Plus real-time tracking for protein, carbs, and fat.' },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-4">
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
@@ -342,6 +401,9 @@ export default function LandingPage({ onGetStarted }) {
               <div className="pt-1">
                 <h3 className="font-bold text-gray-800 dark:text-gray-100">{item.title}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{item.desc}</p>
+                {item.note && (
+                  <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 italic">*Estimates only. Consult a healthcare provider for medical advice.</p>
+                )}
               </div>
             </div>
           ))}
@@ -351,7 +413,8 @@ export default function LandingPage({ onGetStarted }) {
       {/* Features Grid */}
       <div className="bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
         <div className="max-w-2xl mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">Everything included. No exceptions.</h2>
+          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Forever Core Features</h2>
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">100% free to use. All essential tracking features included.</p>
           <div className="grid grid-cols-2 gap-4">
             {[
               { icon: '📷', title: 'Barcode Scanning', desc: 'Scan any product instantly. 220,000+ items in the database.' },
@@ -374,15 +437,14 @@ export default function LandingPage({ onGetStarted }) {
       {/* Comparison Table */}
       <div className="max-w-2xl mx-auto px-4 py-12">
         <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">See how we compare</h2>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Everything free. Always.</p>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Core features. 100% free to use.</p>
         <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-emerald-600 text-white">
-                <th className="text-left px-4 py-3 font-semibold">Feature</th>
+                <th className="text-left px-4 py-3 font-semibold">Features*</th>
                 <th className="text-left px-4 py-3 font-semibold">Free Calorie Track</th>
-                <th className="text-left px-4 py-3 font-semibold">MyFitnessPal®</th>
-                <th className="text-left px-4 py-3 font-semibold">Lose It!™</th>
+                <th className="text-left px-4 py-3 font-semibold">Other Leading Apps</th>
               </tr>
             </thead>
             <tbody>
@@ -390,15 +452,14 @@ export default function LandingPage({ onGetStarted }) {
                 <tr key={i} className={`${i % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-700'} border-t border-gray-200 dark:border-gray-700`}>
                   <td className="px-4 py-3 font-semibold text-gray-800 dark:text-gray-100">{row.feature}</td>
                   <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-semibold">{row.fct}</td>
-                  <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{row.mfp}</td>
-                  <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{row.li}</td>
+                  <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{row.other}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-4 leading-relaxed">
-          Feature availability is based on publicly available information and typical free-tier usage as of February 2026. Competitor products may change over time. Trademarks are the property of their respective owners.
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 leading-relaxed border-t border-gray-200 dark:border-gray-700 pt-4">
+          <strong>*Disclaimer:</strong> Comparison based on typical free-tier features available from leading subscription-based calorie tracking apps as of February 2026. Feature availability may change over time. No specific apps or trademarks are referenced to avoid trademark concerns.
         </p>
       </div>
 
@@ -408,21 +469,47 @@ export default function LandingPage({ onGetStarted }) {
           <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch.</p>
           <button
             onClick={onGetStarted}
-            className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95"
+            className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50"
+            aria-label="Start tracking calories and macros now"
           >
-            Get Started
+            Start Tracking Now
           </button>
+          <p className="text-emerald-100 text-sm mt-3">No download required</p>
         </div>
       </div>
 
       {/* FAQ */}
-      <div className="max-w-2xl mx-auto px-4 py-12">
+      <div id="install-instructions" className="max-w-2xl mx-auto px-4 py-12">
         <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Everything you need to know</h2>
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Tap a section to expand.</p>
         <FAQAccordion sections={FAQ_SECTIONS} />
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-6 leading-relaxed">
-          MyFitnessPal® and Lose It!™ are trademarks of their respective owners. Feature availability is based on typical free-tier usage and may change over time. No affiliation or endorsement is implied.
-        </p>
+      </div>
+
+      {/* Landing Page Footer */}
+      <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-8">
+        <div className="max-w-2xl mx-auto">
+          {/* Medical Disclaimer - Prominent */}
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-6">
+            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+              <strong className="text-yellow-800 dark:text-yellow-400">Medical Disclaimer:</strong> Free Calorie Track is for informational purposes only and is not intended for medical diagnosis, treatment, or professional health advice. TDEE and calorie estimates are approximations based on standard formulas and may not be accurate for all individuals. Always consult a qualified healthcare provider before making changes to your diet, exercise, or health routine. Free Calorie Track is provided "as is" without warranties of any kind and is not liable for any damages, data loss, or inaccuracies.
+            </p>
+          </div>
+
+          {/* Links */}
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <a href="/privacy-policy.html" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+              Privacy Policy
+            </a>
+            <a href="/terms-of-service.html" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+              Terms of Service
+            </a>
+          </div>
+
+          {/* Copyright */}
+          <p className="text-center text-xs text-gray-500 dark:text-gray-500">
+            © {new Date().getFullYear()} Free Calorie Track. All rights reserved.
+          </p>
+        </div>
       </div>
 
     </div>
