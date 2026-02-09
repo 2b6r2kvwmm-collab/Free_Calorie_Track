@@ -14,6 +14,7 @@ import {
   addExerciseEntry,
   getCustomMacros,
   getCustomCalorieGoal,
+  saveCustomCalorieGoal,
   getLocalDateString,
   getWaterTrackerEnabled,
   getMilestonesShown,
@@ -59,6 +60,8 @@ export default function Dashboard({ onRefresh }) {
   const [editFormData, setEditFormData] = useState({});
   const [showMilestone, setShowMilestone] = useState(null);
   const [showBackupReminder, setShowBackupReminder] = useState(false);
+  const [showGoalMismatchWarning, setShowGoalMismatchWarning] = useState(false);
+  const [goalRefreshKey, setGoalRefreshKey] = useState(0); // Force re-render when goal changes
   const waterTrackerEnabled = getWaterTrackerEnabled();
 
   const profile = getProfile();
@@ -93,9 +96,47 @@ export default function Dashboard({ onRefresh }) {
   // Determine if using custom goals (both custom macros AND custom calorie goal must be set)
   const usingCustomGoals = !!(customMacros && customCalorieGoal !== null);
 
-  const macroTargets = usingCustomGoals
+  // Check for manual goal early so we can use it in macro calculations
+  const manualDailyGoal = getDailyGoal();
+  const hasManualGoal = manualDailyGoal !== null; // null means not manually set
+
+  // Calculate base macro targets
+  let macroTargets = usingCustomGoals
     ? customMacros
     : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null);
+
+  // If user has manually set a goal that differs from calculated, recalculate macros
+  if (hasManualGoal && !usingCustomGoals && macroTargets) {
+    const calculatedAdjustment = macroTargets.calorieAdjustment;
+    if (manualDailyGoal !== calculatedAdjustment) {
+      // Recalculate macros for the manual target
+      const manualTargetCalories = tdee + manualDailyGoal;
+      const goalInfo = profile.fitnessGoal;
+
+      // Use the same protein/fat percentages but apply to manual calories
+      const proteinPerKg = goalInfo === 'weight-loss' ? 2.2 :
+                          goalInfo === 'muscle-gain' ? 2.0 :
+                          goalInfo === 'athletic-performance' ? 1.8 : 1.6;
+      const fatPercent = goalInfo === 'maintenance' ? 30 : 25;
+
+      const proteinGrams = Math.round(profile.weight * proteinPerKg);
+      const proteinCalories = proteinGrams * 4;
+      const fatCalories = Math.round(manualTargetCalories * (fatPercent / 100));
+      const fatGrams = Math.round(fatCalories / 9);
+      const carbCalories = manualTargetCalories - proteinCalories - fatCalories;
+      const carbGrams = Math.round(carbCalories / 4);
+
+      macroTargets = {
+        ...macroTargets,
+        protein: proteinGrams,
+        carbs: Math.max(0, carbGrams),
+        fat: fatGrams,
+        calories: manualTargetCalories,
+        calorieAdjustment: manualDailyGoal,
+      };
+    }
+  }
+
   const proteinGoal = macroTargets?.protein || 0;
   const carbsGoal = macroTargets?.carbs || 0;
   const fatGoal = macroTargets?.fat || 0;
@@ -109,10 +150,25 @@ export default function Dashboard({ onRefresh }) {
     adjustedProteinGoal = proteinGoal + additionalProtein;
   }
 
-  // Use custom calorie goal if set, otherwise use calculated goal from fitness goal
+  // Use custom calorie goal if set, otherwise check for manually set goal, then fall back to calculated
   const dailyGoal = usingCustomGoals
     ? customCalorieGoal
-    : (macroTargets?.calorieAdjustment ?? getDailyGoal());
+    : (hasManualGoal ? manualDailyGoal : (macroTargets?.calorieAdjustment ?? 0));
+
+  // Detect mismatch between custom goal and fitness goal
+  const hasGoalMismatch = usingCustomGoals && (() => {
+    const fitnessGoal = profile.fitnessGoal || 'maintenance';
+    const customIsSurplus = customCalorieGoal > tdee + 100; // More than 100 cal above TDEE
+    const customIsDeficit = customCalorieGoal < tdee - 100; // More than 100 cal below TDEE
+
+    // Mismatch if custom goal doesn't align with fitness goal
+    if ((fitnessGoal === 'weight-loss' && customIsSurplus) ||
+        (fitnessGoal === 'muscle-gain' && customIsDeficit) ||
+        (fitnessGoal === 'athletic-performance' && customIsDeficit)) {
+      return true;
+    }
+    return false;
+  })();
 
   const motivationalNudge = getMotivationalNudge(netCalories, dailyGoal, totalProtein, adjustedProteinGoal);
   const recentAchievements = getRecentAchievements();
@@ -164,6 +220,17 @@ export default function Dashboard({ onRefresh }) {
     }
   }, []); // Only run once on mount
 
+  // Check for goal mismatch warning
+  useEffect(() => {
+    if (hasGoalMismatch && !showGoalMismatchWarning) {
+      // Show warning after a short delay so it doesn't interfere with other modals
+      const timer = setTimeout(() => {
+        setShowGoalMismatchWarning(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasGoalMismatch]);
+
   // Get previous 3 days net calories
   const foodLog = getFoodLog();
   const exerciseLog = getExerciseLog();
@@ -202,22 +269,69 @@ export default function Dashboard({ onRefresh }) {
     day: 'numeric'
   });
 
-  // Color coding based on NET calories vs NET goal
-  let statusColor = 'text-emerald-600 dark:text-emerald-400';
-  let statusBg = 'bg-emerald-50 dark:bg-emerald-900/20';
-  let statusText = '✓ Under Goal';
-  let statusIcon = '✓';
+  // Context-aware status based on fitness goal
+  const fitnessGoal = profile.fitnessGoal || 'maintenance';
+  const isDeficitGoal = fitnessGoal === 'weight-loss' || fitnessGoal === 'maintenance';
+  const isSurplusGoal = fitnessGoal === 'muscle-gain' || fitnessGoal === 'athletic-performance';
 
-  if (netCalories > dailyGoal) {
-    statusColor = 'text-red-600 dark:text-red-400';
-    statusBg = 'bg-red-50 dark:bg-red-900/20';
-    statusText = '✗ Over Goal';
-    statusIcon = '✗';
-  } else if (netCalories > dailyGoal * 0.9) {
-    statusColor = 'text-yellow-600 dark:text-yellow-400';
-    statusBg = 'bg-yellow-50 dark:bg-yellow-900/20';
-    statusText = '⚠ Approaching Goal';
-    statusIcon = '⚠';
+  let statusColor, statusBg, statusText, statusIcon;
+
+  // For deficit goals (weight loss, maintenance): under target = good
+  if (isDeficitGoal) {
+    if (netCalories > dailyGoal) {
+      statusColor = 'text-orange-600 dark:text-orange-400';
+      statusBg = 'bg-orange-50 dark:bg-orange-900/20';
+      statusText = '↑ Above Target';
+      statusIcon = '↑';
+    } else if (netCalories > dailyGoal * 0.85) {
+      statusColor = 'text-blue-600 dark:text-blue-400';
+      statusBg = 'bg-blue-50 dark:bg-blue-900/20';
+      statusText = '→ Near Target';
+      statusIcon = '→';
+    } else {
+      statusColor = 'text-emerald-600 dark:text-emerald-400';
+      statusBg = 'bg-emerald-50 dark:bg-emerald-900/20';
+      statusText = '✓ On Track';
+      statusIcon = '✓';
+    }
+  }
+  // For surplus goals (muscle gain, performance): over target = good
+  else if (isSurplusGoal) {
+    if (netCalories > dailyGoal) {
+      statusColor = 'text-emerald-600 dark:text-emerald-400';
+      statusBg = 'bg-emerald-50 dark:bg-emerald-900/20';
+      statusText = '✓ On Track';
+      statusIcon = '✓';
+    } else if (netCalories > dailyGoal * 0.85) {
+      statusColor = 'text-blue-600 dark:text-blue-400';
+      statusBg = 'bg-blue-50 dark:bg-blue-900/20';
+      statusText = '→ Near Target';
+      statusIcon = '→';
+    } else {
+      statusColor = 'text-orange-600 dark:text-orange-400';
+      statusBg = 'bg-orange-50 dark:bg-orange-900/20';
+      statusText = '↓ Below Target';
+      statusIcon = '↓';
+    }
+  }
+  // Default case (should not normally reach here due to maintenance default)
+  else {
+    if (netCalories > dailyGoal) {
+      statusColor = 'text-orange-600 dark:text-orange-400';
+      statusBg = 'bg-orange-50 dark:bg-orange-900/20';
+      statusText = '↑ Above Target';
+      statusIcon = '↑';
+    } else if (netCalories > dailyGoal * 0.85) {
+      statusColor = 'text-blue-600 dark:text-blue-400';
+      statusBg = 'bg-blue-50 dark:bg-blue-900/20';
+      statusText = '→ Near Target';
+      statusIcon = '→';
+    } else {
+      statusColor = 'text-emerald-600 dark:text-emerald-400';
+      statusBg = 'bg-emerald-50 dark:bg-emerald-900/20';
+      statusText = '✓ On Track';
+      statusIcon = '✓';
+    }
   }
 
   const handleAddFood = (food) => {
@@ -264,18 +378,35 @@ export default function Dashboard({ onRefresh }) {
   // Helper function to extract grams from serving size
   const extractGrams = (servingSize) => {
     if (!servingSize) return 100;
-    // Match patterns like "100g", "(50g)", "100ml"
-    const match = servingSize.match(/(\d+(?:\.\d+)?)\s*(g|ml)/i);
-    return match ? parseFloat(match[1]) : 100;
+
+    // Check for multiplier pattern first: "2.5x 100g" or "2x 100g"
+    const multiplierMatch = servingSize.match(/(\d+(?:\.\d+)?)\s*x\s*(\d+(?:\.\d+)?)\s*(g|ml)/i);
+    if (multiplierMatch) {
+      const multiplier = parseFloat(multiplierMatch[1]);
+      const baseGrams = parseFloat(multiplierMatch[2]);
+      return multiplier * baseGrams;
+    }
+
+    // Fall back to simple pattern: "100g", "(50g)", "100ml"
+    const simpleMatch = servingSize.match(/(\d+(?:\.\d+)?)\s*(g|ml)/i);
+    return simpleMatch ? parseFloat(simpleMatch[1]) : 100;
   };
 
   const handleEditFood = (entry) => {
     setEditingFood(entry.timestamp);
     // Extract base grams from serving size
     const baseGrams = extractGrams(entry.servingSize);
-    // Calculate current grams from quantity
-    const currentQuantity = entry.quantity || 1;
-    const currentGrams = baseGrams * currentQuantity;
+
+    // Use the actual logged grams if available, otherwise calculate from quantity
+    let currentGrams;
+    if (entry.grams) {
+      // Use the stored grams from the entry (what was actually logged)
+      currentGrams = entry.grams;
+    } else {
+      // Fallback: calculate from quantity (for older entries without grams field)
+      const currentQuantity = entry.quantity || 1;
+      currentGrams = baseGrams * currentQuantity;
+    }
 
     setEditFormData({
       grams: currentGrams,
@@ -359,12 +490,53 @@ export default function Dashboard({ onRefresh }) {
   };
 
   const handleSaveGoal = () => {
-    const newGoal = parseInt(goalInput);
-    if (newGoal > 0) {
-      saveDailyGoal(newGoal);
-      setShowGoalEdit(false);
-      onRefresh();
+    const adjustment = parseInt(goalInput);
+
+    if (isNaN(adjustment)) {
+      alert('Please enter a valid number.');
+      return;
     }
+
+    // Validate based on fitness goal
+    const fitnessGoal = profile.fitnessGoal || 'maintenance';
+    if (fitnessGoal === 'weight-loss' && adjustment >= 0) {
+      alert('For weight loss, your net goal should be negative (calorie deficit).\n\nExample: -500 for a 500 calorie deficit');
+      return;
+    }
+    if ((fitnessGoal === 'muscle-gain' || fitnessGoal === 'athletic-performance') && adjustment <= 0) {
+      alert('For muscle gain/performance, your net goal should be positive (calorie surplus).\n\nExample: +300 for a 300 calorie surplus');
+      return;
+    }
+
+    // Validate reasonable ranges
+    if (adjustment < -1500 || adjustment > 1000) {
+      alert('That value is outside the possible range.\n\nFor weight loss: -200 to -1500 calories\nFor muscle gain: +100 to +1000 calories');
+      return;
+    }
+
+    // Minimum thresholds
+    if (fitnessGoal === 'weight-loss' && adjustment > -200) {
+      alert('That value is outside the possible range.\n\nFor weight loss: -200 to -1500 calories');
+      return;
+    }
+
+    if ((fitnessGoal === 'muscle-gain' || fitnessGoal === 'athletic-performance') && adjustment < 100) {
+      alert('That value is outside the possible range.\n\nFor muscle gain: +100 to +1000 calories');
+      return;
+    }
+
+    if (usingCustomGoals) {
+      // Convert adjustment to absolute calorie goal
+      const absoluteGoal = tdee + adjustment;
+      saveCustomCalorieGoal(absoluteGoal);
+    } else {
+      // Save the adjustment directly
+      saveDailyGoal(adjustment);
+    }
+    setShowGoalEdit(false);
+    setGoalRefreshKey(prev => prev + 1); // Force re-render to show updated goal
+    loadEntries(); // Reload entries
+    if (onRefresh) onRefresh(); // Notify parent to refresh
   };
 
   // Group foods by meal type
@@ -432,15 +604,20 @@ export default function Dashboard({ onRefresh }) {
             <span className="text-gray-400 dark:text-gray-600">•</span>
             <div className="flex items-center gap-2">
               <span className="text-gray-600 dark:text-gray-400">Net Goal: {dailyGoal} cal</span>
-              <button
-                onClick={() => {
-                  setGoalInput(dailyGoal.toString());
-                  setShowGoalEdit(true);
-                }}
-                className="text-emerald-600 dark:text-emerald-400 hover:underline"
-              >
-                Edit
-              </button>
+              {/* Hide edit button for maintenance goal when not using custom macros */}
+              {(usingCustomGoals || (profile.fitnessGoal !== 'maintenance')) && (
+                <button
+                  onClick={() => {
+                    // Convert to adjustment if using custom goals
+                    const adjustment = usingCustomGoals ? dailyGoal - tdee : dailyGoal;
+                    setGoalInput(adjustment.toString());
+                    setShowGoalEdit(true);
+                  }}
+                  className="text-emerald-600 dark:text-emerald-400 hover:underline"
+                >
+                  Edit
+                </button>
+              )}
             </div>
           </div>
 
@@ -481,19 +658,38 @@ export default function Dashboard({ onRefresh }) {
       {showGoalEdit && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" ref={goalModalRef}>
           <div className="card max-w-md w-full">
-            <h3 className="text-xl font-bold mb-4">Set Daily NET Calorie Goal</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-              This is your target NET calories (food eaten minus calories burned).
-              Use 0 for maintenance, negative for weight loss, positive for weight gain.
+            <h3 className="text-xl font-bold mb-4">Set Daily Net Calorie Goal</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+              This is your target net calories (food eaten minus calories burned).
             </p>
-            <label htmlFor="goal-input" className="sr-only">Daily NET calorie goal</label>
+            <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg mb-4 text-sm">
+              <p className="font-semibold mb-1">Your TDEE: {tdee} cal/day</p>
+              {(profile.fitnessGoal === 'weight-loss') && (
+                <p className="text-gray-700 dark:text-gray-300">
+                  <strong>For weight loss:</strong> Use negative values (deficit)<br/>
+                  Example: -500 = 500 cal deficit
+                </p>
+              )}
+              {(profile.fitnessGoal === 'muscle-gain' || profile.fitnessGoal === 'athletic-performance') && (
+                <p className="text-gray-700 dark:text-gray-300">
+                  <strong>For muscle gain:</strong> Use positive values (surplus)<br/>
+                  Example: +300 = 300 cal surplus
+                </p>
+              )}
+              {(profile.fitnessGoal === 'maintenance') && (
+                <p className="text-gray-700 dark:text-gray-300">
+                  <strong>For maintenance:</strong> Use 0 or small adjustments
+                </p>
+              )}
+            </div>
+            <label htmlFor="goal-input" className="sr-only">Daily Net calorie goal</label>
             <input
               id="goal-input"
               type="number"
               value={goalInput}
               onChange={(e) => setGoalInput(e.target.value)}
               className="input-field mb-4"
-              placeholder="0"
+              placeholder={(profile.fitnessGoal === 'weight-loss') ? '-500' : (profile.fitnessGoal === 'muscle-gain' || profile.fitnessGoal === 'athletic-performance') ? '+300' : '0'}
               autoFocus
             />
             <div className="flex gap-3">
@@ -535,8 +731,8 @@ export default function Dashboard({ onRefresh }) {
 
         {daysTracked < 5 && (
           <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-            <span className="font-semibold">💡 How NET works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
-            NET = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
+            <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
+            net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
           </div>
         )}
       </div>
@@ -702,7 +898,7 @@ export default function Dashboard({ onRefresh }) {
                                 title="Edit"
                                 aria-label="Edit food entry"
                               >
-                                E
+                                ✎
                               </button>
                               <button
                                 onClick={() => handleDeleteFood(entry.timestamp)}
@@ -911,6 +1107,54 @@ export default function Dashboard({ onRefresh }) {
         <BackupReminderModal
           onClose={() => setShowBackupReminder(false)}
         />
+      )}
+
+      {/* Goal Mismatch Warning */}
+      {showGoalMismatchWarning && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6 shadow-xl">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="text-3xl">⚠️</div>
+              <div>
+                <h3 className="text-xl font-bold mb-2">Goal Mismatch Detected</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Your custom calorie goal doesn't match your fitness goal:
+                </p>
+                <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded-lg mb-3 text-sm">
+                  <p className="mb-1">
+                    <strong>Fitness Goal:</strong> {profile.fitnessGoal === 'weight-loss' ? 'Weight Loss' : profile.fitnessGoal === 'muscle-gain' ? 'Muscle Gain' : profile.fitnessGoal === 'athletic-performance' ? 'Athletic Performance' : 'Maintenance'}
+                  </p>
+                  <p className="mb-1">
+                    <strong>Your TDEE:</strong> {tdee} cal
+                  </p>
+                  <p>
+                    <strong>Custom Goal:</strong> {customCalorieGoal} cal ({customCalorieGoal > tdee ? 'Surplus' : 'Deficit'})
+                  </p>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  This may cause confusion with progress tracking. Consider updating your fitness goal in Settings to match your custom calorie target.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowGoalMismatchWarning(false)}
+                className="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600"
+              >
+                Dismiss
+              </button>
+              <button
+                onClick={() => {
+                  setShowGoalMismatchWarning(false);
+                  // User will need to manually navigate to settings - we could add a callback if needed
+                }}
+                className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700"
+              >
+                Got It
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

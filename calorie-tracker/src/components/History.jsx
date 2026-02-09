@@ -160,7 +160,7 @@ export default function History({ onRefresh }) {
                     }`}>
                       {day.netCalories >= 0 ? '+' : ''}{day.netCalories}
                     </div>
-                    <div className="text-xs text-gray-500">NET cal</div>
+                    <div className="text-xs text-gray-500">net cal</div>
                   </div>
                 </div>
               </button>

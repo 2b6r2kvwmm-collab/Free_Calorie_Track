@@ -140,9 +140,9 @@ export default function WeightTracker() {
                   <Line
                     type="monotone"
                     dataKey="weight"
-                    stroke="#3b82f6"
+                    stroke="#475569"
                     strokeWidth={2}
-                    dot={{ fill: '#3b82f6', r: 4 }}
+                    dot={{ fill: '#475569', r: 4 }}
                   />
                 </LineChart>
               </ResponsiveContainer>

@@ -13,17 +13,20 @@ export default function MacroTracker({
   isCustomGoals = false,
   exerciseBurned = 0
 }) {
-  // Use provided goals if available (for custom macros), otherwise calculate
+  // Use provided goals if available (passed from Dashboard after recalculation)
   let baseMacroTargets;
-  if (isCustomGoals) {
-    // Custom macros provided
+  if (proteinGoal && carbsGoal && fatGoal) {
+    // Goals already calculated in Dashboard (handles custom goals AND manual adjustments)
     const totalCals = (proteinGoal * 4) + (carbsGoal * 4) + (fatGoal * 9);
+    const goalLabel = isCustomGoals ? 'Custom Goals' : 'Adjusted Goals';
     baseMacroTargets = {
       protein: proteinGoal,
       carbs: carbsGoal,
       fat: fatGoal,
-      goalLabel: 'Custom Goals',
-      explanation: 'Using your custom calorie and macro targets.',
+      goalLabel: goalLabel,
+      explanation: isCustomGoals
+        ? 'Using your custom calorie and macro targets.'
+        : 'Macro targets adjusted for your manual calorie goal.',
       breakdown: {
         proteinPercent: Math.round((proteinGoal * 4 / totalCals) * 100),
         carbPercent: Math.round((carbsGoal * 4 / totalCals) * 100),
@@ -31,7 +34,7 @@ export default function MacroTracker({
       }
     };
   } else {
-    // Calculate based on fitness goal
+    // Fallback: Calculate based on fitness goal
     const bmr = calculateBMR(profile);
     const tdee = calculateTDEE(bmr, profile.activityLevel);
     baseMacroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal);
@@ -101,14 +104,14 @@ export default function MacroTracker({
         {/* Protein */}
         <div>
           <div className="flex justify-between mb-2">
-            <span className="font-semibold text-red-600 dark:text-red-400">Protein</span>
+            <span className="font-semibold text-violet-600 dark:text-violet-400">Protein</span>
             <span className="text-sm">
               {Math.round(currentProtein)}g / {macroTargets.protein}g
             </span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
             <div
-              className="bg-red-500 h-3 rounded-full transition-all"
+              className="bg-violet-500 h-3 rounded-full transition-all"
               style={{ width: `${proteinProgress}%` }}
             ></div>
           </div>
@@ -117,14 +120,14 @@ export default function MacroTracker({
         {/* Carbs */}
         <div>
           <div className="flex justify-between mb-2">
-            <span className="font-semibold text-blue-600 dark:text-blue-400">Carbs</span>
+            <span className="font-semibold text-orange-600 dark:text-orange-400">Carbs</span>
             <span className="text-sm">
               {Math.round(currentCarbs)}g / {macroTargets.carbs}g
             </span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
             <div
-              className="bg-blue-500 h-3 rounded-full transition-all"
+              className="bg-orange-500 h-3 rounded-full transition-all"
               style={{ width: `${carbProgress}%` }}
             ></div>
           </div>
@@ -133,14 +136,14 @@ export default function MacroTracker({
         {/* Fat */}
         <div>
           <div className="flex justify-between mb-2">
-            <span className="font-semibold text-amber-600 dark:text-amber-400">Fat</span>
+            <span className="font-semibold text-teal-600 dark:text-teal-400">Fat</span>
             <span className="text-sm">
               {Math.round(currentFat)}g / {macroTargets.fat}g
             </span>
           </div>
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
             <div
-              className="bg-amber-500 h-3 rounded-full transition-all"
+              className="bg-teal-500 h-3 rounded-full transition-all"
               style={{ width: `${fatProgress}%` }}
             ></div>
           </div>
@@ -152,19 +155,19 @@ export default function MacroTracker({
         <div className="text-sm font-semibold mb-2">Daily Targets</div>
         <div className="grid grid-cols-3 gap-4 text-center text-sm">
           <div>
-            <div className="text-red-600 dark:text-red-400 font-bold text-lg">
+            <div className="text-violet-600 dark:text-violet-400 font-bold text-lg">
               {macroTargets.breakdown.proteinPercent}%
             </div>
             <div className="text-gray-600 dark:text-gray-400">Protein</div>
           </div>
           <div>
-            <div className="text-blue-600 dark:text-blue-400 font-bold text-lg">
+            <div className="text-orange-600 dark:text-orange-400 font-bold text-lg">
               {macroTargets.breakdown.carbPercent}%
             </div>
             <div className="text-gray-600 dark:text-gray-400">Carbs</div>
           </div>
           <div>
-            <div className="text-amber-600 dark:text-amber-400 font-bold text-lg">
+            <div className="text-teal-600 dark:text-teal-400 font-bold text-lg">
               {macroTargets.breakdown.fatPercent}%
             </div>
             <div className="text-gray-600 dark:text-gray-400">Fat</div>

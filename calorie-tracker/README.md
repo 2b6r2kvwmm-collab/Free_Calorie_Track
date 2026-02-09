@@ -1,12 +1,40 @@
 # Calorie Tracker
 
-A simple, mobile-first web app for tracking NET calories (food eaten minus calories burned).
+A simple, mobile-first web app for tracking net calories (food eaten minus calories burned).
 
 ## Privacy Notice
 
 **Your Data Stays Local:** All your personal tracking data (food logs, weight, exercise, etc.) is stored only in your browser's localStorage and never sent to any servers.
 
 **Anonymous Analytics:** This app uses Vercel Analytics to collect anonymous usage statistics (page views, feature usage) to help improve the app. No personal tracking data is sent to analytics. See our [Privacy Policy](/privacy-policy.html) for full details.
+
+## Workout Import Feature (Implemented with Legal Mitigations)
+
+**Note:** This feature is fully implemented but not yet deployed. It allows users to import workout history from fitness apps (Strava, Apple Health, Garmin, Google Fit).
+
+**Legal Disclaimers Included:**
+- ⚠️ Mandatory acceptance of legal disclaimer before first use
+- 📊 Accuracy warnings (imported data may contain errors)
+- 💾 Storage warnings (data stored unencrypted on device)
+- 📋 Third-party terms compliance reminder
+- ⚕️ Medical disclaimer (not for medical decisions)
+
+**Supported Formats:**
+- CSV (Strava, Garmin exports)
+- JSON (Google Fit exports)
+- GPX (GPS tracking files)
+- XML (Apple Health export.xml)
+- TCX (Garmin Training Center format)
+
+**Import Privacy:**
+All file parsing happens client-side in the browser. Workout data never leaves the user's device. The parser extracts: exercise type, duration, calories burned, date, and distance (if available).
+
+**Liability Considerations:**
+Users must accept legal disclaimer acknowledging:
+- Data accuracy not guaranteed
+- User responsibility to review imported data
+- Compliance with export source's terms of service
+- No reliance on data for medical decisions
 
 ## Features
 
@@ -22,9 +50,10 @@ A simple, mobile-first web app for tracking NET calories (food eaten minus calor
 - **Resting Calories**: Automatic calculation of calories burned throughout the day
 - **Exercise Logging**: Choose from 30+ exercises with scientifically-based MET values
 - **Duration & Intensity**: Log exercise duration for accurate calorie burn estimates
+- **Workout Import**: Import workout history from Strava, Apple Health, Garmin, Google Fit (with legal disclaimers)
 
 ### Dashboard
-- **Big NET Calorie Display**: See your net calories at a glance
+- **Big Net Calorie Display**: See your net calories at a glance
 - **Color Coding**: Green (under goal), yellow (close), red (over)
 - **Daily Breakdown**: View calories eaten, resting burn, and exercise burn
 - **Goal Setting**: Set and adjust your daily calorie goal

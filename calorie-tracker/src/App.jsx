@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
+import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
@@ -78,10 +79,12 @@ function App() {
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+              <h1 className="text-2xl font-bold tracking-tight text-emerald-600 dark:text-emerald-400"
+                  style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
                 Free Calorie Track
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase"
+                 style={{ fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '0.03em', fontSize: '10px' }}>
                 The ultimate free calorie tracker
               </p>
             </div>
@@ -89,6 +92,7 @@ function App() {
               <button
                 onClick={() => setShowUserManager(true)}
                 className="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
               >
                 {currentUserName}
               </button>
@@ -122,48 +126,60 @@ function App() {
       </div>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t-2 border-gray-200 dark:border-gray-700 z-40">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="grid grid-cols-4 gap-2 py-3">
+      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-40">
+        <div className="max-w-4xl mx-auto px-2">
+          <div className="grid grid-cols-4 gap-1 py-2">
             <button
               onClick={() => setCurrentView('dashboard')}
-              className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
+              className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
                 currentView === 'dashboard'
-                  ? 'bg-emerald-600 text-white'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
+              style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
+              aria-label="Dashboard"
             >
-              📊 Dashboard
+              <LayoutDashboard size={20} strokeWidth={2} />
+              <span style={{ letterSpacing: '0.02em' }}>Dashboard</span>
             </button>
             <button
               onClick={() => setCurrentView('trends')}
-              className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
+              className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
                 currentView === 'trends'
-                  ? 'bg-emerald-600 text-white'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
+              style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
+              aria-label="Trends"
             >
-              📈 Trends
+              <TrendingUp size={20} strokeWidth={2} />
+              <span style={{ letterSpacing: '0.02em' }}>Trends</span>
             </button>
             <button
               onClick={() => setCurrentView('history')}
-              className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
+              className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
                 currentView === 'history'
-                  ? 'bg-emerald-600 text-white'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
+              style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
+              aria-label="History"
             >
-              📜 History
+              <HistoryIcon size={20} strokeWidth={2} />
+              <span style={{ letterSpacing: '0.02em' }}>History</span>
             </button>
             <button
               onClick={() => setCurrentView('settings')}
-              className={`py-3 px-2 rounded-lg font-semibold text-sm transition-colors ${
+              className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
                 currentView === 'settings'
-                  ? 'bg-emerald-600 text-white'
-                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
+              style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
+              aria-label="Settings"
             >
-              ⚙️ Settings
+              <SettingsIcon size={20} strokeWidth={2} />
+              <span style={{ letterSpacing: '0.02em' }}>Settings</span>
             </button>
           </div>
         </div>

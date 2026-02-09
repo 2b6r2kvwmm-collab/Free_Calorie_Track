@@ -77,8 +77,8 @@ const FAQ_SECTIONS = [
     title: 'Calories & Nutrition Science',
     items: [
       {
-        q: 'What are NET calories, and why do they matter?',
-        a: 'NET calories represent your true energy balance for the day: the calories you ate, minus the calories your body burned at rest (TDEE), minus the calories you burned exercising. A NET of zero means maintenance — your weight stays the same. Negative NET means a deficit — you\'ll lose weight over time. Positive NET means a surplus — you\'ll gain weight. Most apps show gross calories eaten without factoring in what your body burns, which makes the number misleading. Free Calorie Track shows you the real picture.',
+        q: 'What are Net calories, and why do they matter?',
+        a: 'Net calories represent your true energy balance for the day: the calories you ate, minus the calories your body burned at rest (TDEE), minus the calories you burned exercising. A net of zero means maintenance — your weight stays the same. Negative net means a deficit — you\'ll lose weight over time. Positive net means a surplus — you\'ll gain weight. Most apps show gross calories eaten without factoring in what your body burns, which makes the number misleading. Free Calorie Track shows you the real picture.',
       },
       {
         q: 'What is the difference between BMR and TDEE?',
@@ -98,7 +98,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Can I use this app for muscle gain, not just fat loss?',
-        a: 'Yes. The app supports muscle gain as a fitness goal. It sets a calorie surplus target and higher protein macro goals appropriate for building. You can log strength training from 80+ exercises, track weight gain over time with progress charts, and monitor your weekly calorie averages to make sure you\'re consistently in a surplus. The NET calorie system works the same way in either direction.',
+        a: 'Yes. The app supports muscle gain as a fitness goal. It sets a calorie surplus target and higher protein macro goals appropriate for building. You can log strength training from 80+ exercises, track weight gain over time with progress charts, and monitor your weekly calorie averages to make sure you\'re consistently in a surplus. The Net calorie system works the same way in either direction.',
       },
     ],
   },
@@ -107,7 +107,7 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: 'What does the Trends page show me?',
-        a: 'Trends gives you a bigger-picture view of how your nutrition and fitness are actually going over time. You\'ll see weekly and monthly averages for NET calories, protein, carbs, fat, and exercise calories burned. There\'s also a 7-day rolling average line that smooths out the day-to-day noise — so one bad day doesn\'t make your week look terrible. Weight progress is charted over time so you can see the actual trajectory, not just a single number.',
+        a: 'Trends gives you a bigger-picture view of how your nutrition and fitness are actually going over time. You\'ll see weekly and monthly averages for Net calories, protein, carbs, fat, and exercise calories burned. There\'s also a 7-day rolling average line that smooths out the day-to-day noise — so one bad day doesn\'t make your week look terrible. Weight progress is charted over time so you can see the actual trajectory, not just a single number.',
       },
       {
         q: 'How are weekly and monthly averages calculated?',
@@ -115,11 +115,11 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'What is the 7-day rolling average and why is it useful?',
-        a: 'Weight and calorie intake fluctuate naturally day to day — water retention, meal timing, stress, and dozens of other factors cause the number to bounce around. The 7-day rolling average smooths all of that out. If your rolling average NET calories are consistently negative over weeks, you\'re in a real deficit, regardless of what any single day looked like. It\'s one of the most useful numbers in the app for making informed decisions about your intake.',
+        a: 'Weight and calorie intake fluctuate naturally day to day — water retention, meal timing, stress, and dozens of other factors cause the number to bounce around. The 7-day rolling average smooths all of that out. If your rolling average Net calories are consistently negative over weeks, you\'re in a real deficit, regardless of what any single day looked like. It\'s one of the most useful numbers in the app for making informed decisions about your intake.',
       },
       {
         q: 'How does the app estimate my weight change?',
-        a: 'The app calculates estimated weight change based on your cumulative NET calorie balance over time. Roughly 3,500 calories of deficit equals about one pound of fat lost (and vice versa for surplus). The app uses this relationship alongside your actual logged weight entries to show both estimated and actual weight trends. The estimate is a guide — actual results depend on many factors — but it gives you a grounded expectation based on your own data.',
+        a: 'The app calculates estimated weight change based on your cumulative Net calorie balance over time. Roughly 3,500 calories of deficit equals about one pound of fat lost (and vice versa for surplus). The app uses this relationship alongside your actual logged weight entries to show both estimated and actual weight trends. The estimate is a guide — actual results depend on many factors — but it gives you a grounded expectation based on your own data.',
       },
       {
         q: 'How do I view my food and exercise history?',
@@ -135,7 +135,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'What insights does the dashboard show me?',
-        a: 'The dashboard is your daily command center. At the top you\'ll see your NET calorie balance for today — how far above or below maintenance you are. Below that are macro progress bars for protein, carbs, and fat, updating in real time as you log food. You\'ll also see your food and exercise entries for today, a water tracker (if enabled), and an achievements bar that tracks your streaks and milestones.',
+        a: 'The dashboard is your daily command center. At the top you\'ll see your Net calorie balance for today — how far above or below maintenance you are. Below that are macro progress bars for protein, carbs, and fat, updating in real time as you log food. You\'ll also see your food and exercise entries for today, a water tracker (if enabled), and an achievements bar that tracks your streaks and milestones.',
       },
       {
         q: 'How do streaks and achievements work?',
@@ -369,7 +369,7 @@ export default function LandingPage({ onGetStarted }) {
                 {/* Fallback */}
                 <img
                   src="/hero-screenshot.png"
-                  alt="Free Calorie Track app dashboard showing NET calorie circle in green, macro tracking, and food logging interface"
+                  alt="Free Calorie Track app dashboard showing Net calorie circle in green, macro tracking, and food logging interface"
                   className="w-full h-auto rounded-xl shadow-2xl"
                   loading="eager"
                   style={{
@@ -392,7 +392,7 @@ export default function LandingPage({ onGetStarted }) {
           {[
             { step: '1', title: 'Set up your profile', desc: 'Enter your age, height, weight, and activity level. We calculate your TDEE automatically.*', note: true },
             { step: '2', title: 'Log your food and exercise', desc: 'Scan barcodes, pick from thousands of common foods, search branded products, build custom recipes, and track workouts from 250+ exercises.' },
-            { step: '3', title: 'See your NET calories and macros', desc: 'Food eaten minus your body\'s burn minus exercise. Plus real-time tracking for protein, carbs, and fat.' },
+            { step: '3', title: 'See your Net calories and macros', desc: 'Food eaten minus your body\'s burn minus exercise. Plus real-time tracking for protein, carbs, and fat.' },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-4">
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">

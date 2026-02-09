@@ -172,13 +172,18 @@ function updateRecentFoods(food) {
   setData(STORAGE_KEYS.RECENT_FOODS, recent);
 }
 
-// Daily Goal (NET calories - 0 = maintenance, negative = weight loss, positive = weight gain)
+// Daily Goal (Net calories - 0 = maintenance, negative = weight loss, positive = weight gain)
+// Returns null if not manually set, allowing calculated goals to be used
 export function getDailyGoal() {
-  return getData(STORAGE_KEYS.DAILY_GOAL) ?? 0; // Default to 0 (maintenance)
+  return getData(STORAGE_KEYS.DAILY_GOAL); // Returns null if not set
 }
 
 export function saveDailyGoal(goal) {
   setData(STORAGE_KEYS.DAILY_GOAL, goal);
+}
+
+export function clearDailyGoal() {
+  setData(STORAGE_KEYS.DAILY_GOAL, null);
 }
 
 // Custom Macros - { protein, carbs, fat } in grams, or null if using auto-calculated
@@ -329,6 +334,26 @@ export function getWaterTrackerEnabled() {
 
 export function saveWaterTrackerEnabled(enabled) {
   setData('waterTrackerEnabled', enabled);
+}
+
+// Workout Import Instructions - boolean for showing first-time instructions
+export function getImportInstructionsDismissed() {
+  const dismissed = getData('importInstructionsDismissed');
+  return dismissed !== null ? dismissed : false; // Default to false (show instructions)
+}
+
+export function saveImportInstructionsDismissed(dismissed) {
+  setData('importInstructionsDismissed', dismissed);
+}
+
+// Workout Import Disclaimer - boolean for legal disclaimer acceptance
+export function getImportDisclaimerAccepted() {
+  const accepted = getData('importDisclaimerAccepted');
+  return accepted !== null ? accepted : false; // Default to false (must accept)
+}
+
+export function saveImportDisclaimerAccepted(accepted) {
+  setData('importDisclaimerAccepted', accepted);
 }
 
 // Meal Type Categorization - boolean for prompting meal type when logging food

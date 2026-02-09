@@ -63,7 +63,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
     // Save or clear custom goals
     if (useCustomGoals) {
       saveCustomMacros(customMacros);
-      // Calculate NET goal: Total Calories from Macros - Lifestyle TDEE
+      // Calculate net goal: Total Calories from Macros - Lifestyle TDEE
       const totalCaloriesFromMacros = (customMacros.protein * 4) + (customMacros.carbs * 4) + (customMacros.fat * 9);
       const bmrForGoal = calculateBMR(profile);
       const tdeeForGoal = calculateTDEE(bmrForGoal, formData.activityLevel);
@@ -73,7 +73,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
     } else {
       clearCustomMacros();
       clearCustomCalorieGoal();
-      // Auto-set NET calorie goal based on fitness goal
+      // Auto-set net calorie goal based on fitness goal
       const bmrForGoal = calculateBMR(profile);
       const tdeeForGoal = calculateTDEE(bmrForGoal, formData.activityLevel);
       const macroTargets = calculateMacroTargets(weight, tdeeForGoal, formData.fitnessGoal);
@@ -261,165 +261,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
         </div>
       </div>
 
-      {/* Data Management Section */}
-      <div className="card">
-        <h2 className="text-2xl font-bold mb-4">Data Management</h2>
-
-        {/* Warning Banner */}
-        <div className="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-500 p-4 rounded-lg mb-6">
-          <div className="flex items-start gap-3">
-            <span className="text-2xl">⚠️</span>
-            <div>
-              <p className="font-semibold text-amber-900 dark:text-amber-100 mb-2">
-                Important: Your Data is Stored Locally
-              </p>
-              <p className="text-sm text-amber-800 dark:text-amber-200 mb-2">
-                All your data is stored in your browser's local storage. If you clear your browser cache or data,
-                <strong> all your tracking data will be permanently deleted</strong>.
-              </p>
-              <p className="text-sm text-amber-800 dark:text-amber-200">
-                <strong>Recommendation:</strong> Export your data regularly to create backups. You can import it later
-                if you need to restore or transfer your data.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Export/Import Buttons */}
-        <div className="space-y-4">
-          <div>
-            <button
-              onClick={onExport}
-              className="w-full py-3 px-6 rounded-lg font-semibold border-2 border-emerald-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
-            >
-              📥 Export Data (Download Backup)
-            </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              Download all your data as a JSON file. Keep this file safe as a backup.
-            </p>
-          </div>
-
-          <div>
-            <label htmlFor="import-file-input" className="sr-only">Import backup file</label>
-            <input
-              id="import-file-input"
-              ref={fileInputRef}
-              type="file"
-              accept=".json"
-              onChange={handleImport}
-              className="hidden"
-            />
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="btn-secondary w-full"
-            >
-              📤 Import Data (Restore from Backup)
-            </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              Upload a previously exported backup file. This will replace all current data.
-            </p>
-          </div>
-
-          {/* Import/Export Message */}
-          {importMessage && (
-            <div className={`p-3 rounded-lg text-center font-semibold ${
-              importMessage.includes('Error')
-                ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300'
-                : 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
-            }`}>
-              {importMessage}
-            </div>
-          )}
-
-          {/* Storage Usage Indicator */}
-          <div className="border-t-2 border-gray-200 dark:border-gray-700 pt-6 mt-6">
-            {(() => {
-              // Calculate localStorage usage
-              let totalSize = 0;
-              for (let key in localStorage) {
-                if (localStorage.hasOwnProperty(key)) {
-                  totalSize += localStorage[key].length + key.length;
-                }
-              }
-              const sizeInKB = (totalSize / 1024).toFixed(2);
-              const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
-              const maxSizeMB = 5; // Typical localStorage limit
-              const percentUsed = ((totalSize / (maxSizeMB * 1024 * 1024)) * 100).toFixed(1);
-
-              const isWarning = percentUsed >= 90 && percentUsed < 95;
-              const isDanger = percentUsed >= 95;
-
-              return (
-                <div className={`p-4 rounded-lg mb-6 border-2 ${
-                  isDanger
-                    ? 'bg-red-50 dark:bg-red-900/20 border-red-500'
-                    : isWarning
-                      ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500'
-                      : 'bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600'
-                }`}>
-                  <div className="flex items-start gap-3">
-                    <span className="text-2xl">{isDanger ? '⚠️' : isWarning ? '📊' : '💾'}</span>
-                    <div className="flex-1">
-                      <p className="font-semibold mb-2">Storage Usage</p>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                          <div
-                            className={`h-full transition-all ${
-                              isDanger
-                                ? 'bg-red-600'
-                                : isWarning
-                                  ? 'bg-yellow-500'
-                                  : 'bg-emerald-500'
-                            }`}
-                            style={{ width: `${Math.min(percentUsed, 100)}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-sm font-semibold min-w-[60px] text-right">
-                          {percentUsed}%
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Using {sizeInMB} MB of ~{maxSizeMB} MB available ({sizeInKB} KB)
-                      </p>
-                      {isWarning && (
-                        <p className="text-sm mt-2 text-yellow-800 dark:text-yellow-200">
-                          {isDanger
-                            ? '⚠️ Storage almost full! Consider exporting and deleting old data.'
-                            : '💡 Tip: Export your data periodically to free up space.'}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })()}
-          </div>
-
-          {/* Delete All Data Section */}
-          <div>
-            <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg mb-4">
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">🗑️</span>
-                <div>
-                  <p className="font-semibold text-red-900 dark:text-red-100 mb-2">
-                    Delete All Data
-                  </p>
-                  <p className="text-sm text-red-800 dark:text-red-200">
-                    This will permanently delete all your data including food logs, exercise logs, weight history, custom foods, recipes, and profile information. This action cannot be undone and there is no way to recover your data after deletion.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowDeleteConfirm(true)}
-              className="w-full py-3 px-6 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 transition-colors"
-            >
-              🗑️ Delete All Data Permanently
-            </button>
-          </div>
-        </div>
-      </div>
-
       <div className="card">
         <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
 
@@ -582,12 +423,12 @@ export default function Settings({ onUpdateProfile, onClose }) {
             <div>
               <label className="block text-lg font-semibold mb-3">Fitness Goal</label>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                Automatically sets your NET calorie goal and research-based macro targets
+                Automatically sets your net calorie goal and research-based macro targets
               </p>
             <div className="space-y-3">
               {Object.values(FITNESS_GOALS).map((goalKey) => {
                 const goal = GOAL_INFO[goalKey];
-                // Calculate NET goal based on current weight (preview)
+                // Calculate net goal based on current weight (preview)
                 const previewBMR = calculateBMR(bmrProfile);
                 const previewTDEE = calculateTDEE(previewBMR, formData.activityLevel);
                 const previewTargets = calculateMacroTargets(metricWeight, previewTDEE, goalKey);
@@ -611,7 +452,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                         netCalorieGoal < 0 ? 'text-orange-600 dark:text-orange-400' :
                         'text-gray-600 dark:text-gray-400'
                       }`}>
-                        NET: {netCalorieGoal >= 0 ? '+' : ''}{netCalorieGoal} cal
+                        net: {netCalorieGoal >= 0 ? '+' : ''}{netCalorieGoal} cal
                       </div>
                     </div>
                     <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -624,7 +465,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <div className="mt-4 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
                 <p className="font-semibold mb-1">💡 Based on standard nutrition formulas:</p>
                 <p className="text-xs">
-                  Your NET calorie goal will be automatically set based on your fitness goal.
+                  Your net calorie goal will be automatically set based on your fitness goal.
                   You can still adjust it manually from the Dashboard if needed.
                 </p>
               </div>
@@ -639,7 +480,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
             return (
               <div className="space-y-4 p-4 border-2 border-emerald-500 rounded-lg bg-emerald-50 dark:bg-emerald-900/10">
                 <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
-                  Set your daily macro targets. Your NET calorie goal is calculated automatically.
+                  Set your daily macro targets. Your net calorie goal is calculated automatically.
                 </p>
 
                 {/* Custom Macros */}
@@ -697,15 +538,15 @@ export default function Settings({ onUpdateProfile, onClose }) {
                     <p className="font-semibold text-sm mb-3">Calorie Calculation:</p>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-red-600 dark:text-red-400">Protein: {customMacros.protein}g × 4</span>
+                        <span className="text-violet-600 dark:text-violet-400">Protein: {customMacros.protein}g × 4</span>
                         <span className="font-semibold">{customMacros.protein * 4} cal</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-blue-600 dark:text-blue-400">Carbs: {customMacros.carbs}g × 4</span>
+                        <span className="text-orange-600 dark:text-orange-400">Carbs: {customMacros.carbs}g × 4</span>
                         <span className="font-semibold">{customMacros.carbs * 4} cal</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-amber-600 dark:text-amber-400">Fat: {customMacros.fat}g × 9</span>
+                        <span className="text-teal-600 dark:text-teal-400">Fat: {customMacros.fat}g × 9</span>
                         <span className="font-semibold">{customMacros.fat * 9} cal</span>
                       </div>
                       <div className="border-t-2 border-gray-300 dark:border-gray-600 pt-2 mt-2">
@@ -720,7 +561,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                       </div>
                       <div className="border-t-2 border-emerald-500 dark:border-emerald-600 pt-2 mt-2">
                         <div className="flex justify-between font-bold text-lg">
-                          <span>NET Calorie Goal:</span>
+                          <span>net Calorie Goal:</span>
                           <span className={netCalorieGoal < 0 ? 'text-orange-600 dark:text-orange-400' : netCalorieGoal > 0 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-400'}>
                             {netCalorieGoal >= 0 ? '+' : ''}{netCalorieGoal} cal
                           </span>
@@ -847,12 +688,163 @@ export default function Settings({ onUpdateProfile, onClose }) {
         </button>
       </div>
 
-      {/* Medical Disclaimer */}
-      <div className="card bg-yellow-50 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-800">
-        <h3 className="font-semibold text-sm mb-2 text-gray-900 dark:text-gray-100">⚠️ Medical Disclaimer</h3>
-        <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-          This app provides estimates for informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Consult a doctor or registered dietitian before starting any diet or exercise program, especially if you have any pre-existing health conditions.
-        </p>
+      {/* Data Management Section */}
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-4">Data Management</h2>
+
+        {/* Warning Banner */}
+        <div className="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-500 p-4 rounded-lg mb-6">
+          <div className="flex items-start gap-3">
+            <span className="text-2xl">⚠️</span>
+            <div>
+              <p className="font-semibold text-amber-900 dark:text-amber-100 mb-2">
+                Important: Your Data is Stored Locally
+              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-200 mb-2">
+                All your data is stored in your browser's local storage. If you clear your browser cache or data,
+                <strong> all your tracking data will be permanently deleted</strong>.
+              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-200">
+                <strong>Recommendation:</strong> Export your data regularly to create backups. You can import it later
+                if you need to restore or transfer your data.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Export/Import Buttons */}
+        <div className="space-y-4">
+          <div>
+            <button
+              onClick={onExport}
+              className="w-full py-3 px-6 rounded-lg font-semibold border-2 border-emerald-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+            >
+              📥 Export Data (Download Backup)
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Download all your data as a JSON file. Keep this file safe as a backup.
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="import-file-input" className="sr-only">Import backup file</label>
+            <input
+              id="import-file-input"
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleImport}
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="btn-secondary w-full"
+            >
+              📤 Import Data (Restore from Backup)
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Upload a previously exported backup file. This will replace all current data.
+            </p>
+          </div>
+
+          {/* Import/Export Message */}
+          {importMessage && (
+            <div className={`p-3 rounded-lg text-center font-semibold ${
+              importMessage.includes('Error')
+                ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-300'
+                : 'bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300'
+            }`}>
+              {importMessage}
+            </div>
+          )}
+
+          {/* Storage Usage Indicator */}
+          <div className="border-t-2 border-gray-200 dark:border-gray-700 pt-6 mt-6">
+            {(() => {
+              // Calculate localStorage usage
+              let totalSize = 0;
+              for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                  totalSize += localStorage[key].length + key.length;
+                }
+              }
+              const sizeInKB = (totalSize / 1024).toFixed(2);
+              const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
+              const maxSizeMB = 5; // Typical localStorage limit
+              const percentUsed = ((totalSize / (maxSizeMB * 1024 * 1024)) * 100).toFixed(1);
+
+              const isWarning = percentUsed >= 90 && percentUsed < 95;
+              const isDanger = percentUsed >= 95;
+
+              return (
+                <div className={`p-4 rounded-lg mb-6 border-2 ${
+                  isDanger
+                    ? 'bg-red-50 dark:bg-red-900/20 border-red-500'
+                    : isWarning
+                      ? 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-500'
+                      : 'bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600'
+                }`}>
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">{isDanger ? '⚠️' : isWarning ? '📊' : '💾'}</span>
+                    <div className="flex-1">
+                      <p className="font-semibold mb-2">Storage Usage</p>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+                          <div
+                            className={`h-full transition-all ${
+                              isDanger
+                                ? 'bg-red-600'
+                                : isWarning
+                                  ? 'bg-yellow-500'
+                                  : 'bg-emerald-500'
+                            }`}
+                            style={{ width: `${Math.min(percentUsed, 100)}%` }}
+                          ></div>
+                        </div>
+                        <span className="text-sm font-semibold min-w-[60px] text-right">
+                          {percentUsed}%
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Using {sizeInMB} MB of ~{maxSizeMB} MB available ({sizeInKB} KB)
+                      </p>
+                      {isWarning && (
+                        <p className="text-sm mt-2 text-yellow-800 dark:text-yellow-200">
+                          {isDanger
+                            ? '⚠️ Storage almost full! Consider exporting and deleting old data.'
+                            : '💡 Tip: Export your data periodically to free up space.'}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+
+          {/* Delete All Data Section */}
+          <div>
+            <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 p-4 rounded-lg mb-4">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl">🗑️</span>
+                <div>
+                  <p className="font-semibold text-red-900 dark:text-red-100 mb-2">
+                    Delete All Data
+                  </p>
+                  <p className="text-sm text-red-800 dark:text-red-200">
+                    This will permanently delete all your data including food logs, exercise logs, weight history, custom foods, recipes, and profile information. This action cannot be undone and there is no way to recover your data after deletion.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="w-full py-3 px-6 rounded-lg font-semibold bg-red-600 text-white hover:bg-red-700 transition-colors"
+            >
+              🗑️ Delete All Data Permanently
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Trademark Disclaimer */}

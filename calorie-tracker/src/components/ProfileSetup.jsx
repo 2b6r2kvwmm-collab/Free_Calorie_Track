@@ -49,7 +49,7 @@ export default function ProfileSetup({ onComplete }) {
     // Save or clear custom goals
     if (useCustomGoals) {
       saveCustomMacros(customMacros);
-      // Calculate NET goal: Total Calories from Macros - Lifestyle TDEE
+      // Calculate net goal: Total Calories from Macros - Lifestyle TDEE
       const totalCaloriesFromMacros = (customMacros.protein * 4) + (customMacros.carbs * 4) + (customMacros.fat * 9);
       const bmr = calculateBMR(profile);
       const baselineTDEE = getBaselineTDEE(bmr);

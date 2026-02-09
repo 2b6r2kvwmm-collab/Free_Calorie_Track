@@ -105,7 +105,7 @@ export default function WeeklySummary() {
       {/* Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div className="bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-lg">
-          <div className="text-sm text-gray-600 dark:text-gray-400">Avg NET Cal</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Avg net cal</div>
           <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
             {avgNetCal}
           </div>
@@ -125,7 +125,7 @@ export default function WeeklySummary() {
           <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
             {totalNetCal > 0 ? '+' : ''}{Math.round(totalNetCal)}
           </div>
-          <div className="text-xs text-gray-500">NET calories</div>
+          <div className="text-xs text-gray-500">Net calories</div>
         </div>
 
         <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg">
@@ -141,21 +141,21 @@ export default function WeeklySummary() {
 
       {/* Macro Averages */}
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg text-center">
+        <div className="bg-violet-50 dark:bg-violet-900/20 p-4 rounded-lg text-center">
           <div className="text-sm text-gray-600 dark:text-gray-400">Avg Protein</div>
-          <div className="text-xl font-bold text-red-600 dark:text-red-400">
+          <div className="text-xl font-bold text-violet-600 dark:text-violet-400">
             {avgProtein}g
           </div>
         </div>
-        <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg text-center">
+        <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg text-center">
           <div className="text-sm text-gray-600 dark:text-gray-400">Avg Carbs</div>
-          <div className="text-xl font-bold text-blue-600 dark:text-blue-400">
+          <div className="text-xl font-bold text-orange-600 dark:text-orange-400">
             {avgCarbs}g
           </div>
         </div>
-        <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg text-center">
+        <div className="bg-teal-50 dark:bg-teal-900/20 p-4 rounded-lg text-center">
           <div className="text-sm text-gray-600 dark:text-gray-400">Avg Fat</div>
-          <div className="text-xl font-bold text-amber-600 dark:text-amber-400">
+          <div className="text-xl font-bold text-teal-600 dark:text-teal-400">
             {avgFat}g
           </div>
         </div>
@@ -163,7 +163,7 @@ export default function WeeklySummary() {
 
       {/* Chart */}
       <div className="mb-4">
-        <h3 className="font-semibold text-lg mb-3">NET Calories Trend</h3>
+        <h3 className="font-semibold text-lg mb-3">Net Calories Trend</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -176,7 +176,7 @@ export default function WeeklySummary() {
               dataKey="netCalories"
               stroke="#10b981"
               strokeWidth={2}
-              name="NET Calories"
+              name="net calories"
             />
             <Line
               type="monotone"

@@ -15,28 +15,28 @@ export const ACHIEVEMENTS = {
   STREAK_3: {
     id: 'streak_3',
     title: '3 Day Streak',
-    description: 'Hit your NET calorie goal 3 days in a row',
+    description: 'Hit your Net calorie goal 3 days in a row',
     icon: '🔥',
     category: 'streak',
   },
   STREAK_7: {
     id: 'streak_7',
     title: 'Week Warrior',
-    description: 'Hit your NET calorie goal 7 days in a row',
+    description: 'Hit your Net calorie goal 7 days in a row',
     icon: '⚡',
     category: 'streak',
   },
   STREAK_30: {
     id: 'streak_30',
     title: 'Monthly Master',
-    description: 'Hit your NET calorie goal 30 days in a row',
+    description: 'Hit your Net calorie goal 30 days in a row',
     icon: '🏆',
     category: 'streak',
   },
   STREAK_100: {
     id: 'streak_100',
     title: 'Century Club',
-    description: 'Hit your NET calorie goal 100 days in a row',
+    description: 'Hit your Net calorie goal 100 days in a row',
     icon: '👑',
     category: 'streak',
   },
@@ -297,7 +297,7 @@ export function getMotivationalNudge(netCalories, dailyGoal, totalProtein, prote
 
     if (Math.abs(netCalories - dailyGoal) <= 50) {
       return {
-        message: `Perfect! You hit your NET calorie goal! 🎉`,
+        message: `Perfect! You hit your Net calorie goal! 🎉`,
         type: 'success',
       };
     }

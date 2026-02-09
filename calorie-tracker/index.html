@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
 
     <!-- Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://world.openfoodfacts.org https://va.vercel-scripts.com; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; connect-src 'self' https://world.openfoodfacts.org https://va.vercel-scripts.com; font-src 'self' https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -14,7 +19,7 @@
 
     <title>Free Calorie Track - Free Calorie & Macro Tracker | No Paywalls, No Ads</title>
     <meta name="description" content="The calorie & macro tracker that stayed truly free. Track calories, protein, carbs, fat with barcode scanning, thousands of foods, exercise logging, and trends. No account required, no ads, works offline. Built by someone who actually tracks.">
-    <meta name="keywords" content="free calorie tracker, free macro tracker, calorie counter no subscription, free barcode scanner nutrition, myfitnesspal alternative free, no account calorie tracker, offline calorie tracker, privacy calorie app, free protein tracker, free carb tracker, free fat tracker, NET calories calculator, TDEE calculator free, BMR calculator, free exercise logger, free workout tracker, free weight tracker, PWA fitness app, calorie tracking app no paywall, macro tracking without premium, truly free nutrition app">
+    <meta name="keywords" content="free calorie tracker, free macro tracker, calorie counter no subscription, free barcode scanner nutrition, myfitnesspal alternative free, no account calorie tracker, offline calorie tracker, privacy calorie app, free protein tracker, free carb tracker, free fat tracker, Net calories calculator, TDEE calculator free, BMR calculator, free exercise logger, free workout tracker, free weight tracker, PWA fitness app, calorie tracking app no paywall, macro tracking without premium, truly free nutrition app">
     <meta name="author" content="Griffin">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
@@ -64,7 +69,7 @@
         "price": "0",
         "priceCurrency": "USD"
       },
-      "featureList": "Calorie tracking, Macro tracking (protein, carbs, fat), Barcode scanner, Thousands of common foods, Branded food search, Exercise logging with 250+ exercises, Water intake tracking, Weight tracking, NET calorie calculations, Editable history, Weekly and monthly trends, Custom foods and recipes, Workout templates, Meal categories, Favorites and recents, Data export/import, Offline functionality, No account required, Local data storage, Dark mode, Multi-user support, Progressive Web App",
+      "featureList": "Calorie tracking, Macro tracking (protein, carbs, fat), Barcode scanner, Thousands of common foods, Branded food search, Exercise logging with 250+ exercises, Water intake tracking, Weight tracking, Net calorie calculations, Editable history, Weekly and monthly trends, Custom foods and recipes, Workout templates, Meal categories, Favorites and recents, Data export/import, Offline functionality, No account required, Local data storage, Dark mode, Multi-user support, Progressive Web App",
       "browserRequirements": "Requires JavaScript. Works on modern browsers.",
       "softwareVersion": "1.5.7",
       "releaseNotes": "Water tracking, workout templates, meal categories, copy yesterday's meals, weekly/monthly macro averages",
@@ -113,10 +118,10 @@
         },
         {
           "@type": "Question",
-          "name": "What are NET calories, and why do they matter?",
+          "name": "What are Net calories, and why do they matter?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "NET calories represent your true energy balance for the day: the calories you ate, minus the calories your body burned at rest (TDEE), minus the calories you burned exercising. A NET of zero means maintenance. Negative NET means a deficit and you will lose weight over time. Positive NET means a surplus and you will gain weight. Most apps show gross calories eaten without factoring in what your body burns, which makes the number misleading. Free Calorie Track shows the real picture."
+            "text": "Net calories represent your true energy balance for the day: the calories you ate, minus the calories your body burned at rest (TDEE), minus the calories you burned exercising. A net of zero means maintenance. Negative net means a deficit and you will lose weight over time. Positive net means a surplus and you will gain weight. Most apps show gross calories eaten without factoring in what your body burns, which makes the number misleading. Free Calorie Track shows the real picture."
           }
         },
         {
@@ -267,6 +272,38 @@
         margin-top: 15px;
         display: block;
       }
+      .medical-disclaimer {
+        background-color: #fefce8;
+        border: 2px solid #fef08a;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .dark .medical-disclaimer {
+        background-color: rgba(113, 63, 18, 0.2);
+        border-color: rgba(161, 98, 7, 1);
+      }
+      .medical-disclaimer h3 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0 0 8px 0;
+        color: #374151;
+      }
+      .dark .medical-disclaimer h3 {
+        color: #f3f4f6;
+      }
+      .medical-disclaimer p {
+        font-size: 12px;
+        color: #374151;
+        margin: 0;
+        line-height: 1.6;
+      }
+      .dark .medical-disclaimer p {
+        color: #d1d5db;
+      }
       .footer-divider {
         width: 60%;
         max-width: 400px;
@@ -359,6 +396,16 @@
 
     <div class="app-footer">
 
+      <!-- Medical Disclaimer - Top Priority -->
+      <div class="medical-disclaimer">
+        <h3>⚠️ Medical Disclaimer</h3>
+        <p>
+          This app provides estimates for informational purposes only and is not intended for medical diagnosis, treatment, or professional health advice. TDEE and calorie estimates are approximations and may not be accurate for all individuals. Always consult a qualified healthcare provider before making changes to your diet, exercise, or health routine. Free Calorie Track is provided "as is" without warranties and is not liable for any damages, data loss, or inaccuracies.
+        </p>
+      </div>
+
+      <hr class="footer-divider">
+
       <div style="margin-bottom: 25px;">
         <h3 class="footer-heading">
           Help keep Free Calorie Track free
@@ -410,22 +457,13 @@
         </a>
       </div>
 
-      <hr class="footer-divider">
-
-      <div style="margin-top: 25px;">
-        <div style="background-color: #fff9e6; border: 1px solid #ffd700; border-radius: 8px; padding: 16px; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto;">
-          <p style="font-size: 13px; color: #666; margin: 0; line-height: 1.6;">
-            <strong style="color: #d97706;">Medical Disclaimer:</strong> This app provides estimates for informational purposes only and is not intended for medical diagnosis, treatment, or professional health advice. TDEE and calorie estimates are approximations and may not be accurate for all individuals. Always consult a qualified healthcare provider before making changes to your diet or exercise routine.
-          </p>
-        </div>
-        <div style="font-size: 12px; color: #999; line-height: 1.8;">
-          <div style="margin-bottom: 8px;">
-            <a href="/privacy-policy.html" target="_blank" style="color: #999; text-decoration: none; margin: 0 6px;">Privacy Policy</a>
-            <span>•</span>
-            <a href="/terms-of-service.html" target="_blank" style="color: #999; text-decoration: none; margin: 0 6px;">Terms of Service</a>
-            <span>•</span>
-            <span style="margin: 0 6px;">© 2026 Free Calorie Track</span>
-          </div>
+      <div style="margin-top: 20px; font-size: 12px; color: #999; line-height: 1.8;">
+        <div style="margin-bottom: 8px;">
+          <a href="/privacy-policy.html" target="_blank" style="color: #999; text-decoration: none; margin: 0 6px;">Privacy Policy</a>
+          <span>•</span>
+          <a href="/terms-of-service.html" target="_blank" style="color: #999; text-decoration: none; margin: 0 6px;">Terms of Service</a>
+          <span>•</span>
+          <span style="margin: 0 6px;">© 2026 Free Calorie Track</span>
         </div>
       </div>
     </div>

@@ -190,7 +190,7 @@ export default function Trends() {
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-red-600 dark:text-red-400 font-semibold">Protein</span>
+                    <span className="text-violet-600 dark:text-violet-400 font-semibold">Protein</span>
                     <span>
                       {weeklyMacros.avgProtein}g/day
                       {macroTargets && (
@@ -201,7 +201,7 @@ export default function Trends() {
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-blue-600 dark:text-blue-400 font-semibold">Carbs</span>
+                    <span className="text-orange-600 dark:text-orange-400 font-semibold">Carbs</span>
                     <span>
                       {weeklyMacros.avgCarbs}g/day
                       {macroTargets && (
@@ -212,7 +212,7 @@ export default function Trends() {
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-amber-600 dark:text-amber-400 font-semibold">Fat</span>
+                    <span className="text-teal-600 dark:text-teal-400 font-semibold">Fat</span>
                     <span>
                       {weeklyMacros.avgFat}g/day
                       {macroTargets && (
@@ -237,7 +237,7 @@ export default function Trends() {
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
-                    <span className="text-red-600 dark:text-red-400 font-semibold">Protein</span>
+                    <span className="text-violet-600 dark:text-violet-400 font-semibold">Protein</span>
                     <span>
                       {monthlyMacros.avgProtein}g/day
                       {macroTargets && (
@@ -248,7 +248,7 @@ export default function Trends() {
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-blue-600 dark:text-blue-400 font-semibold">Carbs</span>
+                    <span className="text-orange-600 dark:text-orange-400 font-semibold">Carbs</span>
                     <span>
                       {monthlyMacros.avgCarbs}g/day
                       {macroTargets && (
@@ -259,7 +259,7 @@ export default function Trends() {
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-amber-600 dark:text-amber-400 font-semibold">Fat</span>
+                    <span className="text-teal-600 dark:text-teal-400 font-semibold">Fat</span>
                     <span>
                       {monthlyMacros.avgFat}g/day
                       {macroTargets && (
