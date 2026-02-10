@@ -4,6 +4,7 @@
 
 export const commonFoods = [
   // ⭐ Customizable Build-Your-Own Foods (appear first in search)
+  { name: 'Sandwich (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Sandwiches' },
   { name: 'Pizza (build your own)', calories: 200, protein: 8, carbs: 26, fat: 7, servingSize: '1 slice base', category: 'Pizza' },
   { name: 'Salad (build your own)', calories: 10, protein: 0.5, carbs: 2, fat: 0, servingSize: 'base greens', category: 'Salads' },
   { name: 'Smoothie (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Drinks' },
@@ -2850,6 +2851,7 @@ export const stirFryToppings = [
 
 // Mark which foods support sandwich toppings
 export const foodsWithToppings = [
+  'Sandwich (build your own)',
   'Hamburger (fast food)',
   'Cheeseburger (fast food)',
   'Double Cheeseburger',
