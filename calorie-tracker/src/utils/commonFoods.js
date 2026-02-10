@@ -19,7 +19,15 @@ export const commonFoods = [
   { name: 'Tuna (raw, sushi/sashimi)', calories: 144, protein: 23, carbs: 0, fat: 5, servingSize: '100g', category: 'Protein' },
   { name: 'Tuna (canned in water)', calories: 116, protein: 26, carbs: 0, fat: 1, servingSize: '100g', category: 'Protein' },
   { name: 'Tilapia (cooked)', calories: 128, protein: 26, carbs: 0, fat: 2.7, servingSize: '100g', category: 'Protein' },
+  { name: 'Halibut (cooked)', calories: 140, protein: 27, carbs: 0, fat: 3, servingSize: '100g', category: 'Protein' },
+  { name: 'Mahi-mahi (cooked)', calories: 109, protein: 24, carbs: 0, fat: 0.9, servingSize: '100g', category: 'Protein' },
+  { name: 'Sea Bass (cooked)', calories: 124, protein: 24, carbs: 0, fat: 2.6, servingSize: '100g', category: 'Protein' },
   { name: 'Shrimp (cooked)', calories: 99, protein: 24, carbs: 0, fat: 0.3, servingSize: '100g', category: 'Protein' },
+  { name: 'Scallops (cooked)', calories: 111, protein: 21, carbs: 3, fat: 1, servingSize: '100g', category: 'Protein' },
+  { name: 'Mussels (cooked)', calories: 172, protein: 24, carbs: 7, fat: 4.5, servingSize: '100g', category: 'Protein' },
+  { name: 'Clams (cooked)', calories: 148, protein: 26, carbs: 5, fat: 2, servingSize: '100g', category: 'Protein' },
+  { name: 'Calamari (fried)', calories: 175, protein: 15, carbs: 8, fat: 9, servingSize: '100g', category: 'Protein' },
+  { name: 'Anchovies (5 fillets)', calories: 42, protein: 6, carbs: 0, fat: 2, servingSize: '5 fillets (20g)', category: 'Protein' },
   { name: 'Cod (cooked)', calories: 105, protein: 23, carbs: 0, fat: 0.9, servingSize: '100g', category: 'Protein' },
 
   // Proteins - Eggs & Dairy
@@ -52,6 +60,11 @@ export const commonFoods = [
   { name: 'Colby Jack Cheese (1 oz)', calories: 110, protein: 7, carbs: 0.5, fat: 9, servingSize: '1 oz (28g)', category: 'Protein' },
   { name: 'Monterey Jack Cheese (1 oz)', calories: 106, protein: 7, carbs: 0.2, fat: 8.5, servingSize: '1 oz (28g)', category: 'Protein' },
   { name: 'Ricotta Cheese (1/4 cup)', calories: 90, protein: 7, carbs: 3, fat: 6, servingSize: '1/4 cup (62g)', category: 'Protein' },
+  { name: 'Mascarpone (1 oz)', calories: 120, protein: 2, carbs: 1, fat: 12, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Paneer (1 oz)', calories: 80, protein: 7, carbs: 1, fat: 6, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Queso Fresco (1 oz)', calories: 80, protein: 5, carbs: 1, fat: 6, servingSize: '1 oz (28g)', category: 'Protein' },
+  { name: 'Sour Cream (2 tbsp)', calories: 60, protein: 1, carbs: 2, fat: 6, servingSize: '2 tbsp (30g)', category: 'Protein' },
+  { name: 'Whipped Cream (2 tbsp)', calories: 51, protein: 0.3, carbs: 1.7, fat: 5.5, servingSize: '2 tbsp (15g)', category: 'Protein' },
   { name: 'Cottage Cheese (1/2 cup)', calories: 90, protein: 12, carbs: 4, fat: 2.5, servingSize: '1/2 cup (113g)', category: 'Protein' },
   { name: 'String Cheese (1 stick)', calories: 80, protein: 6, carbs: 1, fat: 6, servingSize: '1 stick (28g)', category: 'Protein' },
 
@@ -72,6 +85,8 @@ export const commonFoods = [
   { name: 'Mimolette (1 oz)', calories: 100, protein: 7, carbs: 0.5, fat: 8, servingSize: '1 oz (28g)', category: 'Protein' },
 
   // Proteins - Plant-based
+  { name: 'Beyond Burger (1 patty)', calories: 250, protein: 20, carbs: 3, fat: 18, servingSize: '1 patty (113g)', category: 'Protein' },
+  { name: 'Impossible Burger (1 patty)', calories: 240, protein: 19, carbs: 9, fat: 14, servingSize: '1 patty (113g)', category: 'Protein' },
   { name: 'Tofu (firm)', calories: 144, protein: 17, carbs: 3, fat: 9, servingSize: '100g', category: 'Protein' },
   { name: 'Black Beans (cooked)', calories: 132, protein: 9, carbs: 24, fat: 0.5, servingSize: '100g', category: 'Protein' },
   { name: 'Chickpeas (cooked)', calories: 164, protein: 9, carbs: 27, fat: 2.6, servingSize: '100g', category: 'Protein' },
@@ -116,6 +131,11 @@ export const commonFoods = [
   // Carbohydrates - Grains
   { name: 'White Rice (cooked)', calories: 130, protein: 2.7, carbs: 28, fat: 0.3, servingSize: '100g', category: 'Carbs' },
   { name: 'Brown Rice (cooked)', calories: 112, protein: 2.6, carbs: 24, fat: 0.9, servingSize: '100g', category: 'Carbs' },
+  { name: 'Jasmine Rice (cooked)', calories: 130, protein: 2.7, carbs: 28, fat: 0.4, servingSize: '100g', category: 'Carbs' },
+  { name: 'Couscous (cooked)', calories: 112, protein: 3.8, carbs: 23, fat: 0.2, servingSize: '100g', category: 'Carbs' },
+  { name: 'Farro (cooked)', calories: 114, protein: 5, carbs: 26, fat: 0.8, servingSize: '100g', category: 'Carbs' },
+  { name: 'Polenta (cooked)', calories: 70, protein: 1.6, carbs: 13, fat: 0.6, servingSize: '100g', category: 'Carbs' },
+  { name: 'Instant Ramen (1 packet)', calories: 380, protein: 9, carbs: 52, fat: 14, servingSize: '1 packet (85g)', category: 'Carbs' },
   { name: 'Quinoa (cooked)', calories: 120, protein: 4.4, carbs: 21, fat: 1.9, servingSize: '100g', category: 'Carbs' },
   { name: 'Pasta (cooked)', calories: 131, protein: 5, carbs: 25, fat: 1.1, servingSize: '100g', category: 'Carbs' },
   { name: 'Whole Wheat Pasta (cooked)', calories: 124, protein: 5, carbs: 26, fat: 0.5, servingSize: '100g', category: 'Carbs' },
@@ -217,6 +237,16 @@ export const commonFoods = [
   { name: 'Blueberries', calories: 57, protein: 0.7, carbs: 14, fat: 0.3, servingSize: '100g', category: 'Fruits' },
   { name: 'Grapes', calories: 69, protein: 0.7, carbs: 18, fat: 0.2, servingSize: '100g', category: 'Fruits' },
   { name: 'Watermelon', calories: 30, protein: 0.6, carbs: 7.6, fat: 0.2, servingSize: '100g', category: 'Fruits' },
+  { name: 'Blackberries', calories: 43, protein: 1.4, carbs: 9.6, fat: 0.5, servingSize: '100g', category: 'Fruits' },
+  { name: 'Raspberries', calories: 52, protein: 1.2, carbs: 12, fat: 0.7, servingSize: '100g', category: 'Fruits' },
+  { name: 'Peach (1 medium)', calories: 59, protein: 1.4, carbs: 14, fat: 0.4, servingSize: '1 peach (150g)', category: 'Fruits' },
+  { name: 'Plum (1 medium)', calories: 30, protein: 0.5, carbs: 7.5, fat: 0.2, servingSize: '1 plum (66g)', category: 'Fruits' },
+  { name: 'Pear (1 medium)', calories: 101, protein: 0.6, carbs: 27, fat: 0.2, servingSize: '1 pear (178g)', category: 'Fruits' },
+  { name: 'Kiwi (1 medium)', calories: 42, protein: 0.8, carbs: 10, fat: 0.4, servingSize: '1 kiwi (69g)', category: 'Fruits' },
+  { name: 'Mango (1 cup)', calories: 99, protein: 1.4, carbs: 25, fat: 0.6, servingSize: '1 cup (165g)', category: 'Fruits' },
+  { name: 'Pineapple (1 cup)', calories: 82, protein: 0.9, carbs: 22, fat: 0.2, servingSize: '1 cup (165g)', category: 'Fruits' },
+  { name: 'Papaya (1 cup)', calories: 62, protein: 0.7, carbs: 16, fat: 0.4, servingSize: '1 cup (145g)', category: 'Fruits' },
+  { name: 'Pomegranate (1/2 cup arils)', calories: 72, protein: 1.5, carbs: 16, fat: 1, servingSize: '1/2 cup (87g)', category: 'Fruits' },
   { name: 'Avocado (1/2 medium)', calories: 161, protein: 2, carbs: 8.6, fat: 15, servingSize: '1/2 avocado (100g)', category: 'Fruits' },
 
   // Vegetables - Non-starchy
@@ -956,6 +986,8 @@ export const commonFoods = [
   { name: 'Cashews (1/4 cup)', calories: 197, protein: 6, carbs: 11, fat: 16, servingSize: '1/4 cup (34g)', category: 'Snacks' },
   { name: 'Pistachios (1 oz, ~49 nuts)', calories: 159, protein: 6, carbs: 8, fat: 13, servingSize: '1 oz / 49 pistachios (28g)', category: 'Snacks' },
   { name: 'Pistachios (1/4 cup)', calories: 170, protein: 6, carbs: 8, fat: 14, servingSize: '1/4 cup (30g)', category: 'Snacks' },
+  { name: 'Macadamia Nuts (1 oz, ~10-12 nuts)', calories: 204, protein: 2, carbs: 4, fat: 21, servingSize: '1 oz / 10-12 nuts (28g)', category: 'Snacks' },
+  { name: 'Brazil Nuts (1 oz, ~6 nuts)', calories: 186, protein: 4, carbs: 3, fat: 19, servingSize: '1 oz / 6 nuts (28g)', category: 'Snacks' },
   { name: 'Trail Mix (1/4 cup)', calories: 140, protein: 4, carbs: 16, fat: 8, servingSize: '1/4 cup (38g)', category: 'Snacks' },
   { name: 'Pecans (1 oz, ~19 halves)', calories: 196, protein: 3, carbs: 4, fat: 20, servingSize: '1 oz / 19 halves (28g)', category: 'Snacks' },
   { name: 'Flax Seeds (1 tbsp)', calories: 37, protein: 1.3, carbs: 2, fat: 3, servingSize: '1 tbsp (7g)', category: 'Snacks' },
@@ -963,11 +995,16 @@ export const commonFoods = [
   // Snacks - Granola & Bars
   { name: 'Granola Bar (chewy)', calories: 120, protein: 2, carbs: 20, fat: 4, servingSize: '1 bar (28g)', category: 'Snacks' },
   { name: 'Nature Valley Bar (crunchy)', calories: 190, protein: 4, carbs: 29, fat: 7, servingSize: '2 bars', category: 'Snacks' },
+  { name: 'Protein Bar (average)', calories: 200, protein: 15, carbs: 22, fat: 7, servingSize: '1 bar (60g)', category: 'Snacks' },
   { name: 'Clif Bar', calories: 250, protein: 9, carbs: 45, fat: 5, servingSize: '1 bar (68g)', category: 'Snacks' },
   { name: 'Kind Bar', calories: 200, protein: 6, carbs: 17, fat: 13, servingSize: '1 bar (40g)', category: 'Snacks' },
 
   // Snacks - Other
   { name: 'Beef Jerky (1 oz)', calories: 116, protein: 9, carbs: 3, fat: 7, servingSize: '1 oz (28g)', category: 'Snacks' },
+  { name: 'Turkey Jerky (1 oz)', calories: 80, protein: 13, carbs: 3, fat: 1, servingSize: '1 oz (28g)', category: 'Snacks' },
+  { name: 'Roasted Chickpeas (1 oz)', calories: 120, protein: 6, carbs: 18, fat: 3, servingSize: '1 oz (28g)', category: 'Snacks' },
+  { name: 'Seaweed Snacks (1 pack)', calories: 30, protein: 1, carbs: 2, fat: 2, servingSize: '1 pack (5g)', category: 'Snacks' },
+  { name: 'Microwave Popcorn (3 cups)', calories: 150, protein: 3, carbs: 18, fat: 8, servingSize: '3 cups', category: 'Snacks' },
   { name: 'Rice Cakes (1 cake)', calories: 35, protein: 1, carbs: 7, fat: 0.3, servingSize: '1 cake', category: 'Snacks' },
   { name: 'Apple with Peanut Butter (2 tbsp)', calories: 285, protein: 8, carbs: 33, fat: 16, servingSize: '1 apple + 2 tbsp PB', category: 'Snacks' },
   { name: 'Celery with Peanut Butter (2 tbsp)', calories: 200, protein: 8, carbs: 12, fat: 16, servingSize: '2 stalks + 2 tbsp PB', category: 'Snacks' },
@@ -2381,6 +2418,422 @@ export const pastaToppings = [
   { name: 'Arugula', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
 ];
 
+// Toppings for pizza
+export const pizzaToppings = [
+  // Sauces
+  { name: 'Tomato Sauce', calories: 20, protein: 1, carbs: 4, fat: 0.5, category: 'sauce' },
+  { name: 'Pesto Sauce', calories: 80, protein: 2, carbs: 1, fat: 8, category: 'sauce' },
+  { name: 'BBQ Sauce', calories: 40, protein: 0, carbs: 10, fat: 0, category: 'sauce' },
+  { name: 'White Sauce (Alfredo)', calories: 100, protein: 2, carbs: 3, fat: 9, category: 'sauce' },
+  { name: 'Olive Oil', calories: 40, protein: 0, carbs: 0, fat: 4.5, category: 'sauce' },
+
+  // Cheeses
+  { name: 'Mozzarella', calories: 80, protein: 6, carbs: 1, fat: 6, category: 'cheese' },
+  { name: 'Parmesan', calories: 22, protein: 2, carbs: 0.2, fat: 1.4, category: 'cheese' },
+  { name: 'Ricotta', calories: 50, protein: 3.5, carbs: 1.5, fat: 3, category: 'cheese' },
+  { name: 'Gorgonzola', calories: 100, protein: 6, carbs: 0.7, fat: 8, category: 'cheese' },
+  { name: 'Feta', calories: 75, protein: 4, carbs: 1.2, fat: 6, category: 'cheese' },
+  { name: 'Cheddar', calories: 115, protein: 7, carbs: 0.4, fat: 9.5, category: 'cheese' },
+  { name: 'Provolone', calories: 100, protein: 7, carbs: 0.6, fat: 7.5, category: 'cheese' },
+  { name: 'Goat Cheese', calories: 75, protein: 5, carbs: 0.3, fat: 6, category: 'cheese' },
+
+  // Proteins
+  { name: 'Pepperoni', calories: 130, protein: 6, carbs: 1, fat: 12, category: 'protein' },
+  { name: 'Italian Sausage', calories: 90, protein: 5, carbs: 1, fat: 7, category: 'protein' },
+  { name: 'Bacon', calories: 45, protein: 3, carbs: 0, fat: 3.5, category: 'protein' },
+  { name: 'Ham', calories: 30, protein: 5, carbs: 0.5, fat: 1, category: 'protein' },
+  { name: 'Grilled Chicken', calories: 47, protein: 9, carbs: 0, fat: 1, category: 'protein' },
+  { name: 'Ground Beef', calories: 75, protein: 7, carbs: 0, fat: 5, category: 'protein' },
+  { name: 'Anchovies', calories: 25, protein: 4, carbs: 0, fat: 1, category: 'protein' },
+  { name: 'Prosciutto', calories: 30, protein: 4, carbs: 0, fat: 1.5, category: 'protein' },
+  { name: 'Salami', calories: 110, protein: 6, carbs: 0.5, fat: 9, category: 'protein' },
+  { name: 'Canadian Bacon', calories: 45, protein: 6, carbs: 0.5, fat: 2, category: 'protein' },
+  { name: 'Meatballs', calories: 80, protein: 6, carbs: 2, fat: 5, category: 'protein' },
+  { name: 'Shrimp', calories: 30, protein: 6, carbs: 0, fat: 0.5, category: 'protein' },
+
+  // Vegetables
+  { name: 'Mushrooms', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Bell Peppers', calories: 8, protein: 0.3, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Onions', calories: 12, protein: 0.3, carbs: 3, fat: 0, category: 'vegetable' },
+  { name: 'Black Olives', calories: 35, protein: 0.3, carbs: 2, fat: 3, category: 'vegetable' },
+  { name: 'Green Olives', calories: 40, protein: 0.3, carbs: 1, fat: 4, category: 'vegetable' },
+  { name: 'Fresh Tomatoes', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Spinach', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Arugula', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Fresh Basil', calories: 1, protein: 0.1, carbs: 0.1, fat: 0, category: 'vegetable' },
+  { name: 'Jalapeños', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Banana Peppers', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Pineapple', calories: 20, protein: 0.2, carbs: 5, fat: 0, category: 'vegetable' },
+  { name: 'Artichoke Hearts', calories: 15, protein: 1, carbs: 3, fat: 0, category: 'vegetable' },
+  { name: 'Roasted Red Peppers', calories: 10, protein: 0.3, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Sun-dried Tomatoes', calories: 20, protein: 0.5, carbs: 4, fat: 0.3, category: 'vegetable' },
+  { name: 'Broccoli', calories: 10, protein: 0.8, carbs: 2, fat: 0.1, category: 'vegetable' },
+];
+
+// Toppings for salads
+export const saladToppings = [
+  // Greens (base)
+  { name: 'Romaine Lettuce (2 cups)', calories: 16, protein: 1.2, carbs: 3, fat: 0.3, category: 'green' },
+  { name: 'Iceberg Lettuce (2 cups)', calories: 10, protein: 0.6, carbs: 2, fat: 0.1, category: 'green' },
+  { name: 'Mixed Greens (2 cups)', calories: 20, protein: 1.5, carbs: 3, fat: 0.3, category: 'green' },
+  { name: 'Spinach (2 cups)', calories: 14, protein: 1.7, carbs: 2.2, fat: 0.2, category: 'green' },
+  { name: 'Arugula (2 cups)', calories: 10, protein: 1, carbs: 1.5, fat: 0.3, category: 'green' },
+  { name: 'Kale (2 cups)', calories: 33, protein: 2.9, carbs: 6, fat: 0.9, category: 'green' },
+
+  // Vegetables
+  { name: 'Cherry Tomatoes (1/2 cup)', calories: 13, protein: 0.6, carbs: 3, fat: 0.1, category: 'vegetable' },
+  { name: 'Cucumber (1/2 cup)', calories: 8, protein: 0.3, carbs: 2, fat: 0.1, category: 'vegetable' },
+  { name: 'Bell Peppers (1/4 cup)', calories: 12, protein: 0.4, carbs: 3, fat: 0.1, category: 'vegetable' },
+  { name: 'Red Onion (2 tbsp)', calories: 8, protein: 0.2, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Carrots (1/4 cup)', calories: 12, protein: 0.3, carbs: 3, fat: 0.1, category: 'vegetable' },
+  { name: 'Mushrooms (1/4 cup)', calories: 8, protein: 1, carbs: 1, fat: 0.1, category: 'vegetable' },
+  { name: 'Broccoli (1/4 cup)', calories: 10, protein: 0.8, carbs: 2, fat: 0.1, category: 'vegetable' },
+  { name: 'Cauliflower (1/4 cup)', calories: 7, protein: 0.5, carbs: 1.5, fat: 0.1, category: 'vegetable' },
+  { name: 'Radishes (1/4 cup)', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Celery (1/4 cup)', calories: 4, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Corn (1/4 cup)', calories: 30, protein: 1, carbs: 7, fat: 0.5, category: 'vegetable' },
+  { name: 'Beets (1/4 cup)', calories: 15, protein: 0.5, carbs: 3, fat: 0, category: 'vegetable' },
+  { name: 'Avocado (1/4)', calories: 80, protein: 1, carbs: 4, fat: 7.5, category: 'vegetable' },
+
+  // Proteins
+  { name: 'Grilled Chicken (3 oz)', calories: 140, protein: 26, carbs: 0, fat: 3, category: 'protein' },
+  { name: 'Grilled Salmon (3 oz)', calories: 175, protein: 19, carbs: 0, fat: 10, category: 'protein' },
+  { name: 'Grilled Shrimp (3 oz)', calories: 85, protein: 18, carbs: 0, fat: 1, category: 'protein' },
+  { name: 'Hard Boiled Egg', calories: 78, protein: 6, carbs: 0.6, fat: 5, category: 'protein' },
+  { name: 'Tuna (2 oz)', calories: 60, protein: 13, carbs: 0, fat: 0.5, category: 'protein' },
+  { name: 'Chickpeas (1/4 cup)', calories: 70, protein: 4, carbs: 12, fat: 1, category: 'protein' },
+  { name: 'Black Beans (1/4 cup)', calories: 55, protein: 4, carbs: 10, fat: 0.2, category: 'protein' },
+  { name: 'Tofu (2 oz)', calories: 80, protein: 9, carbs: 2, fat: 5, category: 'protein' },
+  { name: 'Bacon Bits (1 tbsp)', calories: 30, protein: 2, carbs: 0, fat: 2.5, category: 'protein' },
+  { name: 'Steak (3 oz)', calories: 213, protein: 22, carbs: 0, fat: 13, category: 'protein' },
+
+  // Cheeses
+  { name: 'Feta (1 oz)', calories: 75, protein: 4, carbs: 1.2, fat: 6, category: 'cheese' },
+  { name: 'Parmesan (2 tbsp)', calories: 42, protein: 4, carbs: 0.4, fat: 2.8, category: 'cheese' },
+  { name: 'Cheddar (1 oz)', calories: 115, protein: 7, carbs: 0.4, fat: 9.5, category: 'cheese' },
+  { name: 'Goat Cheese (1 oz)', calories: 75, protein: 5, carbs: 0.3, fat: 6, category: 'cheese' },
+  { name: 'Mozzarella (1 oz)', calories: 85, protein: 6, carbs: 1, fat: 6, category: 'cheese' },
+  { name: 'Blue Cheese (1 oz)', calories: 100, protein: 6, carbs: 0.7, fat: 8, category: 'cheese' },
+
+  // Nuts & Seeds
+  { name: 'Almonds (1 oz)', calories: 164, protein: 6, carbs: 6, fat: 14, category: 'nuts' },
+  { name: 'Walnuts (1 oz)', calories: 185, protein: 4, carbs: 4, fat: 18, category: 'nuts' },
+  { name: 'Pecans (1 oz)', calories: 196, protein: 3, carbs: 4, fat: 20, category: 'nuts' },
+  { name: 'Sunflower Seeds (2 tbsp)', calories: 100, protein: 3, carbs: 4, fat: 9, category: 'nuts' },
+  { name: 'Pumpkin Seeds (2 tbsp)', calories: 90, protein: 4, carbs: 3, fat: 8, category: 'nuts' },
+  { name: 'Croutons (1/4 cup)', calories: 60, protein: 2, carbs: 10, fat: 2, category: 'nuts' },
+
+  // Dressings
+  { name: 'Ranch (2 tbsp)', calories: 145, protein: 0.5, carbs: 2, fat: 15, category: 'dressing' },
+  { name: 'Caesar (2 tbsp)', calories: 160, protein: 1, carbs: 1, fat: 17, category: 'dressing' },
+  { name: 'Balsamic Vinaigrette (2 tbsp)', calories: 90, protein: 0, carbs: 4, fat: 8, category: 'dressing' },
+  { name: 'Italian (2 tbsp)', calories: 85, protein: 0, carbs: 3, fat: 8, category: 'dressing' },
+  { name: 'Honey Mustard (2 tbsp)', calories: 130, protein: 0.5, carbs: 10, fat: 10, category: 'dressing' },
+  { name: 'Blue Cheese (2 tbsp)', calories: 150, protein: 1, carbs: 2, fat: 16, category: 'dressing' },
+  { name: 'Thousand Island (2 tbsp)', calories: 120, protein: 0.3, carbs: 5, fat: 11, category: 'dressing' },
+  { name: 'Oil & Vinegar (2 tbsp)', calories: 140, protein: 0, carbs: 1, fat: 16, category: 'dressing' },
+  { name: 'Lemon Juice (1 tbsp)', calories: 4, protein: 0, carbs: 1, fat: 0, category: 'dressing' },
+  { name: 'Olive Oil (1 tbsp)', calories: 120, protein: 0, carbs: 0, fat: 14, category: 'dressing' },
+];
+
+// Toppings for smoothies and smoothie bowls
+export const smoothieToppings = [
+  // Base Liquids
+  { name: 'Almond Milk (1 cup)', calories: 30, protein: 1, carbs: 1, fat: 2.5, category: 'liquid' },
+  { name: 'Whole Milk (1 cup)', calories: 150, protein: 8, carbs: 12, fat: 8, category: 'liquid' },
+  { name: 'Skim Milk (1 cup)', calories: 83, protein: 8, carbs: 12, fat: 0.2, category: 'liquid' },
+  { name: 'Coconut Milk (1 cup)', calories: 45, protein: 0, carbs: 1, fat: 4, category: 'liquid' },
+  { name: 'Oat Milk (1 cup)', calories: 120, protein: 3, carbs: 16, fat: 5, category: 'liquid' },
+  { name: 'Orange Juice (1 cup)', calories: 110, protein: 2, carbs: 26, fat: 0, category: 'liquid' },
+  { name: 'Apple Juice (1 cup)', calories: 115, protein: 0, carbs: 28, fat: 0, category: 'liquid' },
+  { name: 'Coconut Water (1 cup)', calories: 45, protein: 2, carbs: 9, fat: 0.5, category: 'liquid' },
+  { name: 'Water (1 cup)', calories: 0, protein: 0, carbs: 0, fat: 0, category: 'liquid' },
+  { name: 'Green Tea (brewed, 1 cup)', calories: 2, protein: 0, carbs: 0, fat: 0, category: 'liquid' },
+
+  // Fruits
+  { name: 'Banana (1 medium)', calories: 105, protein: 1.3, carbs: 27, fat: 0.4, category: 'fruit' },
+  { name: 'Strawberries (1 cup)', calories: 50, protein: 1, carbs: 12, fat: 0.5, category: 'fruit' },
+  { name: 'Blueberries (1 cup)', calories: 84, protein: 1, carbs: 21, fat: 0.5, category: 'fruit' },
+  { name: 'Mango (1 cup)', calories: 99, protein: 1.4, carbs: 25, fat: 0.6, category: 'fruit' },
+  { name: 'Pineapple (1 cup)', calories: 82, protein: 0.9, carbs: 22, fat: 0.2, category: 'fruit' },
+  { name: 'Peach (1 medium)', calories: 59, protein: 1.4, carbs: 14, fat: 0.4, category: 'fruit' },
+  { name: 'Raspberries (1 cup)', calories: 64, protein: 1.5, carbs: 15, fat: 0.8, category: 'fruit' },
+  { name: 'Blackberries (1 cup)', calories: 62, protein: 2, carbs: 14, fat: 0.7, category: 'fruit' },
+  { name: 'Cherries (1 cup)', calories: 87, protein: 1.5, carbs: 22, fat: 0.3, category: 'fruit' },
+  { name: 'Acai Puree (1 packet)', calories: 70, protein: 1, carbs: 7, fat: 5, category: 'fruit' },
+
+  // Protein Additions
+  { name: 'Protein Powder (1 scoop)', calories: 120, protein: 24, carbs: 3, fat: 1.5, category: 'protein' },
+  { name: 'Greek Yogurt (1/2 cup)', calories: 65, protein: 12, carbs: 5, fat: 0.5, category: 'protein' },
+  { name: 'Peanut Butter (1 tbsp)', calories: 94, protein: 4, carbs: 3, fat: 8, category: 'protein' },
+  { name: 'Almond Butter (1 tbsp)', calories: 98, protein: 3.4, carbs: 3, fat: 9, category: 'protein' },
+  { name: 'Cashew Butter (1 tbsp)', calories: 94, protein: 2.8, carbs: 4.4, fat: 8, category: 'protein' },
+  { name: 'Chia Seeds (1 tbsp)', calories: 58, protein: 2, carbs: 5, fat: 3.7, category: 'protein' },
+  { name: 'Hemp Seeds (1 tbsp)', calories: 55, protein: 3.2, carbs: 0.9, fat: 4.3, category: 'protein' },
+  { name: 'Silken Tofu (1/4 cup)', calories: 40, protein: 4, carbs: 2, fat: 2, category: 'protein' },
+
+  // Superfoods & Greens
+  { name: 'Spinach (1 cup)', calories: 7, protein: 0.9, carbs: 1.1, fat: 0.1, category: 'superfood' },
+  { name: 'Kale (1 cup)', calories: 33, protein: 2.9, carbs: 6, fat: 0.9, category: 'superfood' },
+  { name: 'Spirulina (1 tsp)', calories: 11, protein: 2.3, carbs: 0.5, fat: 0.3, category: 'superfood' },
+  { name: 'Flax Seeds (ground, 1 tbsp)', calories: 37, protein: 1.3, carbs: 2, fat: 3, category: 'superfood' },
+  { name: 'Cacao Powder (1 tbsp)', calories: 12, protein: 1, carbs: 3, fat: 0.7, category: 'superfood' },
+  { name: 'Matcha Powder (1 tsp)', calories: 3, protein: 0.3, carbs: 0.4, fat: 0, category: 'superfood' },
+  { name: 'Ginger (fresh, 1 tsp)', calories: 2, protein: 0, carbs: 0.4, fat: 0, category: 'superfood' },
+  { name: 'Turmeric (1 tsp)', calories: 8, protein: 0.3, carbs: 1.4, fat: 0.2, category: 'superfood' },
+
+  // Bowl Toppings (for smoothie bowls)
+  { name: 'Granola (1/4 cup)', calories: 140, protein: 3, carbs: 24, fat: 4, category: 'topping' },
+  { name: 'Coconut Flakes (2 tbsp)', calories: 70, protein: 0.7, carbs: 3, fat: 7, category: 'topping' },
+  { name: 'Sliced Almonds (2 tbsp)', calories: 70, protein: 2.5, carbs: 2.5, fat: 6, category: 'topping' },
+  { name: 'Cacao Nibs (1 tbsp)', calories: 70, protein: 1, carbs: 4, fat: 5, category: 'topping' },
+  { name: 'Honey (1 tbsp)', calories: 64, protein: 0, carbs: 17, fat: 0, category: 'topping' },
+  { name: 'Maple Syrup (1 tbsp)', calories: 52, protein: 0, carbs: 13, fat: 0, category: 'topping' },
+  { name: 'Fresh Berries (1/4 cup)', calories: 20, protein: 0.3, carbs: 5, fat: 0.1, category: 'topping' },
+  { name: 'Banana Slices (1/4 banana)', calories: 26, protein: 0.3, carbs: 7, fat: 0.1, category: 'topping' },
+  { name: 'Chia Seeds (1 tsp)', calories: 19, protein: 0.7, carbs: 1.7, fat: 1.2, category: 'topping' },
+];
+
+// Toppings for poke bowls, buddha bowls, grain bowls
+export const bowlToppings = [
+  // Bases
+  { name: 'White Rice (1 cup)', calories: 205, protein: 4.3, carbs: 45, fat: 0.4, category: 'base' },
+  { name: 'Brown Rice (1 cup)', calories: 218, protein: 5, carbs: 46, fat: 1.6, category: 'base' },
+  { name: 'Quinoa (1 cup)', calories: 222, protein: 8, carbs: 39, fat: 3.6, category: 'base' },
+  { name: 'Mixed Greens (2 cups)', calories: 20, protein: 1.5, carbs: 3, fat: 0.3, category: 'base' },
+  { name: 'Soba Noodles (1 cup)', calories: 113, protein: 6, carbs: 24, fat: 0.1, category: 'base' },
+  { name: 'Rice Noodles (1 cup)', calories: 192, protein: 1.6, carbs: 44, fat: 0.4, category: 'base' },
+  { name: 'Cauliflower Rice (1 cup)', calories: 25, protein: 2, carbs: 5, fat: 0.3, category: 'base' },
+  { name: 'Farro (1 cup)', calories: 200, protein: 8, carbs: 44, fat: 1.5, category: 'base' },
+
+  // Proteins
+  { name: 'Salmon (raw, 4 oz)', calories: 180, protein: 23, carbs: 0, fat: 10, category: 'protein' },
+  { name: 'Tuna (raw, 4 oz)', calories: 120, protein: 27, carbs: 0, fat: 1, category: 'protein' },
+  { name: 'Shrimp (cooked, 4 oz)', calories: 120, protein: 23, carbs: 0, fat: 2, category: 'protein' },
+  { name: 'Tofu (4 oz)', calories: 94, protein: 10, carbs: 2, fat: 6, category: 'protein' },
+  { name: 'Grilled Chicken (4 oz)', calories: 187, protein: 35, carbs: 0, fat: 4, category: 'protein' },
+  { name: 'Teriyaki Chicken (4 oz)', calories: 220, protein: 32, carbs: 8, fat: 6, category: 'protein' },
+  { name: 'Spicy Tuna Mix (1/4 cup)', calories: 80, protein: 12, carbs: 3, fat: 2, category: 'protein' },
+  { name: 'Tempeh (4 oz)', calories: 220, protein: 22, carbs: 10, fat: 12, category: 'protein' },
+  { name: 'Falafel (3 pieces)', calories: 170, protein: 7, carbs: 18, fat: 9, category: 'protein' },
+  { name: 'Chickpeas (1/2 cup)', calories: 135, protein: 7, carbs: 22, fat: 2, category: 'protein' },
+
+  // Vegetables
+  { name: 'Edamame (1/2 cup)', calories: 95, protein: 9, carbs: 7, fat: 4, category: 'vegetable' },
+  { name: 'Cucumber (1/2 cup)', calories: 8, protein: 0.3, carbs: 2, fat: 0.1, category: 'vegetable' },
+  { name: 'Avocado (1/4)', calories: 80, protein: 1, carbs: 4, fat: 7.5, category: 'vegetable' },
+  { name: 'Carrots (shredded, 1/2 cup)', calories: 23, protein: 0.5, carbs: 5, fat: 0.1, category: 'vegetable' },
+  { name: 'Purple Cabbage (1/2 cup)', calories: 14, protein: 0.7, carbs: 3, fat: 0.1, category: 'vegetable' },
+  { name: 'Seaweed Salad (1/4 cup)', calories: 35, protein: 1, carbs: 6, fat: 1, category: 'vegetable' },
+  { name: 'Corn (1/4 cup)', calories: 30, protein: 1, carbs: 7, fat: 0.5, category: 'vegetable' },
+  { name: 'Radishes (sliced, 1/4 cup)', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Jalapeño Slices (2 tbsp)', calories: 4, protein: 0.1, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Pickled Ginger (1 tbsp)', calories: 10, protein: 0, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Mango (diced, 1/4 cup)', calories: 25, protein: 0.3, carbs: 6, fat: 0.2, category: 'vegetable' },
+  { name: 'Roasted Sweet Potato (1/2 cup)', calories: 90, protein: 2, carbs: 21, fat: 0.1, category: 'vegetable' },
+
+  // Sauces & Dressings
+  { name: 'Soy Sauce (1 tbsp)', calories: 9, protein: 1, carbs: 1, fat: 0, category: 'sauce' },
+  { name: 'Ponzu Sauce (1 tbsp)', calories: 10, protein: 1, carbs: 2, fat: 0, category: 'sauce' },
+  { name: 'Spicy Mayo (1 tbsp)', calories: 100, protein: 0.2, carbs: 0.5, fat: 11, category: 'sauce' },
+  { name: 'Sesame Ginger Dressing (1 tbsp)', calories: 35, protein: 0.3, carbs: 3, fat: 3, category: 'sauce' },
+  { name: 'Sriracha (1 tsp)', calories: 5, protein: 0, carbs: 1, fat: 0, category: 'sauce' },
+  { name: 'Tahini Sauce (1 tbsp)', calories: 89, protein: 2.6, carbs: 3.2, fat: 8, category: 'sauce' },
+  { name: 'Peanut Sauce (2 tbsp)', calories: 80, protein: 3, carbs: 5, fat: 6, category: 'sauce' },
+  { name: 'Teriyaki Sauce (1 tbsp)', calories: 15, protein: 0.5, carbs: 3, fat: 0, category: 'sauce' },
+
+  // Toppings
+  { name: 'Sesame Seeds (1 tsp)', calories: 17, protein: 0.5, carbs: 0.7, fat: 1.5, category: 'topping' },
+  { name: 'Crispy Onions (1 tbsp)', calories: 45, protein: 0.5, carbs: 3, fat: 3.5, category: 'topping' },
+  { name: 'Nori Strips', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'topping' },
+  { name: 'Wasabi (1 tsp)', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'topping' },
+  { name: 'Scallions (2 tbsp)', calories: 5, protein: 0.3, carbs: 1, fat: 0, category: 'topping' },
+  { name: 'Furikake (1 tsp)', calories: 5, protein: 0.3, carbs: 0.8, fat: 0.2, category: 'topping' },
+  { name: 'Masago (fish roe, 1 tbsp)', calories: 20, protein: 3, carbs: 0, fat: 1, category: 'topping' },
+];
+
+// Toppings for oatmeal and breakfast bowls
+export const oatmealToppings = [
+  // Bases
+  { name: 'Oatmeal (cooked, 1 cup)', calories: 158, protein: 6, carbs: 27, fat: 3, category: 'base' },
+  { name: 'Steel Cut Oats (cooked, 1 cup)', calories: 170, protein: 7, carbs: 29, fat: 3, category: 'base' },
+  { name: 'Overnight Oats (1 cup)', calories: 200, protein: 7, carbs: 35, fat: 4, category: 'base' },
+  { name: 'Acai Bowl Base (1 cup)', calories: 140, protein: 2, carbs: 20, fat: 10, category: 'base' },
+  { name: 'Yogurt (plain, 1 cup)', calories: 149, protein: 12, carbs: 11, fat: 4, category: 'base' },
+  { name: 'Greek Yogurt (plain, 1 cup)', calories: 130, protein: 20, carbs: 7, fat: 0.7, category: 'base' },
+
+  // Fruits
+  { name: 'Banana (sliced, 1 medium)', calories: 105, protein: 1.3, carbs: 27, fat: 0.4, category: 'fruit' },
+  { name: 'Blueberries (1/2 cup)', calories: 42, protein: 0.5, carbs: 11, fat: 0.2, category: 'fruit' },
+  { name: 'Strawberries (sliced, 1/2 cup)', calories: 25, protein: 0.5, carbs: 6, fat: 0.2, category: 'fruit' },
+  { name: 'Raspberries (1/2 cup)', calories: 32, protein: 0.7, carbs: 7, fat: 0.4, category: 'fruit' },
+  { name: 'Blackberries (1/2 cup)', calories: 31, protein: 1, carbs: 7, fat: 0.4, category: 'fruit' },
+  { name: 'Apple (diced, 1/2 cup)', calories: 32, protein: 0.2, carbs: 8, fat: 0.1, category: 'fruit' },
+  { name: 'Peaches (sliced, 1/2 cup)', calories: 30, protein: 0.7, carbs: 7, fat: 0.2, category: 'fruit' },
+  { name: 'Mango (diced, 1/2 cup)', calories: 50, protein: 0.7, carbs: 12, fat: 0.3, category: 'fruit' },
+  { name: 'Pear (diced, 1/2 cup)', calories: 42, protein: 0.3, carbs: 11, fat: 0.1, category: 'fruit' },
+  { name: 'Raisins (2 tbsp)', calories: 60, protein: 0.6, carbs: 16, fat: 0.1, category: 'fruit' },
+  { name: 'Dried Cranberries (2 tbsp)', calories: 50, protein: 0, carbs: 13, fat: 0, category: 'fruit' },
+  { name: 'Dates (chopped, 2)', calories: 66, protein: 0.4, carbs: 18, fat: 0, category: 'fruit' },
+
+  // Protein Additions
+  { name: 'Protein Powder (1 scoop)', calories: 120, protein: 24, carbs: 3, fat: 1.5, category: 'protein' },
+  { name: 'Peanut Butter (1 tbsp)', calories: 94, protein: 4, carbs: 3, fat: 8, category: 'protein' },
+  { name: 'Almond Butter (1 tbsp)', calories: 98, protein: 3.4, carbs: 3, fat: 9, category: 'protein' },
+  { name: 'Chia Seeds (1 tbsp)', calories: 58, protein: 2, carbs: 5, fat: 3.7, category: 'protein' },
+  { name: 'Hemp Seeds (1 tbsp)', calories: 55, protein: 3.2, carbs: 0.9, fat: 4.3, category: 'protein' },
+  { name: 'Flax Seeds (ground, 1 tbsp)', calories: 37, protein: 1.3, carbs: 2, fat: 3, category: 'protein' },
+  { name: 'Egg (hard boiled)', calories: 78, protein: 6, carbs: 0.6, fat: 5, category: 'protein' },
+
+  // Nuts & Seeds
+  { name: 'Almonds (sliced, 2 tbsp)', calories: 70, protein: 2.5, carbs: 2.5, fat: 6, category: 'nuts' },
+  { name: 'Walnuts (chopped, 2 tbsp)', calories: 90, protein: 2, carbs: 2, fat: 9, category: 'nuts' },
+  { name: 'Pecans (chopped, 2 tbsp)', calories: 90, protein: 1.3, carbs: 2, fat: 9, category: 'nuts' },
+  { name: 'Cashews (chopped, 2 tbsp)', calories: 78, protein: 2.5, carbs: 4.5, fat: 6, category: 'nuts' },
+  { name: 'Pumpkin Seeds (1 tbsp)', calories: 45, protein: 2, carbs: 1.5, fat: 4, category: 'nuts' },
+  { name: 'Sunflower Seeds (1 tbsp)', calories: 50, protein: 1.8, carbs: 2, fat: 4.5, category: 'nuts' },
+
+  // Sweeteners
+  { name: 'Honey (1 tbsp)', calories: 64, protein: 0, carbs: 17, fat: 0, category: 'sweetener' },
+  { name: 'Maple Syrup (1 tbsp)', calories: 52, protein: 0, carbs: 13, fat: 0, category: 'sweetener' },
+  { name: 'Agave Nectar (1 tbsp)', calories: 60, protein: 0, carbs: 16, fat: 0, category: 'sweetener' },
+  { name: 'Brown Sugar (1 tbsp)', calories: 52, protein: 0, carbs: 13, fat: 0, category: 'sweetener' },
+  { name: 'Stevia (to taste)', calories: 0, protein: 0, carbs: 0, fat: 0, category: 'sweetener' },
+
+  // Other Toppings
+  { name: 'Granola (1/4 cup)', calories: 140, protein: 3, carbs: 24, fat: 4, category: 'topping' },
+  { name: 'Coconut Flakes (2 tbsp)', calories: 70, protein: 0.7, carbs: 3, fat: 7, category: 'topping' },
+  { name: 'Cacao Nibs (1 tbsp)', calories: 70, protein: 1, carbs: 4, fat: 5, category: 'topping' },
+  { name: 'Dark Chocolate Chips (1 tbsp)', calories: 70, protein: 0.8, carbs: 9, fat: 4, category: 'topping' },
+  { name: 'Cinnamon (1 tsp)', calories: 6, protein: 0.1, carbs: 2, fat: 0, category: 'topping' },
+  { name: 'Vanilla Extract (1 tsp)', calories: 12, protein: 0, carbs: 0.5, fat: 0, category: 'topping' },
+];
+
+// Toppings for tacos and burritos
+export const tacoToppings = [
+  // Shells & Wraps
+  { name: 'Flour Tortilla (8-inch)', calories: 140, protein: 4, carbs: 24, fat: 3.5, category: 'shell' },
+  { name: 'Corn Tortilla (6-inch)', calories: 52, protein: 1.4, carbs: 11, fat: 0.7, category: 'shell' },
+  { name: 'Whole Wheat Tortilla (8-inch)', calories: 130, protein: 4, carbs: 21, fat: 3, category: 'shell' },
+  { name: 'Burrito Tortilla (12-inch)', calories: 290, protein: 8, carbs: 50, fat: 7, category: 'shell' },
+  { name: 'Hard Taco Shell', calories: 50, protein: 1, carbs: 7, fat: 2, category: 'shell' },
+  { name: 'Tostada Shell', calories: 60, protein: 1, carbs: 9, fat: 2.5, category: 'shell' },
+
+  // Proteins
+  { name: 'Ground Beef (seasoned, 3 oz)', calories: 210, protein: 22, carbs: 2, fat: 13, category: 'protein' },
+  { name: 'Shredded Chicken (3 oz)', calories: 140, protein: 26, carbs: 0, fat: 3, category: 'protein' },
+  { name: 'Carnitas (pork, 3 oz)', calories: 220, protein: 20, carbs: 0, fat: 15, category: 'protein' },
+  { name: 'Carne Asada (steak, 3 oz)', calories: 200, protein: 23, carbs: 0, fat: 11, category: 'protein' },
+  { name: 'Grilled Fish (3 oz)', calories: 110, protein: 22, carbs: 0, fat: 2, category: 'protein' },
+  { name: 'Shrimp (grilled, 3 oz)', calories: 85, protein: 18, carbs: 0, fat: 1, category: 'protein' },
+  { name: 'Al Pastor (pork, 3 oz)', calories: 200, protein: 18, carbs: 5, fat: 12, category: 'protein' },
+  { name: 'Barbacoa (beef, 3 oz)', calories: 170, protein: 24, carbs: 1, fat: 8, category: 'protein' },
+  { name: 'Chorizo (3 oz)', calories: 270, protein: 14, carbs: 2, fat: 23, category: 'protein' },
+  { name: 'Sofritas (tofu, 3 oz)', calories: 150, protein: 10, carbs: 9, fat: 10, category: 'protein' },
+
+  // Beans & Rice
+  { name: 'Black Beans (1/2 cup)', calories: 110, protein: 7, carbs: 20, fat: 0.5, category: 'beans' },
+  { name: 'Pinto Beans (1/2 cup)', calories: 122, protein: 8, carbs: 22, fat: 0.6, category: 'beans' },
+  { name: 'Refried Beans (1/2 cup)', calories: 120, protein: 7, carbs: 20, fat: 2, category: 'beans' },
+  { name: 'Spanish Rice (1/2 cup)', calories: 100, protein: 2, carbs: 22, fat: 0.5, category: 'rice' },
+  { name: 'Cilantro Lime Rice (1/2 cup)', calories: 110, protein: 2, carbs: 23, fat: 1, category: 'rice' },
+  { name: 'Mexican Rice (1/2 cup)', calories: 105, protein: 2, carbs: 22, fat: 1, category: 'rice' },
+
+  // Vegetables
+  { name: 'Lettuce (shredded, 1/4 cup)', calories: 2, protein: 0.1, carbs: 0.4, fat: 0, category: 'vegetable' },
+  { name: 'Tomatoes (diced, 1/4 cup)', calories: 9, protein: 0.4, carbs: 2, fat: 0.1, category: 'vegetable' },
+  { name: 'Onions (diced, 2 tbsp)', calories: 8, protein: 0.2, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Bell Peppers (strips, 1/4 cup)', calories: 8, protein: 0.3, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Jalapeños (sliced, 2 tbsp)', calories: 4, protein: 0.1, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Fajita Vegetables (1/2 cup)', calories: 30, protein: 1, carbs: 6, fat: 0.5, category: 'vegetable' },
+  { name: 'Corn (1/4 cup)', calories: 30, protein: 1, carbs: 7, fat: 0.5, category: 'vegetable' },
+  { name: 'Pickled Jalapeños (2 tbsp)', calories: 5, protein: 0, carbs: 1, fat: 0, category: 'vegetable' },
+
+  // Cheese & Dairy
+  { name: 'Cheddar Cheese (shredded, 1/4 cup)', calories: 110, protein: 7, carbs: 0.5, fat: 9, category: 'cheese' },
+  { name: 'Mexican Blend Cheese (1/4 cup)', calories: 100, protein: 6, carbs: 1, fat: 8, category: 'cheese' },
+  { name: 'Queso Fresco (crumbled, 2 tbsp)', calories: 40, protein: 2.5, carbs: 0.5, fat: 3, category: 'cheese' },
+  { name: 'Sour Cream (2 tbsp)', calories: 60, protein: 1, carbs: 2, fat: 6, category: 'dairy' },
+  { name: 'Greek Yogurt (2 tbsp)', calories: 18, protein: 3, carbs: 1.5, fat: 0.2, category: 'dairy' },
+
+  // Salsas & Sauces
+  { name: 'Pico de Gallo (2 tbsp)', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'salsa' },
+  { name: 'Salsa Verde (2 tbsp)', calories: 10, protein: 0.3, carbs: 2, fat: 0, category: 'salsa' },
+  { name: 'Salsa Roja (2 tbsp)', calories: 10, protein: 0.3, carbs: 2, fat: 0, category: 'salsa' },
+  { name: 'Hot Sauce (1 tsp)', calories: 1, protein: 0, carbs: 0.2, fat: 0, category: 'salsa' },
+  { name: 'Guacamole (2 tbsp)', calories: 50, protein: 0.6, carbs: 3, fat: 4.5, category: 'salsa' },
+  { name: 'Chipotle Sauce (1 tbsp)', calories: 70, protein: 0.2, carbs: 1, fat: 7, category: 'sauce' },
+  { name: 'Taco Sauce (mild, 1 tbsp)', calories: 5, protein: 0, carbs: 1, fat: 0, category: 'sauce' },
+  { name: 'Crema (2 tbsp)', calories: 50, protein: 1, carbs: 1, fat: 5, category: 'sauce' },
+
+  // Toppings
+  { name: 'Cilantro (fresh, 1 tbsp)', calories: 1, protein: 0.1, carbs: 0.1, fat: 0, category: 'topping' },
+  { name: 'Lime (juice from 1 wedge)', calories: 2, protein: 0, carbs: 0.7, fat: 0, category: 'topping' },
+  { name: 'Avocado (sliced, 1/4)', calories: 80, protein: 1, carbs: 4, fat: 7.5, category: 'topping' },
+  { name: 'Radishes (sliced, 2 tbsp)', calories: 3, protein: 0.1, carbs: 0.7, fat: 0, category: 'topping' },
+  { name: 'Cabbage (shredded, 1/4 cup)', calories: 5, protein: 0.3, carbs: 1, fat: 0, category: 'topping' },
+  { name: 'Pickled Onions (2 tbsp)', calories: 10, protein: 0, carbs: 2, fat: 0, category: 'topping' },
+];
+
+// Toppings for stir-fry
+export const stirFryToppings = [
+  // Bases
+  { name: 'White Rice (1 cup)', calories: 205, protein: 4.3, carbs: 45, fat: 0.4, category: 'base' },
+  { name: 'Brown Rice (1 cup)', calories: 218, protein: 5, carbs: 46, fat: 1.6, category: 'base' },
+  { name: 'Fried Rice (1 cup)', calories: 228, protein: 5.5, carbs: 42, fat: 4.5, category: 'base' },
+  { name: 'Lo Mein Noodles (1 cup)', calories: 221, protein: 7, carbs: 40, fat: 4, category: 'base' },
+  { name: 'Rice Noodles (1 cup)', calories: 192, protein: 1.6, carbs: 44, fat: 0.4, category: 'base' },
+  { name: 'Udon Noodles (1 cup)', calories: 226, protein: 6, carbs: 45, fat: 1, category: 'base' },
+  { name: 'Soba Noodles (1 cup)', calories: 113, protein: 6, carbs: 24, fat: 0.1, category: 'base' },
+  { name: 'Cauliflower Rice (1 cup)', calories: 25, protein: 2, carbs: 5, fat: 0.3, category: 'base' },
+
+  // Proteins
+  { name: 'Chicken Breast (sliced, 4 oz)', calories: 187, protein: 35, carbs: 0, fat: 4, category: 'protein' },
+  { name: 'Beef (sliced, 4 oz)', calories: 250, protein: 26, carbs: 0, fat: 15, category: 'protein' },
+  { name: 'Pork (sliced, 4 oz)', calories: 242, protein: 28, carbs: 0, fat: 14, category: 'protein' },
+  { name: 'Shrimp (4 oz)', calories: 120, protein: 23, carbs: 0, fat: 2, category: 'protein' },
+  { name: 'Tofu (4 oz)', calories: 94, protein: 10, carbs: 2, fat: 6, category: 'protein' },
+  { name: 'Tempeh (4 oz)', calories: 220, protein: 22, carbs: 10, fat: 12, category: 'protein' },
+  { name: 'Egg (scrambled)', calories: 90, protein: 6, carbs: 0.5, fat: 7, category: 'protein' },
+  { name: 'Cashews (1/4 cup)', calories: 197, protein: 6, carbs: 11, fat: 16, category: 'protein' },
+
+  // Vegetables
+  { name: 'Broccoli (1 cup)', calories: 31, protein: 2.5, carbs: 6, fat: 0.3, category: 'vegetable' },
+  { name: 'Bell Peppers (sliced, 1 cup)', calories: 30, protein: 1, carbs: 7, fat: 0.3, category: 'vegetable' },
+  { name: 'Snap Peas (1 cup)', calories: 41, protein: 2.8, carbs: 7.4, fat: 0.2, category: 'vegetable' },
+  { name: 'Carrots (sliced, 1 cup)', calories: 52, protein: 1.2, carbs: 12, fat: 0.3, category: 'vegetable' },
+  { name: 'Mushrooms (sliced, 1 cup)', calories: 15, protein: 2, carbs: 2, fat: 0.2, category: 'vegetable' },
+  { name: 'Bok Choy (1 cup)', calories: 9, protein: 1, carbs: 1.5, fat: 0.1, category: 'vegetable' },
+  { name: 'Water Chestnuts (1/2 cup)', calories: 60, protein: 1, carbs: 15, fat: 0, category: 'vegetable' },
+  { name: 'Baby Corn (1/2 cup)', calories: 25, protein: 1.5, carbs: 4, fat: 0.5, category: 'vegetable' },
+  { name: 'Bean Sprouts (1 cup)', calories: 31, protein: 3, carbs: 6, fat: 0.2, category: 'vegetable' },
+  { name: 'Zucchini (sliced, 1 cup)', calories: 20, protein: 1.5, carbs: 4, fat: 0.4, category: 'vegetable' },
+  { name: 'Onions (sliced, 1/2 cup)', calories: 32, protein: 0.9, carbs: 7, fat: 0.1, category: 'vegetable' },
+  { name: 'Cabbage (shredded, 1 cup)', calories: 22, protein: 1, carbs: 5, fat: 0.1, category: 'vegetable' },
+  { name: 'Green Beans (1 cup)', calories: 34, protein: 2, carbs: 8, fat: 0.1, category: 'vegetable' },
+  { name: 'Bamboo Shoots (1/2 cup)', calories: 7, protein: 0.7, carbs: 1, fat: 0.2, category: 'vegetable' },
+
+  // Sauces
+  { name: 'Soy Sauce (1 tbsp)', calories: 9, protein: 1, carbs: 1, fat: 0, category: 'sauce' },
+  { name: 'Teriyaki Sauce (2 tbsp)', calories: 30, protein: 1, carbs: 6, fat: 0, category: 'sauce' },
+  { name: 'Oyster Sauce (1 tbsp)', calories: 9, protein: 0.2, carbs: 2, fat: 0, category: 'sauce' },
+  { name: 'Hoisin Sauce (1 tbsp)', calories: 35, protein: 0.5, carbs: 7, fat: 0.5, category: 'sauce' },
+  { name: 'Sweet & Sour Sauce (2 tbsp)', calories: 40, protein: 0, carbs: 10, fat: 0, category: 'sauce' },
+  { name: 'Black Bean Sauce (1 tbsp)', calories: 20, protein: 1, carbs: 3, fat: 0.5, category: 'sauce' },
+  { name: 'Garlic Sauce (1 tbsp)', calories: 30, protein: 0.2, carbs: 2, fat: 2.5, category: 'sauce' },
+  { name: 'Ginger Sauce (1 tbsp)', calories: 25, protein: 0.3, carbs: 3, fat: 1.5, category: 'sauce' },
+  { name: 'Sesame Oil (1 tsp)', calories: 40, protein: 0, carbs: 0, fat: 4.5, category: 'sauce' },
+  { name: 'Chili Oil (1 tsp)', calories: 40, protein: 0, carbs: 0, fat: 4.5, category: 'sauce' },
+
+  // Toppings
+  { name: 'Sesame Seeds (1 tsp)', calories: 17, protein: 0.5, carbs: 0.7, fat: 1.5, category: 'topping' },
+  { name: 'Scallions (chopped, 2 tbsp)', calories: 5, protein: 0.3, carbs: 1, fat: 0, category: 'topping' },
+  { name: 'Peanuts (chopped, 2 tbsp)', calories: 104, protein: 4.3, carbs: 3.5, fat: 9, category: 'topping' },
+  { name: 'Crispy Noodles (1/4 cup)', calories: 70, protein: 1, carbs: 8, fat: 4, category: 'topping' },
+  { name: 'Fresh Ginger (minced, 1 tsp)', calories: 2, protein: 0, carbs: 0.4, fat: 0, category: 'topping' },
+  { name: 'Garlic (minced, 1 tsp)', calories: 4, protein: 0.2, carbs: 1, fat: 0, category: 'topping' },
+];
+
 // Mark which foods support sandwich toppings
 export const foodsWithToppings = [
   'Hamburger (fast food)',
@@ -2420,6 +2873,61 @@ export const foodsWithPastaToppings = [
   'Macaroni (cooked)',
 ];
 
+// Mark which foods support pizza toppings
+export const foodsWithPizzaToppings = [
+  'Pizza (cheese, 1 slice)',
+  'Pizza (margherita, 1 slice)',
+  'Pizza (thin crust cheese, 1 slice)',
+];
+
+// Mark which foods support salad toppings
+export const foodsWithSaladToppings = [
+  'Garden Salad',
+  'Caesar Salad (no dressing)',
+  'Greek Salad (no dressing)',
+  'House Salad',
+];
+
+// Mark which foods support smoothie toppings
+export const foodsWithSmoothieToppings = [
+  'Smoothie (base)',
+  'Protein Smoothie',
+  'Green Smoothie',
+  'Fruit Smoothie',
+  'Smoothie Bowl',
+];
+
+// Mark which foods support bowl toppings
+export const foodsWithBowlToppings = [
+  'Poke Bowl (build your own)',
+  'Buddha Bowl (build your own)',
+  'Grain Bowl (build your own)',
+  'Rice Bowl (plain)',
+];
+
+// Mark which foods support oatmeal toppings
+export const foodsWithOatmealToppings = [
+  'Oatmeal (plain)',
+  'Steel Cut Oats (plain)',
+  'Overnight Oats (plain)',
+  'Breakfast Bowl (base)',
+];
+
+// Mark which foods support taco toppings
+export const foodsWithTacoToppings = [
+  'Taco (build your own)',
+  'Burrito (build your own)',
+  'Tostada (build your own)',
+  'Quesadilla (plain)',
+];
+
+// Mark which foods support stir-fry toppings
+export const foodsWithStirFryToppings = [
+  'Stir-Fry (build your own)',
+  'Fried Rice (plain)',
+  'Lo Mein (plain)',
+];
+
 // Helper to check if food supports toppings
 export function supportsToppings(foodName) {
   return foodsWithToppings.includes(foodName);
@@ -2428,6 +2936,41 @@ export function supportsToppings(foodName) {
 // Helper to check if food supports pasta toppings
 export function supportsPastaToppings(foodName) {
   return foodsWithPastaToppings.includes(foodName);
+}
+
+// Helper to check if food supports pizza toppings
+export function supportsPizzaToppings(foodName) {
+  return foodsWithPizzaToppings.includes(foodName);
+}
+
+// Helper to check if food supports salad toppings
+export function supportsSaladToppings(foodName) {
+  return foodsWithSaladToppings.includes(foodName);
+}
+
+// Helper to check if food supports smoothie toppings
+export function supportsSmoothieToppings(foodName) {
+  return foodsWithSmoothieToppings.includes(foodName);
+}
+
+// Helper to check if food supports bowl toppings
+export function supportsBowlToppings(foodName) {
+  return foodsWithBowlToppings.includes(foodName);
+}
+
+// Helper to check if food supports oatmeal toppings
+export function supportsOatmealToppings(foodName) {
+  return foodsWithOatmealToppings.includes(foodName);
+}
+
+// Helper to check if food supports taco toppings
+export function supportsTacoToppings(foodName) {
+  return foodsWithTacoToppings.includes(foodName);
+}
+
+// Helper to check if food supports stir-fry toppings
+export function supportsStirFryToppings(foodName) {
+  return foodsWithStirFryToppings.includes(foodName);
 }
 
 // Improved search function with flexible word matching
