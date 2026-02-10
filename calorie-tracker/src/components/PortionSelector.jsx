@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
-import { supportsToppings, sandwichToppings, supportsPastaToppings, pastaToppings } from '../utils/commonFoods';
+import {
+  supportsToppings, sandwichToppings,
+  supportsPastaToppings, pastaToppings,
+  supportsPizzaToppings, pizzaToppings,
+  supportsSaladToppings, saladToppings,
+  supportsSmoothieToppings, smoothieToppings,
+  supportsBowlToppings, bowlToppings,
+  supportsOatmealToppings, oatmealToppings,
+  supportsTacoToppings, tacoToppings,
+  supportsStirFryToppings, stirFryToppings
+} from '../utils/commonFoods';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 export default function PortionSelector({ food, onConfirm, onCancel }) {
   const modalRef = useModalAccessibility(true, onCancel);
-  const [inputMode, setInputMode] = useState('servings'); // 'servings' or 'weight'
   const [servings, setServings] = useState('1');
-  const [exactWeight, setExactWeight] = useState('');
+  // selectedToppings: array of { topping, multiplier }
   const [selectedToppings, setSelectedToppings] = useState([]);
 
   // Lock body scroll when modal opens
@@ -17,37 +26,70 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     };
   }, []);
 
+  // Detect which topping system applies
   const hasSandwichToppings = supportsToppings(food.name);
   const hasPastaToppings = supportsPastaToppings(food.name);
-  const hasToppings = hasSandwichToppings || hasPastaToppings;
+  const hasPizzaToppings = supportsPizzaToppings(food.name);
+  const hasSaladToppings = supportsSaladToppings(food.name);
+  const hasSmoothieToppings = supportsSmoothieToppings(food.name);
+  const hasBowlToppings = supportsBowlToppings(food.name);
+  const hasOatmealToppings = supportsOatmealToppings(food.name);
+  const hasTacoToppings = supportsTacoToppings(food.name);
+  const hasStirFryToppings = supportsStirFryToppings(food.name);
 
-  // Select the appropriate toppings array
-  const toppingsArray = hasPastaToppings ? pastaToppings : sandwichToppings;
+  const hasToppings = hasSandwichToppings || hasPastaToppings || hasPizzaToppings ||
+                      hasSaladToppings || hasSmoothieToppings || hasBowlToppings ||
+                      hasOatmealToppings || hasTacoToppings || hasStirFryToppings;
 
-  // Parse base serving size to extract weight if possible
-  const baseServingWeight = (() => {
-    const match = food.servingSize.match(/(\d+\.?\d*)\s*g/i);
-    return match ? parseFloat(match[1]) : null;
-  })();
+  // Detect if this is a "build your own" item
+  const isBuildYourOwn = food.name.includes('build your own');
 
-  // Calculate multiplier based on input mode
-  const multiplier = (() => {
-    if (inputMode === 'servings') {
-      return parseFloat(servings) || 0;
-    } else if (inputMode === 'weight' && baseServingWeight) {
-      const weight = parseFloat(exactWeight) || 0;
-      return weight / baseServingWeight;
-    }
-    return 0;
-  })();
+  // Detect if this is a pizza item
+  const isPizza = hasPizzaToppings || food.name.toLowerCase().includes('pizza') || food.servingSize.toLowerCase().includes('slice');
 
-  // Calculate totals including toppings
+  // Select the appropriate toppings array and type
+  let toppingsArray = [];
+  let toppingType = '';
+
+  if (hasPastaToppings) {
+    toppingsArray = pastaToppings;
+    toppingType = 'pasta';
+  } else if (hasSandwichToppings) {
+    toppingsArray = sandwichToppings;
+    toppingType = 'sandwich';
+  } else if (hasPizzaToppings) {
+    toppingsArray = pizzaToppings;
+    toppingType = 'pizza';
+  } else if (hasSaladToppings) {
+    toppingsArray = saladToppings;
+    toppingType = 'salad';
+  } else if (hasSmoothieToppings) {
+    toppingsArray = smoothieToppings;
+    toppingType = 'smoothie';
+  } else if (hasBowlToppings) {
+    toppingsArray = bowlToppings;
+    toppingType = 'bowl';
+  } else if (hasOatmealToppings) {
+    toppingsArray = oatmealToppings;
+    toppingType = 'oatmeal';
+  } else if (hasTacoToppings) {
+    toppingsArray = tacoToppings;
+    toppingType = 'taco';
+  } else if (hasStirFryToppings) {
+    toppingsArray = stirFryToppings;
+    toppingType = 'stirfry';
+  }
+
+  // Calculate base multiplier
+  const multiplier = parseFloat(servings) || 0;
+
+  // Calculate totals including toppings with their multipliers
   const toppingsTotal = selectedToppings.reduce(
-    (totals, topping) => ({
-      calories: totals.calories + topping.calories,
-      protein: totals.protein + topping.protein,
-      carbs: totals.carbs + topping.carbs,
-      fat: totals.fat + topping.fat,
+    (totals, item) => ({
+      calories: totals.calories + (item.topping.calories * item.multiplier),
+      protein: totals.protein + (item.topping.protein * item.multiplier),
+      carbs: totals.carbs + (item.topping.carbs * item.multiplier),
+      fat: totals.fat + (item.topping.fat * item.multiplier),
     }),
     { calories: 0, protein: 0, carbs: 0, fat: 0 }
   );
@@ -63,18 +105,42 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
   const adjustedFat = Math.round((baseFat + toppingsTotal.fat) * 10) / 10;
 
   const handleConfirm = () => {
-    if (multiplier <= 0) return;
+    // For build-your-own (except pizza), allow confirmation even with multiplier 0 if toppings selected
+    if (!isBuildYourOwn && multiplier <= 0) return;
+    if (isBuildYourOwn && !isPizza && selectedToppings.length === 0) return;
+    if (isBuildYourOwn && isPizza && (multiplier <= 0 || selectedToppings.length === 0)) return;
 
     let name = food.name;
     if (selectedToppings.length > 0) {
-      const toppingNames = selectedToppings.map((t) => t.name).join(', ');
-      name = `${food.name} + ${toppingNames}`;
+      const toppingNames = selectedToppings.map((item) => {
+        const multiplierText = item.multiplier !== 1 ? ` (${item.multiplier}x)` : '';
+        return item.topping.name + multiplierText;
+      }).join(', ');
+
+      if (isBuildYourOwn) {
+        // Extract header from food name (e.g., "Salad (build your own)" -> "Salad:")
+        const headerMatch = food.name.match(/^([^(]+)/);
+        let header = headerMatch ? headerMatch[1].trim() : '';
+
+        // For pizza, include slice count in header
+        if (isPizza && multiplier > 0) {
+          const sliceText = multiplier === 1 ? '1 slice' : `${multiplier} slices`;
+          header = `${header} (${sliceText})`;
+        }
+
+        name = header + ': ' + toppingNames;
+      } else {
+        name = `${food.name} + ${toppingNames}`;
+      }
     }
 
     // Determine serving size display
     let servingSizeDisplay;
-    if (inputMode === 'weight' && exactWeight) {
-      servingSizeDisplay = `${exactWeight}g`;
+    if (isBuildYourOwn && !isPizza) {
+      servingSizeDisplay = 'custom';
+    } else if (isPizza && Number.isInteger(multiplier)) {
+      // For pizza, show as "2 slices" instead of "2x 1 slice base"
+      servingSizeDisplay = multiplier === 1 ? '1 slice' : `${multiplier} slices`;
     } else if (multiplier === 1) {
       servingSizeDisplay = food.servingSize;
     } else {
@@ -94,13 +160,23 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
 
   const toggleTopping = (topping) => {
     setSelectedToppings((prev) => {
-      const exists = prev.find((t) => t.name === topping.name);
+      const exists = prev.find((item) => item.topping.name === topping.name);
       if (exists) {
-        return prev.filter((t) => t.name !== topping.name);
+        return prev.filter((item) => item.topping.name !== topping.name);
       } else {
-        return [...prev, topping];
+        return [...prev, { topping, multiplier: 1 }];
       }
     });
+  };
+
+  const updateToppingMultiplier = (toppingName, multiplier) => {
+    setSelectedToppings((prev) =>
+      prev.map((item) =>
+        item.topping.name === toppingName
+          ? { ...item, multiplier: parseFloat(multiplier) || 0 }
+          : item
+      )
+    );
   };
 
   // Quick multiplier buttons
@@ -110,7 +186,9 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center p-4 z-50 overflow-y-auto" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="card max-w-md w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Select Portion Size</h2>
+          <h2 className="text-2xl font-bold">
+            {isBuildYourOwn ? food.name : 'Select Portion Size'}
+          </h2>
           <button
             onClick={onCancel}
             className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-3xl font-bold"
@@ -121,59 +199,36 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
         </div>
 
         {/* Food Info */}
-        <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
-          <h3 className="font-semibold text-lg mb-2">{food.name}</h3>
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            Base serving: {food.servingSize}
+        {!isBuildYourOwn && (
+          <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
+            <h3 className="font-semibold text-lg mb-2">{food.name}</h3>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Base serving: {food.servingSize}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Input Mode Toggle */}
-        <div className="flex gap-2 mb-6">
-          <button
-            onClick={() => setInputMode('servings')}
-            className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
-              inputMode === 'servings'
-                ? 'bg-emerald-600 text-white border-emerald-500'
-                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
-            }`}
-          >
-            Servings
-          </button>
-          <button
-            onClick={() => setInputMode('weight')}
-            className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
-              inputMode === 'weight'
-                ? 'bg-emerald-600 text-white border-emerald-500'
-                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
-            }`}
-            disabled={!baseServingWeight}
-          >
-            Exact Weight
-          </button>
-        </div>
-
-        {/* Servings Input */}
-        {inputMode === 'servings' && (
+        {/* Servings Input - show for non-build-your-own items AND pizza build-your-own */}
+        {(!isBuildYourOwn || isPizza) && (
           <>
             <div className="mb-4">
               <label className="block text-lg font-semibold mb-3">
-                Number of Servings
+                {isPizza ? 'Number of Slices' : 'Number of Servings'}
               </label>
               <input
                 type="number"
-                min="0.1"
-                step="0.1"
+                min={isPizza ? "1" : "0.1"}
+                step={isPizza ? "1" : "0.1"}
                 value={servings}
                 onChange={(e) => setServings(e.target.value)}
                 className="input-field text-center text-2xl"
-                autoFocus
+                autoFocus={!hasToppings}
               />
             </div>
 
             {/* Quick Options */}
             <div className="grid grid-cols-6 gap-2 mb-6">
-              {quickOptions.map((option) => (
+              {(isPizza ? [1, 2, 3, 4, 5, 6] : quickOptions).map((option) => (
                 <button
                   key={option}
                   onClick={() => setServings(option.toString())}
@@ -183,37 +238,15 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
                       : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
                   }`}
                 >
-                  {option}x
+                  {isPizza ? `${option}` : `${option}x`}
                 </button>
               ))}
             </div>
           </>
         )}
 
-        {/* Exact Weight Input */}
-        {inputMode === 'weight' && (
-          <div className="mb-6">
-            <label className="block text-lg font-semibold mb-3">
-              Weight in Grams
-            </label>
-            <input
-              type="number"
-              min="1"
-              step="1"
-              value={exactWeight}
-              onChange={(e) => setExactWeight(e.target.value)}
-              placeholder="Enter weight in grams"
-              className="input-field text-center text-2xl"
-              autoFocus
-            />
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-              Base: {baseServingWeight}g = {food.calories} cal
-            </div>
-          </div>
-        )}
-
         {/* Preview */}
-        {multiplier > 0 && (
+        {(multiplier > 0 || selectedToppings.length > 0) && (
           <div className="bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-lg mb-6">
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
               You're adding:
@@ -222,80 +255,152 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
             <div className="text-sm text-gray-600 dark:text-gray-400">
               P: {adjustedProtein}g • C: {adjustedCarbs}g • F: {adjustedFat}g
             </div>
-            <div className="text-xs text-gray-500 mt-2">
-              {inputMode === 'weight' && exactWeight
-                ? `${exactWeight}g`
-                : `${multiplier}x ${food.servingSize}`}
-            </div>
+            {(!isBuildYourOwn || isPizza) && (
+              <div className="text-xs text-gray-500 mt-2">
+                {isPizza && Number.isInteger(multiplier)
+                  ? (multiplier === 1 ? '1 slice' : `${multiplier} slices`)
+                  : `${multiplier}x ${food.servingSize}`
+                }
+              </div>
+            )}
           </div>
         )}
 
-        {/* Actions */}
-        <div className="flex gap-3 mb-6">
-          <button onClick={onCancel} className="btn-secondary flex-1">
-            Cancel
-          </button>
-          <button
-            onClick={handleConfirm}
-            className="btn-primary flex-1"
-            disabled={multiplier <= 0}
-          >
-            Add to Log
-          </button>
-        </div>
-
         {/* Toppings Selection */}
         {hasToppings && (
-          <div className="border-t border-gray-300 dark:border-gray-600 pt-6">
+          <div className={!isBuildYourOwn ? "border-t border-gray-300 dark:border-gray-600 pt-6" : ""}>
             <h3 className="font-semibold text-lg mb-3">
-              {hasPastaToppings ? 'Add Sauce & Toppings (Optional)' : 'Add Toppings (Optional)'}
+              {toppingType === 'pasta' && (isBuildYourOwn ? 'Build Your Pasta' : 'Add Sauce & Toppings (Optional)')}
+              {toppingType === 'sandwich' && (isBuildYourOwn ? 'Build Your Sandwich' : 'Add Toppings (Optional)')}
+              {toppingType === 'pizza' && (isBuildYourOwn ? 'Build Your Pizza' : 'Add Toppings (Optional)')}
+              {toppingType === 'salad' && (isBuildYourOwn ? 'Build Your Salad' : 'Add Toppings (Optional)')}
+              {toppingType === 'smoothie' && (isBuildYourOwn ? 'Build Your Smoothie' : 'Add Toppings (Optional)')}
+              {toppingType === 'bowl' && (isBuildYourOwn ? 'Build Your Bowl' : 'Add Toppings (Optional)')}
+              {toppingType === 'oatmeal' && (isBuildYourOwn ? 'Build Your Oatmeal' : 'Add Toppings (Optional)')}
+              {toppingType === 'taco' && (isBuildYourOwn ? 'Build Your Taco/Burrito' : 'Add Toppings (Optional)')}
+              {toppingType === 'stirfry' && (isBuildYourOwn ? 'Build Your Stir-Fry' : 'Add Toppings (Optional)')}
             </h3>
 
-            {/* Group by category */}
-            {['sauce', 'cheese', 'protein', 'vegetable'].map((category) => {
-              const categoryToppings = toppingsArray.filter(
-                (t) => t.category === category
-              );
-              if (categoryToppings.length === 0) return null;
+            {/* Get unique categories from toppings array */}
+            {(() => {
+              const categories = [...new Set(toppingsArray.map(t => t.category))];
 
-              const categoryLabel = {
-                protein: hasPastaToppings ? 'Protein' : 'Extra Protein',
-                cheese: 'Cheese',
-                vegetable: hasPastaToppings ? 'Vegetables' : 'Veggies',
-                sauce: 'Sauces',
-              }[category];
+              return categories.map((category) => {
+                const categoryToppings = toppingsArray.filter(
+                  (t) => t.category === category
+                );
+                if (categoryToppings.length === 0) return null;
 
-              return (
-                <div key={category} className="mb-4">
-                  <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 capitalize">
-                    {categoryLabel}
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {categoryToppings.map((topping) => {
-                      const isSelected = selectedToppings.find(
-                        (t) => t.name === topping.name
-                      );
-                      return (
-                        <button
-                          key={topping.name}
-                          onClick={() => toggleTopping(topping)}
-                          className={`py-2 px-3 rounded-lg text-sm border-2 transition-colors text-left ${
-                            isSelected
-                              ? 'bg-emerald-600 text-white border-emerald-500'
-                              : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
-                          }`}
-                        >
-                          <div className="font-semibold">{topping.name}</div>
-                          <div className="text-xs opacity-80">
-                            +{topping.calories} cal
+                // Define category labels for all types
+                const categoryLabels = {
+                  // Common categories
+                  protein: 'Protein',
+                  cheese: 'Cheese',
+                  vegetable: 'Vegetables',
+                  sauce: 'Sauces',
+                  topping: 'Toppings',
+                  // Smoothie/Bowl specific
+                  liquid: 'Liquid Base',
+                  fruit: 'Fruits',
+                  green: 'Greens',
+                  superfood: 'Superfoods',
+                  nuts: 'Nuts & Seeds',
+                  sweetener: 'Sweeteners',
+                  // Bowl specific
+                  base: 'Base',
+                  grain: 'Grains',
+                  // Salad specific
+                  dressing: 'Dressings',
+                  // Taco specific
+                  shell: 'Shell',
+                  beans: 'Beans',
+                  rice: 'Rice',
+                  salsa: 'Salsa & Sauces',
+                  dairy: 'Dairy',
+                };
+
+                const categoryLabel = categoryLabels[category] || category.charAt(0).toUpperCase() + category.slice(1);
+
+                return (
+                  <div key={category} className="mb-4">
+                    <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
+                      {categoryLabel}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {categoryToppings.map((topping) => {
+                        const selectedItem = selectedToppings.find(
+                          (item) => item.topping.name === topping.name
+                        );
+                        const isSelected = !!selectedItem;
+                        return (
+                          <div key={topping.name} className="flex flex-col gap-1">
+                            <button
+                              onClick={() => toggleTopping(topping)}
+                              className={`py-2 px-3 rounded-lg text-sm border-2 transition-colors text-left ${
+                                isSelected
+                                  ? 'bg-emerald-600 text-white border-emerald-500'
+                                  : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                              }`}
+                            >
+                              <div className="font-semibold">{topping.name}</div>
+                              <div className="text-xs opacity-80">
+                                {topping.calories} cal
+                              </div>
+                            </button>
+                            {isSelected && (
+                              <input
+                                type="number"
+                                min="0.1"
+                                step="0.1"
+                                value={selectedItem.multiplier}
+                                onChange={(e) => updateToppingMultiplier(topping.name, e.target.value)}
+                                onClick={(e) => e.stopPropagation()}
+                                className="input-field text-center text-sm py-1"
+                                placeholder="Qty"
+                              />
+                            )}
                           </div>
-                        </button>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              });
+            })()}
+
+            {/* Actions for build-your-own items (shown in toppings section) */}
+            {isBuildYourOwn && !isPizza && (
+              <div className="flex gap-3 mt-6">
+                <button onClick={onCancel} className="btn-secondary flex-1">
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirm}
+                  className="btn-primary flex-1"
+                  disabled={selectedToppings.length === 0}
+                >
+                  Add to Log
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Actions for regular items and pizza build-your-own */}
+        {(!isBuildYourOwn || isPizza) && (
+          <div className="flex gap-3 mb-6">
+            <button onClick={onCancel} className="btn-secondary flex-1">
+              Cancel
+            </button>
+            <button
+              onClick={handleConfirm}
+              className="btn-primary flex-1"
+              disabled={isPizza && isBuildYourOwn
+                ? (multiplier <= 0 || selectedToppings.length === 0)
+                : multiplier <= 0}
+            >
+              Add to Log
+            </button>
           </div>
         )}
       </div>

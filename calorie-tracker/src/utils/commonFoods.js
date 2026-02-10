@@ -2361,36 +2361,54 @@ export const commonFoods = [
 export const sandwichToppings = [
   // Proteins
   { name: 'Bacon (2 strips)', calories: 90, protein: 6, carbs: 0, fat: 7, category: 'protein' },
-  { name: 'Fried Egg', calories: 90, protein: 6, carbs: 0.5, fat: 7, category: 'protein' },
-  { name: 'Ham', calories: 60, protein: 10, carbs: 1, fat: 2, category: 'protein' },
-  { name: 'Turkey', calories: 50, protein: 10, carbs: 1, fat: 0.5, category: 'protein' },
-  { name: 'Grilled Chicken', calories: 110, protein: 22, carbs: 0, fat: 2, category: 'protein' },
-  { name: 'Extra Beef Patty', calories: 220, protein: 20, carbs: 0, fat: 15, category: 'protein' },
+  { name: 'Fried Egg (1 egg)', calories: 90, protein: 6, carbs: 0.5, fat: 7, category: 'protein' },
+  { name: 'Ham (2 oz)', calories: 60, protein: 10, carbs: 1, fat: 2, category: 'protein' },
+  { name: 'Turkey (2 oz)', calories: 50, protein: 10, carbs: 1, fat: 0.5, category: 'protein' },
+  { name: 'Roast Beef (2 oz)', calories: 80, protein: 12, carbs: 1, fat: 3, category: 'protein' },
+  { name: 'Grilled Chicken (3 oz)', calories: 110, protein: 22, carbs: 0, fat: 2, category: 'protein' },
+  { name: 'Beef Patty (1/4 lb)', calories: 220, protein: 20, carbs: 0, fat: 15, category: 'protein' },
+  { name: 'Tuna Salad (1/4 cup)', calories: 90, protein: 8, carbs: 3, fat: 5, category: 'protein' },
+  { name: 'Chicken Salad (1/4 cup)', calories: 110, protein: 7, carbs: 3, fat: 7, category: 'protein' },
+  { name: 'Egg Salad (1/4 cup)', calories: 100, protein: 6, carbs: 2, fat: 7, category: 'protein' },
+  { name: 'Salami (4 slices)', calories: 110, protein: 6, carbs: 0.5, fat: 9, category: 'protein' },
+  { name: 'Pastrami (2 oz)', calories: 90, protein: 12, carbs: 1, fat: 4, category: 'protein' },
 
   // Cheese
-  { name: 'American Cheese', calories: 96, protein: 5, carbs: 2, fat: 7, category: 'cheese' },
-  { name: 'Swiss Cheese', calories: 106, protein: 8, carbs: 1.5, fat: 8, category: 'cheese' },
-  { name: 'Provolone', calories: 98, protein: 7, carbs: 0.6, fat: 7.5, category: 'cheese' },
-  { name: 'Pepper Jack', calories: 110, protein: 6.5, carbs: 0.5, fat: 9, category: 'cheese' },
-  { name: 'Mozzarella', calories: 85, protein: 6, carbs: 1, fat: 6, category: 'cheese' },
+  { name: 'American Cheese (1 slice)', calories: 96, protein: 5, carbs: 2, fat: 7, category: 'cheese' },
+  { name: 'Swiss Cheese (1 slice)', calories: 106, protein: 8, carbs: 1.5, fat: 8, category: 'cheese' },
+  { name: 'Cheddar Cheese (1 slice)', calories: 113, protein: 7, carbs: 0.4, fat: 9.3, category: 'cheese' },
+  { name: 'Provolone (1 slice)', calories: 98, protein: 7, carbs: 0.6, fat: 7.5, category: 'cheese' },
+  { name: 'Pepper Jack (1 slice)', calories: 110, protein: 6.5, carbs: 0.5, fat: 9, category: 'cheese' },
+  { name: 'Mozzarella (1 slice)', calories: 85, protein: 6, carbs: 1, fat: 6, category: 'cheese' },
+  { name: 'Cream Cheese (2 tbsp)', calories: 100, protein: 2, carbs: 2, fat: 10, category: 'cheese' },
 
   // Vegetables
-  { name: 'Lettuce', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
-  { name: 'Tomato', calories: 10, protein: 0.5, carbs: 2, fat: 0, category: 'vegetable' },
-  { name: 'Onion', calories: 12, protein: 0.3, carbs: 3, fat: 0, category: 'vegetable' },
-  { name: 'Pickles', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
-  { name: 'Jalapeños', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
-  { name: 'Avocado', calories: 120, protein: 1.5, carbs: 6, fat: 11, category: 'vegetable' },
-  { name: 'Mushrooms (sautéed)', calories: 28, protein: 2, carbs: 4, fat: 0.5, category: 'vegetable' },
-  { name: 'Bell Peppers', calories: 10, protein: 0.3, carbs: 2, fat: 0, category: 'vegetable' },
-  { name: 'Spinach', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Lettuce (2 leaves)', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Tomato (3 slices)', calories: 10, protein: 0.5, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Onion (3 slices)', calories: 12, protein: 0.3, carbs: 3, fat: 0, category: 'vegetable' },
+  { name: 'Pickles (4 slices)', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Jalapeños (4 slices)', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Avocado (1/4 whole)', calories: 80, protein: 1, carbs: 4, fat: 7.5, category: 'vegetable' },
+  { name: 'Mushrooms sautéed (1/4 cup)', calories: 28, protein: 2, carbs: 4, fat: 0.5, category: 'vegetable' },
+  { name: 'Bell Peppers (3 slices)', calories: 10, protein: 0.3, carbs: 2, fat: 0, category: 'vegetable' },
+  { name: 'Spinach (1/2 cup)', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Cucumber (4 slices)', calories: 4, protein: 0.2, carbs: 1, fat: 0, category: 'vegetable' },
+  { name: 'Sprouts (1/4 cup)', calories: 8, protein: 1, carbs: 1, fat: 0, category: 'vegetable' },
 
-  // Condiments & Sauces (common burger/sandwich additions)
-  { name: 'Mustard', calories: 10, protein: 0.6, carbs: 1, fat: 0.6, category: 'sauce' },
-  { name: 'Mayo', calories: 94, protein: 0.1, carbs: 0.1, fat: 10, category: 'sauce' },
-  { name: 'Ranch', calories: 73, protein: 0.3, carbs: 1, fat: 7.5, category: 'sauce' },
-  { name: 'Hot Sauce', calories: 5, protein: 0.2, carbs: 1, fat: 0, category: 'sauce' },
-  { name: 'Chipotle Mayo', calories: 100, protein: 0.2, carbs: 1, fat: 11, category: 'sauce' },
+  // Spreads & Condiments
+  { name: 'Peanut Butter (2 tbsp)', calories: 190, protein: 8, carbs: 7, fat: 16, category: 'sauce' },
+  { name: 'Almond Butter (2 tbsp)', calories: 196, protein: 6.8, carbs: 6, fat: 18, category: 'sauce' },
+  { name: 'Jelly/Jam (1 tbsp)', calories: 50, protein: 0, carbs: 13, fat: 0, category: 'sauce' },
+  { name: 'Honey (1 tbsp)', calories: 64, protein: 0, carbs: 17, fat: 0, category: 'sauce' },
+  { name: 'Mustard (1 tsp)', calories: 3, protein: 0.2, carbs: 0.3, fat: 0.2, category: 'sauce' },
+  { name: 'Mayo (1 tbsp)', calories: 94, protein: 0.1, carbs: 0.1, fat: 10, category: 'sauce' },
+  { name: 'Ranch (1 tbsp)', calories: 73, protein: 0.3, carbs: 1, fat: 7.5, category: 'sauce' },
+  { name: 'Hot Sauce (1 tsp)', calories: 1, protein: 0, carbs: 0, fat: 0, category: 'sauce' },
+  { name: 'Chipotle Mayo (1 tbsp)', calories: 100, protein: 0.2, carbs: 1, fat: 11, category: 'sauce' },
+  { name: 'Hummus (2 tbsp)', calories: 50, protein: 1.5, carbs: 4.5, fat: 3, category: 'sauce' },
+  { name: 'Guacamole (2 tbsp)', calories: 50, protein: 0.5, carbs: 3, fat: 4.5, category: 'sauce' },
+  { name: 'BBQ Sauce (1 tbsp)', calories: 29, protein: 0, carbs: 7, fat: 0, category: 'sauce' },
+  { name: 'Ketchup (1 tbsp)', calories: 20, protein: 0, carbs: 5, fat: 0, category: 'sauce' },
 ];
 
 // Toppings for pasta dishes
@@ -2555,6 +2573,7 @@ export const saladToppings = [
 export const smoothieToppings = [
   // Base Liquids
   { name: 'Almond Milk (1 cup)', calories: 30, protein: 1, carbs: 1, fat: 2.5, category: 'liquid' },
+  { name: 'Soy Milk (1 cup)', calories: 80, protein: 7, carbs: 4, fat: 4, category: 'liquid' },
   { name: 'Whole Milk (1 cup)', calories: 150, protein: 8, carbs: 12, fat: 8, category: 'liquid' },
   { name: 'Skim Milk (1 cup)', calories: 83, protein: 8, carbs: 12, fat: 0.2, category: 'liquid' },
   { name: 'Coconut Milk (1 cup)', calories: 45, protein: 0, carbs: 1, fat: 4, category: 'liquid' },
@@ -2727,11 +2746,16 @@ export const oatmealToppings = [
 // Toppings for tacos and burritos
 export const tacoToppings = [
   // Shells & Wraps
+  { name: 'Flour Tortilla (6-inch)', calories: 90, protein: 2.5, carbs: 15, fat: 2, category: 'shell' },
   { name: 'Flour Tortilla (8-inch)', calories: 140, protein: 4, carbs: 24, fat: 3.5, category: 'shell' },
+  { name: 'Flour Tortilla (10-inch)', calories: 220, protein: 6, carbs: 38, fat: 5.5, category: 'shell' },
+  { name: 'Flour Tortilla (12-inch)', calories: 290, protein: 8, carbs: 50, fat: 7, category: 'shell' },
+  { name: 'Corn Tortilla (4-inch)', calories: 26, protein: 0.7, carbs: 5.5, fat: 0.4, category: 'shell' },
   { name: 'Corn Tortilla (6-inch)', calories: 52, protein: 1.4, carbs: 11, fat: 0.7, category: 'shell' },
+  { name: 'Corn Tortilla (8-inch)', calories: 94, protein: 2.5, carbs: 20, fat: 1.3, category: 'shell' },
   { name: 'Whole Wheat Tortilla (8-inch)', calories: 130, protein: 4, carbs: 21, fat: 3, category: 'shell' },
-  { name: 'Burrito Tortilla (12-inch)', calories: 290, protein: 8, carbs: 50, fat: 7, category: 'shell' },
-  { name: 'Hard Taco Shell', calories: 50, protein: 1, carbs: 7, fat: 2, category: 'shell' },
+  { name: 'Whole Wheat Tortilla (10-inch)', calories: 170, protein: 5, carbs: 28, fat: 4, category: 'shell' },
+  { name: 'Hard Taco Shell (corn)', calories: 50, protein: 1, carbs: 7, fat: 2, category: 'shell' },
   { name: 'Tostada Shell', calories: 60, protein: 1, carbs: 9, fat: 2.5, category: 'shell' },
 
   // Proteins
@@ -2750,6 +2774,8 @@ export const tacoToppings = [
   { name: 'Black Beans (1/2 cup)', calories: 110, protein: 7, carbs: 20, fat: 0.5, category: 'beans' },
   { name: 'Pinto Beans (1/2 cup)', calories: 122, protein: 8, carbs: 22, fat: 0.6, category: 'beans' },
   { name: 'Refried Beans (1/2 cup)', calories: 120, protein: 7, carbs: 20, fat: 2, category: 'beans' },
+  { name: 'White Rice (1/2 cup)', calories: 103, protein: 2, carbs: 22, fat: 0.2, category: 'rice' },
+  { name: 'Brown Rice (1/2 cup)', calories: 108, protein: 2.5, carbs: 22, fat: 0.9, category: 'rice' },
   { name: 'Spanish Rice (1/2 cup)', calories: 100, protein: 2, carbs: 22, fat: 0.5, category: 'rice' },
   { name: 'Cilantro Lime Rice (1/2 cup)', calories: 110, protein: 2, carbs: 23, fat: 1, category: 'rice' },
   { name: 'Mexican Rice (1/2 cup)', calories: 105, protein: 2, carbs: 22, fat: 1, category: 'rice' },
