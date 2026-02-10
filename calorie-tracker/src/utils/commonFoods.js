@@ -3,6 +3,20 @@
 // Macros: protein, carbs, fat (in grams)
 
 export const commonFoods = [
+  // ⭐ Customizable Build-Your-Own Foods (appear first in search)
+  { name: 'Pizza (build your own)', calories: 200, protein: 8, carbs: 26, fat: 7, servingSize: '1 slice base', category: 'Pizza' },
+  { name: 'Salad (build your own)', calories: 10, protein: 0.5, carbs: 2, fat: 0, servingSize: 'base greens', category: 'Salads' },
+  { name: 'Smoothie (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Drinks' },
+  { name: 'Smoothie Bowl (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Breakfast' },
+  { name: 'Poke Bowl (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Bowls' },
+  { name: 'Buddha Bowl (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Bowls' },
+  { name: 'Grain Bowl (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Bowls' },
+  { name: 'Oatmeal (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Breakfast' },
+  { name: 'Breakfast Bowl (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Breakfast' },
+  { name: 'Taco (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Mexican' },
+  { name: 'Burrito (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Mexican' },
+  { name: 'Stir-Fry (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Asian' },
+
   // Proteins - Meat & Poultry (cooked only)
   { name: 'Chicken Breast (cooked)', calories: 195, protein: 35, carbs: 0, fat: 5, servingSize: '100g', category: 'Protein' },
   { name: 'Chicken Thigh (cooked)', calories: 247, protein: 28, carbs: 0, fat: 14, servingSize: '100g', category: 'Protein' },
@@ -2875,6 +2889,7 @@ export const foodsWithPastaToppings = [
 
 // Mark which foods support pizza toppings
 export const foodsWithPizzaToppings = [
+  'Pizza (build your own)',
   'Pizza (cheese, 1 slice)',
   'Pizza (margherita, 1 slice)',
   'Pizza (thin crust cheese, 1 slice)',
@@ -2882,6 +2897,7 @@ export const foodsWithPizzaToppings = [
 
 // Mark which foods support salad toppings
 export const foodsWithSaladToppings = [
+  'Salad (build your own)',
   'Garden Salad',
   'Caesar Salad (no dressing)',
   'Greek Salad (no dressing)',
@@ -2890,6 +2906,8 @@ export const foodsWithSaladToppings = [
 
 // Mark which foods support smoothie toppings
 export const foodsWithSmoothieToppings = [
+  'Smoothie (build your own)',
+  'Smoothie Bowl (build your own)',
   'Smoothie (base)',
   'Protein Smoothie',
   'Green Smoothie',
@@ -2907,6 +2925,8 @@ export const foodsWithBowlToppings = [
 
 // Mark which foods support oatmeal toppings
 export const foodsWithOatmealToppings = [
+  'Oatmeal (build your own)',
+  'Breakfast Bowl (build your own)',
   'Oatmeal (plain)',
   'Steel Cut Oats (plain)',
   'Overnight Oats (plain)',
