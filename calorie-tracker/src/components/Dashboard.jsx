@@ -748,6 +748,7 @@ export default function Dashboard({ onRefresh }) {
           carbsGoal={carbsGoal}
           fatGoal={fatGoal}
           isCustomGoals={usingCustomGoals}
+          fitnessGoal={profile.fitnessGoal}
           exerciseBurned={exerciseBurned}
         />
       )}

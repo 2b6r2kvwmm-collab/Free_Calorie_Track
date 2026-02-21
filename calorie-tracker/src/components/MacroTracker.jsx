@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { calculateMacroTargets } from '../utils/macros';
+import { calculateMacroTargets, GOAL_INFO } from '../utils/macros';
 import { calculateBMR, calculateTDEE } from '../utils/calculations';
 
 export default function MacroTracker({
@@ -11,6 +11,7 @@ export default function MacroTracker({
   carbsGoal,
   fatGoal,
   isCustomGoals = false,
+  fitnessGoal = null,
   exerciseBurned = 0
 }) {
   // Use provided goals if available (passed from Dashboard after recalculation)
@@ -18,15 +19,27 @@ export default function MacroTracker({
   if (proteinGoal && carbsGoal && fatGoal) {
     // Goals already calculated in Dashboard (handles custom goals AND manual adjustments)
     const totalCals = (proteinGoal * 4) + (carbsGoal * 4) + (fatGoal * 9);
-    const goalLabel = isCustomGoals ? 'Custom Goals' : 'Adjusted Goals';
+
+    // Determine goal label and explanation
+    let goalLabel, explanation;
+    if (isCustomGoals) {
+      goalLabel = 'Custom Goals';
+      explanation = 'Using your custom calorie and macro targets.';
+    } else if (fitnessGoal && GOAL_INFO[fitnessGoal]) {
+      // Use the fitness goal label even if macros were adjusted
+      goalLabel = GOAL_INFO[fitnessGoal].label;
+      explanation = GOAL_INFO[fitnessGoal].explanation;
+    } else {
+      goalLabel = 'Custom Goal';
+      explanation = 'Macro targets based on your calorie goal.';
+    }
+
     baseMacroTargets = {
       protein: proteinGoal,
       carbs: carbsGoal,
       fat: fatGoal,
       goalLabel: goalLabel,
-      explanation: isCustomGoals
-        ? 'Using your custom calorie and macro targets.'
-        : 'Macro targets adjusted for your manual calorie goal.',
+      explanation: explanation,
       breakdown: {
         proteinPercent: Math.round((proteinGoal * 4 / totalCals) * 100),
         carbPercent: Math.round((carbsGoal * 4 / totalCals) * 100),
