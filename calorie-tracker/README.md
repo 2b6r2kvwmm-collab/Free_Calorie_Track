@@ -207,3 +207,4 @@ Free to use and modify for personal projects.
 - Food data from [Open Food Facts](https://world.openfoodfacts.org/) (open database)
 - MET values from [Compendium of Physical Activities](https://sites.google.com/site/compendiumofphysicalactivities/)
 - BMR calculation using Mifflin-St Jeor Equation
+# Force redeploy
