@@ -12,18 +12,13 @@ import UserManager from './components/UserManager';
 import UpdateNotification from './components/UpdateNotification';
 
 function App() {
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState(getProfile());
   const [currentView, setCurrentView] = useState('dashboard');
   const [darkMode, setDarkMode] = useState(getDarkMode());
   const [refreshKey, setRefreshKey] = useState(0);
   const [showUserManager, setShowUserManager] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(getCurrentUserId());
   const [landingPageShown, setLandingPageShown] = useState(getLandingPageShown());
-
-  useEffect(() => {
-    const savedProfile = getProfile();
-    setProfile(savedProfile);
-  }, []);
 
   useEffect(() => {
     if (darkMode) {

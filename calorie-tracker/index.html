@@ -3,6 +3,24 @@
   <head>
     <meta charset="UTF-8" />
 
+    <!-- Prevent dark mode flash - must run before any rendering -->
+    <script>
+      (function() {
+        try {
+          const userId = localStorage.getItem('calorieTracker_currentUser') || 'default';
+          const darkModeKey = 'calorieTracker_' + userId + '_darkMode';
+          const darkMode = localStorage.getItem(darkModeKey);
+          // Default to dark mode if not set (darkMode === null)
+          if (darkMode === null || darkMode === 'true') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          // If localStorage fails, default to dark mode
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
     <!-- Content Security Policy - Removed meta tag to avoid conflict with vercel.json headers -->
 
     <!-- Google Fonts: Inter -->
