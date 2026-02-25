@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
+import InstallPrompt from './components/InstallPrompt';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
 import Trends from './components/Trends';
@@ -19,6 +20,7 @@ function App() {
   const [showUserManager, setShowUserManager] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(getCurrentUserId());
   const [landingPageShown, setLandingPageShown] = useState(getLandingPageShown());
+  const [installPromptShown, setInstallPromptShown] = useState(getInstallPromptShown());
 
   useEffect(() => {
     if (darkMode) {
@@ -59,6 +61,15 @@ function App() {
       <LandingPage onGetStarted={() => {
         markLandingPageShown();
         setLandingPageShown(true);
+      }} />
+    );
+  }
+
+  if (!installPromptShown && !profile) {
+    return (
+      <InstallPrompt onContinue={() => {
+        markInstallPromptShown();
+        setInstallPromptShown(true);
       }} />
     );
   }

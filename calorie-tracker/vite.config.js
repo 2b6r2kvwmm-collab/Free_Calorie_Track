@@ -18,9 +18,9 @@ export default defineConfig({
       },
       injectRegister: 'auto',
       manifest: {
-        name: 'Calorie Tracker',
-        short_name: 'Calories',
-        description: 'Track your net calories - food eaten minus calories burned',
+        name: 'Free Calorie Track',
+        short_name: 'Free Calorie Track',
+        description: 'Free calorie and macro tracker with barcode scanning, trends, and offline support',
         theme_color: '#10b981',
         background_color: '#ffffff',
         display: 'standalone',

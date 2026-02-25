@@ -3,6 +3,15 @@
   <head>
     <meta charset="UTF-8" />
 
+    <!-- Prevent visual flash - critical CSS must load before any rendering -->
+    <style>
+      /* Set background immediately to match dark mode default */
+      html { background-color: #111827; }
+      html.dark { background-color: #111827; }
+      html:not(.dark) { background-color: #ffffff; }
+      body { margin: 0; background-color: inherit; }
+    </style>
+
     <!-- Prevent dark mode flash - must run before any rendering -->
     <script>
       (function() {
@@ -332,79 +341,6 @@
       .dark .footer-divider {
         background-color: #374151;
       }
-
-      /* iOS Popup Styles */
-      .ios-prompt {
-        display: none;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: white;
-        padding: 20px;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        z-index: 9999;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        box-sizing: border-box;
-        text-align: center;
-        border-top: 1px solid #eee;
-        padding-bottom: 40px;
-      }
-      .ios-prompt p {
-        margin: 0 0 15px 0;
-        color: #333;
-        font-size: 15px;
-        line-height: 1.4;
-      }
-      .ios-prompt .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        color: #999;
-        cursor: pointer;
-        background: none;
-        border: none;
-        padding: 0;
-        line-height: 1;
-      }
-
-      /* Desktop Install Banner */
-      .desktop-install-banner {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-        color: white;
-        padding: 12px 20px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-        z-index: 9999;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        box-sizing: border-box;
-        text-align: center;
-        font-size: 14px;
-      }
-      .desktop-install-banner .close-btn {
-        position: absolute;
-        top: 8px;
-        right: 15px;
-        font-size: 22px;
-        color: white;
-        cursor: pointer;
-        background: none;
-        border: none;
-        padding: 0;
-        line-height: 1;
-        opacity: 0.9;
-      }
-      .desktop-install-banner .close-btn:hover {
-        opacity: 1;
-      }
-      .desktop-install-banner strong {
-        font-weight: 600;
-      }
     </style>
   </head>
   <body>
@@ -484,22 +420,5 @@
         </div>
       </div>
     </div>
-    <div id="ios-install-prompt" class="ios-prompt">
-      <button class="close-btn" id="ios-close-btn">×</button>
-      <p><strong>Install as an App:</strong></p>
-      <p>1. Tap the <strong>Share</strong> icon <span style="font-size:20px">⎋</span> below.<br>
-      2. Select <strong>"Add to Home Screen"</strong> <span style="font-size:20px">⊞</span>.</p>
-    </div>
-
-    <div id="desktop-install-banner" class="desktop-install-banner">
-      <button class="close-btn" id="desktop-close-btn">×</button>
-      <p style="margin: 0;">
-        📱 <strong>Install this app on your phone</strong> for the best experience!
-        Open this page on your mobile device and add it to your home screen.
-      </p>
-    </div>
-
-    <!-- Load install prompt logic from external file for CSP compliance -->
-    <script src="/install-prompt.js"></script>
     </body>
 </html>

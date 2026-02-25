@@ -468,6 +468,15 @@ export function markLandingPageShown() {
   setData('landingPageShown', true);
 }
 
+// Install prompt - shown after landing page
+export function getInstallPromptShown() {
+  return getData('installPromptShown') === true;
+}
+
+export function markInstallPromptShown() {
+  setData('installPromptShown', true);
+}
+
 // Milestone tracking - { days60: true, days180: false, days365: false }
 export function getMilestonesShown() {
   return getData(STORAGE_KEYS.MILESTONES_SHOWN) || {

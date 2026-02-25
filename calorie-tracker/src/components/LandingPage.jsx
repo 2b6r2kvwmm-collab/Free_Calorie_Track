@@ -170,9 +170,10 @@ const HOMESCREEN_STEPS = [
   {
     platform: 'iPhone — Safari',
     steps: [
-      'Tap the Share button (box with an arrow pointing up) at the bottom center of the screen.',
-      'Scroll down in the menu that appears and tap "Add to Home Screen."',
-      'Tap "Add" in the top right to confirm.',
+      'Tap the three-dot menu (...) then tap the Share button (⬆︎).',
+      'Tap "View More" and then "Add to Home Screen."',
+      'If you don\'t see "Add to Home Screen", scroll to "Edit Actions" and add it.',
+      'All set! Now you can find Free Calorie Track on your phone like any other app.',
     ],
   },
   {
@@ -186,8 +187,10 @@ const HOMESCREEN_STEPS = [
   {
     platform: 'iPhone — Firefox',
     steps: [
-      'Tap the three-line menu at the bottom of the screen.',
-      'Tap "Add to Home Screen."',
+      'Tap the three-dot menu (...) at the bottom of the screen.',
+      'Tap "More" then "Share."',
+      'Tap "View More" if needed, then "Add to Home Screen."',
+      'All set! Now you can find Free Calorie Track on your phone like any other app.',
     ],
   },
   {
@@ -205,11 +208,27 @@ const HOMESCREEN_STEPS = [
     ],
   },
   {
-    platform: 'Desktop — Chrome or Edge',
+    platform: 'Mac — Safari',
     steps: [
-      'Look for a small install icon in the address bar (a monitor or download arrow).',
-      'If it\'s not there, open the three-dot menu and look for "Install Free Calorie Track."',
-      'Safari on Mac does not support PWA install, but the app works fully in the browser tab.',
+      'In Safari\'s menu bar, go to File → Add to Dock.',
+      'Edit the name if desired, then click "Add."',
+      'The app will appear in your Applications folder and Dock.',
+    ],
+  },
+  {
+    platform: 'Desktop — Chrome',
+    steps: [
+      'Look for a small install icon in the address bar (⊕ or a monitor icon).',
+      'Click it to install, or open the three-dot menu and select "Install Free Calorie Track."',
+      'The app will open in its own window and appear in your applications.',
+    ],
+  },
+  {
+    platform: 'Desktop — Edge',
+    steps: [
+      'Look for the app icon (⊕) in the address bar and click it.',
+      'Or open the three-dot menu → Apps → "Install this site as an app."',
+      'The app will appear in your Start Menu and taskbar like any native app.',
     ],
   },
 ];
