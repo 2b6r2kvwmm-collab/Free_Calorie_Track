@@ -326,6 +326,8 @@ function FAQAccordion({ sections }) {
 export default function LandingPage({ onGetStarted }) {
   // Hide the universal footer from index.html when landing page is shown
   useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top on mount
+
     const footer = document.querySelector('.app-footer');
     if (footer) {
       footer.style.display = 'none';

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FITNESS_GOALS, GOAL_INFO } from '../utils/macros';
 import { saveCustomMacros, clearCustomMacros, saveCustomCalorieGoal, clearCustomCalorieGoal } from '../utils/storage';
 import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
@@ -16,6 +16,11 @@ export default function ProfileSetup({ onComplete }) {
     unit: 'imperial', // metric or imperial
     fitnessGoal: FITNESS_GOALS.MAINTENANCE,
   });
+
+  useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

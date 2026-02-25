@@ -71,6 +71,7 @@ export default function Dashboard({ onRefresh }) {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top on mount
     loadEntries();
   }, []);
 

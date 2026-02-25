@@ -47,11 +47,41 @@ function InstallPrompt({ onContinue }) {
   const [isMobile, setIsMobile] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [canAutoInstall, setCanAutoInstall] = useState(false);
+  const [browserInstructions, setBrowserInstructions] = useState(null);
 
   useEffect(() => {
-    // Detect if user is on mobile device
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+
+    const ua = navigator.userAgent.toLowerCase();
+
+    // Detect mobile
     const checkMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     setIsMobile(checkMobile);
+
+    // Detect specific browser and set appropriate instructions
+    let instructions = null;
+
+    if (/iphone|ipad|ipod/.test(ua)) {
+      // iOS device - detect browser
+      if (/crios/.test(ua)) {
+        instructions = HOMESCREEN_STEPS.find(s => s.platform === 'iPhone — Chrome');
+      } else if (/fxios/.test(ua)) {
+        instructions = HOMESCREEN_STEPS.find(s => s.platform === 'iPhone — Firefox');
+      } else {
+        // Default to Safari on iOS
+        instructions = HOMESCREEN_STEPS.find(s => s.platform === 'iPhone — Safari');
+      }
+    } else if (/android/.test(ua)) {
+      // Android device
+      if (/chrome/.test(ua) && !/edg/.test(ua)) {
+        instructions = HOMESCREEN_STEPS.find(s => s.platform === 'Android — Chrome');
+      } else {
+        instructions = HOMESCREEN_STEPS.find(s => s.platform === 'Android — Other browsers');
+      }
+    }
+
+    setBrowserInstructions(instructions);
 
     // Listen for beforeinstallprompt event (Chrome/Edge on Android/Desktop)
     const handleBeforeInstall = (e) => {
@@ -183,25 +213,31 @@ function InstallPrompt({ onContinue }) {
                   One-click install available on your browser
                 </p>
               </div>
+            ) : browserInstructions ? (
+              /* Show instructions for detected browser only */
+              <div className="mb-8">
+                <div className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-5">
+                  <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide mb-3"
+                     style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+                    {browserInstructions.platform}
+                  </p>
+                  <ol className="list-decimal list-inside space-y-2">
+                    {browserInstructions.steps.map((step, sIdx) => (
+                      <li key={sIdx} className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
+                          style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+                        {step}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
             ) : (
-              /* Show manual instructions for Safari/Firefox */
-              <div className="space-y-6 mb-8">
-                {HOMESCREEN_STEPS.map((group, idx) => (
-                  <div key={idx} className="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4">
-                    <p className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide mb-3"
-                       style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-                      {group.platform}
-                    </p>
-                    <ol className="list-decimal list-inside space-y-2">
-                      {group.steps.map((step, sIdx) => (
-                        <li key={sIdx} className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
-                            style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-                          {step}
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                ))}
+              /* Fallback if browser not detected - show generic message */
+              <div className="mb-8 bg-gray-50 dark:bg-gray-900/50 rounded-xl p-5">
+                <p className="text-sm text-gray-700 dark:text-gray-300 text-center"
+                   style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+                  Look for "Add to Home Screen" or "Install" in your browser menu.
+                </p>
               </div>
             )}
 
