@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const FAQ_SECTIONS = [
   {
@@ -518,6 +519,9 @@ export default function LandingPage({ onGetStarted }) {
 
           {/* Links */}
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+              Blog
+            </Link>
             <a href="/privacy-policy.html" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
               Privacy Policy
             </a>

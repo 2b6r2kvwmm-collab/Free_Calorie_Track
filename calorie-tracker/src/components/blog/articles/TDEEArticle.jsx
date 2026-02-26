@@ -1,10 +1,18 @@
 import BlogLayout from '../BlogLayout';
+import SEO from '../../SEO';
 import TDEECalculator from '../TDEECalculator';
 import { Link } from 'react-router-dom';
 
 export default function TDEEArticle() {
   return (
     <BlogLayout>
+      <SEO
+        title="How to Calculate Your TDEE (Total Daily Energy Expenditure)"
+        description="Learn how to calculate your TDEE using the Mifflin-St Jeor equation and understand what it means for your calorie goals."
+        keywords={['TDEE calculator', 'how to calculate TDEE', 'what is TDEE', 'total daily energy expenditure']}
+        url="/blog/how-to-calculate-tdee"
+        image="https://freecalorietrack.com/images/blog/tdee-calculator.webp"
+      />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
         <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">Blog</Link>

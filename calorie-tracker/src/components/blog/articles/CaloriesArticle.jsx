@@ -1,9 +1,17 @@
 import BlogLayout from '../BlogLayout';
+import SEO from '../../SEO';
 import { Link } from 'react-router-dom';
 
 export default function CaloriesArticle() {
   return (
     <BlogLayout>
+      <SEO
+        title="What Are Calories? A Complete Guide to Calorie Tracking"
+        description="Learn what calories actually are, how calorie tracking works, and why it's the most effective method for weight management."
+        keywords={['what are calories', 'calorie tracking', 'how calorie tracking works', 'calories explained']}
+        url="/blog/what-are-calories"
+        image="https://freecalorietrack.com/images/blog/calories-guide.webp"
+      />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
         <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">Blog</Link>

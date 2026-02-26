@@ -1,9 +1,17 @@
 import BlogLayout from '../BlogLayout';
+import SEO from '../../SEO';
 import { Link } from 'react-router-dom';
 
 export default function MacrosArticle() {
   return (
     <BlogLayout>
+      <SEO
+        title="What Are Macros? Understanding Macronutrients"
+        description="Learn what macronutrients (protein, carbs, and fat) are, what they do in your body, and why tracking them matters."
+        keywords={['what are macros', 'macronutrients explained', 'protein carbs fat', 'why track macros']}
+        url="/blog/what-are-macros"
+        image="https://freecalorietrack.com/images/blog/macros-guide.webp"
+      />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
         <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">Blog</Link>

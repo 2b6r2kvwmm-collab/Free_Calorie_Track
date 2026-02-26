@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import SEO from '../SEO';
 import BlogLayout from './BlogLayout';
 import { blogPosts } from './blogPosts';
 
@@ -26,6 +27,13 @@ export default function BlogHome() {
 
   return (
     <BlogLayout>
+      <SEO
+        title="Blog - Guides, Calculators & Gear Reviews"
+        description="Free guides on calorie tracking, macros, TDEE, and honest reviews of fitness gear including blenders and adjustable dumbbells."
+        keywords={['calorie tracking guide', 'macro calculator', 'TDEE calculator', 'fitness gear reviews', 'adjustable dumbbells review', 'blender review']}
+        url="/blog"
+        type="website"
+      />
       {/* Categories */}
       <div className="mb-8 flex flex-wrap gap-3" role="group" aria-label="Filter articles by category">
         {categories.map((category) => (

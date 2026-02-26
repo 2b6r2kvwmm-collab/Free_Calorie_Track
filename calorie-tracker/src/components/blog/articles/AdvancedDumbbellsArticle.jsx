@@ -1,9 +1,17 @@
 import BlogLayout from '../BlogLayout';
+import SEO from '../../SEO';
 import { Link } from 'react-router-dom';
 
 export default function AdvancedDumbbellsArticle() {
   return (
     <BlogLayout>
+      <SEO
+        title="Best Adjustable Dumbbells for Intermediate to Advanced Lifters"
+        description="The best heavy-duty adjustable dumbbells that go up to 80 lbs—perfect for serious lifters who need more weight."
+        keywords={['best heavy dumbbells', 'adjustable dumbbells 80 lbs', 'advanced adjustable dumbbells', 'heavy duty dumbbells', 'home gym equipment']}
+        url="/blog/best-adjustable-dumbbells-advanced"
+        image="https://freecalorietrack.com/images/blog/nuobell-dumbbells.webp"
+      />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
         <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">Blog</Link>

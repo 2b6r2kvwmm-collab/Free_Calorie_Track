@@ -1,10 +1,18 @@
 import BlogLayout from '../BlogLayout';
+import SEO from '../../SEO';
 import MacroCalculator from '../MacroCalculator';
 import { Link } from 'react-router-dom';
 
 export default function MacroArticle() {
   return (
     <BlogLayout>
+      <SEO
+        title="Macro Calculator: Find Your Protein, Carbs, and Fat Goals"
+        description="Use our free macro calculator to find your optimal protein, carbohydrate, and fat intake based on your goals."
+        keywords={['macro calculator', 'how to calculate macros', 'macros for weight loss', 'protein carbs fat ratio']}
+        url="/blog/macro-calculator-guide"
+        image="https://freecalorietrack.com/images/blog/macro-calculator.webp"
+      />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
         <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">Blog</Link>

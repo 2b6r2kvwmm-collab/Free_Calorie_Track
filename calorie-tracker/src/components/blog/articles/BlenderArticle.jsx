@@ -1,9 +1,17 @@
 import BlogLayout from '../BlogLayout';
+import SEO from '../../SEO';
 import { Link } from 'react-router-dom';
 
 export default function BlenderArticle() {
   return (
     <BlogLayout>
+      <SEO
+        title="NutriBullet Pro 900 Review: 2 Years of Daily Use"
+        description="My honest review of the NutriBullet Pro 900 after using it daily for 2+ years to make protein shakes and smoothies. Best blender for protein shakes."
+        keywords={['NutriBullet Pro 900 review', 'best blender for protein shakes', 'smoothie blender review', 'NutriBullet review']}
+        url="/blog/best-blenders-for-protein-shakes"
+        image="https://freecalorietrack.com/images/blog/nutribullet-pro-900.webp"
+      />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
         <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">Blog</Link>

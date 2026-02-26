@@ -1,9 +1,17 @@
 import BlogLayout from '../BlogLayout';
+import SEO from '../../SEO';
 import { Link } from 'react-router-dom';
 
 export default function CoreFitnessDumbbellsArticle() {
   return (
     <BlogLayout>
+      <SEO
+        title="Best Adjustable Dumbbells for Beginners and Intermediate Lifters"
+        description="My review of the Core Fitness Adjustable Dumbbells—the perfect space-saving weight set with a twist-to-select mechanism (5-50 lbs)."
+        keywords={['best adjustable dumbbells', 'adjustable dumbbells review', 'Core Fitness dumbbells', 'home gym dumbbells', 'space saving dumbbells']}
+        url="/blog/best-adjustable-dumbbells-beginners"
+        image="https://freecalorietrack.com/images/blog/core-fitness-dumbbells.webp"
+      />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">
         <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400">Blog</Link>
