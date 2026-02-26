@@ -13,22 +13,7 @@
     </style>
 
     <!-- Prevent dark mode flash - must run before any rendering -->
-    <script>
-      (function() {
-        try {
-          const userId = localStorage.getItem('calorieTracker_currentUser') || 'default';
-          const darkModeKey = 'calorieTracker_' + userId + '_darkMode';
-          const darkMode = localStorage.getItem(darkModeKey);
-          // Default to dark mode if not set (darkMode === null)
-          if (darkMode === null || darkMode === 'true') {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (e) {
-          // If localStorage fails, default to dark mode
-          document.documentElement.classList.add('dark');
-        }
-      })();
-    </script>
+    <script src="/dark-mode-init.js"></script>
 
     <!-- Content Security Policy - Removed meta tag to avoid conflict with vercel.json headers -->
 
@@ -396,7 +381,7 @@
           <a href="https://amzn.to/4qU7fJY" target="_blank" rel="noopener noreferrer" class="footer-link">
             💪 Favorite Adjustable Dumbbells
           </a>
-          <a href="https://amzn.to/3Mc65KN" target="_blank" rel="noopener noreferrer" class="footer-link">
+          <a href="https://amzn.to/3P38ZCB" target="_blank" rel="noopener noreferrer" class="footer-link">
             🥤 Favorite Smoothie & Protein Blender
           </a>
         </div>

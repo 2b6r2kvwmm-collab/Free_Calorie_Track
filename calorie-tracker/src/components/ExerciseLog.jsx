@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { exercises, calculateExerciseCalories, calculateWeightedVestMET, getRunningMET, getCyclingMET, calculatePace } from '../utils/calculations';
-import { getProfile, addExerciseEntry, getImportInstructionsDismissed, getImportDisclaimerAccepted, saveImportDisclaimerAccepted } from '../utils/storage';
+import { getProfile, addExerciseEntry } from '../utils/storage';
 import WorkoutTemplates from './WorkoutTemplates';
 import { trackWorkout } from '../utils/gamification';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
-import ImportDisclaimerModal from './ImportDisclaimerModal';
-import ImportInstructionsModal from './ImportInstructionsModal';
-import WorkoutImporter from './WorkoutImporter';
 
 // Helper function to calculate weighted vest calorie multiplier
 function getVestCalorieMultiplier(vestWeight) {
@@ -37,9 +34,6 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [walkingDistance, setWalkingDistance] = useState('');
   const [walkingDistanceUnit, setWalkingDistanceUnit] = useState('miles');
   const [showWorkoutTemplates, setShowWorkoutTemplates] = useState(false);
-  const [showImportDisclaimer, setShowImportDisclaimer] = useState(false);
-  const [showImportInstructions, setShowImportInstructions] = useState(false);
-  const [showWorkoutImporter, setShowWorkoutImporter] = useState(false);
   const scrollRef = useRef(null);
 
   const profile = getProfile();
@@ -203,48 +197,6 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
     onClose();
   };
 
-  // Handle import workouts button click
-  const handleImportClick = () => {
-    // Check if user has accepted legal disclaimer first
-    const disclaimerAccepted = getImportDisclaimerAccepted();
-    if (!disclaimerAccepted) {
-      setShowImportDisclaimer(true);
-      return;
-    }
-
-    // Then check if user has seen instructions
-    const instructionsDismissed = getImportInstructionsDismissed();
-    if (instructionsDismissed) {
-      setShowWorkoutImporter(true);
-    } else {
-      setShowImportInstructions(true);
-    }
-  };
-
-  // Handle disclaimer acceptance
-  const handleDisclaimerAccept = () => {
-    saveImportDisclaimerAccepted(true);
-    setShowImportDisclaimer(false);
-
-    // After accepting disclaimer, show instructions or importer
-    const instructionsDismissed = getImportInstructionsDismissed();
-    if (instructionsDismissed) {
-      setShowWorkoutImporter(true);
-    } else {
-      setShowImportInstructions(true);
-    }
-  };
-
-  // Handle disclaimer decline
-  const handleDisclaimerDecline = () => {
-    setShowImportDisclaimer(false);
-    // Don't save acceptance, so they'll see it again next time
-  };
-
-  // Handle import complete
-  const handleImportComplete = () => {
-    if (onRefresh) onRefresh();
-  };
 
   // Show workout templates modal
   if (showWorkoutTemplates) {
@@ -261,22 +213,13 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       <div className="card max-w-2xl w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto" ref={scrollRef}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Log Exercise</h2>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleImportClick}
-              className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-semibold text-sm flex items-center gap-1"
-              aria-label="Import workouts from file"
-            >
-              📥 Import
-            </button>
-            <button
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-3xl font-bold"
-              aria-label="Close exercise log"
-            >
-              ×
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 text-3xl font-bold"
+            aria-label="Close exercise log"
+          >
+            ×
+          </button>
         </div>
 
         {!selectedExercise ? (
@@ -683,28 +626,6 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
         )}
       </div>
 
-      {/* Import Disclaimer Modal */}
-      <ImportDisclaimerModal
-        isOpen={showImportDisclaimer}
-        onAccept={handleDisclaimerAccept}
-        onDecline={handleDisclaimerDecline}
-      />
-
-      {/* Import Instructions Modal */}
-      <ImportInstructionsModal
-        isOpen={showImportInstructions}
-        onClose={() => {
-          setShowImportInstructions(false);
-          setShowWorkoutImporter(true);
-        }}
-      />
-
-      {/* Workout Importer Modal */}
-      <WorkoutImporter
-        isOpen={showWorkoutImporter}
-        onClose={() => setShowWorkoutImporter(false)}
-        onComplete={handleImportComplete}
-      />
     </div>
   );
 }

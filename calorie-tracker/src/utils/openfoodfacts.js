@@ -1,6 +1,31 @@
 // Open Food Facts API utilities
 
 const API_BASE = 'https://world.openfoodfacts.org';
+const MAX_RESPONSE_SIZE = 2 * 1024 * 1024; // 2MB limit for API responses
+
+/**
+ * Validates response size to prevent memory issues from oversized responses
+ * @param {Response} response - Fetch API response object
+ * @returns {Promise<Object>} - Parsed JSON if valid
+ * @throws {Error} - If response is too large
+ */
+async function validateAndParseResponse(response) {
+  const contentLength = response.headers.get('content-length');
+
+  // Check content-length header if available
+  if (contentLength && parseInt(contentLength) > MAX_RESPONSE_SIZE) {
+    throw new Error('Response size exceeds limit');
+  }
+
+  // Read response as text first to check size
+  const text = await response.text();
+
+  if (text.length > MAX_RESPONSE_SIZE) {
+    throw new Error('Response size exceeds limit');
+  }
+
+  return JSON.parse(text);
+}
 
 export async function searchFoods(query) {
   try {
@@ -12,7 +37,7 @@ export async function searchFoods(query) {
       throw new Error('Search failed');
     }
 
-    const data = await response.json();
+    const data = await validateAndParseResponse(response);
 
     return data.products.map(product => {
       const nutriments = product.nutriments || {};
@@ -66,7 +91,7 @@ export async function getFoodByBarcode(barcode) {
       throw new Error('Barcode lookup failed');
     }
 
-    const data = await response.json();
+    const data = await validateAndParseResponse(response);
 
     if (data.status === 0) {
       return null; // Product not found

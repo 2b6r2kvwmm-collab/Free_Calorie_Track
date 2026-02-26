@@ -9,6 +9,8 @@ export default function FoodSearch({ onAddFood, onClose }) {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const scrollRef = useRef(null);
+  const lastSearchTime = useRef(0);
+  const SEARCH_COOLDOWN = 500; // 500ms minimum between searches
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -29,6 +31,14 @@ export default function FoodSearch({ onAddFood, onClose }) {
     e.preventDefault();
     if (!query.trim()) return;
 
+    // Rate limiting: prevent searches more frequent than cooldown period
+    const now = Date.now();
+    const timeSinceLastSearch = now - lastSearchTime.current;
+    if (timeSinceLastSearch < SEARCH_COOLDOWN) {
+      return; // Ignore rapid successive searches
+    }
+
+    lastSearchTime.current = now;
     setLoading(true);
     setSearched(true);
     const foods = await searchFoods(query);

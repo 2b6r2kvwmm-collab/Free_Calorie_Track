@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
@@ -11,8 +12,19 @@ import History from './components/History';
 import Settings from './components/Settings';
 import UserManager from './components/UserManager';
 import UpdateNotification from './components/UpdateNotification';
+import BlogHome from './components/blog/BlogHome';
+import CaloriesArticle from './components/blog/articles/CaloriesArticle';
+import MacrosArticle from './components/blog/articles/MacrosArticle';
+import TDEEArticle from './components/blog/articles/TDEEArticle';
+import BlenderArticle from './components/blog/articles/BlenderArticle';
+import MacroArticle from './components/blog/articles/MacroArticle';
+import CoreFitnessDumbbellsArticle from './components/blog/articles/CoreFitnessDumbbellsArticle';
+import AdvancedDumbbellsArticle from './components/blog/articles/AdvancedDumbbellsArticle';
 
 function App() {
+  const location = useLocation();
+  const isBlogRoute = location.pathname.startsWith('/blog');
+
   const [profile, setProfile] = useState(getProfile());
   const [currentView, setCurrentView] = useState('dashboard');
   const [darkMode, setDarkMode] = useState(getDarkMode());
@@ -56,6 +68,23 @@ function App() {
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';
 
+  // Blog routes - render independently of app state
+  if (isBlogRoute) {
+    return (
+      <Routes>
+        <Route path="/blog" element={<BlogHome />} />
+        <Route path="/blog/what-are-calories" element={<CaloriesArticle />} />
+        <Route path="/blog/what-are-macros" element={<MacrosArticle />} />
+        <Route path="/blog/how-to-calculate-tdee" element={<TDEEArticle />} />
+        <Route path="/blog/best-blenders-for-protein-shakes" element={<BlenderArticle />} />
+        <Route path="/blog/macro-calculator-guide" element={<MacroArticle />} />
+        <Route path="/blog/best-adjustable-dumbbells-beginners" element={<CoreFitnessDumbbellsArticle />} />
+        <Route path="/blog/best-adjustable-dumbbells-advanced" element={<AdvancedDumbbellsArticle />} />
+      </Routes>
+    );
+  }
+
+  // App routes
   if (!landingPageShown && !profile) {
     return (
       <LandingPage onGetStarted={() => {

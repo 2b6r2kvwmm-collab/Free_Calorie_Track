@@ -1,9 +1,11 @@
 import { useState, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getMealTypeEnabled, saveMealTypeEnabled, calculateUserStats } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
 import { handleExport } from '../utils/backupExport';
+import { sanitizeObject } from '../utils/sanitize';
 import ConfirmationModal from './ConfirmationModal';
 
 export default function Settings({ onUpdateProfile, onClose }) {
@@ -135,20 +137,20 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
     const importData = pendingImportData;
 
-    // Import each data type
-    if (importData.profile) setData('profile', importData.profile);
-    if (importData.foodLog) setData('foodLog', importData.foodLog);
-    if (importData.exerciseLog) setData('exerciseLog', importData.exerciseLog);
-    if (importData.favorites) setData('favorites', importData.favorites);
-    if (importData.recentFoods) setData('recentFoods', importData.recentFoods);
+    // Sanitize all imported data to prevent XSS attacks
+    if (importData.profile) setData('profile', sanitizeObject(importData.profile));
+    if (importData.foodLog) setData('foodLog', sanitizeObject(importData.foodLog));
+    if (importData.exerciseLog) setData('exerciseLog', sanitizeObject(importData.exerciseLog));
+    if (importData.favorites) setData('favorites', sanitizeObject(importData.favorites));
+    if (importData.recentFoods) setData('recentFoods', sanitizeObject(importData.recentFoods));
     if (importData.dailyGoal !== undefined) setData('dailyGoal', importData.dailyGoal);
-    if (importData.weightLog) setData('weightLog', importData.weightLog);
+    if (importData.weightLog) setData('weightLog', sanitizeObject(importData.weightLog));
     if (importData.darkMode !== undefined) setData('darkMode', importData.darkMode);
-    if (importData.customFoods) setData('customFoods', importData.customFoods);
+    if (importData.customFoods) setData('customFoods', sanitizeObject(importData.customFoods));
     if (importData.customMacros) setData('customMacros', importData.customMacros);
     if (importData.waterLog) setData('waterLog', importData.waterLog);
     if (importData.waterUnit) setData('waterUnit', importData.waterUnit);
-    if (importData.workoutTemplates) setData('workoutTemplates', importData.workoutTemplates);
+    if (importData.workoutTemplates) setData('workoutTemplates', sanitizeObject(importData.workoutTemplates));
 
     setShowImportConfirm(false);
     setPendingImportData(null);
@@ -171,6 +173,34 @@ export default function Settings({ onUpdateProfile, onClose }) {
         // Validate the data structure
         if (!importData.profile || !importData.version) {
           setImportMessage('Error: Invalid backup file format');
+          setTimeout(() => setImportMessage(''), 5000);
+          return;
+        }
+
+        // Validate profile structure
+        if (typeof importData.profile !== 'object' ||
+            !importData.profile.age ||
+            !importData.profile.sex ||
+            !importData.profile.height ||
+            !importData.profile.weight) {
+          setImportMessage('Error: Invalid profile data in backup file');
+          setTimeout(() => setImportMessage(''), 5000);
+          return;
+        }
+
+        // Validate arrays are actually arrays
+        if (importData.foodLog && !Array.isArray(importData.foodLog)) {
+          setImportMessage('Error: Invalid food log data');
+          setTimeout(() => setImportMessage(''), 5000);
+          return;
+        }
+        if (importData.exerciseLog && !Array.isArray(importData.exerciseLog)) {
+          setImportMessage('Error: Invalid exercise log data');
+          setTimeout(() => setImportMessage(''), 5000);
+          return;
+        }
+        if (importData.weightLog && !Array.isArray(importData.weightLog)) {
+          setImportMessage('Error: Invalid weight log data');
           setTimeout(() => setImportMessage(''), 5000);
           return;
         }
@@ -637,7 +667,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                       Free Calorie Track has no ads, no paywalls, and no premium tiers.
                     </p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Everything is free forever. If you find this useful, consider supporting it with a small donation to keep it free for everyone.
+                      If you find this useful, consider supporting it with a small donation to keep it free for everyone.
                     </p>
                   </>
                 )}
@@ -655,6 +685,16 @@ export default function Settings({ onUpdateProfile, onClose }) {
         >
           Chip in $5
         </a>
+
+        {/* Subtle link to gear reviews */}
+        <p className="text-center mt-3">
+          <Link
+            to="/blog?category=Gear+Reviews"
+            className="text-xs text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+          >
+            Gear recommendations →
+          </Link>
+        </p>
       </div>
 
       {/* Share Section */}
