@@ -95,7 +95,7 @@ Add JSON-LD structured data to blog articles for rich snippets:
   "image": "https://freecalorietrack.com/images/blog/image.webp",
   "author": {
     "@type": "Person",
-    "name": "Griffin"
+    "name": "FCT Staff"
   },
   "publisher": {
     "@type": "Organization",
@@ -120,7 +120,7 @@ Add JSON-LD structured data to blog articles for rich snippets:
   },
   "author": {
     "@type": "Person",
-    "name": "Griffin"
+    "name": "FCT Staff"
   },
   "reviewRating": {
     "@type": "Rating",

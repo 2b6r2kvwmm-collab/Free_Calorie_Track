@@ -7,7 +7,7 @@ export default function SEO({
   image = 'https://freecalorietrack.com/og-image.png',
   url,
   type = 'article',
-  author = 'Griffin',
+  author = 'FCT Staff',
   skipSiteName = false
 }) {
   // For blog articles, skip site name suffix to keep titles under 60 chars
