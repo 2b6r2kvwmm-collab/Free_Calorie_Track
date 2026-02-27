@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from './SEO';
 
 const FAQ_SECTIONS = [
   {
@@ -341,7 +342,15 @@ export default function LandingPage({ onGetStarted }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <>
+      <SEO
+        title="Free Calorie & Macro Tracker | No Paywalls, No Ads"
+        description="Track calories, protein, carbs, fat with barcode scanning, thousands of foods, exercise logging, and trends. No account required, no ads, works offline. Built by someone who actually tracks."
+        keywords={['free calorie tracker', 'free macro tracker', 'calorie counter no subscription', 'free barcode scanner nutrition', 'myfitnesspal alternative free', 'no account calorie tracker', 'offline calorie tracker', 'privacy calorie app', 'free protein tracker', 'free carb tracker', 'free fat tracker']}
+        url="/"
+        type="website"
+      />
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Hero */}
       <div className="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto">
@@ -538,5 +547,6 @@ export default function LandingPage({ onGetStarted }) {
       </div>
 
     </div>
+    </>
   );
 }
