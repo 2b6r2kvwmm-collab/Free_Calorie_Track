@@ -345,7 +345,7 @@ export default function LandingPage({ onGetStarted }) {
     <>
       <SEO
         title="Free Calorie & Macro Tracker | No Paywalls, No Ads"
-        description="Track calories, protein, carbs, fat with barcode scanning, thousands of foods, exercise logging, and trends. No account required, no ads, works offline. Built by someone who actually tracks."
+        description="Track calories, protein, carbs & fat with barcode scanning, exercise logging, and trends. No account required, no ads, works offline—truly free."
         keywords={['free calorie tracker', 'free macro tracker', 'calorie counter no subscription', 'free barcode scanner nutrition', 'myfitnesspal alternative free', 'no account calorie tracker', 'offline calorie tracker', 'privacy calorie app', 'free protein tracker', 'free carb tracker', 'free fat tracker']}
         url="/"
         type="website"
