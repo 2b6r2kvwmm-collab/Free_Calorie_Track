@@ -38,7 +38,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Why is this app free when others charge for the same features?',
-        a: 'Free Calorie Track is a single-developer project with no investors, no ad network, and no company overhead to fund. It runs as a Progressive Web App, which means no app store fees. It\'s kept alive by optional donations from people who find it useful. The goal was never to build a business — it was to build the calorie tracker that the developer wished existed.',
+        a: 'Free Calorie Track is funded by optional donations, not by investors or advertising. It runs as a Progressive Web App, which means no app store fees or middlemen. The goal was to build a calorie tracker that respects your privacy and doesn\'t gate features behind paywalls.',
       },
       {
         q: 'Is a free calorie tracker as good as a paid one?',
@@ -541,7 +541,7 @@ export default function LandingPage({ onGetStarted }) {
 
           {/* Copyright */}
           <p className="text-center text-xs text-gray-500 dark:text-gray-500">
-            © {new Date().getFullYear()} Free Calorie Track. All rights reserved.
+            © {new Date().getFullYear()} Unexpectable LLC. All rights reserved.
           </p>
         </div>
       </div>
