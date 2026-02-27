@@ -12,6 +12,7 @@ export default function TDEEArticle() {
         keywords={['TDEE calculator', 'how to calculate TDEE', 'what is TDEE', 'total daily energy expenditure']}
         url="/blog/how-to-calculate-tdee"
         image="https://freecalorietrack.com/images/blog/tdee-calculator.webp"
+        skipSiteName={true}
       />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">

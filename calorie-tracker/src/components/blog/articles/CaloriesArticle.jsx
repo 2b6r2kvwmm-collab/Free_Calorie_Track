@@ -11,6 +11,7 @@ export default function CaloriesArticle() {
         keywords={['what are calories', 'calorie tracking', 'how calorie tracking works', 'calories explained']}
         url="/blog/what-are-calories"
         image="https://freecalorietrack.com/images/blog/calories-guide.webp"
+        skipSiteName={true}
       />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">

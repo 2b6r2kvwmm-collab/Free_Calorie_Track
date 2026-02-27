@@ -11,6 +11,7 @@ export default function BlenderArticle() {
         keywords={['NutriBullet Pro 900 review', 'best blender for protein shakes', 'smoothie blender review', 'NutriBullet review']}
         url="/blog/best-blenders-for-protein-shakes"
         image="https://freecalorietrack.com/images/blog/nutribullet-pro-900.webp"
+        skipSiteName={true}
       />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">

@@ -11,6 +11,7 @@ export default function MacrosArticle() {
         keywords={['what are macros', 'macronutrients explained', 'protein carbs fat', 'why track macros']}
         url="/blog/what-are-macros"
         image="https://freecalorietrack.com/images/blog/macros-guide.webp"
+        skipSiteName={true}
       />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">

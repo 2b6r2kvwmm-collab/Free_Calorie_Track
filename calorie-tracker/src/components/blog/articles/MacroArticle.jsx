@@ -12,6 +12,7 @@ export default function MacroArticle() {
         keywords={['macro calculator', 'how to calculate macros', 'macros for weight loss', 'protein carbs fat ratio']}
         url="/blog/macro-calculator-guide"
         image="https://freecalorietrack.com/images/blog/macro-calculator.webp"
+        skipSiteName={true}
       />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">

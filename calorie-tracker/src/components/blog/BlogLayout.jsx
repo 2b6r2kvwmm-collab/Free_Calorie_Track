@@ -15,11 +15,11 @@ export default function BlogLayout({ children }) {
             ← Back to App
           </Link>
           <Link to="/blog">
-            <h1 className="text-3xl font-bold"
+            <div className="text-3xl font-bold"
                 style={{ fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '-0.02em' }}>
               <span className="text-emerald-600 dark:text-emerald-400">Free Calorie Track</span>
               <span className="text-gray-600 dark:text-gray-400"> Blog</span>
-            </h1>
+            </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1"
                style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
               Calorie tracking tips, gear reviews, and guides

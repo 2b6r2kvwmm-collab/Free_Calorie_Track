@@ -11,6 +11,7 @@ export default function AdvancedDumbbellsArticle() {
         keywords={['best heavy dumbbells', 'adjustable dumbbells 80 lbs', 'advanced adjustable dumbbells', 'heavy duty dumbbells', 'home gym equipment']}
         url="/blog/best-adjustable-dumbbells-advanced"
         image="https://freecalorietrack.com/images/blog/nuobell-dumbbells.webp"
+        skipSiteName={true}
       />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">

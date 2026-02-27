@@ -11,6 +11,7 @@ export default function CoreFitnessDumbbellsArticle() {
         keywords={['best adjustable dumbbells', 'adjustable dumbbells review', 'Core Fitness dumbbells', 'home gym dumbbells', 'space saving dumbbells']}
         url="/blog/best-adjustable-dumbbells-beginners"
         image="https://freecalorietrack.com/images/blog/core-fitness-dumbbells.webp"
+        skipSiteName={true}
       />
       {/* Breadcrumb */}
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">

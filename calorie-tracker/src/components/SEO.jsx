@@ -7,16 +7,20 @@ export default function SEO({
   image = 'https://freecalorietrack.com/og-image.png',
   url,
   type = 'article',
-  author = 'Griffin'
+  author = 'Griffin',
+  skipSiteName = false
 }) {
-  const fullTitle = title ? `${title} | Free Calorie Track` : 'Free Calorie Track - Free Calorie & Macro Tracker | No Paywalls, No Ads';
+  // For blog articles, skip site name suffix to keep titles under 60 chars
+  const fullTitle = skipSiteName || !title ? title : `${title} | Free Calorie Track`;
+  const fallbackTitle = 'Free Calorie Track - Free Calorie & Macro Tracker | No Paywalls, No Ads';
+  const pageTitle = fullTitle || fallbackTitle;
   const fullUrl = url ? `https://freecalorietrack.com${url}` : 'https://freecalorietrack.com/';
 
   return (
     <Helmet>
       {/* Primary Meta Tags */}
-      <title>{fullTitle}</title>
-      <meta name="title" content={fullTitle} />
+      <title>{pageTitle}</title>
+      <meta name="title" content={pageTitle} />
       <meta name="description" content={description} />
       {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
       <meta name="author" content={author} />
@@ -25,7 +29,7 @@ export default function SEO({
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={fullUrl} />
-      <meta property="og:title" content={fullTitle} />
+      <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:site_name" content="Free Calorie Track" />
@@ -33,7 +37,7 @@ export default function SEO({
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={fullUrl} />
-      <meta property="twitter:title" content={fullTitle} />
+      <meta property="twitter:title" content={pageTitle} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
 
