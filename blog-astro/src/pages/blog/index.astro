@@ -1,0 +1,162 @@
+---
+import '../../styles/global.css';
+import { getCollection } from 'astro:content';
+import { footerContent } from '../../../../shared/footer-content.js';
+
+const blogEntries = await getCollection('blog');
+// Sort by date, newest first
+blogEntries.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Free Calorie Track</title>
+  <meta name="description" content="Nutrition, fitness, and health guides from Free Calorie Track. Learn about calories, macros, TDEE, and gear reviews.">
+  <link rel="canonical" href="https://freecalorietrack.com/blog/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blog - Free Calorie Track">
+  <meta property="og:description" content="Nutrition, fitness, and health guides from Free Calorie Track.">
+  <meta property="og:url" content="https://freecalorietrack.com/blog/">
+
+  <!-- Fonts - match main app -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Dark mode initialization script -->
+  <script is:inline>
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="bg-emerald-600 dark:bg-emerald-700 text-white py-4 px-4 shadow-lg">
+    <div class="max-w-6xl mx-auto">
+      <a href="/" class="text-2xl font-bold hover:text-emerald-100 transition-colors">
+        Free Calorie Track
+      </a>
+      <p class="text-emerald-100 text-sm mt-1">Nutrition & Fitness Blog</p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">Blog</h1>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {blogEntries.map((post) => (
+        <a
+          href={`/blog/${post.slug}`}
+          class="block bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-200 dark:border-gray-700"
+        >
+          {post.data.image && (
+            <img
+              src={post.data.image}
+              alt={post.data.title}
+              class="w-full h-48 object-cover"
+            />
+          )}
+          <div class="p-6">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+              {post.data.title}
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+              {post.data.description}
+            </p>
+            <p class="text-emerald-600 dark:text-emerald-400 text-sm font-medium">
+              Read more →
+            </p>
+            <p class="text-gray-500 dark:text-gray-500 text-xs mt-2">
+              {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </main>
+
+  <!-- Footer - imported from shared content -->
+  <footer class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-12 px-4 mt-auto border-t border-gray-300 dark:border-gray-700">
+    <div class="max-w-4xl mx-auto space-y-8">
+
+      <!-- Medical Disclaimer -->
+      <div class="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 rounded">
+        <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2">{footerContent.medicalDisclaimer.title}</h3>
+        <p class="text-sm text-gray-700 dark:text-gray-300">{footerContent.medicalDisclaimer.text}</p>
+      </div>
+
+      <!-- Support Section -->
+      <div class="text-center border-t border-gray-300 dark:border-gray-600 pt-6">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{footerContent.supportSection.heading}</h3>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">{footerContent.supportSection.description}</p>
+        <a
+          href={footerContent.supportSection.buttonUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+        >
+          {footerContent.supportSection.buttonText}
+        </a>
+      </div>
+
+      <!-- Affiliate Gear Links -->
+      <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 text-center">{footerContent.gearLinks.heading}</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-4 italic">{footerContent.gearLinks.disclaimer}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {footerContent.gearLinks.items.map((link) => (
+            <a
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-2 p-3 bg-white dark:bg-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors border border-gray-200 dark:border-gray-600"
+            >
+              <span class="text-2xl">{link.emoji}</span>
+              <span class="text-sm font-medium text-gray-800 dark:text-gray-200">{link.text}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Feedback Link -->
+      <div class="text-center text-sm border-t border-gray-300 dark:border-gray-600 pt-6">
+        <a
+          href={footerContent.feedbackLink.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-emerald-600 dark:text-emerald-400 hover:underline"
+        >
+          {footerContent.feedbackLink.text}
+        </a>
+      </div>
+
+      <!-- Legal Links -->
+      <div class="flex justify-center gap-6 text-sm border-t border-gray-300 dark:border-gray-600 pt-6">
+        {footerContent.legalLinks.map((link, index) => (
+          <>
+            <a
+              href={link.url}
+              class="text-emerald-600 dark:text-emerald-400 hover:underline"
+            >
+              {link.text}
+            </a>
+            {index < footerContent.legalLinks.length - 1 && <span class="text-gray-400">•</span>}
+          </>
+        ))}
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-center text-sm text-gray-500 dark:text-gray-400 pt-4">
+        © {footerContent.copyright.year} {footerContent.copyright.entity}
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

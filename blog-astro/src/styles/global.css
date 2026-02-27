@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Dark mode support - matches main app */
+@theme {
+  --color-surface-dark: #1f2937;
+  --color-text-dark: #f9fafb;
+}
+
+/* Global styles to match main app */
+body {
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+}
