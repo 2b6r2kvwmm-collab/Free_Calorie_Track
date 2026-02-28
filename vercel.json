@@ -2,11 +2,9 @@
   "buildCommand": "chmod +x build-all.sh && ./build-all.sh",
   "outputDirectory": "calorie-tracker/dist",
   "installCommand": "echo 'Dependencies installed via build script'",
-  "cleanUrls": true,
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(dashboard|trends|history|settings)", "dest": "/index.html" },
-    { "src": "/", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/(dashboard|trends|history|settings)", "destination": "/index.html" },
+    { "source": "/", "destination": "/index.html" }
   ],
   "headers": [
     {
