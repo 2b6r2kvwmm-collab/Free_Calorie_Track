@@ -16,6 +16,13 @@ import UpdateNotification from './components/UpdateNotification';
 function App() {
   const location = useLocation();
 
+  // Redirect to blog if user navigates to /blog/* while SPA is loaded
+  useEffect(() => {
+    if (location.pathname.startsWith('/blog')) {
+      window.location.href = location.pathname;
+    }
+  }, [location.pathname]);
+
   const [profile, setProfile] = useState(getProfile());
   const [currentView, setCurrentView] = useState('dashboard');
   const [darkMode, setDarkMode] = useState(getDarkMode());
