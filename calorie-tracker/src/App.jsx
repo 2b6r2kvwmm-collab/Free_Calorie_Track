@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
@@ -13,6 +14,8 @@ import UserManager from './components/UserManager';
 import UpdateNotification from './components/UpdateNotification';
 
 function App() {
+  const location = useLocation();
+
   const [profile, setProfile] = useState(getProfile());
   const [currentView, setCurrentView] = useState('dashboard');
   const [darkMode, setDarkMode] = useState(getDarkMode());
