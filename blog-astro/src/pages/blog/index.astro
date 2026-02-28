@@ -6,6 +6,37 @@ import { footerContent } from '../../../../shared/footer-content.js';
 const blogEntries = await getCollection('blog');
 // Sort by date, newest first
 blogEntries.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+
+// Map to include category info from blogPosts.js
+const postsWithMeta = blogEntries.map(entry => {
+  const slug = entry.slug;
+  let category = 'Guides';
+  let emoji = '📝';
+  let readTime = 5;
+
+  if (slug.includes('dumbbells') || slug.includes('blender')) {
+    category = 'Gear Reviews';
+    emoji = slug.includes('advanced') ? '💪' : '🏋️';
+  } else if (slug.includes('calculator') || slug.includes('tdee')) {
+    category = 'Calculators';
+    emoji = '🧮';
+  } else if (slug === 'what-are-calories') {
+    emoji = '⚡';
+  } else if (slug === 'what-are-macros') {
+    emoji = '🍎';
+  } else if (slug === 'how-to-calculate-tdee') {
+    emoji = '🔥';
+    category = 'Calculators';
+    readTime = 7;
+  } else if (slug === 'best-blenders-for-protein-shakes') {
+    emoji = '🫐';
+    readTime = 6;
+  } else if (slug === 'macro-calculator-guide') {
+    readTime = 6;
+  }
+
+  return { ...entry, category, emoji, readTime };
+});
 ---
 
 <!DOCTYPE html>
@@ -13,14 +44,18 @@ blogEntries.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog - Free Calorie Track</title>
-  <meta name="description" content="Nutrition, fitness, and health guides from Free Calorie Track. Learn about calories, macros, TDEE, and gear reviews.">
+  <title>Blog - Guides, Calculators & Gear Reviews - Free Calorie Track</title>
+  <meta name="description" content="Free guides on calorie tracking, macros, TDEE, and honest reviews of fitness gear including blenders and adjustable dumbbells.">
   <link rel="canonical" href="https://freecalorietrack.com/blog/">
+
+  <!-- Favicon - FCT logo -->
+  <link rel="icon" href="/favicon.ico?v=6">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=6">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Blog - Free Calorie Track">
-  <meta property="og:description" content="Nutrition, fitness, and health guides from Free Calorie Track.">
+  <meta property="og:description" content="Free guides on calorie tracking, macros, TDEE, and honest reviews of fitness gear.">
   <meta property="og:url" content="https://freecalorietrack.com/blog/">
 
   <!-- Fonts - match main app -->
@@ -34,53 +69,139 @@ blogEntries.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
       document.documentElement.classList.add('dark');
     }
   </script>
+
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+  <!-- Skip to main content link for keyboard navigation -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-600 focus:text-white focus:rounded">
+    Skip to main content
+  </a>
+
   <!-- Header -->
-  <header class="bg-emerald-600 dark:bg-emerald-700 text-white py-4 px-4 shadow-lg">
-    <div class="max-w-6xl mx-auto">
-      <a href="/" class="text-2xl font-bold hover:text-emerald-100 transition-colors">
-        Free Calorie Track
+  <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700" role="banner">
+    <div class="max-w-4xl mx-auto px-4 py-6">
+      <a href="/" class="text-sm text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 mb-2 inline-block" aria-label="Return to Free Calorie Track app">
+        ← Back to App
       </a>
-      <p class="text-emerald-100 text-sm mt-1">Nutrition & Fitness Blog</p>
+      <a href="/blog">
+        <div class="text-3xl font-bold" style="font-family: 'Inter', system-ui, sans-serif; letter-spacing: -0.02em;">
+          <span class="text-emerald-600 dark:text-emerald-400">Free Calorie Track</span>
+          <span class="text-gray-600 dark:text-gray-400"> Blog</span>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1" style="font-family: 'Inter', system-ui, sans-serif;">
+          Calorie tracking tips, gear reviews, and guides
+        </p>
+      </a>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
-    <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-8">Blog</h1>
+  <main id="main-content" class="flex-1 max-w-4xl mx-auto px-4 py-8 w-full" role="main">
+    <!-- Categories -->
+    <h2 class="sr-only">Filter Articles</h2>
+    <div class="mb-8 flex flex-wrap gap-3" role="group" aria-label="Filter articles by category">
+      <button
+        type="button"
+        class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400"
+        data-category="All"
+        aria-pressed="true"
+        aria-label="Show all articles"
+      >
+        All
+      </button>
+      <button
+        type="button"
+        class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+        data-category="Guides"
+        aria-pressed="false"
+        aria-label="Show guides only"
+      >
+        Guides
+      </button>
+      <button
+        type="button"
+        class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+        data-category="Gear Reviews"
+        aria-pressed="false"
+        aria-label="Show gear reviews only"
+      >
+        Gear Reviews
+      </button>
+      <button
+        type="button"
+        class="category-filter px-4 py-2 rounded-full text-sm font-medium transition-colors bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+        data-category="Calculators"
+        aria-pressed="false"
+        aria-label="Show calculators only"
+      >
+        Calculators
+      </button>
+    </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {blogEntries.map((post) => (
+    <!-- Screen reader announcement for filter changes -->
+    <div id="filter-announcement" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- Posts Grid -->
+    <div class="grid gap-8 md:grid-cols-2">
+      {postsWithMeta.map((post) => (
         <a
           href={`/blog/${post.slug}`}
-          class="block bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow overflow-hidden border border-gray-200 dark:border-gray-700"
+          data-category={post.category}
+          class="blog-post-card group bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-gray-200 dark:border-gray-700"
+          aria-label={`Read article: ${post.data.title}`}
         >
-          {post.data.image && (
-            <img
-              src={post.data.image}
-              alt={post.data.title}
-              class="w-full h-48 object-cover"
-            />
-          )}
+          <div class="aspect-video bg-gradient-to-br from-emerald-400 to-emerald-600 relative overflow-hidden" aria-hidden="true">
+            {post.data.image ? (
+              <img
+                src={post.data.image}
+                alt={post.data.title}
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            ) : (
+              <div class="absolute inset-0 flex items-center justify-center">
+                <span class="text-6xl">{post.emoji}</span>
+              </div>
+            )}
+          </div>
           <div class="p-6">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">
+                {post.category}
+              </span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">•</span>
+              <span class="text-xs text-gray-500 dark:text-gray-400">{post.readTime} min read</span>
+            </div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" style="font-family: 'Inter', system-ui, sans-serif;">
               {post.data.title}
             </h2>
-            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">
+            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed" style="font-family: 'Inter', system-ui, sans-serif;">
               {post.data.description}
-            </p>
-            <p class="text-emerald-600 dark:text-emerald-400 text-sm font-medium">
-              Read more →
-            </p>
-            <p class="text-gray-500 dark:text-gray-500 text-xs mt-2">
-              {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </div>
         </a>
       ))}
     </div>
   </main>
+
+  <!-- CTA Footer -->
+  <div class="bg-emerald-50 dark:bg-emerald-900/20 border-t border-emerald-100 dark:border-emerald-800 py-12">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-3" style="font-family: 'Inter', system-ui, sans-serif;">
+        Ready to Start Tracking?
+      </h2>
+      <p class="text-gray-700 dark:text-gray-300 mb-6" style="font-family: 'Inter', system-ui, sans-serif;">
+        Free Calorie Track includes barcode scanning, macro tracking, trends, and offline mode—all free forever.
+      </p>
+      <a
+        href="/"
+        class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg"
+        style="font-family: 'Inter', system-ui, sans-serif;"
+      >
+        Get Started Free
+      </a>
+    </div>
+  </div>
 
   <!-- Footer - imported from shared content -->
   <footer class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-12 px-4 mt-auto border-t border-gray-300 dark:border-gray-700">
@@ -158,5 +279,52 @@ blogEntries.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
       </div>
     </div>
   </footer>
+
+  <!-- Category filter and dark mode toggle script -->
+  <script is:inline>
+    window.addEventListener('load', function() {
+      // Category filters
+      const filterButtons = document.querySelectorAll('.category-filter');
+      const postCards = document.querySelectorAll('.blog-post-card');
+
+      filterButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          const category = button.dataset.category;
+
+          // Update button states
+          filterButtons.forEach(function(btn) {
+            btn.classList.remove('bg-emerald-100', 'dark:bg-emerald-900/30', 'text-emerald-700', 'dark:text-emerald-400');
+            btn.classList.add('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-200', 'dark:hover:bg-gray-700');
+            btn.setAttribute('aria-pressed', 'false');
+          });
+
+          button.classList.remove('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-200', 'dark:hover:bg-gray-700');
+          button.classList.add('bg-emerald-100', 'dark:bg-emerald-900/30', 'text-emerald-700', 'dark:text-emerald-400');
+          button.setAttribute('aria-pressed', 'true');
+
+          // Filter posts
+          var visibleCount = 0;
+          postCards.forEach(function(card) {
+            if (category === 'All' || card.dataset.category === category) {
+              card.style.display = 'block';
+              visibleCount++;
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          // Announce filter change to screen readers
+          var announcement = document.getElementById('filter-announcement');
+          if (announcement) {
+            var message = category === 'All'
+              ? 'Showing all ' + visibleCount + ' articles'
+              : 'Showing ' + visibleCount + ' ' + category.toLowerCase() + ' articles';
+            announcement.textContent = message;
+          }
+        });
+      });
+
+    });
+  </script>
 </body>
 </html>

@@ -184,13 +184,19 @@ Vercel serves everything from `/calorie-tracker/dist`:
 
 ## Styling
 
-The blog uses **Tailwind CSS v4** to match the main app's design:
+The blog uses **Tailwind CSS v3** with the `@astrojs/tailwind` integration to match the main app's design:
 
-- Dark mode: `.dark` class on `<html>`
+- Dark mode: `.dark` class on `<html>` (class-based)
 - Colors: Emerald primary, gray backgrounds
 - Typography: Inter font (loaded from Google Fonts)
+- Custom prose styles for article content
 
-Custom styles in `/src/styles/global.css` ensure consistency with the main app.
+Custom styles in `/src/styles/global.css` include:
+- Article typography (.prose classes)
+- Accessibility utilities (sr-only, focus-visible)
+- Dark mode variants
+
+**Note:** We use Tailwind v3 instead of v4 for better compatibility with the Astro ecosystem and reliable dark mode support.
 
 ---
 
@@ -217,6 +223,38 @@ See `/shared/README.md` and `/.ai-context.md` for details.
 - ✅ Fast page loads (static HTML, no JS hydration)
 - ✅ Mobile-responsive
 - ✅ Dark mode support
+
+---
+
+## Accessibility (ADA Compliance)
+
+The blog is built to WCAG 2.1 AA standards:
+
+### Keyboard Navigation
+- ✅ Skip-to-content link (press Tab on page load)
+- ✅ All interactive elements keyboard accessible
+- ✅ Visible focus indicators (green outline on focus)
+- ✅ Proper tab order
+
+### Screen Reader Support
+- ✅ Semantic HTML (header, main, nav, footer, article)
+- ✅ ARIA labels on all interactive elements
+- ✅ ARIA live regions announce filter changes
+- ✅ Proper heading hierarchy (h1 → h2 → h3)
+- ✅ Alt text on all images
+- ✅ Screen reader-only text for context (.sr-only)
+
+### Visual Accessibility
+- ✅ High contrast text (passes WCAG AA)
+- ✅ Focus-visible outlines for keyboard users
+- ✅ Responsive text sizing
+- ✅ Dark mode with proper contrast ratios
+
+### Interactive Elements
+- ✅ All buttons have `type="button"`
+- ✅ Toggle buttons use `aria-pressed`
+- ✅ Links have descriptive text or aria-labels
+- ✅ Category filters announce changes to screen readers
 
 ---
 
@@ -258,6 +296,56 @@ cp your-image.webp public/images/blog/
 Images in `/public` are served from the root URL:
 - File: `/public/images/blog/calories.webp`
 - URL: `https://freecalorietrack.com/images/blog/calories.webp`
+
+---
+
+### Dark mode not working
+
+**Cause:** Using Tailwind CSS v4 with incompatible dark mode configuration.
+
+**Fix:**
+We use Tailwind v3 with `@astrojs/tailwind` integration:
+```bash
+npm install @astrojs/tailwind tailwindcss@^3
+```
+
+In `astro.config.mjs`:
+```javascript
+import tailwind from '@astrojs/tailwind';
+
+export default defineConfig({
+  integrations: [tailwind({ applyBaseStyles: false })]
+});
+```
+
+In `tailwind.config.mjs`:
+```javascript
+export default {
+  darkMode: 'class',
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}']
+};
+```
+
+---
+
+### Favicon shows wrong icon
+
+**Cause:** Browser caching or incorrect file format.
+
+**Fix:**
+1. Ensure files exist in `/public/`:
+   - `favicon.ico`
+   - `favicon-32x32.png`
+   - `apple-touch-icon.png`
+
+2. Clear browser cache or use hard refresh (Cmd+Shift+R on Mac)
+
+3. Try incognito/private browsing mode
+
+4. Check favicon links include cache-busting:
+   ```html
+   <link rel="icon" type="image/x-icon" href="/favicon.ico?v=3">
+   ```
 
 ---
 
