@@ -145,7 +145,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
     if (importData.recentFoods) setData('recentFoods', sanitizeObject(importData.recentFoods));
     if (importData.dailyGoal !== undefined) setData('dailyGoal', importData.dailyGoal);
     if (importData.weightLog) setData('weightLog', sanitizeObject(importData.weightLog));
-    if (importData.darkMode !== undefined) setData('darkMode', importData.darkMode);
+    // Note: darkMode is now global, old backups may have it but we skip importing it
     if (importData.customFoods) setData('customFoods', sanitizeObject(importData.customFoods));
     if (importData.customMacros) setData('customMacros', importData.customMacros);
     if (importData.waterLog) setData('waterLog', importData.waterLog);

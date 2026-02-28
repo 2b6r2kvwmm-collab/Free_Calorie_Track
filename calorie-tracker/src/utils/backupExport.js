@@ -13,7 +13,7 @@ export function handleExport() {
     recentFoods: getData('recentFoods'),
     dailyGoal: getData('dailyGoal'),
     weightLog: getData('weightLog'),
-    darkMode: getData('darkMode'),
+    // Note: darkMode is now global (stored separately, not exported per-user)
     customFoods: getData('customFoods'),
     customMacros: getData('customMacros'),
     waterLog: getData('waterLog'),

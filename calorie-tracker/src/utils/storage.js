@@ -237,15 +237,25 @@ export function addWeightEntry(weight) {
 
 // Dark Mode
 export function getDarkMode() {
-  const stored = getData(STORAGE_KEYS.DARK_MODE);
-  if (stored !== null) return stored;
+  // Dark mode is global (not user-specific) so it syncs with blog
+  try {
+    const stored = localStorage.getItem('darkMode');
+    if (stored !== null) return JSON.parse(stored);
+  } catch (error) {
+    console.error('Error reading darkMode:', error);
+  }
 
   // Default to dark mode
   return true;
 }
 
 export function saveDarkMode(isDark) {
-  setData(STORAGE_KEYS.DARK_MODE, isDark);
+  // Dark mode is global (not user-specific) so it syncs with blog
+  try {
+    localStorage.setItem('darkMode', JSON.stringify(isDark));
+  } catch (error) {
+    console.error('Error saving darkMode:', error);
+  }
 }
 
 // Get entries for a specific date
