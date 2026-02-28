@@ -27,8 +27,8 @@ export default function TDEECalculator() {
     const profile = {
       age: parseInt(formData.age),
       sex: formData.sex,
-      heightCm,
-      weightKg,
+      height: heightCm,
+      weight: weightKg,
       activityLevel: formData.activityLevel,
     };
 
