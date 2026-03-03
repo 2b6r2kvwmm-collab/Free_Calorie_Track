@@ -54,4 +54,41 @@
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/breville-barista-express-review</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/how-to-use-a-food-scale</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Blog Articles - New Guides -->
+  <url>
+    <loc>https://freecalorietrack.com/blog/what-is-protein</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/high-protein-low-calorie-foods</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/how-to-count-calories</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/bmi-vs-ffmi</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/free-calorie-tracker-app-features</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

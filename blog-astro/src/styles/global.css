@@ -138,3 +138,61 @@ body {
   color: #ffffff !important;
   text-decoration: none !important;
 }
+
+/* Table styling - ensure proper column widths and spacing */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: 0.875em;
+  line-height: 1.7;
+}
+
+.prose thead {
+  border-bottom: 1px solid #d1d5db;
+}
+
+.dark .prose thead {
+  border-bottom: 1px solid #4b5563;
+}
+
+.prose thead th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.dark .prose thead th {
+  color: #f9fafb;
+}
+
+.prose tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .prose tbody tr {
+  border-bottom: 1px solid #374151;
+}
+
+.prose tbody td {
+  padding: 0.75rem 1rem;
+  vertical-align: top;
+  min-width: 120px;
+}
+
+/* Ensure first column has enough width for content */
+.prose tbody td:first-child,
+.prose thead th:first-child {
+  min-width: 140px;
+  padding-right: 1.5rem;
+}
+
+/* Second column gets more space for descriptions */
+.prose tbody td:nth-child(2),
+.prose thead th:nth-child(2) {
+  min-width: 200px;
+  padding-right: 1.5rem;
+}
