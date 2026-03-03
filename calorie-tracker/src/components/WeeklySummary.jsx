@@ -164,38 +164,41 @@ export default function WeeklySummary() {
       {/* Chart */}
       <div className="mb-4">
         <h3 className="font-semibold text-lg mb-3">Net Calories Trend</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="netCalories"
-              stroke="#10b981"
-              strokeWidth={2}
-              name="net calories"
-            />
-            <Line
-              type="monotone"
-              dataKey="eaten"
-              stroke="#3b82f6"
-              strokeWidth={1}
-              strokeDasharray="5 5"
-              name="Eaten"
-            />
-            <Line
-              type="monotone"
-              dataKey="burned"
-              stroke="#ef4444"
-              strokeWidth={1}
-              strokeDasharray="5 5"
-              name="Burned"
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        {/* Reserve space to prevent CLS */}
+        <div className="min-h-[300px]">
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="netCalories"
+                stroke="#10b981"
+                strokeWidth={2}
+                name="net calories"
+              />
+              <Line
+                type="monotone"
+                dataKey="eaten"
+                stroke="#3b82f6"
+                strokeWidth={1}
+                strokeDasharray="5 5"
+                name="Eaten"
+              />
+              <Line
+                type="monotone"
+                dataKey="burned"
+                stroke="#ef4444"
+                strokeWidth={1}
+                strokeDasharray="5 5"
+                name="Burned"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       {daysWithData === 0 && (

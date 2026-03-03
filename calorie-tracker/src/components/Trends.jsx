@@ -309,47 +309,53 @@ export default function Trends() {
         {/* Net Calories Chart */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold mb-4">Net Calories</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={dataWithAverage}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="displayDate" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="net"
-                stroke="#10b981"
-                strokeWidth={2}
-                name="Net Calories"
-              />
-              <Line
-                type="monotone"
-                dataKey="average"
-                stroke="#f59e0b"
-                strokeWidth={2}
-                strokeDasharray="5 5"
-                name="7-Day Average"
-                connectNulls
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {/* Reserve space to prevent CLS */}
+          <div className="min-h-[300px]">
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={dataWithAverage}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="displayDate" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="net"
+                  stroke="#10b981"
+                  strokeWidth={2}
+                  name="Net Calories"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="average"
+                  stroke="#f59e0b"
+                  strokeWidth={2}
+                  strokeDasharray="5 5"
+                  name="7-Day Average"
+                  connectNulls
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         {/* Calories In vs Out */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold mb-4">Calories In vs Out</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="displayDate" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="eaten" fill="#3b82f6" name="Eaten" />
-              <Bar dataKey="burned" fill="#f97316" name="Burned" />
-            </BarChart>
-          </ResponsiveContainer>
+          {/* Reserve space to prevent CLS */}
+          <div className="min-h-[300px]">
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="displayDate" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="eaten" fill="#3b82f6" name="Eaten" />
+                <Bar dataKey="burned" fill="#f97316" name="Burned" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 

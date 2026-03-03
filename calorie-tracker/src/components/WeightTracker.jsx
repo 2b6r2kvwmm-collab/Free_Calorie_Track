@@ -131,21 +131,24 @@ export default function WeightTracker() {
           {chartData.length > 1 && (
             <div className="mb-4">
               <h3 className="font-semibold text-lg mb-3">Weight Trend</h3>
-              <ResponsiveContainer width="100%" height={250}>
-                <LineChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="date" />
-                  <YAxis domain={['dataMin - 2', 'dataMax + 2']} />
-                  <Tooltip formatter={(value) => `${value} ${profile.unit === 'metric' ? 'kg' : 'lbs'}`} />
-                  <Line
-                    type="monotone"
-                    dataKey="weight"
-                    stroke="#475569"
-                    strokeWidth={2}
-                    dot={{ fill: '#475569', r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              {/* Reserve space to prevent CLS */}
+              <div className="min-h-[250px]">
+                <ResponsiveContainer width="100%" height={250}>
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="date" />
+                    <YAxis domain={['dataMin - 2', 'dataMax + 2']} />
+                    <Tooltip formatter={(value) => `${value} ${profile.unit === 'metric' ? 'kg' : 'lbs'}`} />
+                    <Line
+                      type="monotone"
+                      dataKey="weight"
+                      stroke="#475569"
+                      strokeWidth={2}
+                      dot={{ fill: '#475569', r: 4 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           )}
 

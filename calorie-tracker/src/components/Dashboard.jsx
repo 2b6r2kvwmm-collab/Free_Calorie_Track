@@ -64,6 +64,12 @@ export default function Dashboard({ onRefresh }) {
   const [goalRefreshKey, setGoalRefreshKey] = useState(0); // Force re-render when goal changes
   const waterTrackerEnabled = getWaterTrackerEnabled();
 
+  // State locking for async operations
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Toast notification state
+  const [toast, setToast] = useState(null); // { message, type: 'success' | 'error' }
+
   const profile = getProfile();
 
   const loadEntries = () => {
@@ -335,7 +341,18 @@ export default function Dashboard({ onRefresh }) {
     }
   }
 
-  const handleAddFood = (food) => {
+  // Toast auto-dismiss
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  const handleAddFood = async (food) => {
+    if (isProcessing) return; // Prevent double-tap
+
+    // Create entry with timestamp for optimistic update
     const entry = {
       name: food.name,
       calories: food.calories,
@@ -350,18 +367,90 @@ export default function Dashboard({ onRefresh }) {
       baseCarbs: food.carbs || 0,
       baseFat: food.fat || 0,
       quantity: 1, // Default multiplier
+      timestamp: Date.now(),
+      date: getLocalDateString(),
     };
-    addFoodEntry(entry);
-    trackFoodEntry();
-    loadEntries();
-    onRefresh();
+
+    // OPTIMISTIC UI: Update immediately
+    setIsProcessing(true);
+    setEntries(prev => ({
+      ...prev,
+      food: [...prev.food, entry],
+    }));
+
+    try {
+      // Async storage write (non-blocking)
+      await new Promise((resolve, reject) => {
+        queueMicrotask(() => {
+          try {
+            addFoodEntry(entry);
+            trackFoodEntry();
+            resolve();
+          } catch (err) {
+            reject(err);
+          }
+        });
+      });
+
+      // Success - no rollback needed
+      onRefresh();
+    } catch (error) {
+      // ROLLBACK on failure
+      console.error('Failed to save food entry:', error);
+      setEntries(prev => ({
+        ...prev,
+        food: prev.food.filter(e => e.timestamp !== entry.timestamp),
+      }));
+      setToast({ message: 'Failed to save. Please try again.', type: 'error' });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
-  const handleAddExercise = (exercise) => {
-    addExerciseEntry(exercise);
-    trackWorkout();
-    loadEntries();
-    onRefresh();
+  const handleAddExercise = async (exercise) => {
+    if (isProcessing) return; // Prevent double-tap
+
+    // Create entry with timestamp for optimistic update
+    const entry = {
+      ...exercise,
+      timestamp: Date.now(),
+      date: getLocalDateString(),
+    };
+
+    // OPTIMISTIC UI: Update immediately
+    setIsProcessing(true);
+    setEntries(prev => ({
+      ...prev,
+      exercise: [...prev.exercise, entry],
+    }));
+
+    try {
+      // Async storage write (non-blocking)
+      await new Promise((resolve, reject) => {
+        queueMicrotask(() => {
+          try {
+            addExerciseEntry(entry);
+            trackWorkout();
+            resolve();
+          } catch (err) {
+            reject(err);
+          }
+        });
+      });
+
+      // Success - no rollback needed
+      onRefresh();
+    } catch (error) {
+      // ROLLBACK on failure
+      console.error('Failed to save exercise entry:', error);
+      setEntries(prev => ({
+        ...prev,
+        exercise: prev.exercise.filter(e => e.timestamp !== entry.timestamp),
+      }));
+      setToast({ message: 'Failed to save. Please try again.', type: 'error' });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleDeleteFood = (timestamp) => {
@@ -1154,6 +1243,22 @@ export default function Dashboard({ onRefresh }) {
               >
                 Got It
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50 px-4 w-full max-w-md">
+          <div className={`px-6 py-4 rounded-lg shadow-xl ${
+            toast.type === 'error'
+              ? 'bg-red-600 text-white'
+              : 'bg-emerald-600 text-white'
+          }`}>
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">{toast.type === 'error' ? '❌' : '✓'}</span>
+              <span className="font-semibold">{toast.message}</span>
             </div>
           </div>
         </div>

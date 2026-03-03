@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
@@ -15,6 +15,7 @@ import UpdateNotification from './components/UpdateNotification';
 
 function App() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Redirect to blog if user navigates to /blog/* while SPA is loaded
   useEffect(() => {
@@ -24,7 +25,6 @@ function App() {
   }, [location.pathname]);
 
   const [profile, setProfile] = useState(getProfile());
-  const [currentView, setCurrentView] = useState('dashboard');
   const [darkMode, setDarkMode] = useState(getDarkMode());
   const [refreshKey, setRefreshKey] = useState(0);
   const [showUserManager, setShowUserManager] = useState(false);
@@ -127,19 +127,29 @@ function App() {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-6">
-        {currentView === 'dashboard' && (
-          <Dashboard key={refreshKey} onRefresh={handleRefresh} />
-        )}
-        {currentView === 'trends' && <Trends key={refreshKey} />}
-        {currentView === 'history' && (
-          <History key={refreshKey} onRefresh={handleRefresh} />
-        )}
-        {currentView === 'settings' && (
-          <Settings
-            onUpdateProfile={handleUpdateProfile}
-            onClose={() => setCurrentView('dashboard')}
+        <Routes>
+          <Route
+            path="/"
+            element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
           />
-        )}
+          <Route
+            path="/trends"
+            element={<Trends key={refreshKey} />}
+          />
+          <Route
+            path="/history"
+            element={<History key={refreshKey} onRefresh={handleRefresh} />}
+          />
+          <Route
+            path="/settings"
+            element={
+              <Settings
+                onUpdateProfile={handleUpdateProfile}
+                onClose={() => navigate('/')}
+              />
+            }
+          />
+        </Routes>
       </div>
 
       {/* Bottom Navigation */}
@@ -147,53 +157,57 @@ function App() {
         <div className="max-w-4xl mx-auto px-2">
           <div className="grid grid-cols-4 gap-1 py-2" style={{ paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom))' }}>
             <button
-              onClick={() => setCurrentView('dashboard')}
+              onClick={() => navigate('/')}
               className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
-                currentView === 'dashboard'
+                location.pathname === '/'
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
               style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
               aria-label="Dashboard"
+              aria-current={location.pathname === '/' ? 'page' : undefined}
             >
               <LayoutDashboard size={20} strokeWidth={2} />
               <span style={{ letterSpacing: '0.02em' }}>Dashboard</span>
             </button>
             <button
-              onClick={() => setCurrentView('trends')}
+              onClick={() => navigate('/trends')}
               className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
-                currentView === 'trends'
+                location.pathname === '/trends'
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
               style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
               aria-label="Trends"
+              aria-current={location.pathname === '/trends' ? 'page' : undefined}
             >
               <TrendingUp size={20} strokeWidth={2} />
               <span style={{ letterSpacing: '0.02em' }}>Trends</span>
             </button>
             <button
-              onClick={() => setCurrentView('history')}
+              onClick={() => navigate('/history')}
               className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
-                currentView === 'history'
+                location.pathname === '/history'
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
               style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
               aria-label="History"
+              aria-current={location.pathname === '/history' ? 'page' : undefined}
             >
               <HistoryIcon size={20} strokeWidth={2} />
               <span style={{ letterSpacing: '0.02em' }}>History</span>
             </button>
             <button
-              onClick={() => setCurrentView('settings')}
+              onClick={() => navigate('/settings')}
               className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
-                currentView === 'settings'
+                location.pathname === '/settings'
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
               style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
               aria-label="Settings"
+              aria-current={location.pathname === '/settings' ? 'page' : undefined}
             >
               <SettingsIcon size={20} strokeWidth={2} />
               <span style={{ letterSpacing: '0.02em' }}>Settings</span>
