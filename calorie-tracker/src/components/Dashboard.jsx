@@ -76,12 +76,18 @@ export default function Dashboard({ onRefresh }) {
 
   const profile = getProfile();
 
-  // Auto-open modals based on URL
+  // Auto-open/close modals based on URL
   useEffect(() => {
     if (location.pathname === '/add-food') {
       setShowFoodInput(true);
+      setShowExerciseLog(false);
     } else if (location.pathname === '/log-exercise') {
       setShowExerciseLog(true);
+      setShowFoodInput(false);
+    } else {
+      // Close both modals when not on modal URLs
+      setShowFoodInput(false);
+      setShowExerciseLog(false);
     }
   }, [location.pathname]);
 
@@ -1177,7 +1183,7 @@ export default function Dashboard({ onRefresh }) {
           onClose={() => {
             setShowFoodInput(false);
             if (location.pathname === '/add-food') {
-              navigate(-1); // Go back to previous page
+              navigate('/');
             }
           }}
           onRefresh={onRefresh}
@@ -1190,7 +1196,7 @@ export default function Dashboard({ onRefresh }) {
           onClose={() => {
             setShowExerciseLog(false);
             if (location.pathname === '/log-exercise') {
-              navigate(-1); // Go back to previous page
+              navigate('/');
             }
           }}
           onRefresh={onRefresh}
