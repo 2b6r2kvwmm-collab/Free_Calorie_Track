@@ -41,6 +41,32 @@ function App() {
     saveDarkMode(darkMode);
   }, [darkMode]);
 
+  // Analytics: Strip onboarding query params after tracking
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const onboardingStep = params.get('onboarding');
+
+    if (onboardingStep) {
+      // Validate against state before trusting (prevents pollution from shared links)
+      const isValid = (
+        (onboardingStep === 'landing-complete' && landingPageShown) ||
+        (onboardingStep === 'install-complete' && installPromptShown) ||
+        (onboardingStep === 'profile-complete' && profile)
+      );
+
+      if (isValid) {
+        // Vercel Analytics auto-tracks this URL with query param
+        // Wait briefly for tracking, then clean up URL
+        setTimeout(() => {
+          navigate('/', { replace: true });
+        }, 100);
+      } else {
+        // Invalid/shared link - strip immediately
+        navigate('/', { replace: true });
+      }
+    }
+  }, [location.search, landingPageShown, installPromptShown, profile, navigate]);
+
   const handleProfileComplete = (newProfile) => {
     saveProfile(newProfile);
     // Add initial weight to weight tracker
@@ -72,6 +98,8 @@ function App() {
       <LandingPage onGetStarted={() => {
         markLandingPageShown();
         setLandingPageShown(true);
+        // Track landing completion in analytics
+        navigate('/?onboarding=landing-complete', { replace: true });
       }} />
     );
   }
@@ -81,12 +109,18 @@ function App() {
       <InstallPrompt onContinue={() => {
         markInstallPromptShown();
         setInstallPromptShown(true);
+        // Track install prompt completion in analytics
+        navigate('/?onboarding=install-complete', { replace: true });
       }} />
     );
   }
 
   if (!profile) {
-    return <ProfileSetup onComplete={handleProfileComplete} />;
+    return <ProfileSetup onComplete={(newProfile) => {
+      handleProfileComplete(newProfile);
+      // Track profile setup completion in analytics
+      navigate('/?onboarding=profile-complete', { replace: true });
+    }} />;
   }
 
   return (
