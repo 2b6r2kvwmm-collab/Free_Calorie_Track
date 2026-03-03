@@ -56,10 +56,10 @@ function App() {
 
       if (isValid) {
         // Vercel Analytics auto-tracks this URL with query param
-        // Wait briefly for tracking, then clean up URL
+        // Wait for analytics beacon to send, then clean up URL
         setTimeout(() => {
           navigate('/', { replace: true });
-        }, 100);
+        }, 500);
       } else {
         // Invalid/shared link - strip immediately
         navigate('/', { replace: true });
@@ -98,8 +98,8 @@ function App() {
       <LandingPage onGetStarted={() => {
         markLandingPageShown();
         setLandingPageShown(true);
-        // Track landing completion in analytics
-        navigate('/?onboarding=landing-complete', { replace: true });
+        // Track landing completion in analytics (push to history for tracking)
+        navigate('/?onboarding=landing-complete');
       }} />
     );
   }
@@ -109,8 +109,8 @@ function App() {
       <InstallPrompt onContinue={() => {
         markInstallPromptShown();
         setInstallPromptShown(true);
-        // Track install prompt completion in analytics
-        navigate('/?onboarding=install-complete', { replace: true });
+        // Track install prompt completion in analytics (push to history for tracking)
+        navigate('/?onboarding=install-complete');
       }} />
     );
   }
@@ -118,8 +118,8 @@ function App() {
   if (!profile) {
     return <ProfileSetup onComplete={(newProfile) => {
       handleProfileComplete(newProfile);
-      // Track profile setup completion in analytics
-      navigate('/?onboarding=profile-complete', { replace: true });
+      // Track profile setup completion in analytics (push to history for tracking)
+      navigate('/?onboarding=profile-complete');
     }} />;
   }
 
