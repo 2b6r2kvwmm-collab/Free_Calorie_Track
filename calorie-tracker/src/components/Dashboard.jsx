@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   getTodayEntries,
   deleteFoodEntry,
@@ -47,6 +48,9 @@ import MilestoneModal from './MilestoneModal';
 import BackupReminderModal from './BackupReminderModal';
 
 export default function Dashboard({ onRefresh }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [entries, setEntries] = useState({ food: [], exercise: [] });
   const [showFoodInput, setShowFoodInput] = useState(false);
   const [showExerciseLog, setShowExerciseLog] = useState(false);
@@ -71,6 +75,15 @@ export default function Dashboard({ onRefresh }) {
   const [toast, setToast] = useState(null); // { message, type: 'success' | 'error' }
 
   const profile = getProfile();
+
+  // Auto-open modals based on URL
+  useEffect(() => {
+    if (location.pathname === '/add-food') {
+      setShowFoodInput(true);
+    } else if (location.pathname === '/log-exercise') {
+      setShowExerciseLog(true);
+    }
+  }, [location.pathname]);
 
   const loadEntries = () => {
     setEntries(getTodayEntries());
@@ -864,10 +877,10 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Action Buttons */}
       <div className="grid grid-cols-2 gap-4">
-        <button onClick={() => setShowFoodInput(true)} className="btn-primary">
+        <button onClick={() => navigate('/add-food')} className="btn-primary">
           Add Food
         </button>
-        <button onClick={() => setShowExerciseLog(true)} className="btn-primary">
+        <button onClick={() => navigate('/log-exercise')} className="btn-primary">
           Log Exercise
         </button>
       </div>
@@ -1161,7 +1174,12 @@ export default function Dashboard({ onRefresh }) {
       {showFoodInput && (
         <FoodInput
           onAddFood={handleAddFood}
-          onClose={() => setShowFoodInput(false)}
+          onClose={() => {
+            setShowFoodInput(false);
+            if (location.pathname === '/add-food') {
+              navigate(-1); // Go back to previous page
+            }
+          }}
           onRefresh={onRefresh}
         />
       )}
@@ -1169,7 +1187,12 @@ export default function Dashboard({ onRefresh }) {
       {showExerciseLog && (
         <ExerciseLog
           onAddExercise={handleAddExercise}
-          onClose={() => setShowExerciseLog(false)}
+          onClose={() => {
+            setShowExerciseLog(false);
+            if (location.pathname === '/log-exercise') {
+              navigate(-1); // Go back to previous page
+            }
+          }}
           onRefresh={onRefresh}
         />
       )}

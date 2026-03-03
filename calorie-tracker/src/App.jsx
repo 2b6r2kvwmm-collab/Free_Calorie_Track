@@ -133,6 +133,14 @@ function App() {
             element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
           />
           <Route
+            path="/add-food"
+            element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+          />
+          <Route
+            path="/log-exercise"
+            element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+          />
+          <Route
             path="/trends"
             element={<Trends key={refreshKey} />}
           />
@@ -159,13 +167,13 @@ function App() {
             <button
               onClick={() => navigate('/')}
               className={`py-2.5 px-2 rounded-xl font-medium text-xs flex flex-col items-center gap-1 transition-all ${
-                location.pathname === '/'
+                location.pathname === '/' || location.pathname === '/add-food' || location.pathname === '/log-exercise'
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
                   : 'text-gray-600 dark:text-gray-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-700 dark:hover:text-emerald-400'
               }`}
               style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
               aria-label="Dashboard"
-              aria-current={location.pathname === '/' ? 'page' : undefined}
+              aria-current={location.pathname === '/' || location.pathname === '/add-food' || location.pathname === '/log-exercise' ? 'page' : undefined}
             >
               <LayoutDashboard size={20} strokeWidth={2} />
               <span style={{ letterSpacing: '0.02em' }}>Dashboard</span>
