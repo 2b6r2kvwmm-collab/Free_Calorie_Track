@@ -74,6 +74,10 @@ const FAQ_SECTIONS = [
         a: 'Yes. You can create custom foods by manually entering the name and nutrition information. The recipe builder lets you combine multiple ingredients — from the common foods list, barcode scans, or database searches — and automatically calculates the nutrition per serving. Save recipes to log them again quickly later.',
       },
       {
+        q: 'How do I quickly log complex meals like salads, sandwiches, or bowls?',
+        a: 'Use the Recipe Builder to combine multiple ingredients in one go. Pick your base (salad greens, bread, rice bowl), add proteins, toppings, cheese, dressings, and sauces—the app calculates the total nutrition automatically. Save it to log again later. This is faster than entering each ingredient separately and far more accurate than AI photo scanning, which can\'t detect oils, seasonings, cooking methods, or precise ingredient quantities.',
+      },
+      {
         q: 'Can I copy yesterday\'s meals?',
         a: 'Yes. There\'s a one-tap "Copy Yesterday\'s Meals" option in the food logging menu. It copies every food entry from the previous day into today\'s log. Useful for people who eat similar meals day to day and don\'t want to re-enter everything from scratch.',
       },
