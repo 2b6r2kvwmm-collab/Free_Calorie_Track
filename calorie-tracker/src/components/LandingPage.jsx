@@ -11,19 +11,23 @@ const FAQ_SECTIONS = [
         a: 'Yes. All core features in the app are free to use. There is currently no premium tier, no upgrade wall, and no free-trial period that expires. Barcode scanning, macro tracking, trends, history editing, exercise logging — all of it is included. The app is funded by optional donations, not by gating features behind a paywall. While the core features will remain free, optional features may be introduced in the future.',
       },
       {
+        q: 'Is this a real app or just a website?',
+        a: 'Free Calorie Track is a Progressive Web App (PWA) — a modern type of app that runs in your web browser but works exactly like a native app. Once you add it to your home screen, it opens in full screen with no browser bars, works offline, and feels indistinguishable from apps downloaded from the App Store or Google Play. The advantage: no app store download required, no waiting for updates, and it works on any device with a web browser. You can install the app on your iPhone, Android phone, tablet, Mac, or Windows PC.',
+      },
+      {
         q: 'Do I need to create an account or sign up?',
         a: 'No. There is no account, no email, no password. You open the app and start tracking immediately. Your data is stored locally on your device, so there\'s nothing to sign into. If you use multiple devices, you can export and import your data as a backup file.',
       },
       {
-        q: 'How do I get started?',
+        q: 'How do I get started with the app?',
         a: 'Open the app on any device with a modern web browser. You\'ll be walked through a quick profile setup — just enter your age, sex, height, weight, and activity level. The app calculates your TDEE and calorie goal from there. Then start logging food. That\'s it.',
       },
       {
-        q: 'What devices does Free Calorie Track work on?',
-        a: 'Any device with a modern web browser: iPhone, Android phones, iPad, tablets, Windows PCs, Macs, and Linux. It\'s a Progressive Web App (PWA), which means you can install it on your home screen and use it like a native app — with offline support and no app store required.',
+        q: 'What devices does the Free Calorie Track app work on?',
+        a: 'The app works on any device with a modern web browser: iPhone, Android phones, iPad, tablets, Windows PCs, Macs, and Linux. It\'s a Progressive Web App (PWA), which means you can install it on your home screen and use it like a native app — with offline support and no app store required.',
       },
       {
-        q: 'How do I add Free Calorie Track to my home screen?',
+        q: 'How do I install the app on my home screen?',
         a: null, // rendered as custom multi-step block
         type: 'homescreen',
       },
@@ -37,8 +41,12 @@ const FAQ_SECTIONS = [
         a: 'Most popular calorie tracking apps require account creation and limit essential features — like barcode scanning, macro tracking, and trend insights — behind premium subscriptions. They may also show ads to free-tier users. Free Calorie Track includes these features at no cost, requires no account, shows no ads, and stores your data locally on your device rather than requiring cloud storage.',
       },
       {
+        q: 'Is this the best free macro tracker app?',
+        a: 'Free Calorie Track is one of the only macro tracking apps that provides full macro tracking (protein, carbs, fat) with real-time progress bars, automatic or custom macro goals, and detailed trends—all completely free with no paywall. Most macro tracker apps either charge a subscription fee to unlock macro tracking, show ads, or limit how many foods you can log per day. This app has no limits, no ads, and no subscription—just free macro tracking that works offline on any device.',
+      },
+      {
         q: 'Why is this app free when others charge for the same features?',
-        a: 'Free Calorie Track is funded by optional donations, not by investors or advertising. It runs as a Progressive Web App, which means no app store fees or middlemen. The goal was to build a calorie tracker that respects your privacy and doesn\'t gate features behind paywalls.',
+        a: 'Free Calorie Track is funded by optional donations, not by investors or advertising. It runs as a Progressive Web App, which means no app store fees or middlemen. The goal was to build a calorie and macro tracker that respects your privacy and doesn\'t gate features behind paywalls.',
       },
       {
         q: 'Is a free calorie tracker as good as a paid one?',
@@ -59,7 +67,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Can I track macros (protein, carbs, and fat) for free?',
-        a: 'Yes. Macro tracking is fully included. The app shows real-time progress bars for protein, carbs, and fat alongside your calorie count. You can use the automatically calculated macro targets based on your fitness goal, or set your own custom macro goals in settings. No paywall, no premium required.',
+        a: 'Yes. Macro tracking is fully included—this is a complete macro tracker app with no limitations. The app shows real-time progress bars for protein, carbs, and fat alongside your calorie count. You can use the automatically calculated macro targets based on your fitness goal, or set your own custom macro goals in settings. Unlike other macro tracking apps, there\'s no paywall, no premium tier, and no daily logging limits.',
       },
       {
         q: 'Can I create custom foods and recipes?',
@@ -344,9 +352,9 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <>
       <SEO
-        title="Free Calorie & Macro Tracker | No Paywalls, No Ads"
-        description="Track calories, protein, carbs & fat with barcode scanning, exercise logging, and trends. No account required, no ads, works offline—truly free."
-        keywords={['free calorie tracker', 'free macro tracker', 'calorie counter no subscription', 'free barcode scanner nutrition', 'myfitnesspal alternative free', 'no account calorie tracker', 'offline calorie tracker', 'privacy calorie app', 'free protein tracker', 'free carb tracker', 'free fat tracker']}
+        title="Free Calorie & Macro Tracker App | No Paywalls, No Ads"
+        description="Free calorie and macro tracker app with barcode scanning, protein/carb/fat tracking, and exercise logging. No account required, no ads, works offline—truly free macro tracking app for iPhone, Android & desktop."
+        keywords={['free macro tracker app', 'free calorie tracker app', 'macro tracking app', 'free protein tracker app', 'calorie counter app no subscription', 'free barcode scanner nutrition app', 'myfitnesspal alternative free app', 'no account macro tracker app', 'offline macro tracker app', 'privacy macro tracking app', 'free carb tracker app', 'free fat tracker app', 'calorie and macro tracking app', 'macro calculator app']}
         url="/"
         type="website"
       />
@@ -357,9 +365,9 @@ export default function LandingPage({ onGetStarted }) {
           <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
             {/* Left: Text */}
             <div className="flex-1 text-center md:text-left max-w-xl">
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">Free Calorie Track</h1>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">Free Calorie & Macro Tracker App</h1>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                Track calories & macros with <span className="font-bold text-emerald-600 dark:text-emerald-400">no paywalls, no ads, no account.</span>
+                The only calorie and macro tracking app with <span className="font-bold text-emerald-600 dark:text-emerald-400">no paywalls, no ads, no account.</span>
               </p>
               <button
                 onClick={onGetStarted}
@@ -418,12 +426,12 @@ export default function LandingPage({ onGetStarted }) {
 
       {/* How It Works */}
       <div className="max-w-2xl mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">How it works</h2>
+        <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">How the app works</h2>
         <div className="space-y-6">
           {[
-            { step: '1', title: 'Set up your profile', desc: 'Enter your age, height, weight, and activity level. We calculate your TDEE automatically.*', note: true },
-            { step: '2', title: 'Log your food and exercise', desc: 'Scan barcodes, pick from thousands of common foods, search branded products, build custom recipes, and track workouts from 250+ exercises.' },
-            { step: '3', title: 'See your Net calories and macros', desc: 'Food eaten minus your body\'s burn minus exercise. Plus real-time tracking for protein, carbs, and fat.' },
+            { step: '1', title: 'Set up your profile in the app', desc: 'Enter your age, height, weight, and activity level. The macro tracker app calculates your TDEE and macro targets automatically.*', note: true },
+            { step: '2', title: 'Log your food and exercise', desc: 'Scan barcodes, pick from thousands of common foods, search branded products, build custom recipes, and track workouts from 250+ exercises in the app.' },
+            { step: '3', title: 'See your Net calories and macros', desc: 'The macro tracking app shows your food eaten minus your body\'s burn minus exercise. Plus real-time tracking for protein, carbs, and fat.' },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-4">
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
@@ -444,16 +452,16 @@ export default function LandingPage({ onGetStarted }) {
       {/* Features Grid */}
       <div className="bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
         <div className="max-w-2xl mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Forever Core Features</h2>
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">100% free to use. All essential tracking features included.</p>
+          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Forever App Features</h2>
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">100% free to use. All essential calorie and macro tracking features included in the app.</p>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: '📷', title: 'Barcode Scanning', desc: 'Scan any product instantly. 220,000+ items in the database.' },
-              { icon: '🥩', title: 'Macro Tracking', desc: 'Protein, carbs, fat. Real-time progress bars, auto or custom targets.' },
-              { icon: '🏋️', title: '250+ Exercises', desc: 'Cardio, strength, sports, HIIT. MET-based calorie calculations.' },
-              { icon: '✏️', title: 'Edit Anything', desc: 'Fix yesterday. Fix last week. No streak penalties, no guilt.' },
-              { icon: '📈', title: 'Trends & Insights', desc: 'Weekly and monthly averages. Weight progress charts. All free.' },
-              { icon: '📶', title: 'Works Offline', desc: 'Install on any device.' },
+              { icon: '📷', title: 'Barcode Scanning', desc: 'Scan any product instantly with the app. 220,000+ items in the database.' },
+              { icon: '🥩', title: 'Macro Tracking', desc: 'Full macro tracker with protein, carbs, fat. Real-time progress bars, auto or custom targets.' },
+              { icon: '🏋️', title: '250+ Exercises', desc: 'Cardio, strength, sports, HIIT. MET-based calorie calculations in the app.' },
+              { icon: '✏️', title: 'Edit Anything', desc: 'Fix yesterday. Fix last week. No streak penalties, no guilt in this app.' },
+              { icon: '📈', title: 'Trends & Insights', desc: 'Weekly and monthly averages. Weight progress charts. All free in the app.' },
+              { icon: '📶', title: 'Works Offline', desc: 'Install the app on any device. No internet needed.' },
             ].map((f) => (
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
                 <div className="text-2xl mb-2">{f.icon}</div>
@@ -467,15 +475,15 @@ export default function LandingPage({ onGetStarted }) {
 
       {/* Comparison Table */}
       <div className="max-w-2xl mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">See how we compare</h2>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Core features. 100% free to use.</p>
+        <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">See how our macro tracker app compares</h2>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Core app features for calorie and macro tracking. 100% free to use.</p>
         <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-emerald-600 text-white">
-                <th className="text-left px-4 py-3 font-semibold">Features*</th>
-                <th className="text-left px-4 py-3 font-semibold">Free Calorie Track</th>
-                <th className="text-left px-4 py-3 font-semibold">Other Leading Apps</th>
+                <th className="text-left px-4 py-3 font-semibold">App Features*</th>
+                <th className="text-left px-4 py-3 font-semibold">Free Calorie Track App</th>
+                <th className="text-left px-4 py-3 font-semibold">Other Calorie Tracking Apps</th>
               </tr>
             </thead>
             <tbody>
@@ -490,22 +498,22 @@ export default function LandingPage({ onGetStarted }) {
           </table>
         </div>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 leading-relaxed border-t border-gray-200 dark:border-gray-700 pt-4">
-          <strong>*Disclaimer:</strong> Comparison based on typical free-tier features available from leading subscription-based calorie tracking apps as of February 2026. Feature availability may change over time. No specific apps or trademarks are referenced to avoid trademark concerns.
+          <strong>*Disclaimer:</strong> Comparison based on typical free-tier features available from leading subscription-based calorie and macro tracking apps as of February 2026. Feature availability may change over time. No specific apps or trademarks are referenced to avoid trademark concerns.
         </p>
       </div>
 
       {/* CTA */}
       <div className="bg-emerald-600 dark:bg-emerald-700 px-4 py-12">
         <div className="max-w-2xl mx-auto text-center text-white">
-          <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch.</p>
+          <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch. Just a free calorie and macro tracking app.</p>
           <button
             onClick={onGetStarted}
             className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50"
-            aria-label="Start tracking calories and macros now"
+            aria-label="Start using the free calorie and macro tracker app now"
           >
-            Start Tracking Now
+            Start Using the App Now
           </button>
-          <p className="text-emerald-100 text-sm mt-3">No download required</p>
+          <p className="text-emerald-100 text-sm mt-3">No app store download required—opens instantly in your browser</p>
         </div>
       </div>
 
