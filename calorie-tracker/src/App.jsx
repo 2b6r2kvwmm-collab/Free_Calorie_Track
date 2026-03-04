@@ -41,42 +41,6 @@ function App() {
     saveDarkMode(darkMode);
   }, [darkMode]);
 
-  // Analytics: Strip onboarding query params after tracking
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const onboardingStep = params.get('onboarding');
-
-    console.log('[ANALYTICS DEBUG] useEffect fired - location.search:', location.search);
-    console.log('[ANALYTICS DEBUG] Full URL:', window.location.href);
-
-    if (onboardingStep) {
-      console.log('[ANALYTICS DEBUG] Found onboarding param:', onboardingStep);
-
-      // Validate against state before trusting (prevents pollution from shared links)
-      const isValid = (
-        (onboardingStep === 'landing-complete' && landingPageShown) ||
-        (onboardingStep === 'install-complete' && installPromptShown) ||
-        (onboardingStep === 'profile-complete' && profile)
-      );
-
-      console.log('[ANALYTICS DEBUG] Validation result:', isValid);
-      console.log('[ANALYTICS DEBUG] State - landingPageShown:', landingPageShown, 'installPromptShown:', installPromptShown, 'profile:', !!profile);
-
-      if (isValid) {
-        // Vercel Analytics auto-tracks this URL with query param
-        // Wait for analytics beacon to send, then clean up URL
-        console.log('[ANALYTICS DEBUG] Valid param - waiting 500ms before cleanup');
-        setTimeout(() => {
-          console.log('[ANALYTICS DEBUG] Cleaning up URL - navigating to /');
-          navigate('/', { replace: true });
-        }, 500);
-      } else {
-        // Invalid/shared link - strip immediately
-        console.log('[ANALYTICS DEBUG] Invalid param - stripping immediately');
-        navigate('/', { replace: true });
-      }
-    }
-  }, [location.search, landingPageShown, installPromptShown, profile, navigate]);
 
   const handleProfileComplete = (newProfile) => {
     saveProfile(newProfile);
@@ -107,11 +71,8 @@ function App() {
   if (!landingPageShown && !profile) {
     return (
       <LandingPage onGetStarted={() => {
-        console.log('[ANALYTICS DEBUG] Landing page completed');
         markLandingPageShown();
         setLandingPageShown(true);
-        console.log('[ANALYTICS DEBUG] Navigating to: /?onboarding=landing-complete');
-        navigate('/?onboarding=landing-complete');
       }} />
     );
   }
@@ -119,22 +80,14 @@ function App() {
   if (!installPromptShown && !profile) {
     return (
       <InstallPrompt onContinue={() => {
-        console.log('[ANALYTICS DEBUG] Install prompt completed');
         markInstallPromptShown();
         setInstallPromptShown(true);
-        console.log('[ANALYTICS DEBUG] Navigating to: /?onboarding=install-complete');
-        navigate('/?onboarding=install-complete');
       }} />
     );
   }
 
   if (!profile) {
-    return <ProfileSetup onComplete={(newProfile) => {
-      console.log('[ANALYTICS DEBUG] Profile setup completed');
-      handleProfileComplete(newProfile);
-      console.log('[ANALYTICS DEBUG] Navigating to: /?onboarding=profile-complete');
-      navigate('/?onboarding=profile-complete');
-    }} />;
+    return <ProfileSetup onComplete={handleProfileComplete} />;
   }
 
   return (
