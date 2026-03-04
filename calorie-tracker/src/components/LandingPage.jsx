@@ -75,7 +75,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'How do I quickly log complex meals like salads, sandwiches, or bowls?',
-        a: 'Use the Recipe Builder to combine multiple ingredients in one go. Pick your base (salad greens, bread, rice bowl), add proteins, toppings, cheese, dressings, and sauces—the app calculates the total nutrition automatically. Save it to log again later. This is faster than entering each ingredient separately and far more accurate than AI photo scanning, which can\'t detect oils, seasonings, cooking methods, or precise ingredient quantities.',
+        a: 'Use the built-in builders in Common Foods. Search for "Sandwich (build your own)", "Salad (build your own)", "Pizza (build your own)", or any of the 13 available builders. Select your proteins, cheeses, vegetables, sauces, and toppings from organized categories—the app calculates nutrition automatically as you build. You can set custom quantities for each ingredient. It logs in seconds as one item (e.g., "Salad: chicken, feta, ranch") instead of entering each ingredient separately. Far more accurate than AI photo scanning, which can\'t detect oils, portions, or ingredients.',
       },
       {
         q: 'Can I copy yesterday\'s meals?',
