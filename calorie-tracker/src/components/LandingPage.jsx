@@ -356,9 +356,9 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <>
       <SEO
-        title="Calorie Tracker Free - No Paywalls, No Ads"
-        description="Calorie tracker free to use with barcode scanning, macro tracking (protein, carbs, fat), and exercise logging. No account required, no ads, works offline. Free calorie tracker for iPhone, Android, and desktop."
-        keywords={['calorie tracker free', 'free calorie tracker', 'free macro tracker', 'calorie counter free', 'free calorie tracking', 'macro tracker free', 'free barcode scanner nutrition', 'myfitnesspal alternative free', 'no account calorie tracker', 'offline calorie tracker', 'free protein tracker', 'free carb tracker', 'free fat tracker', 'calorie and macro tracker free']}
+        title="Best Free Macro Tracker - Track Calories & Macros (No Ads)"
+        description="Best free macro tracker app - track calories, protein, carbs, fat with barcode scanning. No account, no ads, works offline. Free for all devices."
+        keywords={['best free macro tracker', 'free macro tracker app', 'macro tracker app', 'best macro tracker', 'macro tracker free', 'free macro tracking app', 'best free macro tracker app', 'macro tracking app', 'calorie tracker', 'free calorie tracker app', 'best free calorie and macro tracker', 'free barcode scanner nutrition', 'no account macro tracker', 'offline macro tracker', 'free protein tracker', 'free carb tracker', 'best macro tracking app free']}
         url="/"
         type="website"
       />
@@ -369,9 +369,9 @@ export default function LandingPage({ onGetStarted }) {
           <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
             {/* Left: Text */}
             <div className="flex-1 text-center md:text-left max-w-xl">
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">Free Calorie Tracker</h1>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">Best Free Macro Tracker</h1>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                The only calorie tracker free of <span className="font-bold text-emerald-600 dark:text-emerald-400">paywalls, ads, and accounts.</span>
+                Track calories, protein, carbs & fat with <span className="font-bold text-emerald-600 dark:text-emerald-400">no paywalls, ads, or accounts.</span>
               </p>
               <button
                 onClick={onGetStarted}
@@ -433,9 +433,9 @@ export default function LandingPage({ onGetStarted }) {
         <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">How it works</h2>
         <div className="space-y-6">
           {[
-            { step: '1', title: 'Set up your profile', desc: 'Enter your age, height, weight, and activity level. The free calorie tracker calculates your TDEE and macro targets automatically.*', note: true },
+            { step: '1', title: 'Set up your profile', desc: 'Enter your age, height, weight, and activity level. The free macro tracker calculates your TDEE and macro targets (protein, carbs, fat) automatically.*', note: true },
             { step: '2', title: 'Log your food and exercise', desc: 'Scan barcodes, pick from thousands of common foods, search branded products, build custom recipes, and track workouts from 250+ exercises.' },
-            { step: '3', title: 'See your Net calories and macros', desc: 'The tracker shows your food eaten minus your body\'s burn minus exercise. Plus real-time tracking for protein, carbs, and fat.' },
+            { step: '3', title: 'See your macros and Net calories', desc: 'Real-time progress bars for protein, carbs, and fat. Track your Net calories (food eaten minus body burn minus exercise) for true energy balance.' },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-4">
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
@@ -456,8 +456,8 @@ export default function LandingPage({ onGetStarted }) {
       {/* Features Grid */}
       <div className="bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
         <div className="max-w-2xl mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Forever Features</h2>
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">100% free calorie tracker. All essential tracking features included.</p>
+          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Macro Tracker Features</h2>
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Best free macro tracker app. Track protein, carbs, fat, and calories with no paywalls.</p>
           <div className="grid grid-cols-2 gap-4">
             {[
               { icon: '📷', title: 'Barcode Scanning', desc: 'Scan any product instantly. 220,000+ items in the database.' },
@@ -479,15 +479,15 @@ export default function LandingPage({ onGetStarted }) {
 
       {/* Comparison Table */}
       <div className="max-w-2xl mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free calorie tracker comparison</h2>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Core features for calorie and macro tracking. 100% free to use.</p>
+        <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Best free macro tracker comparison</h2>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Core features for macro and calorie tracking. 100% free to use.</p>
         <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-emerald-600 text-white">
                 <th className="text-left px-4 py-3 font-semibold">Features*</th>
                 <th className="text-left px-4 py-3 font-semibold">Free Calorie Track</th>
-                <th className="text-left px-4 py-3 font-semibold">Other Calorie Trackers</th>
+                <th className="text-left px-4 py-3 font-semibold">Other Macro Trackers</th>
               </tr>
             </thead>
             <tbody>
@@ -502,18 +502,18 @@ export default function LandingPage({ onGetStarted }) {
           </table>
         </div>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 leading-relaxed border-t border-gray-200 dark:border-gray-700 pt-4">
-          <strong>*Disclaimer:</strong> Comparison based on typical free-tier features available from leading subscription-based calorie trackers as of February 2026. Feature availability may change over time. No specific apps or trademarks are referenced to avoid trademark concerns.
+          <strong>*Disclaimer:</strong> Comparison based on typical free-tier features available from leading subscription-based macro and calorie trackers as of February 2026. Feature availability may change over time. No specific apps or trademarks are referenced to avoid trademark concerns.
         </p>
       </div>
 
       {/* CTA */}
       <div className="bg-emerald-600 dark:bg-emerald-700 px-4 py-12">
         <div className="max-w-2xl mx-auto text-center text-white">
-          <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch. Just a free calorie tracker.</p>
+          <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch. Just a free macro tracker.</p>
           <button
             onClick={onGetStarted}
             className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50"
-            aria-label="Start using the free calorie tracker now"
+            aria-label="Start using the best free macro tracker now"
           >
             Start Tracking Now
           </button>
