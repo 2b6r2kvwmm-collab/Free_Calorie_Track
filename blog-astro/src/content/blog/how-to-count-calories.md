@@ -1,12 +1,22 @@
 ---
-title: "How to Count Calories: Complete Beginner's Guide (2026)"
-description: "Step-by-step guide to counting calories for weight loss. Learn to read nutrition labels, measure portions, and track accurately."
+title: "How to Count Calories + Free Calorie Tracker (No Signup)"
+description: "Learn how to count calories in 3 easy steps + use our free calorie tracker with barcode scanning, macro tracking, and 250+ exercises. No account required, no ads, works offline."
 pubDate: 2026-03-02
 author: "FCT Staff"
 image: "/images/blog/how-to-count-calories.webp"
 ---
 
 ![How to count calories](/images/blog/how-to-count-calories.webp)
+
+<div class="text-center my-8 p-6 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 rounded-xl border-2 border-emerald-500">
+  <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">📊 Want to track calories automatically?</h3>
+  <p class="text-gray-700 dark:text-gray-300 mb-4 max-w-xl mx-auto">
+    Use our free calorie tracker with barcode scanning, 220,000+ foods, and macro tracking. No signup, no ads, works offline.
+  </p>
+  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+    Try Free Calorie Track →
+  </a>
+</div>
 
 <div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
   <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>

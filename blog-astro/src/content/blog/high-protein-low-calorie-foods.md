@@ -1,12 +1,22 @@
 ---
-title: "40+ High Protein Low Calorie Foods (Complete List)"
-description: "The best high protein low calorie foods for weight loss and muscle building. Includes macro breakdowns and meal ideas."
+title: "40+ High Protein Low Calorie Foods + Free Protein Tracker"
+description: "The best high protein low calorie foods for weight loss and muscle building. Includes macro breakdowns, meal ideas, and free protein tracking tool. No signup required."
 pubDate: 2026-03-02
 author: "FCT Staff"
 image: "/images/blog/high-protein-foods.webp"
 ---
 
 ![High protein low calorie foods](/images/blog/high-protein-foods.webp)
+
+<div class="text-center my-8 p-6 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 rounded-xl border-2 border-emerald-500">
+  <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">📊 Track your protein intake automatically</h3>
+  <p class="text-gray-700 dark:text-gray-300 mb-4 max-w-xl mx-auto">
+    Free calorie tracker with protein tracking, macro targets, and 220,000+ foods including all the high-protein options listed below. No signup required.
+  </p>
+  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+    Try Free Calorie Track →
+  </a>
+</div>
 
 <div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
   <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>

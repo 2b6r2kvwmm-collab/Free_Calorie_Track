@@ -1,12 +1,22 @@
 ---
-title: "What Are Macros? Understanding Macronutrients"
-description: "Learn what macronutrients (protein, carbs, and fat) are, what they do in your body, and why tracking them matters."
+title: "What Are Macros? (Free Macro Tracker Included)"
+description: "Simple explanation of macros (protein, carbs, fat) + free macro tracker with real-time progress bars, automatic macro goals, and barcode scanning. No signup required."
 pubDate: 2026-02-25
 author: "FCT Staff"
 image: "/images/blog/macros-guide.webp"
 ---
 
 ![What are macros guide](/images/blog/macros-guide.webp)
+
+<div class="text-center my-8 p-6 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 rounded-xl border-2 border-emerald-500">
+  <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">📊 Want to track your macros automatically?</h3>
+  <p class="text-gray-700 dark:text-gray-300 mb-4 max-w-xl mx-auto">
+    Use our free macro tracker with real-time progress bars for protein, carbs, and fat. Automatic macro targets based on your goals. No signup, no ads.
+  </p>
+  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+    Try Free Calorie Track →
+  </a>
+</div>
 
 <div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-8 rounded-r-lg">
   <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
