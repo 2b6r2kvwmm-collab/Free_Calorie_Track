@@ -356,9 +356,9 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <>
       <SEO
-        title="Best Free Macro Tracker - Track Calories & Macros (No Ads)"
+        title="Free Calorie & Macro Tracker - Best App for Tracking Macros"
         description="Best free macro tracker app - track calories, protein, carbs, fat with barcode scanning. No account, no ads, works offline. Free for all devices."
-        keywords={['best free macro tracker', 'free macro tracker app', 'macro tracker app', 'best macro tracker', 'macro tracker free', 'free macro tracking app', 'best free macro tracker app', 'macro tracking app', 'calorie tracker', 'free calorie tracker app', 'best free calorie and macro tracker', 'free barcode scanner nutrition', 'no account macro tracker', 'offline macro tracker', 'free protein tracker', 'free carb tracker', 'best macro tracking app free']}
+        keywords={['best free macro tracker', 'free macro tracker app', 'macro tracker app', 'best macro tracker', 'calorie tracker free', 'free calorie tracker', 'macro tracker free', 'free macro tracking app', 'best free macro tracker app', 'macro tracking app', 'calorie tracker', 'free calorie tracker app', 'best free calorie and macro tracker', 'free barcode scanner nutrition', 'no account macro tracker', 'offline macro tracker', 'free protein tracker', 'free carb tracker', 'best macro tracking app free']}
         url="/"
         type="website"
       />
