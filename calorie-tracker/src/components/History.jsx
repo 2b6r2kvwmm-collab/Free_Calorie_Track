@@ -138,10 +138,10 @@ export default function History({ onRefresh }) {
       {/* Add to Any Date */}
       <div className="card">
         <h3 className="text-sm font-semibold mb-3">Log to a Different Day</h3>
-        <div className="space-y-3">
+        <div className="space-y-3 max-w-full">
           <input
             type="date"
-            className="input-field"
+            className="input-field w-full"
             max={new Date().toISOString().split('T')[0]}
             value={datePickerValue}
             onChange={(e) => {
@@ -154,7 +154,7 @@ export default function History({ onRefresh }) {
             aria-label="Select date to add entries"
           />
           {selectedDate && (
-            <div className="flex gap-3">
+            <div className="flex gap-2 sm:gap-3">
               <button
                 onClick={() => handleAddFoodToDate(selectedDate)}
                 className="btn-primary flex-1"

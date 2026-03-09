@@ -84,12 +84,13 @@ define(['./workbox-959db468'], (function (workbox) { 'use strict';
     "url": "registerSW.js",
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
-    "url": "index.html",
-    "revision": "0.ulo09l9h3qk"
+    "url": "/index.html",
+    "revision": "0.3836a07bn14"
   }], {});
   workbox.cleanupOutdatedCaches();
-  workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
-    allowlist: [/^\/$/]
+  workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/index.html"), {
+    allowlist: [/^\/$/],
+    denylist: [/^\/blog/]
   }));
   workbox.registerRoute(/^https:\/\/world\.openfoodfacts\.org\/.*/i, new workbox.CacheFirst({
     "cacheName": "openfoodfacts-cache",

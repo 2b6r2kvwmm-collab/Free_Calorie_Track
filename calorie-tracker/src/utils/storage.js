@@ -377,6 +377,37 @@ export function saveMealTypeEnabled(enabled) {
   setData('mealTypeEnabled', enabled);
 }
 
+// Dashboard Focus - 'calories' or 'macros' to prioritize display order
+export function getDashboardFocus() {
+  const focus = getData('dashboardFocus');
+  return focus || 'calories'; // Default to 'calories' (current behavior)
+}
+
+export function saveDashboardFocus(focus) {
+  setData('dashboardFocus', focus);
+}
+
+// Macro Presets - apply popular macro splits based on calorie goal
+export function applyMacroPreset(presetName, calorieGoal) {
+  const presets = {
+    'high-protein': { p: 0.40, c: 0.30, f: 0.30 },
+    'balanced': { p: 0.30, c: 0.40, f: 0.30 },
+    'low-carb': { p: 0.40, c: 0.20, f: 0.40 },
+    'keto': { p: 0.30, c: 0.05, f: 0.65 },
+    'athletic': { p: 0.30, c: 0.50, f: 0.20 },
+    'zone': { p: 0.30, c: 0.40, f: 0.30 },
+  };
+
+  const preset = presets[presetName];
+  if (!preset) return null;
+
+  const protein = Math.round((calorieGoal * preset.p) / 4);
+  const carbs = Math.round((calorieGoal * preset.c) / 4);
+  const fat = Math.round((calorieGoal * preset.f) / 9);
+
+  return { protein, carbs, fat, calories: calorieGoal };
+}
+
 // Convert between oz and mL
 export function ozToMl(oz) {
   return Math.round(oz * 29.5735);

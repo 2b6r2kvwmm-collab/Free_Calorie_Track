@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getMealTypeEnabled, saveMealTypeEnabled, calculateUserStats } from '../utils/storage';
+import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
@@ -20,6 +20,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const [customMacros, setCustomMacros] = useState(currentCustomMacros);
   const [waterTrackerEnabled, setWaterTrackerEnabled] = useState(getWaterTrackerEnabled());
   const [mealTypeEnabled, setMealTypeEnabled] = useState(getMealTypeEnabled());
+  const [dashboardFocus, setDashboardFocus] = useState(getDashboardFocus());
 
   // Convert stored metric values to user's preferred unit for display
   const displayHeight = currentProfile.unit === 'imperial'
@@ -288,6 +289,48 @@ export default function Settings({ onUpdateProfile, onClose }) {
               </p>
             </div>
           </div>
+
+          <div>
+            <label className="block text-lg font-semibold mb-3">Dashboard Focus</label>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+              Choose what to prioritize on your dashboard.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setDashboardFocus('calories');
+                  saveDashboardFocus('calories');
+                }}
+                className={`py-3 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                  dashboardFocus === 'calories'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
+                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                Calories First
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDashboardFocus('macros');
+                  saveDashboardFocus('macros');
+                }}
+                className={`py-3 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                  dashboardFocus === 'macros'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
+                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                Macros First
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              {dashboardFocus === 'macros'
+                ? 'Macro progress bars will appear above calorie breakdown.'
+                : 'Calorie breakdown appears first (current layout).'}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -513,10 +556,94 @@ export default function Settings({ onUpdateProfile, onClose }) {
                   Set your daily macro targets. Your net calorie goal is calculated automatically.
                 </p>
 
+                {/* Quick Macro Presets */}
+                <div className="mb-6">
+                  <label className="block text-sm font-semibold mb-3">
+                    Quick Macro Presets
+                  </label>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">
+                    One-tap popular macro splits based on your calorie goal. You can adjust after selecting.
+                  </p>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const preset = applyMacroPreset('high-protein', totalCaloriesFromMacros);
+                        if (preset) setCustomMacros({ protein: preset.protein, carbs: preset.carbs, fat: preset.fat });
+                      }}
+                      className="p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors text-left"
+                    >
+                      <div className="font-semibold text-gray-800 dark:text-gray-200">High Protein</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">40% P / 30% C / 30% F</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Best for: Fat loss, muscle retention</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const preset = applyMacroPreset('balanced', totalCaloriesFromMacros);
+                        if (preset) setCustomMacros({ protein: preset.protein, carbs: preset.carbs, fat: preset.fat });
+                      }}
+                      className="p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors text-left"
+                    >
+                      <div className="font-semibold text-gray-800 dark:text-gray-200">Balanced</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">30% P / 40% C / 30% F</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Best for: General fitness, maintenance</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const preset = applyMacroPreset('low-carb', totalCaloriesFromMacros);
+                        if (preset) setCustomMacros({ protein: preset.protein, carbs: preset.carbs, fat: preset.fat });
+                      }}
+                      className="p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors text-left"
+                    >
+                      <div className="font-semibold text-gray-800 dark:text-gray-200">Low Carb</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">40% P / 20% C / 40% F</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Best for: Low-carb diets</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const preset = applyMacroPreset('keto', totalCaloriesFromMacros);
+                        if (preset) setCustomMacros({ protein: preset.protein, carbs: preset.carbs, fat: preset.fat });
+                      }}
+                      className="p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors text-left"
+                    >
+                      <div className="font-semibold text-gray-800 dark:text-gray-200">Keto</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">30% P / 5% C / 65% F</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Best for: Ketogenic diet</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const preset = applyMacroPreset('athletic', totalCaloriesFromMacros);
+                        if (preset) setCustomMacros({ protein: preset.protein, carbs: preset.carbs, fat: preset.fat });
+                      }}
+                      className="p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors text-left"
+                    >
+                      <div className="font-semibold text-gray-800 dark:text-gray-200">Athletic Performance</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">30% P / 50% C / 20% F</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Best for: Endurance athletes</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const preset = applyMacroPreset('zone', totalCaloriesFromMacros);
+                        if (preset) setCustomMacros({ protein: preset.protein, carbs: preset.carbs, fat: preset.fat });
+                      }}
+                      className="p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors text-left"
+                    >
+                      <div className="font-semibold text-gray-800 dark:text-gray-200">Zone Diet</div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400">30% P / 40% C / 30% F</div>
+                      <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">Best for: Blood sugar control</div>
+                    </button>
+                  </div>
+                </div>
+
                 {/* Custom Macros */}
                 <div>
                   <label className="block text-sm font-semibold mb-3">
-                    Daily Macro Targets (grams)
+                    Or Enter Manually (grams)
                   </label>
 
                   <div className="grid grid-cols-3 gap-4">

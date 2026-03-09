@@ -129,7 +129,7 @@ function App() {
               </h1>
               <p className="text-xs text-gray-500 dark:text-gray-400 uppercase"
                  style={{ fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '0.03em', fontSize: '10px' }}>
-                The ultimate free calorie tracker
+                The ultimate calorie & macro tracker
               </p>
             </div>
             <div className="flex items-center gap-4">

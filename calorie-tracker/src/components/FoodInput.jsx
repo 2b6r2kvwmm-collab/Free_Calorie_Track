@@ -217,10 +217,10 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                 {favorites.map((food, index) => (
                   <div
                     key={index}
-                    className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                    className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-3 sm:p-4"
                   >
-                    <div className="flex justify-between items-start gap-4">
-                      <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                      <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-lg">{food.name}</h3>
                         <div className="text-gray-600 dark:text-gray-400 mt-1">
                           <span className="font-semibold text-lg">{food.calories} cal</span>
@@ -229,7 +229,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                           )}
                         </div>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 sm:flex-shrink-0">
                         <button
                           onClick={() => toggleFavorite(food, true)}
                           className="text-2xl"
@@ -239,7 +239,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                         </button>
                         <button
                           onClick={() => handleAddFood(food)}
-                          className="btn-primary"
+                          className="btn-primary whitespace-nowrap"
                         >
                           Add
                         </button>
@@ -276,10 +276,10 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                   return (
                     <div
                       key={index}
-                      className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                      className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-3 sm:p-4"
                     >
-                      <div className="flex justify-between items-start gap-4">
-                        <div className="flex-1">
+                      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                        <div className="flex-1 min-w-0">
                           <h3 className="font-semibold text-lg">{food.name}</h3>
                           <div className="text-gray-600 dark:text-gray-400 mt-1">
                             <span className="font-semibold text-lg">{food.calories} cal</span>
@@ -288,7 +288,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                             )}
                           </div>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 sm:flex-shrink-0">
                           <button
                             onClick={() => toggleFavorite(food, isFavorite)}
                             className="text-2xl"
@@ -298,7 +298,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
                           </button>
                           <button
                             onClick={() => handleAddFood(food)}
-                            className="btn-primary"
+                            className="btn-primary whitespace-nowrap"
                           >
                             Add
                           </button>

@@ -18,6 +18,7 @@ import {
   saveCustomCalorieGoal,
   getLocalDateString,
   getWaterTrackerEnabled,
+  getDashboardFocus,
   getMilestonesShown,
   markMilestoneShown,
   calculateUserStats,
@@ -67,6 +68,7 @@ export default function Dashboard({ onRefresh }) {
   const [showGoalMismatchWarning, setShowGoalMismatchWarning] = useState(false);
   const [goalRefreshKey, setGoalRefreshKey] = useState(0); // Force re-render when goal changes
   const waterTrackerEnabled = getWaterTrackerEnabled();
+  const dashboardFocus = getDashboardFocus();
 
   // State locking for async operations
   const [isProcessing, setIsProcessing] = useState(false);
@@ -813,53 +815,111 @@ export default function Dashboard({ onRefresh }) {
         </div>
       )}
 
-      {/* Calorie Breakdown */}
-      <div className="space-y-3">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="card text-center">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
-            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-              +{caloriesEaten}
+      {/* Conditionally render Macros or Calories first based on dashboard focus */}
+      {dashboardFocus === 'macros' ? (
+        <>
+          {/* Macros First - Larger display */}
+          {(profile.fitnessGoal || usingCustomGoals) && (
+            <div className="transform scale-105">
+              <MacroTracker
+                profile={profile}
+                currentProtein={totalProtein}
+                currentCarbs={totalCarbs}
+                currentFat={totalFat}
+                proteinGoal={proteinGoal}
+                carbsGoal={carbsGoal}
+                fatGoal={fatGoal}
+                isCustomGoals={usingCustomGoals}
+                fitnessGoal={profile.fitnessGoal}
+                exerciseBurned={exerciseBurned}
+              />
             </div>
-          </div>
+          )}
 
-          <div className="card text-center">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Resting</div>
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
-              -{restingBurned}
+          {/* Calorie Breakdown - Secondary */}
+          <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="card text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                  +{caloriesEaten}
+                </div>
+              </div>
+
+              <div className="card text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Resting</div>
+                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
+                  -{restingBurned}
+                </div>
+              </div>
+
+              <div className="card text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                  -{exerciseBurned}
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="card text-center">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
-            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-              -{exerciseBurned}
+            {daysTracked < 5 && (
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
+                net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Calories First - Default layout */}
+          <div className="space-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="card text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
+                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                  +{caloriesEaten}
+                </div>
+              </div>
+
+              <div className="card text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Resting</div>
+                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
+                  -{restingBurned}
+                </div>
+              </div>
+
+              <div className="card text-center">
+                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
+                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+                  -{exerciseBurned}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {daysTracked < 5 && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-            <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
-            net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
+            {daysTracked < 5 && (
+              <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
+                net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      {/* Macros Breakdown with Goals */}
-      {(profile.fitnessGoal || usingCustomGoals) && (
-        <MacroTracker
-          profile={profile}
-          currentProtein={totalProtein}
-          currentCarbs={totalCarbs}
-          currentFat={totalFat}
-          proteinGoal={proteinGoal}
-          carbsGoal={carbsGoal}
-          fatGoal={fatGoal}
-          isCustomGoals={usingCustomGoals}
-          fitnessGoal={profile.fitnessGoal}
-          exerciseBurned={exerciseBurned}
-        />
+          {/* Macros Breakdown with Goals */}
+          {(profile.fitnessGoal || usingCustomGoals) && (
+            <MacroTracker
+              profile={profile}
+              currentProtein={totalProtein}
+              currentCarbs={totalCarbs}
+              currentFat={totalFat}
+              proteinGoal={proteinGoal}
+              carbsGoal={carbsGoal}
+              fatGoal={fatGoal}
+              isCustomGoals={usingCustomGoals}
+              fitnessGoal={profile.fitnessGoal}
+              exerciseBurned={exerciseBurned}
+            />
+          )}
+        </>
       )}
 
       {/* Achievements Bar */}
