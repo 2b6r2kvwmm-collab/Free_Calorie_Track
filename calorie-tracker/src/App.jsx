@@ -44,6 +44,8 @@ function App() {
   }, [darkMode]);
 
   // Check if we should show the share modal (after 5 days of tracking)
+  const [userDaysTracked, setUserDaysTracked] = useState(0);
+
   useEffect(() => {
     if (!profile) return; // Only check for logged-in users
 
@@ -52,6 +54,7 @@ function App() {
 
     const stats = calculateUserStats();
     if (stats.daysTracked >= 5) {
+      setUserDaysTracked(stats.daysTracked);
       // Wait 2 seconds after page load to show modal (less jarring)
       const timer = setTimeout(() => {
         setShowShareModal(true);
@@ -258,7 +261,7 @@ function App() {
 
       {/* Share Modal - shown after 5 days of tracking */}
       {showShareModal && (
-        <ShareModal onClose={handleShareModalClose} />
+        <ShareModal onClose={handleShareModalClose} daysTracked={userDaysTracked} />
       )}
 
       {/* Update Notification */}

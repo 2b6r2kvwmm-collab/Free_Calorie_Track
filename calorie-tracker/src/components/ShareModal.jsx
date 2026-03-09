@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
-export default function ShareModal({ onClose }) {
+export default function ShareModal({ onClose, daysTracked }) {
   const modalRef = useModalAccessibility(true, onClose);
 
   // Lock body scroll when modal opens
@@ -77,7 +77,7 @@ export default function ShareModal({ onClose }) {
         <div className="text-center">
           <div className="text-4xl mb-4">📊</div>
           <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-gray-100">
-            5-day streak! You're crushing it.
+            {daysTracked}-day streak! You're crushing it.
           </h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
             Know anyone tired of:
