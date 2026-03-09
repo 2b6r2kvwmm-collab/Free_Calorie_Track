@@ -10,6 +10,7 @@ export default function History({ onRefresh }) {
   const [showFoodInput, setShowFoodInput] = useState(false);
   const [showExerciseLog, setShowExerciseLog] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [datePickerValue, setDatePickerValue] = useState('');
 
   const profile = getProfile();
   const bmr = calculateBMR(profile);
@@ -99,18 +100,24 @@ export default function History({ onRefresh }) {
   };
 
   const handleFoodAdded = (food) => {
-    addFoodEntry(food, selectedDate);
+    const dateToAdd = selectedDate;
+    addFoodEntry(food, dateToAdd);
     setShowFoodInput(false);
     setSelectedDate(null);
+    setDatePickerValue(''); // Clear the date picker
     loadHistory();
+    setExpandedDate(dateToAdd); // Auto-expand the date after adding
     onRefresh();
   };
 
   const handleExerciseAdded = (exercise) => {
-    addExerciseEntry(exercise, selectedDate);
+    const dateToAdd = selectedDate;
+    addExerciseEntry(exercise, dateToAdd);
     setShowExerciseLog(false);
     setSelectedDate(null);
+    setDatePickerValue(''); // Clear the date picker
     loadHistory();
+    setExpandedDate(dateToAdd); // Auto-expand the date after adding
     onRefresh();
   };
 
@@ -127,6 +134,43 @@ export default function History({ onRefresh }) {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold text-center mb-6">History</h2>
+
+      {/* Add to Any Date */}
+      <div className="card">
+        <h3 className="text-sm font-semibold mb-3">Log to a Different Day</h3>
+        <div className="space-y-3">
+          <input
+            type="date"
+            className="input-field"
+            max={new Date().toISOString().split('T')[0]}
+            value={datePickerValue}
+            onChange={(e) => {
+              setDatePickerValue(e.target.value);
+              if (e.target.value) {
+                setSelectedDate(e.target.value);
+                setExpandedDate(e.target.value);
+              }
+            }}
+            aria-label="Select date to add entries"
+          />
+          {selectedDate && (
+            <div className="flex gap-3">
+              <button
+                onClick={() => handleAddFoodToDate(selectedDate)}
+                className="btn-primary flex-1"
+              >
+                + Add Food
+              </button>
+              <button
+                onClick={() => handleAddExerciseToDate(selectedDate)}
+                className="btn-secondary flex-1"
+              >
+                + Add Exercise
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
 
       {historyData.length === 0 ? (
         <div className="card text-center py-12">
