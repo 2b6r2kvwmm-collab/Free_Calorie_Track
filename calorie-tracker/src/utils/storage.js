@@ -18,6 +18,7 @@ const STORAGE_KEYS = {
   WATER_UNIT: 'waterUnit',
   WORKOUT_TEMPLATES: 'workoutTemplates',
   MILESTONES_SHOWN: 'milestonesShown',
+  SHARE_MODAL_SHOWN: 'shareModalShown',
 };
 
 // Get local date string (YYYY-MM-DD) in user's timezone, not UTC
@@ -500,6 +501,15 @@ export function markMilestoneShown(milestone) {
   const milestones = getMilestonesShown();
   milestones[`days${milestone}`] = true;
   setData(STORAGE_KEYS.MILESTONES_SHOWN, milestones);
+}
+
+// Share modal tracking
+export function getShareModalShown() {
+  return getData(STORAGE_KEYS.SHARE_MODAL_SHOWN) || false;
+}
+
+export function markShareModalShown() {
+  setData(STORAGE_KEYS.SHARE_MODAL_SHOWN, true);
 }
 
 // Calculate user stats for milestone celebrations and settings

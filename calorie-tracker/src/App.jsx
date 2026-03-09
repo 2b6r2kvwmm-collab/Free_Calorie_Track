@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
@@ -12,6 +12,7 @@ import History from './components/History';
 import Settings from './components/Settings';
 import UserManager from './components/UserManager';
 import UpdateNotification from './components/UpdateNotification';
+import ShareModal from './components/ShareModal';
 
 function App() {
   const location = useLocation();
@@ -31,6 +32,7 @@ function App() {
   const [currentUserId, setCurrentUserId] = useState(getCurrentUserId());
   const [landingPageShown, setLandingPageShown] = useState(getLandingPageShown());
   const [installPromptShown, setInstallPromptShown] = useState(getInstallPromptShown());
+  const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -41,6 +43,22 @@ function App() {
     saveDarkMode(darkMode);
   }, [darkMode]);
 
+  // Check if we should show the share modal (after 5 days of tracking)
+  useEffect(() => {
+    if (!profile) return; // Only check for logged-in users
+
+    const shareModalShown = getShareModalShown();
+    if (shareModalShown) return; // Already shown
+
+    const stats = calculateUserStats();
+    if (stats.daysTracked >= 5) {
+      // Wait 2 seconds after page load to show modal (less jarring)
+      const timer = setTimeout(() => {
+        setShowShareModal(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [profile, refreshKey]);
 
   const handleProfileComplete = (newProfile) => {
     saveProfile(newProfile);
@@ -63,6 +81,11 @@ function App() {
     setProfile(getProfile());
     setRefreshKey(prev => prev + 1);
     setShowUserManager(false);
+  };
+
+  const handleShareModalClose = () => {
+    markShareModalShown();
+    setShowShareModal(false);
   };
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';
@@ -231,6 +254,11 @@ function App() {
           onUserSwitch={handleUserSwitch}
           onClose={() => setShowUserManager(false)}
         />
+      )}
+
+      {/* Share Modal - shown after 5 days of tracking */}
+      {showShareModal && (
+        <ShareModal onClose={handleShareModalClose} />
       )}
 
       {/* Update Notification */}
