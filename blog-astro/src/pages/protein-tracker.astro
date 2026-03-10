@@ -1,0 +1,215 @@
+---
+import LandingPageLayout from '../layouts/LandingPageLayout.astro';
+
+const title = "Free Protein Tracker - Track Daily Protein Intake";
+const description = "Free protein tracker with no paywalls or ads. Track daily protein intake with real-time progress bars, automatic goals, and detailed trends. Works offline on any device.";
+const keywords = "protein tracker, free protein tracker, daily protein tracker, protein tracking app, track protein intake, protein goal tracker, high protein diet tracker";
+---
+
+<LandingPageLayout title={title} description={description} keywords={keywords}>
+
+  <!-- Hero -->
+  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+        <!-- Left: Text -->
+        <div class="flex-1 text-center md:text-left max-w-xl">
+          <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">Free Protein Tracker</h1>
+          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            Track your daily protein intake with <span class="font-bold text-emerald-600 dark:text-emerald-400">real-time progress bars</span>, automatic goals, and detailed trends. No paywalls, no ads, no account required.
+          </p>
+          <a
+            href="/"
+            class="inline-block bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+          >
+            Start Tracking Protein Now
+          </a>
+        </div>
+
+        <!-- Right: App Screenshot -->
+        <div class="flex-1 w-full max-w-sm md:max-w-3xl">
+          <picture>
+            <!-- Desktop: Multi-phone composite -->
+            <source
+              srcset="/hero-screenshot.webp"
+              type="image/webp"
+              media="(min-width: 768px)"
+            />
+
+            <!-- Mobile: Single phone -->
+            <source
+              srcset="/hero-mobile.webp"
+              type="image/webp"
+              media="(max-width: 767px)"
+            />
+
+            <!-- Fallback -->
+            <img
+              src="/hero-screenshot.webp"
+              alt="Free Calorie Track protein tracker showing real-time protein progress bars"
+              class="w-full h-auto rounded-xl shadow-2xl"
+              loading="eager"
+              style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
+            />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-4 py-12">
+
+    <!-- Why Track Protein Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">Why Track Your Protein Intake?</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">💪</span>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Build & Maintain Muscle</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Protein is essential for muscle growth and repair. Track intake to ensure you're hitting the 0.7-1.0g per pound of body weight recommended for muscle building.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">🔥</span>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Support Fat Loss Goals</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">High-protein diets help preserve muscle during weight loss and increase satiety, making it easier to maintain a calorie deficit.</p>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">⚡</span>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Improve Recovery</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Athletes and active individuals need adequate protein for recovery. Track daily intake to ensure you're supporting your training.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">📊</span>
+            <div>
+              <h3 class="font-bold text-lg mb-1">Hit Consistent Goals</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">What gets measured gets managed. Tracking protein helps you stay consistent and make progress toward your fitness goals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-8 text-center">Free Protein Tracker Features</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="text-4xl mb-4">📈</div>
+          <h3 class="font-bold text-lg mb-2">Real-Time Progress Bars</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">See your daily protein intake update in real time as you log meals. Visual progress bars make it easy to know if you're on track.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="text-4xl mb-4">🎯</div>
+          <h3 class="font-bold text-lg mb-2">Automatic Protein Goals</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Set your fitness goal (muscle gain, fat loss, maintenance) and get research-based protein targets calculated automatically.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="text-4xl mb-4">📷</div>
+          <h3 class="font-bold text-lg mb-2">Barcode Scanning</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Scan any product barcode to instantly log protein content. 220,000+ products in the database. Completely free, no limits.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="text-4xl mb-4">🥩</div>
+          <h3 class="font-bold text-lg mb-2">Thousands of Foods</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Pick from thousands of common foods with accurate protein data. Chicken breast, eggs, Greek yogurt, protein powder—all pre-loaded.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="text-4xl mb-4">📊</div>
+          <h3 class="font-bold text-lg mb-2">7-Day Achievement Tracker</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">See which days you hit your protein goal over the last week. Visual calendar shows your consistency at a glance.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="text-4xl mb-4">📶</div>
+          <h3 class="font-bold text-lg mb-2">Works Offline</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Install on any device and track protein without internet. All your food data and history stored locally on your device.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-8 text-center">How the Protein Tracker Works</h2>
+      <div class="space-y-6 max-w-2xl mx-auto">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">1</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Set Your Profile & Goals</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Enter your age, weight, height, and fitness goal. The app calculates your optimal daily protein target based on research-backed formulas.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">2</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Log Your Meals</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Scan barcodes, pick from common foods, search branded products, or create custom recipes. The protein content is tracked automatically for each entry.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">3</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">See Your Progress</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Real-time progress bar shows how much protein you've consumed vs. your goal. Check weekly trends to see consistency over time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Free Calorie Track -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">Why Use Our Protein Tracker?</h2>
+      <div class="space-y-4 max-w-2xl mx-auto">
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">Completely Free</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">No paywalls, no premium tier, no subscription. All protein tracking features are free forever.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">No Ads</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Track your protein without interruptions. No banner ads, no video ads, no sponsored content.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">No Account Required</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Open the app and start tracking immediately. No email, no password, no sign-up friction.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">Private & Secure</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Your data stays on your device. No cloud sync, no server storage, no third parties accessing your nutrition data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="text-center bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-12 text-white shadow-2xl">
+      <h2 class="text-3xl font-bold mb-4">Ready to Hit Your Protein Goals?</h2>
+      <p class="text-xl text-emerald-100 mb-8">Start tracking protein for free. No sign-up, no credit card, no catch.</p>
+      <a
+        href="/"
+        class="inline-block bg-white text-emerald-700 font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95"
+      >
+        Launch Free Protein Tracker
+      </a>
+      <p class="text-emerald-100 text-sm mt-4">Opens instantly in your browser—no app store download required</p>
+    </div>
+
+  </main>
+</LandingPageLayout>

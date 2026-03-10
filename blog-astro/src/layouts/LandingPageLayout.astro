@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  image?: string;
+}
+
+const { title, description, keywords, image } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const defaultImage = 'https://freecalorietrack.com/screenshot.png';
+const ogImage = image || defaultImage;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  {keywords && <meta name="keywords" content={keywords}>}
+  <link rel="canonical" href={canonicalURL}>
+  <meta name="author" content="FCT Staff">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalURL}>
+  <meta property="og:site_name" content="Free Calorie Track">
+  <meta property="og:image" content={ogImage}>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Dark mode initialization - default to dark -->
+  <script is:inline>
+    // Default to dark mode unless explicitly set to false
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === null || darkMode === 'true') {
+      document.documentElement.classList.add('dark');
+      if (darkMode === null) {
+        localStorage.setItem('darkMode', 'true');
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    html {
+      background-color: #111827;
+    }
+    html.dark {
+      background-color: #111827;
+    }
+    html:not(.dark) {
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  <slot />
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-16">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      <div class="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 mb-4">
+        <a href="/" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Home</a>
+        <a href="/blog" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Blog</a>
+        <a href="/privacy-policy.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Privacy Policy</a>
+        <a href="/terms-of-service.html" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Terms of Service</a>
+      </div>
+      <p class="text-center text-xs text-gray-500 dark:text-gray-500">
+        © {new Date().getFullYear()} Unexpectable LLC. All rights reserved.
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
