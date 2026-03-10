@@ -130,9 +130,9 @@ export default function CommonFoods({ onAddFood, onClose }) {
                 key={index}
                 className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-emerald-500 transition-colors"
               >
-                <div className="flex justify-between items-start gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                <div className="flex justify-between items-start gap-2 sm:gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <h3 className="font-semibold text-lg">{food.name}</h3>
                       <span className="text-xs bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">
                         {food.category}
@@ -146,7 +146,7 @@ export default function CommonFoods({ onAddFood, onClose }) {
                       <div className="text-xs">{food.servingSize}</div>
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1 sm:gap-2 flex-shrink-0">
                     <button
                       onClick={(e) => toggleFavorite(food, e)}
                       className="text-2xl hover:scale-110 transition-transform"
@@ -157,7 +157,7 @@ export default function CommonFoods({ onAddFood, onClose }) {
                     </button>
                     <button
                       onClick={() => handleFoodClick(food)}
-                      className="btn-primary whitespace-nowrap"
+                      className="btn-primary whitespace-nowrap text-sm sm:text-base px-3 sm:px-4"
                     >
                       Add
                     </button>

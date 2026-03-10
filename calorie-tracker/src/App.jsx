@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
@@ -26,6 +26,8 @@ function App() {
   if (fromLandingPage) {
     markLandingPageShown();
     markInstallPromptShown();
+    // Set macro-focused dashboard as default for landing page users
+    saveDashboardFocus('macros');
     // Clean up URL
     window.history.replaceState({}, '', '/');
   }
