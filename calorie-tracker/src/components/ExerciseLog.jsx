@@ -23,6 +23,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [trackingMode, setTrackingMode] = useState('duration'); // 'duration' or 'reps'
   const [walkingTrackingMode, setWalkingTrackingMode] = useState('duration'); // 'duration', 'steps', or 'distance'
+  const [cardioTrackingMode, setCardioTrackingMode] = useState('distanceDuration'); // 'distanceDuration', 'paceDistance', or 'paceDuration'
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
   const [weight, setWeight] = useState('');
@@ -30,6 +31,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [vestWeight, setVestWeight] = useState('10-15');
   const [distance, setDistance] = useState('');
   const [distanceUnit, setDistanceUnit] = useState('miles');
+  const [pace, setPace] = useState(''); // For pace-based cardio tracking
   const [steps, setSteps] = useState('');
   const [walkingDistance, setWalkingDistance] = useState('');
   const [walkingDistanceUnit, setWalkingDistanceUnit] = useState('miles');
@@ -134,16 +136,73 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       let exerciseName = selectedExercise.name;
 
       // Handle distance-based exercises (Running/Cycling)
-      if (requiresDistance && distance && duration) {
-        const pace = calculatePace(parseFloat(distance), parseInt(duration), distanceUnit);
-        if (selectedExercise.category === 'Running') {
-          metValue = getRunningMET(pace);
-          const pacePerMile = 60 / pace;
-          exerciseName = `Running (${parseFloat(distance).toFixed(1)} ${distanceUnit}, ${pacePerMile.toFixed(1)} min/mile)`;
-        } else if (selectedExercise.category === 'Cycling') {
-          metValue = getCyclingMET(pace);
-          exerciseName = `Cycling (${parseFloat(distance).toFixed(1)} ${distanceUnit}, ${pace.toFixed(1)} mph)`;
+      if (requiresDistance) {
+        let calculatedPace, calculatedDistance, calculatedDuration;
+
+        if (cardioTrackingMode === 'distanceDuration') {
+          // Mode 1: Distance + Duration → Calculate Pace
+          calculatedPace = calculatePace(parseFloat(distance), parseInt(duration), distanceUnit);
+          calculatedDistance = parseFloat(distance);
+          calculatedDuration = parseInt(duration);
+        } else if (cardioTrackingMode === 'paceDistance') {
+          // Mode 2: Pace + Distance → Calculate Duration
+          const paceValue = parseFloat(pace);
+          calculatedDistance = parseFloat(distance);
+
+          if (selectedExercise.category === 'Running') {
+            // Pace is in min/mile, convert to mph
+            calculatedPace = 60 / paceValue;
+          } else {
+            // Cycling: pace is already in mph
+            calculatedPace = paceValue;
+          }
+
+          // Calculate duration in minutes
+          const distanceInMiles = distanceUnit === 'km' ? calculatedDistance * 0.621371 : calculatedDistance;
+          calculatedDuration = Math.round((distanceInMiles / calculatedPace) * 60);
+        } else if (cardioTrackingMode === 'paceDuration') {
+          // Mode 3: Pace + Duration → Calculate Distance
+          const paceValue = parseFloat(pace);
+          calculatedDuration = parseInt(duration);
+
+          if (selectedExercise.category === 'Running') {
+            // Pace is in min/mile, convert to mph
+            calculatedPace = 60 / paceValue;
+          } else {
+            // Cycling: pace is already in mph
+            calculatedPace = paceValue;
+          }
+
+          // Calculate distance in miles
+          const hours = calculatedDuration / 60;
+          const distanceInMiles = calculatedPace * hours;
+          calculatedDistance = distanceUnit === 'km' ? distanceInMiles / 0.621371 : distanceInMiles;
         }
+
+        // Get MET value based on calculated pace
+        if (selectedExercise.category === 'Running') {
+          metValue = getRunningMET(calculatedPace);
+          const pacePerMile = 60 / calculatedPace;
+          exerciseName = `Running (${calculatedDistance.toFixed(1)} ${distanceUnit}, ${pacePerMile.toFixed(1)} min/mile)`;
+        } else if (selectedExercise.category === 'Cycling') {
+          metValue = getCyclingMET(calculatedPace);
+          exerciseName = `Cycling (${calculatedDistance.toFixed(1)} ${distanceUnit}, ${calculatedPace.toFixed(1)} mph)`;
+        }
+
+        // Calculate calories and log exercise
+        const caloriesBurned = calculateExerciseCalories(
+          profile.weight,
+          metValue,
+          calculatedDuration
+        );
+
+        onAddExercise({
+          name: exerciseName,
+          duration: calculatedDuration,
+          caloriesBurned,
+        });
+        onClose();
+        return;
       } else if (isWalkingExercise && useWeightedVest) {
         metValue = calculateWeightedVestMET(
           selectedExercise.met,
@@ -353,6 +412,50 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
               </div>
             )}
 
+            {/* Cardio Tracking Mode (Running/Cycling) */}
+            {requiresDistance && (
+              <div>
+                <label className="block text-lg font-semibold mb-3">
+                  Track By
+                </label>
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => setCardioTrackingMode('distanceDuration')}
+                    className={`py-2 px-2 rounded-lg font-semibold text-sm border-2 transition-colors ${
+                      cardioTrackingMode === 'distanceDuration'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                    }`}
+                  >
+                    Distance + Time
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCardioTrackingMode('paceDistance')}
+                    className={`py-2 px-2 rounded-lg font-semibold text-sm border-2 transition-colors ${
+                      cardioTrackingMode === 'paceDistance'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                    }`}
+                  >
+                    Pace + Distance
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCardioTrackingMode('paceDuration')}
+                    className={`py-2 px-2 rounded-lg font-semibold text-sm border-2 transition-colors ${
+                      cardioTrackingMode === 'paceDuration'
+                        ? 'bg-emerald-600 text-white border-emerald-500'
+                        : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                    }`}
+                  >
+                    Pace + Time
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Weighted Vest Options (for all walking tracking modes) */}
             {isWalkingExercise && (
               <div>
@@ -445,8 +548,33 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
               </div>
             )}
 
+            {/* Pace Input for Running/Cycling (when using pace-based modes) */}
+            {requiresDistance && (cardioTrackingMode === 'paceDistance' || cardioTrackingMode === 'paceDuration') && (
+              <div>
+                <label className="block text-lg font-semibold mb-3">
+                  {selectedExercise.category === 'Running' ? 'Pace (min/mile) *' : 'Speed (mph) *'}
+                </label>
+                <input
+                  type="number"
+                  required
+                  min="0.1"
+                  step="0.1"
+                  value={pace}
+                  onChange={(e) => setPace(e.target.value)}
+                  placeholder={selectedExercise.category === 'Running' ? '8.5' : '15.0'}
+                  className="input-field"
+                  autoFocus
+                />
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+                  {selectedExercise.category === 'Running'
+                    ? 'Example: 8.5 min/mile = ~7 mph pace'
+                    : 'Example: 15 mph = moderate cycling speed'}
+                </p>
+              </div>
+            )}
+
             {/* Distance Input for Running/Cycling */}
-            {requiresDistance && (
+            {requiresDistance && (cardioTrackingMode === 'distanceDuration' || cardioTrackingMode === 'paceDistance') && (
               <div>
                 <label className="block text-lg font-semibold mb-3">
                   Distance *
@@ -461,7 +589,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     onChange={(e) => setDistance(e.target.value)}
                     placeholder="3.75"
                     className="input-field"
-                    autoFocus
+                    autoFocus={cardioTrackingMode === 'distanceDuration'}
                   />
                   <select
                     value={distanceUnit}
@@ -472,11 +600,42 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     <option value="km">Kilometers</option>
                   </select>
                 </div>
+
+                {/* Calorie preview for paceDistance mode */}
+                {cardioTrackingMode === 'paceDistance' && pace && distance && (
+                  <div className="mt-4 text-center">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      Estimated calories burned
+                    </div>
+                    <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                      {(() => {
+                        const paceValue = parseFloat(pace);
+                        const calculatedPace = selectedExercise.category === 'Running' ? 60 / paceValue : paceValue;
+                        const distanceInMiles = distanceUnit === 'km' ? parseFloat(distance) * 0.621371 : parseFloat(distance);
+                        const calculatedDuration = Math.round((distanceInMiles / calculatedPace) * 60);
+                        const met = selectedExercise.category === 'Running' ? getRunningMET(calculatedPace) : getCyclingMET(calculatedPace);
+                        return calculateExerciseCalories(profile.weight, met, calculatedDuration);
+                      })()}{' '}
+                      cal
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2">
+                      {(() => {
+                        const paceValue = parseFloat(pace);
+                        const calculatedPace = selectedExercise.category === 'Running' ? 60 / paceValue : paceValue;
+                        const distanceInMiles = distanceUnit === 'km' ? parseFloat(distance) * 0.621371 : parseFloat(distance);
+                        const calculatedDuration = Math.round((distanceInMiles / calculatedPace) * 60);
+                        return `Duration: ${calculatedDuration} minutes`;
+                      })()}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Duration Input - for duration mode AND not walking with steps/distance */}
-            {trackingMode === 'duration' && !(isWalkingExercise && (walkingTrackingMode === 'steps' || walkingTrackingMode === 'distance')) && (
+            {/* Duration Input - for duration mode AND not walking with steps/distance AND not cardio with paceDistance */}
+            {trackingMode === 'duration' &&
+             !(isWalkingExercise && (walkingTrackingMode === 'steps' || walkingTrackingMode === 'distance')) &&
+             !(requiresDistance && cardioTrackingMode === 'paceDistance') && (
               <div>
                 <label className="block text-lg font-semibold mb-3">
                   Duration (minutes) *
@@ -493,7 +652,9 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                   autoFocus={!requiresDistance}
                 />
 
-                {duration && (
+                {((requiresDistance && cardioTrackingMode === 'distanceDuration' && duration && distance) ||
+                  (requiresDistance && cardioTrackingMode === 'paceDuration' && duration && pace) ||
+                  (!requiresDistance && duration)) && (
                   <div className="mt-4 text-center">
                     <div className="text-sm text-gray-600 dark:text-gray-400">
                       Estimated calories burned
@@ -501,30 +662,52 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
                       {(() => {
                         let met = selectedExercise.met;
-                        if (requiresDistance && distance && duration) {
-                          const pace = calculatePace(parseFloat(distance), parseInt(duration), distanceUnit);
+                        let estimatedDuration = parseInt(duration) || 0;
+
+                        if (requiresDistance && cardioTrackingMode === 'distanceDuration' && distance && duration) {
+                          const calculatedPace = calculatePace(parseFloat(distance), parseInt(duration), distanceUnit);
                           if (selectedExercise.category === 'Running') {
-                            met = getRunningMET(pace);
+                            met = getRunningMET(calculatedPace);
                           } else if (selectedExercise.category === 'Cycling') {
-                            met = getCyclingMET(pace);
+                            met = getCyclingMET(calculatedPace);
+                          }
+                        } else if (requiresDistance && cardioTrackingMode === 'paceDuration' && pace && duration) {
+                          const paceValue = parseFloat(pace);
+                          const calculatedPace = selectedExercise.category === 'Running' ? 60 / paceValue : paceValue;
+                          if (selectedExercise.category === 'Running') {
+                            met = getRunningMET(calculatedPace);
+                          } else if (selectedExercise.category === 'Cycling') {
+                            met = getCyclingMET(calculatedPace);
                           }
                         } else if (isWalkingExercise && useWeightedVest) {
                           met = calculateWeightedVestMET(selectedExercise.met, selectedExercise.speed, vestWeight);
                         }
-                        return calculateExerciseCalories(profile.weight, met, parseInt(duration) || 0);
+                        return calculateExerciseCalories(profile.weight, met, estimatedDuration);
                       })()}{' '}
                       cal
                     </div>
-                    {requiresDistance && distance && duration && (
+                    {requiresDistance && cardioTrackingMode === 'distanceDuration' && distance && duration && (
                       <div className="text-xs text-gray-500 mt-2">
                         {(() => {
-                          const pace = calculatePace(parseFloat(distance), parseInt(duration), distanceUnit);
+                          const calculatedPace = calculatePace(parseFloat(distance), parseInt(duration), distanceUnit);
                           if (selectedExercise.category === 'Running') {
-                            const pacePerMile = 60 / pace;
-                            return `Pace: ${pacePerMile.toFixed(1)} min/mile (${pace.toFixed(1)} mph)`;
+                            const pacePerMile = 60 / calculatedPace;
+                            return `Pace: ${pacePerMile.toFixed(1)} min/mile (${calculatedPace.toFixed(1)} mph)`;
                           } else if (selectedExercise.category === 'Cycling') {
-                            return `Speed: ${pace.toFixed(1)} mph`;
+                            return `Speed: ${calculatedPace.toFixed(1)} mph`;
                           }
+                        })()}
+                      </div>
+                    )}
+                    {requiresDistance && cardioTrackingMode === 'paceDuration' && pace && duration && (
+                      <div className="text-xs text-gray-500 mt-2">
+                        {(() => {
+                          const paceValue = parseFloat(pace);
+                          const calculatedPace = selectedExercise.category === 'Running' ? 60 / paceValue : paceValue;
+                          const hours = parseInt(duration) / 60;
+                          const distanceInMiles = calculatedPace * hours;
+                          const calculatedDistance = distanceUnit === 'km' ? distanceInMiles / 0.621371 : distanceInMiles;
+                          return `Distance: ${calculatedDistance.toFixed(2)} ${distanceUnit}`;
                         })()}
                       </div>
                     )}
