@@ -202,12 +202,10 @@ export default function Trends() {
       }
     });
 
-    if (daysWithData === 0) return null;
-
     return {
       daysMetGoal,
       daysWithData,
-      percentage: Math.round((daysMetGoal / daysWithData) * 100),
+      percentage: daysWithData > 0 ? Math.round((daysMetGoal / daysWithData) * 100) : 0,
     };
   })();
 
@@ -489,17 +487,22 @@ export default function Trends() {
 
             {/* Performance message */}
             <div className="mt-4 text-center">
-              {proteinAchievement.percentage >= 85 && (
+              {proteinAchievement.daysWithData === 0 && (
+                <div className="text-gray-600 dark:text-gray-400 font-semibold">
+                  📊 Start logging food to track your protein progress!
+                </div>
+              )}
+              {proteinAchievement.daysWithData > 0 && proteinAchievement.percentage >= 85 && (
                 <div className="text-emerald-600 dark:text-emerald-400 font-semibold">
                   🎉 Excellent consistency!
                 </div>
               )}
-              {proteinAchievement.percentage >= 60 && proteinAchievement.percentage < 85 && (
+              {proteinAchievement.daysWithData > 0 && proteinAchievement.percentage >= 60 && proteinAchievement.percentage < 85 && (
                 <div className="text-blue-600 dark:text-blue-400 font-semibold">
                   👍 Good progress - keep it up!
                 </div>
               )}
-              {proteinAchievement.percentage < 60 && (
+              {proteinAchievement.daysWithData > 0 && proteinAchievement.percentage < 60 && (
                 <div className="text-gray-600 dark:text-gray-400 font-semibold">
                   💪 Focus on hitting that protein target!
                 </div>

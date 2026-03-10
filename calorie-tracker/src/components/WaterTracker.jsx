@@ -5,6 +5,7 @@ import {
   setWaterForDate,
   getWaterUnit,
   saveWaterUnit,
+  getWaterGoal,
   ozToMl,
   mlToOz,
   getProfile,
@@ -70,9 +71,17 @@ export default function WaterTracker({ onRefresh }) {
   const displayWater = unit === 'oz' ? mlToOz(waterMl) : waterMl;
   const displayUnit = unit === 'oz' ? 'oz' : 'mL';
 
-  // Calculate progress (recommended 8 glasses = 64oz or ~1900mL)
-  const dailyGoalMl = unit === 'oz' ? ozToMl(64) : 2000;
+  // Calculate progress (use custom goal or default: 64oz / 2000mL)
+  const customGoalMl = getWaterGoal();
+  const defaultGoalMl = unit === 'oz' ? ozToMl(64) : 2000;
+  const dailyGoalMl = customGoalMl || defaultGoalMl;
   const progressPercent = Math.min(100, (waterMl / dailyGoalMl) * 100);
+
+  // Display goal in current unit
+  const displayGoal = unit === 'oz' ? mlToOz(dailyGoalMl) : dailyGoalMl;
+  const displayGoalText = unit === 'oz'
+    ? `${Math.round(displayGoal)} oz`
+    : `${Math.round(displayGoal).toLocaleString()} mL`;
 
   return (
     <div className="card">
@@ -94,7 +103,7 @@ export default function WaterTracker({ onRefresh }) {
           {unit === 'oz' ? displayWater.toFixed(1) : Math.round(displayWater)} {displayUnit}
         </div>
         <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          Goal: {unit === 'oz' ? '64 oz' : '2,000 mL'} ({Math.round(progressPercent)}%)
+          Goal: {displayGoalText} ({Math.round(progressPercent)}%)
         </div>
 
         {/* Progress Bar */}

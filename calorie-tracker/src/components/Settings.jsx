@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats } from '../utils/storage';
+import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getWaterGoal, saveWaterGoal, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats, ozToMl, mlToOz } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
@@ -16,11 +16,37 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const [pendingImportData, setPendingImportData] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [useCustomGoals, setUseCustomGoals] = useState(!!(getCustomMacros() || getCustomCalorieGoal()));
-  const currentCustomMacros = getCustomMacros() || { protein: 150, carbs: 200, fat: 65 };
-  const [customMacros, setCustomMacros] = useState(currentCustomMacros);
+
+  // Calculate default custom macros based on current profile if not already set
+  const getDefaultCustomMacros = () => {
+    const existing = getCustomMacros();
+    if (existing) return existing;
+
+    // Calculate based on current fitness goal and TDEE
+    const bmr = calculateBMR(currentProfile);
+    const tdee = calculateTDEE(bmr, currentProfile.activityLevel);
+    const calculatedMacros = calculateMacroTargets(currentProfile.weight, tdee, currentProfile.fitnessGoal || 'maintenance');
+
+    return {
+      protein: calculatedMacros.protein,
+      carbs: calculatedMacros.carbs,
+      fat: calculatedMacros.fat
+    };
+  };
+
+  const [customMacros, setCustomMacros] = useState(getDefaultCustomMacros());
   const [waterTrackerEnabled, setWaterTrackerEnabled] = useState(getWaterTrackerEnabled());
   const [mealTypeEnabled, setMealTypeEnabled] = useState(getMealTypeEnabled());
   const [dashboardFocus, setDashboardFocus] = useState(getDashboardFocus());
+
+  // Water goal state (stored in mL, displayed in user's preferred unit)
+  const waterGoalMl = getWaterGoal();
+  const defaultWaterGoalMl = currentProfile.unit === 'imperial' ? ozToMl(64) : 2000;
+  const [customWaterGoal, setCustomWaterGoal] = useState(
+    waterGoalMl
+      ? (currentProfile.unit === 'imperial' ? mlToOz(waterGoalMl) : waterGoalMl)
+      : (currentProfile.unit === 'imperial' ? 64 : 2000)
+  );
 
   // Convert stored metric values to user's preferred unit for display
   const displayHeight = currentProfile.unit === 'imperial'
@@ -259,13 +285,51 @@ export default function Settings({ onUpdateProfile, onClose }) {
               }}
               className="w-5 h-5 text-emerald-500 rounded mt-1"
             />
-            <div>
+            <div className="flex-1">
               <label htmlFor="waterTrackerEnabled" className="text-lg font-semibold cursor-pointer">
                 Show Water Intake Tracker
               </label>
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Display the water intake tracker on your dashboard to track daily hydration.
               </p>
+
+              {/* Water Goal Input - only shown when water tracker is enabled */}
+              {waterTrackerEnabled && (
+                <div className="mt-3 pl-2 border-l-2 border-blue-300 dark:border-blue-700">
+                  <label htmlFor="waterGoal" className="block text-sm font-semibold mb-2">
+                    Daily Water Goal ({currentProfile.unit === 'imperial' ? 'oz' : 'mL'})
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      id="waterGoal"
+                      type="number"
+                      min="1"
+                      max={currentProfile.unit === 'imperial' ? 500 : 10000}
+                      step={currentProfile.unit === 'imperial' ? 1 : 100}
+                      value={customWaterGoal}
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        setCustomWaterGoal(value);
+                      }}
+                      onBlur={() => {
+                        // Save when user finishes editing
+                        const goalMl = currentProfile.unit === 'imperial'
+                          ? ozToMl(customWaterGoal)
+                          : customWaterGoal;
+                        saveWaterGoal(goalMl);
+                      }}
+                      className="input-field w-32"
+                      placeholder={currentProfile.unit === 'imperial' ? '64' : '2000'}
+                    />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {currentProfile.unit === 'imperial' ? 'oz' : 'mL'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    Default: {currentProfile.unit === 'imperial' ? '64 oz (8 glasses)' : '2,000 mL'}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 

@@ -686,6 +686,87 @@ export default function Dashboard({ onRefresh }) {
         </div>
       )}
 
+      {/* Featured Macro Goals - Only when Macros First is selected */}
+      {dashboardFocus === 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
+        <div className={`card ${statusBg}`}>
+          <div className="text-center">
+            <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-4">
+              MACRO GOALS
+            </div>
+
+            {/* Macro Progress Bars */}
+            <div className="space-y-4">
+              {/* Protein */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-semibold text-red-600 dark:text-red-400">Protein</span>
+                  <span className="text-sm">
+                    <span className="font-bold text-2xl">{Math.round(totalProtein)}</span>
+                    <span className="text-gray-600 dark:text-gray-400"> / {adjustedProteinGoal}g</span>
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
+                  <div
+                    className="bg-red-600 dark:bg-red-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
+                    style={{ width: `${Math.min((totalProtein / adjustedProteinGoal) * 100, 100)}%` }}
+                  >
+                    <span className="text-white text-xs font-bold">
+                      {Math.round((totalProtein / adjustedProteinGoal) * 100)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Carbs */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-semibold text-blue-600 dark:text-blue-400">Carbs</span>
+                  <span className="text-sm">
+                    <span className="font-bold text-2xl">{Math.round(totalCarbs)}</span>
+                    <span className="text-gray-600 dark:text-gray-400"> / {carbsGoal}g</span>
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
+                  <div
+                    className="bg-blue-600 dark:bg-blue-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
+                    style={{ width: `${Math.min((totalCarbs / carbsGoal) * 100, 100)}%` }}
+                  >
+                    <span className="text-white text-xs font-bold">
+                      {Math.round((totalCarbs / carbsGoal) * 100)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Fat */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="font-semibold text-amber-600 dark:text-amber-400">Fat</span>
+                  <span className="text-sm">
+                    <span className="font-bold text-2xl">{Math.round(totalFat)}</span>
+                    <span className="text-gray-600 dark:text-gray-400"> / {fatGoal}g</span>
+                  </span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
+                  <div
+                    className="bg-amber-600 dark:bg-amber-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
+                    style={{ width: `${Math.min((totalFat / fatGoal) * 100, 100)}%` }}
+                  >
+                    <span className="text-white text-xs font-bold">
+                      {Math.round((totalFat / fatGoal) * 100)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-xs text-gray-500 dark:text-gray-500 text-center italic mt-4">
+              Macro targets {exerciseBurned > 0 ? 'adjusted for exercise' : 'for today'}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Calories to Goal Display */}
       <div className={`card ${statusBg}`}>
         <div className="text-center">
@@ -815,111 +896,53 @@ export default function Dashboard({ onRefresh }) {
         </div>
       )}
 
-      {/* Conditionally render Macros or Calories first based on dashboard focus */}
-      {dashboardFocus === 'macros' ? (
-        <>
-          {/* Macros First - Larger display */}
-          {(profile.fitnessGoal || usingCustomGoals) && (
-            <div className="transform scale-105">
-              <MacroTracker
-                profile={profile}
-                currentProtein={totalProtein}
-                currentCarbs={totalCarbs}
-                currentFat={totalFat}
-                proteinGoal={proteinGoal}
-                carbsGoal={carbsGoal}
-                fatGoal={fatGoal}
-                isCustomGoals={usingCustomGoals}
-                fitnessGoal={profile.fitnessGoal}
-                exerciseBurned={exerciseBurned}
-              />
+      {/* Calorie Breakdown */}
+      <div className="space-y-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="card text-center">
+            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
+            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+              +{caloriesEaten}
             </div>
-          )}
-
-          {/* Calorie Breakdown - Secondary */}
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="card text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                  +{caloriesEaten}
-                </div>
-              </div>
-
-              <div className="card text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Resting</div>
-                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
-                  -{restingBurned}
-                </div>
-              </div>
-
-              <div className="card text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
-                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-                  -{exerciseBurned}
-                </div>
-              </div>
-            </div>
-
-            {daysTracked < 5 && (
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-                <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
-                net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
-              </div>
-            )}
-          </div>
-        </>
-      ) : (
-        <>
-          {/* Calories First - Default layout */}
-          <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="card text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                  +{caloriesEaten}
-                </div>
-              </div>
-
-              <div className="card text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Resting</div>
-                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
-                  -{restingBurned}
-                </div>
-              </div>
-
-              <div className="card text-center">
-                <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
-                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-                  -{exerciseBurned}
-                </div>
-              </div>
-            </div>
-
-            {daysTracked < 5 && (
-              <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-                <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
-                net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
-              </div>
-            )}
           </div>
 
-          {/* Macros Breakdown with Goals */}
-          {(profile.fitnessGoal || usingCustomGoals) && (
-            <MacroTracker
-              profile={profile}
-              currentProtein={totalProtein}
-              currentCarbs={totalCarbs}
-              currentFat={totalFat}
-              proteinGoal={proteinGoal}
-              carbsGoal={carbsGoal}
-              fatGoal={fatGoal}
-              isCustomGoals={usingCustomGoals}
-              fitnessGoal={profile.fitnessGoal}
-              exerciseBurned={exerciseBurned}
-            />
-          )}
-        </>
+          <div className="card text-center">
+            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Resting</div>
+            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
+              -{restingBurned}
+            </div>
+          </div>
+
+          <div className="card text-center">
+            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
+            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
+              -{exerciseBurned}
+            </div>
+          </div>
+        </div>
+
+        {daysTracked < 5 && (
+          <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+            <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
+            net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
+          </div>
+        )}
+      </div>
+
+      {/* Macros Breakdown with Goals - Only show when NOT in macros-first mode */}
+      {dashboardFocus !== 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
+        <MacroTracker
+          profile={profile}
+          currentProtein={totalProtein}
+          currentCarbs={totalCarbs}
+          currentFat={totalFat}
+          proteinGoal={proteinGoal}
+          carbsGoal={carbsGoal}
+          fatGoal={fatGoal}
+          isCustomGoals={usingCustomGoals}
+          fitnessGoal={profile.fitnessGoal}
+          exerciseBurned={exerciseBurned}
+        />
       )}
 
       {/* Achievements Bar */}

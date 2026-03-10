@@ -347,6 +347,15 @@ export function saveWaterTrackerEnabled(enabled) {
   setData('waterTrackerEnabled', enabled);
 }
 
+// Water Goal - Custom daily water intake goal in mL
+export function getWaterGoal() {
+  return getData('waterGoal') || null; // null means use default (64 oz / 2000 mL)
+}
+
+export function saveWaterGoal(goalMl) {
+  setData('waterGoal', goalMl);
+}
+
 // Workout Import Instructions - boolean for showing first-time instructions
 export function getImportInstructionsDismissed() {
   const dismissed = getData('importInstructionsDismissed');
