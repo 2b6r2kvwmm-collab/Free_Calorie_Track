@@ -18,19 +18,23 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Check if user came from a landing page (skip React landing page)
-  const urlParams = new URLSearchParams(window.location.search);
-  const fromLandingPage = urlParams.get('from') === 'landing-page';
+  // Check if user came from a landing page (skip React landing page) - only check once
+  const [fromLandingPage] = useState(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('from') === 'landing-page';
+  });
 
-  // Mark as shown if coming from Astro landing page
-  if (fromLandingPage) {
-    markLandingPageShown();
-    markInstallPromptShown();
-    // Set macro-focused dashboard as default for landing page users
-    saveDashboardFocus('macros');
-    // Clean up URL
-    window.history.replaceState({}, '', '/');
-  }
+  // Handle landing page detection once on mount
+  useEffect(() => {
+    if (fromLandingPage) {
+      markLandingPageShown();
+      markInstallPromptShown();
+      // Set macro-focused dashboard as default for landing page users
+      saveDashboardFocus('macros');
+      // Clean up URL
+      navigate('/', { replace: true });
+    }
+  }, [fromLandingPage, navigate]);
 
   // Redirect to blog if user navigates to /blog/* while SPA is loaded
   useEffect(() => {
