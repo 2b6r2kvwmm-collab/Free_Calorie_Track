@@ -18,6 +18,18 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Check if user came from a landing page (skip React landing page)
+  const urlParams = new URLSearchParams(window.location.search);
+  const fromLandingPage = urlParams.get('from') === 'landing-page';
+
+  // Mark as shown if coming from Astro landing page
+  if (fromLandingPage) {
+    markLandingPageShown();
+    markInstallPromptShown();
+    // Clean up URL
+    window.history.replaceState({}, '', '/');
+  }
+
   // Redirect to blog if user navigates to /blog/* while SPA is loaded
   useEffect(() => {
     if (location.pathname.startsWith('/blog')) {
@@ -25,31 +37,13 @@ function App() {
     }
   }, [location.pathname]);
 
-  // Redirect to app if user navigates to landing pages while SPA is loaded
-  useEffect(() => {
-    if (location.pathname.startsWith('/protein-tracker') || location.pathname.startsWith('/macro-tracker')) {
-      window.location.href = location.pathname;
-    }
-  }, [location.pathname]);
-
-  // Check if user came from a landing page (skip React landing page)
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('from') === 'landing-page') {
-      markLandingPageShown();
-      markInstallPromptShown();
-      // Clean up URL
-      window.history.replaceState({}, '', '/');
-    }
-  }, []);
-
   const [profile, setProfile] = useState(getProfile());
   const [darkMode, setDarkMode] = useState(getDarkMode());
   const [refreshKey, setRefreshKey] = useState(0);
   const [showUserManager, setShowUserManager] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(getCurrentUserId());
-  const [landingPageShown, setLandingPageShown] = useState(getLandingPageShown());
-  const [installPromptShown, setInstallPromptShown] = useState(getInstallPromptShown());
+  const [landingPageShown, setLandingPageShown] = useState(fromLandingPage ? true : getLandingPageShown());
+  const [installPromptShown, setInstallPromptShown] = useState(fromLandingPage ? true : getInstallPromptShown());
   const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
