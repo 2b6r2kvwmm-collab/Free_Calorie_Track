@@ -3,6 +3,8 @@
   "outputDirectory": "calorie-tracker/dist",
   "installCommand": "echo 'Dependencies installed via build script'",
   "rewrites": [
+    { "source": "/protein-tracker", "destination": "/protein-tracker/index.html" },
+    { "source": "/macro-tracker", "destination": "/macro-tracker/index.html" },
     { "source": "/(dashboard|trends|history|settings)", "destination": "/index.html" },
     { "source": "/", "destination": "/index.html" }
   ],

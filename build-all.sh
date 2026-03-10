@@ -30,6 +30,15 @@ if [ -d "blog-astro/dist/blog" ]; then
   cp -r blog-astro/dist/blog/* calorie-tracker/dist/blog/
 fi
 
+# Copy landing pages to root of dist
+echo "📄 Copying landing pages..."
+if [ -d "blog-astro/dist/protein-tracker" ]; then
+  cp -r blog-astro/dist/protein-tracker calorie-tracker/dist/
+fi
+if [ -d "blog-astro/dist/macro-tracker" ]; then
+  cp -r blog-astro/dist/macro-tracker calorie-tracker/dist/
+fi
+
 # Copy static assets (_astro directory)
 if [ -d "blog-astro/dist/_astro" ]; then
   cp -r blog-astro/dist/_astro calorie-tracker/dist/
@@ -45,3 +54,4 @@ fi
 echo "✅ Build complete! Output in calorie-tracker/dist"
 echo "   - Main app: /calorie-tracker/dist"
 echo "   - Blog: /calorie-tracker/dist/blog"
+echo "   - Landing pages: /calorie-tracker/dist/protein-tracker, /macro-tracker"
