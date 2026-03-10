@@ -356,11 +356,12 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <>
       <SEO
-        title="Best Free Calorie App & Macro Tracker | No Paywalls"
+        title="Best Free Calorie App & Macro Tracker"
         description="Looking for a truly free calorie app? Track calories, macros, and daily protein with barcode scanning. No account, no paywalls, no ads. Works offline."
         keywords={['calorie app', 'calorie tracker app', 'free calorie app', 'best free calorie app', 'calorie tracker', 'free calorie tracker', 'macro app', 'macro tracker', 'protein tracker', 'free macro tracker', 'best free macro tracker', 'macro tracking app', 'free calorie tracker app', 'best calorie app', 'calorie tracker free', 'macro tracker free', 'free protein tracker', 'free barcode scanner nutrition', 'no account calorie tracker', 'offline calorie tracker']}
         url="/"
         type="website"
+        skipSiteName={true}
       />
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Hero */}
