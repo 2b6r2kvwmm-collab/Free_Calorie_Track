@@ -688,7 +688,7 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Featured Macro Goals - Only when Macros First is selected */}
       {dashboardFocus === 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
-        <div className="card">
+        <div className="card bg-emerald-50 dark:bg-emerald-900/20">
           <div className="text-center">
             <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-4">
               MACRO GOALS
@@ -707,12 +707,17 @@ export default function Dashboard({ onRefresh }) {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
                   <div
-                    className="bg-violet-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
-                    style={{ width: `${Math.min((totalProtein / adjustedProteinGoal) * 100, 100)}%` }}
+                    className="bg-violet-500 h-6 rounded-full transition-all flex items-center justify-end pr-3"
+                    style={{
+                      width: `${Math.min((totalProtein / adjustedProteinGoal) * 100, 100)}%`,
+                      minWidth: totalProtein > 0 ? '40px' : '0'
+                    }}
                   >
-                    <span className="text-white text-xs font-bold">
-                      {Math.round((totalProtein / adjustedProteinGoal) * 100)}%
-                    </span>
+                    {totalProtein > 0 && (
+                      <span className="text-white text-xs font-bold">
+                        {Math.round((totalProtein / adjustedProteinGoal) * 100)}%
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -728,12 +733,17 @@ export default function Dashboard({ onRefresh }) {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
                   <div
-                    className="bg-orange-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
-                    style={{ width: `${Math.min((totalCarbs / carbsGoal) * 100, 100)}%` }}
+                    className="bg-orange-500 h-6 rounded-full transition-all flex items-center justify-end pr-3"
+                    style={{
+                      width: `${Math.min((totalCarbs / carbsGoal) * 100, 100)}%`,
+                      minWidth: totalCarbs > 0 ? '40px' : '0'
+                    }}
                   >
-                    <span className="text-white text-xs font-bold">
-                      {Math.round((totalCarbs / carbsGoal) * 100)}%
-                    </span>
+                    {totalCarbs > 0 && (
+                      <span className="text-white text-xs font-bold">
+                        {Math.round((totalCarbs / carbsGoal) * 100)}%
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -749,12 +759,17 @@ export default function Dashboard({ onRefresh }) {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
                   <div
-                    className="bg-teal-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
-                    style={{ width: `${Math.min((totalFat / fatGoal) * 100, 100)}%` }}
+                    className="bg-teal-500 h-6 rounded-full transition-all flex items-center justify-end pr-3"
+                    style={{
+                      width: `${Math.min((totalFat / fatGoal) * 100, 100)}%`,
+                      minWidth: totalFat > 0 ? '40px' : '0'
+                    }}
                   >
-                    <span className="text-white text-xs font-bold">
-                      {Math.round((totalFat / fatGoal) * 100)}%
-                    </span>
+                    {totalFat > 0 && (
+                      <span className="text-white text-xs font-bold">
+                        {Math.round((totalFat / fatGoal) * 100)}%
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
