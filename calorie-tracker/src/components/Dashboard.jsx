@@ -688,7 +688,7 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Featured Macro Goals - Only when Macros First is selected */}
       {dashboardFocus === 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
-        <div className={`card ${statusBg}`}>
+        <div className="card">
           <div className="text-center">
             <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-4">
               MACRO GOALS
@@ -699,7 +699,7 @@ export default function Dashboard({ onRefresh }) {
               {/* Protein */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-red-600 dark:text-red-400">Protein</span>
+                  <span className="font-semibold text-violet-600 dark:text-violet-400">Protein</span>
                   <span className="text-sm">
                     <span className="font-bold text-2xl">{Math.round(totalProtein)}</span>
                     <span className="text-gray-600 dark:text-gray-400"> / {adjustedProteinGoal}g</span>
@@ -707,7 +707,7 @@ export default function Dashboard({ onRefresh }) {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
                   <div
-                    className="bg-red-600 dark:bg-red-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
+                    className="bg-violet-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
                     style={{ width: `${Math.min((totalProtein / adjustedProteinGoal) * 100, 100)}%` }}
                   >
                     <span className="text-white text-xs font-bold">
@@ -720,7 +720,7 @@ export default function Dashboard({ onRefresh }) {
               {/* Carbs */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-blue-600 dark:text-blue-400">Carbs</span>
+                  <span className="font-semibold text-orange-600 dark:text-orange-400">Carbs</span>
                   <span className="text-sm">
                     <span className="font-bold text-2xl">{Math.round(totalCarbs)}</span>
                     <span className="text-gray-600 dark:text-gray-400"> / {carbsGoal}g</span>
@@ -728,7 +728,7 @@ export default function Dashboard({ onRefresh }) {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
                   <div
-                    className="bg-blue-600 dark:bg-blue-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
+                    className="bg-orange-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
                     style={{ width: `${Math.min((totalCarbs / carbsGoal) * 100, 100)}%` }}
                   >
                     <span className="text-white text-xs font-bold">
@@ -741,7 +741,7 @@ export default function Dashboard({ onRefresh }) {
               {/* Fat */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-amber-600 dark:text-amber-400">Fat</span>
+                  <span className="font-semibold text-teal-600 dark:text-teal-400">Fat</span>
                   <span className="text-sm">
                     <span className="font-bold text-2xl">{Math.round(totalFat)}</span>
                     <span className="text-gray-600 dark:text-gray-400"> / {fatGoal}g</span>
@@ -749,7 +749,7 @@ export default function Dashboard({ onRefresh }) {
                 </div>
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
                   <div
-                    className="bg-amber-600 dark:bg-amber-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
+                    className="bg-teal-500 h-6 rounded-full transition-all flex items-center justify-end pr-2"
                     style={{ width: `${Math.min((totalFat / fatGoal) * 100, 100)}%` }}
                   >
                     <span className="text-white text-xs font-bold">
@@ -768,7 +768,7 @@ export default function Dashboard({ onRefresh }) {
       )}
 
       {/* Calories to Goal Display */}
-      <div className={`card ${statusBg}`}>
+      <div className="card">
         <div className="text-center">
           <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
             CALORIES TO GOAL
