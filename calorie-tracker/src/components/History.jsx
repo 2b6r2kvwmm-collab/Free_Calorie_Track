@@ -141,7 +141,7 @@ export default function History({ onRefresh }) {
         <div className="space-y-3">
           <input
             type="date"
-            className="input-field w-full"
+            className="w-full px-2 py-2 text-base border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800"
             max={new Date().toISOString().split('T')[0]}
             value={datePickerValue}
             onChange={(e) => {
