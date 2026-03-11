@@ -3,6 +3,7 @@ import { getCustomFoods, addCustomFood, deleteCustomFood } from '../utils/storag
 import RecipeBuilder from './RecipeBuilder';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import ConfirmationModal from './ConfirmationModal';
+import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
 export default function CustomFoodManager({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -23,9 +24,9 @@ export default function CustomFoodManager({ onAddFood, onClose }) {
 
   // Lock body scroll when modal opens
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     return () => {
-      document.body.style.overflow = 'unset';
+      unlockScroll();
     };
   }, []);
 

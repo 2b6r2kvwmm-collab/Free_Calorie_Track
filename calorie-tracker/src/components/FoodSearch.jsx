@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { searchFoods } from '../utils/openfoodfacts';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
 export default function FoodSearch({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -14,9 +15,9 @@ export default function FoodSearch({ onAddFood, onClose }) {
 
   // Lock body scroll when modal opens
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     return () => {
-      document.body.style.overflow = 'unset';
+      unlockScroll();
     };
   }, []);
 

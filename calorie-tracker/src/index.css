@@ -25,6 +25,13 @@
     @apply bg-white dark:bg-gray-800 rounded-xl shadow-md p-6;
   }
 
+  /* Modal open - prevent body scroll without layout shift */
+  body.modal-open {
+    overflow: hidden;
+    /* Prevent layout shift by maintaining scrollbar space */
+    padding-right: var(--scrollbar-width, 0);
+  }
+
   /* Screen reader only - visually hidden but accessible to assistive tech */
   .sr-only {
     position: absolute;

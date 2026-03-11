@@ -414,6 +414,8 @@ export default function LandingPage({ onGetStarted }) {
                 <img
                   src="/hero-screenshot.png"
                   alt="Free Calorie Track app dashboard showing Net calorie circle in green, macro tracking, and food logging interface"
+                  width="5000"
+                  height="3000"
                   className="w-full h-auto rounded-xl shadow-2xl"
                   loading="eager"
                   style={{

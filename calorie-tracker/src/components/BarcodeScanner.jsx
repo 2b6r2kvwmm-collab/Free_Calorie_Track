@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { getFoodByBarcode } from '../utils/openfoodfacts';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
 export default function BarcodeScanner({ onAddFood, onClose }) {
   const scannerRef = useRef(null);
@@ -17,11 +18,11 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   useEffect(() => {
     startScanner();
     // Lock body scroll when modal opens
-    document.body.style.overflow = 'hidden';
+    lockScroll();
 
     return () => {
       stopScanner();
-      document.body.style.overflow = 'unset';
+      unlockScroll();
     };
   }, []);
 

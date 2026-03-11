@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { getFavorites, getRecentFoods, addFavorite, removeFavorite, copyYesterdaysMeals, getMealTypeEnabled, saveMealTypeEnabled } from '../utils/storage';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import { lockScroll, unlockScroll } from '../utils/scrollLock';
 import FoodSearch from './FoodSearch';
 import BarcodeScanner from './BarcodeScanner';
 import QuickAdd from './QuickAdd';
@@ -20,9 +21,9 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
 
   // Lock body scroll when modal opens
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     return () => {
-      document.body.style.overflow = 'unset';
+      unlockScroll();
     };
   }, []);
 

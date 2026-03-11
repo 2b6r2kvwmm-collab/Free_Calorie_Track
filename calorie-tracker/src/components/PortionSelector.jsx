@@ -11,6 +11,7 @@ import {
   supportsStirFryToppings, stirFryToppings
 } from '../utils/commonFoods';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
 export default function PortionSelector({ food, onConfirm, onCancel }) {
   const modalRef = useModalAccessibility(true, onCancel);
@@ -20,9 +21,9 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
 
   // Lock body scroll when modal opens
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     return () => {
-      document.body.style.overflow = 'unset';
+      unlockScroll();
     };
   }, []);
 

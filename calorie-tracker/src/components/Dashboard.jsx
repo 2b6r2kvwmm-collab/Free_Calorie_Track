@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   getTodayEntries,
@@ -102,19 +102,24 @@ export default function Dashboard({ onRefresh }) {
     loadEntries();
   }, []);
 
-  const bmr = calculateBMR(profile);
-  const tdee = calculateTDEE(bmr, profile.activityLevel); // Lifestyle TDEE with activity level
+  // Memoize BMR/TDEE calculations - only recalculate when profile changes
+  const bmr = useMemo(() => calculateBMR(profile), [profile]);
+  const tdee = useMemo(() => calculateTDEE(bmr, profile.activityLevel), [bmr, profile.activityLevel]);
   const restingBurned = tdee; // Full day's resting calories (end-of-day calculation)
 
-  const caloriesEaten = entries.food.reduce((sum, entry) => sum + entry.calories, 0);
-  const exerciseBurned = entries.exercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
+  // Memoize calorie/macro totals - only recalculate when entries change
+  const { caloriesEaten, exerciseBurned, totalProtein, totalCarbs, totalFat } = useMemo(() => {
+    const caloriesEaten = entries.food.reduce((sum, entry) => sum + entry.calories, 0);
+    const exerciseBurned = entries.exercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
+    const totalProtein = entries.food.reduce((sum, entry) => sum + (entry.protein || 0), 0);
+    const totalCarbs = entries.food.reduce((sum, entry) => sum + (entry.carbs || 0), 0);
+    const totalFat = entries.food.reduce((sum, entry) => sum + (entry.fat || 0), 0);
+
+    return { caloriesEaten, exerciseBurned, totalProtein, totalCarbs, totalFat };
+  }, [entries.food, entries.exercise]);
+
   const totalBurned = restingBurned + exerciseBurned;
   const netCalories = caloriesEaten - totalBurned;
-
-  // Calculate total macros
-  const totalProtein = entries.food.reduce((sum, entry) => sum + (entry.protein || 0), 0);
-  const totalCarbs = entries.food.reduce((sum, entry) => sum + (entry.carbs || 0), 0);
-  const totalFat = entries.food.reduce((sum, entry) => sum + (entry.fat || 0), 0);
 
   // Gamification
   const gamificationData = getGamificationData();
@@ -128,55 +133,62 @@ export default function Dashboard({ onRefresh }) {
   const manualDailyGoal = getDailyGoal();
   const hasManualGoal = manualDailyGoal !== null; // null means not manually set
 
-  // Calculate base macro targets
-  let macroTargets = usingCustomGoals
-    ? customMacros
-    : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null);
+  // Memoize macro targets calculation - only recalculate when dependencies change
+  const macroTargets = useMemo(() => {
+    // Calculate base macro targets
+    let targets = usingCustomGoals
+      ? customMacros
+      : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null);
 
-  // If user has manually set a goal that differs from calculated, recalculate macros
-  if (hasManualGoal && !usingCustomGoals && macroTargets) {
-    const calculatedAdjustment = macroTargets.calorieAdjustment;
-    if (manualDailyGoal !== calculatedAdjustment) {
-      // Recalculate macros for the manual target
-      const manualTargetCalories = tdee + manualDailyGoal;
-      const goalInfo = profile.fitnessGoal;
+    // If user has manually set a goal that differs from calculated, recalculate macros
+    if (hasManualGoal && !usingCustomGoals && targets) {
+      const calculatedAdjustment = targets.calorieAdjustment;
+      if (manualDailyGoal !== calculatedAdjustment) {
+        // Recalculate macros for the manual target
+        const manualTargetCalories = tdee + manualDailyGoal;
+        const goalInfo = profile.fitnessGoal;
 
-      // Use the same protein/fat percentages but apply to manual calories
-      const proteinPerKg = goalInfo === 'weight-loss' ? 2.2 :
-                          goalInfo === 'muscle-gain' ? 2.0 :
-                          goalInfo === 'athletic-performance' ? 1.8 : 1.6;
-      const fatPercent = goalInfo === 'maintenance' ? 30 : 25;
+        // Use the same protein/fat percentages but apply to manual calories
+        const proteinPerKg = goalInfo === 'weight-loss' ? 2.2 :
+                            goalInfo === 'muscle-gain' ? 2.0 :
+                            goalInfo === 'athletic-performance' ? 1.8 : 1.6;
+        const fatPercent = goalInfo === 'maintenance' ? 30 : 25;
 
-      const proteinGrams = Math.round(profile.weight * proteinPerKg);
-      const proteinCalories = proteinGrams * 4;
-      const fatCalories = Math.round(manualTargetCalories * (fatPercent / 100));
-      const fatGrams = Math.round(fatCalories / 9);
-      const carbCalories = manualTargetCalories - proteinCalories - fatCalories;
-      const carbGrams = Math.round(carbCalories / 4);
+        const proteinGrams = Math.round(profile.weight * proteinPerKg);
+        const proteinCalories = proteinGrams * 4;
+        const fatCalories = Math.round(manualTargetCalories * (fatPercent / 100));
+        const fatGrams = Math.round(fatCalories / 9);
+        const carbCalories = manualTargetCalories - proteinCalories - fatCalories;
+        const carbGrams = Math.round(carbCalories / 4);
 
-      macroTargets = {
-        ...macroTargets,
-        protein: proteinGrams,
-        carbs: Math.max(0, carbGrams),
-        fat: fatGrams,
-        calories: manualTargetCalories,
-        calorieAdjustment: manualDailyGoal,
-      };
+        targets = {
+          ...targets,
+          protein: proteinGrams,
+          carbs: Math.max(0, carbGrams),
+          fat: fatGrams,
+          calories: manualTargetCalories,
+          calorieAdjustment: manualDailyGoal,
+        };
+      }
     }
-  }
+
+    return targets;
+  }, [usingCustomGoals, customMacros, profile.fitnessGoal, profile.weight, tdee, hasManualGoal, manualDailyGoal]);
 
   const proteinGoal = macroTargets?.protein || 0;
   const carbsGoal = macroTargets?.carbs || 0;
   const fatGoal = macroTargets?.fat || 0;
 
-  // Adjust protein goal based on exercise (same logic as MacroTracker)
-  let adjustedProteinGoal = proteinGoal;
-  if (exerciseBurned > 0 && macroTargets) {
-    const baseTotalCals = (macroTargets.protein * 4) + (macroTargets.carbs * 4) + (macroTargets.fat * 9);
-    const proteinPercent = (macroTargets.protein * 4) / baseTotalCals;
-    const additionalProtein = Math.round((exerciseBurned * proteinPercent) / 4);
-    adjustedProteinGoal = proteinGoal + additionalProtein;
-  }
+  // Memoize adjusted protein goal - only recalculate when exercise or targets change
+  const adjustedProteinGoal = useMemo(() => {
+    if (exerciseBurned > 0 && macroTargets) {
+      const baseTotalCals = (macroTargets.protein * 4) + (macroTargets.carbs * 4) + (macroTargets.fat * 9);
+      const proteinPercent = (macroTargets.protein * 4) / baseTotalCals;
+      const additionalProtein = Math.round((exerciseBurned * proteinPercent) / 4);
+      return proteinGoal + additionalProtein;
+    }
+    return proteinGoal;
+  }, [exerciseBurned, macroTargets, proteinGoal]);
 
   // Use custom calorie goal if set, otherwise check for manually set goal, then fall back to calculated
   const dailyGoal = usingCustomGoals

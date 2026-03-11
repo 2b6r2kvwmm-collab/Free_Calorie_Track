@@ -4,6 +4,7 @@ import { getProfile, addExerciseEntry } from '../utils/storage';
 import WorkoutTemplates from './WorkoutTemplates';
 import { trackWorkout } from '../utils/gamification';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
 // Helper function to calculate weighted vest calorie multiplier
 function getVestCalorieMultiplier(vestWeight) {
@@ -42,9 +43,9 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
 
   // Lock body scroll when modal opens
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     return () => {
-      document.body.style.overflow = 'unset';
+      unlockScroll();
     };
   }, []);
 

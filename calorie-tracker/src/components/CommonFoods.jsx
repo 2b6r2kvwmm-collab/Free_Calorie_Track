@@ -3,10 +3,12 @@ import { searchCommonFoods, getCategories } from '../utils/commonFoods';
 import { getFavorites, addFavorite, removeFavorite } from '../utils/storage';
 import PortionSelector from './PortionSelector';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
+import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
 export default function CommonFoods({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedFood, setSelectedFood] = useState(null);
   const [favorites, setFavorites] = useState(getFavorites());
@@ -14,25 +16,40 @@ export default function CommonFoods({ onAddFood, onClose }) {
 
   // Lock body scroll when modal opens
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    lockScroll();
     return () => {
-      document.body.style.overflow = 'unset';
+      unlockScroll();
     };
   }, []);
+
+  // Debounce search query to avoid expensive filtering on every keystroke
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300); // 300ms delay
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   // Scroll to top when search or category changes
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = 0;
     }
-  }, [searchQuery, selectedCategory]);
+  }, [debouncedSearchQuery, selectedCategory]);
 
   const categories = ['All', ...getCategories()];
 
+  // Memoize favorites Set for O(1) lookup instead of O(n) with array.some()
+  const favoritesSet = useMemo(() => {
+    return new Set(favorites.map(f => `${f.name}|${f.calories}`));
+  }, [favorites]);
+
   // Memoize search results to prevent re-filtering on every render
+  // Uses debounced query to avoid expensive searches on every keystroke
   const allFoods = useMemo(() => {
-    return searchCommonFoods(searchQuery);
-  }, [searchQuery]);
+    return searchCommonFoods(debouncedSearchQuery);
+  }, [debouncedSearchQuery]);
 
   // Filter by category if not "All"
   const filteredFoods = selectedCategory === 'All'
@@ -65,8 +82,9 @@ export default function CommonFoods({ onAddFood, onClose }) {
     setFavorites(getFavorites()); // Refresh favorites list
   };
 
+  // O(1) lookup using memoized Set instead of O(n) array.some()
   const isFavoriteFood = (food) => {
-    return favorites.some(f => f.name === food.name && f.calories === food.calories);
+    return favoritesSet.has(`${food.name}|${food.calories}`);
   };
 
   return (
