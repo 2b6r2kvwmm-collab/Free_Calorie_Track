@@ -6,6 +6,7 @@ export default function UpdateNotification() {
   const [showUpdate, setShowUpdate] = useState(false);
   const updateCheckRef = useRef(false); // Prevent multiple simultaneous update checks
   const intervalIdRef = useRef(null); // Track interval for cleanup
+  const hasShownBannerRef = useRef(false); // Prevent showing banner multiple times
 
   const {
     needRefresh: [needRefresh, setNeedRefresh],
@@ -52,8 +53,11 @@ export default function UpdateNotification() {
   }, []);
 
   useEffect(() => {
-    if (needRefresh) {
+    // Only show banner once per session, even if needRefresh toggles multiple times
+    if (needRefresh && !hasShownBannerRef.current) {
+      console.log('Showing update banner');
       setShowUpdate(true);
+      hasShownBannerRef.current = true;
     }
   }, [needRefresh]);
 
@@ -71,8 +75,10 @@ export default function UpdateNotification() {
   };
 
   const handleDismiss = () => {
+    console.log('User dismissed update banner');
     setShowUpdate(false);
     setNeedRefresh(false);
+    // Keep hasShownBannerRef.current = true to prevent re-showing
   };
 
   if (!showUpdate) return null;
