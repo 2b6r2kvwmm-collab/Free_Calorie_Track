@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { commonFoods } from '../utils/commonFoods';
+import { commonFoods, hasMixedRawCooked, getRawCookedState } from '../utils/commonFoods';
 import { addCustomFood } from '../utils/storage';
 import { getFoodByBarcode } from '../utils/openfoodfacts';
 import BarcodeScanner from './BarcodeScanner';
@@ -59,14 +59,24 @@ export default function RecipeBuilder({ onSave, onClose }) {
   };
 
   const addIngredient = (food, quantity = 100) => {
-    setIngredients([...ingredients, {
+    const newIngredient = {
       name: food.name,
       quantity: quantity,
       calories: food.calories || 0,
       protein: food.protein || 0,
       carbs: food.carbs || 0,
       fat: food.fat || 0,
-    }]);
+    };
+
+    const updatedIngredients = [...ingredients, newIngredient];
+
+    // Check if adding this ingredient creates a raw/cooked mix
+    if (hasMixedRawCooked(updatedIngredients)) {
+      setAlertMessage('Warning: You\'re mixing raw and cooked ingredients. For more accurate nutrition tracking, it\'s recommended to use all raw ingredients (preferred) or all cooked ingredients. Raw ingredients allow you to account for cooking losses more precisely.');
+      setShowAlert(true);
+    }
+
+    setIngredients(updatedIngredients);
     setShowFoodSelector(false);
     setSearchQuery('');
   };
@@ -302,7 +312,14 @@ export default function RecipeBuilder({ onSave, onClose }) {
                 >
                   <div className="flex justify-between items-start gap-3">
                     <div className="flex-1">
-                      <div className="font-semibold">{ing.name}</div>
+                      <div className="flex items-center gap-2">
+                        <div className="font-semibold">{ing.name}</div>
+                        {getRawCookedState(ing.name) && (
+                          <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded">
+                            {getRawCookedState(ing.name)}
+                          </span>
+                        )}
+                      </div>
                       <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                         {Math.round(ing.calories * ing.quantity / 100)} cal •
                         P: {Math.round(ing.protein * ing.quantity / 100 * 10) / 10}g •

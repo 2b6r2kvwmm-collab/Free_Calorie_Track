@@ -3065,3 +3065,67 @@ export function getCategories() {
   const categories = [...new Set(commonFoods.map(food => food.category))];
   return categories.sort();
 }
+
+// Raw/Cooked Toggle Helpers
+
+// Check if a food name indicates it's raw or cooked
+export function getRawCookedState(foodName) {
+  const lowerName = foodName.toLowerCase();
+  if (lowerName.includes('(raw)') || lowerName.includes('raw,') || lowerName.includes('raw/')) {
+    return 'raw';
+  }
+  if (lowerName.includes('(cooked)') || lowerName.includes('cooked,') || lowerName.includes('cooked/')) {
+    return 'cooked';
+  }
+  return null;
+}
+
+// Check if a food has a raw/cooked pair available
+export function hasRawCookedPair(food) {
+  const baseName = getBaseName(food.name);
+  const currentState = getRawCookedState(food.name);
+
+  if (!currentState) return false;
+
+  const oppositeState = currentState === 'raw' ? 'cooked' : 'raw';
+  const oppositeName = `${baseName} (${oppositeState})`;
+
+  return commonFoods.some(f => f.name.toLowerCase() === oppositeName.toLowerCase());
+}
+
+// Get the base name without (raw) or (cooked) suffix
+function getBaseName(foodName) {
+  return foodName
+    .replace(/\s*\(raw\)/i, '')
+    .replace(/\s*\(cooked\)/i, '')
+    .replace(/,?\s*raw$/i, '')
+    .replace(/,?\s*cooked$/i, '')
+    .trim();
+}
+
+// Get the opposite version (raw <-> cooked) of a food
+export function getRawCookedPair(food) {
+  const baseName = getBaseName(food.name);
+  const currentState = getRawCookedState(food.name);
+
+  if (!currentState) return null;
+
+  const oppositeState = currentState === 'raw' ? 'cooked' : 'raw';
+  const oppositeName = `${baseName} (${oppositeState})`;
+
+  return commonFoods.find(f => f.name.toLowerCase() === oppositeName.toLowerCase()) || null;
+}
+
+// Check if ingredients in a list mix raw and cooked items
+export function hasMixedRawCooked(ingredients) {
+  const states = ingredients
+    .map(ing => getRawCookedState(ing.name))
+    .filter(state => state !== null);
+
+  if (states.length === 0) return false;
+
+  const hasRaw = states.includes('raw');
+  const hasCooked = states.includes('cooked');
+
+  return hasRaw && hasCooked;
+}
