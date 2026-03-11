@@ -136,7 +136,7 @@ export default function History({ onRefresh }) {
       <h2 className="text-2xl font-bold text-center mb-6">History</h2>
 
       {/* Add to Any Date */}
-      <div className="card">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 sm:p-6">
         <h3 className="text-sm font-semibold mb-3">Log to a Different Day</h3>
         <div className="space-y-3">
           <input
@@ -157,13 +157,13 @@ export default function History({ onRefresh }) {
             <div className="flex gap-2">
               <button
                 onClick={() => handleAddFoodToDate(selectedDate)}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition-colors flex-1 min-w-0"
               >
                 + Add Food
               </button>
               <button
                 onClick={() => handleAddExerciseToDate(selectedDate)}
-                className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
+                className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition-colors flex-1 min-w-0"
               >
                 + Add Exercise
               </button>
@@ -216,13 +216,13 @@ export default function History({ onRefresh }) {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleAddFoodToDate(day.date)}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition-colors flex-1 min-w-0"
                     >
                       + Food
                     </button>
                     <button
                       onClick={() => handleAddExerciseToDate(day.date)}
-                      className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
+                      className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg text-sm sm:text-lg transition-colors flex-1 min-w-0"
                     >
                       + Exercise
                     </button>
