@@ -57,6 +57,7 @@ export default function CommonFoods({ onAddFood, onClose }) {
     : allFoods.filter(food => food.category === selectedCategory);
 
   // Remove duplicate raw/cooked entries - only show raw version (user toggles in PortionSelector)
+  // IMPORTANT: Keep the original food object intact - only change display in UI
   const seenBaseNames = new Set();
   filteredFoods = filteredFoods.filter(food => {
     const state = getRawCookedState(food.name);
@@ -76,17 +77,16 @@ export default function CommonFoods({ onAddFood, onClose }) {
     }
 
     return false;
-  }).map(food => {
-    // Remove (raw) or (cooked) from display name if it has a pair
+  });
+
+  // Helper function to get clean display name
+  const getDisplayName = (food) => {
     const state = getRawCookedState(food.name);
     if (state && hasRawCookedPair(food)) {
-      return {
-        ...food,
-        name: food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim()
-      };
+      return food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
     }
-    return food;
-  });
+    return food.name;
+  };
 
   const handleFoodClick = (food) => {
     setSelectedFood(food);
@@ -194,7 +194,7 @@ export default function CommonFoods({ onAddFood, onClose }) {
                 <div className="flex justify-between items-start gap-2 sm:gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
-                      <h3 className="font-semibold text-lg">{food.name}</h3>
+                      <h3 className="font-semibold text-lg">{getDisplayName(food)}</h3>
                       <span className="text-xs bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">
                         {food.category}
                       </span>

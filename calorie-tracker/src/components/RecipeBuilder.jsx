@@ -146,6 +146,7 @@ export default function RecipeBuilder({ onSave, onClose }) {
     : commonFoods.slice(0, 50);
 
   // Remove duplicate raw/cooked entries - only show raw version
+  // Keep original food objects intact for proper pair detection
   const seenBaseNames = new Set();
   filteredFoods = filteredFoods.filter(food => {
     const state = getRawCookedState(food.name);
@@ -165,17 +166,16 @@ export default function RecipeBuilder({ onSave, onClose }) {
     }
 
     return false;
-  }).map(food => {
-    // Remove (raw) or (cooked) from display name
+  });
+
+  // Helper to get clean display name
+  const getDisplayName = (food) => {
     const state = getRawCookedState(food.name);
     if (state) {
-      return {
-        ...food,
-        name: food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim()
-      };
+      return food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
     }
-    return food;
-  });
+    return food.name;
+  };
 
   const totals = calculateTotals();
 
@@ -274,7 +274,7 @@ export default function RecipeBuilder({ onSave, onClose }) {
                   onClick={() => addIngredient(food)}
                   className="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                 >
-                  <div className="font-semibold">{food.name}</div>
+                  <div className="font-semibold">{getDisplayName(food)}</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">
                     {food.calories} cal • P: {food.protein}g • C: {food.carbs}g • F: {food.fat}g
                   </div>
