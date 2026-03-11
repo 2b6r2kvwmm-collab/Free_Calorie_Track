@@ -10,7 +10,9 @@ interface Props {
 }
 
 const { title, description, pubDate, image } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Ensure canonical URL never has trailing slash for consistency
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonicalURL = new URL(pathname, Astro.site);
 ---
 
 <!DOCTYPE html>

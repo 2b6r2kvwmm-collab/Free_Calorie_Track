@@ -9,7 +9,9 @@ interface Props {
 }
 
 const { title, description, keywords, image } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+// Ensure canonical URL never has trailing slash for consistency
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonicalURL = new URL(pathname, Astro.site);
 const defaultImage = 'https://freecalorietrack.com/screenshot.png';
 const ogImage = image || defaultImage;
 ---
