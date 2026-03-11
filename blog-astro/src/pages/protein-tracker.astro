@@ -212,4 +212,52 @@ const keywords = "protein tracker, free protein tracker, daily protein tracker, 
     </div>
 
   </main>
+
+  <!-- FAQ Schema for Google Rich Results -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much protein do I need per day?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Protein needs vary based on your goals. For muscle building, aim for 0.7-1.0g per pound of body weight (1.6-2.2g per kg). For weight loss with muscle preservation, target 0.8-1.0g per pound. For general health and maintenance, 0.6-0.8g per pound is sufficient. This protein tracker automatically calculates your daily protein goal based on your weight and fitness goal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this protein tracker really free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this protein tracker is completely free with no paywalls, no premium tier, and no subscription. All features including barcode scanning, automatic protein goals, and detailed trends are free forever. There are also no ads."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why is tracking protein important?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tracking protein is essential for muscle growth, recovery, and preserving lean mass during weight loss. Protein increases satiety, supports a higher metabolism through the thermic effect of food, and helps maintain muscle tissue. Most people underestimate their protein intake without tracking, making it difficult to reach fitness goals."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I track protein without internet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this protein tracker works completely offline. You can install it on any device as a Progressive Web App (PWA) and track protein intake without internet. All your food data and protein history is stored locally on your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What foods are high in protein?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "High-protein foods include chicken breast (31g per 100g), lean beef (26g per 100g), fish like salmon and tuna (20-25g per 100g), eggs (6g per egg), Greek yogurt (10g per 100g), cottage cheese (11g per 100g), protein powder (20-30g per scoop), tofu (8g per 100g), and legumes like lentils (9g per 100g cooked). The app includes thousands of these foods pre-loaded for easy tracking."
+        }
+      }
+    ]
+  })} />
 </LandingPageLayout>
