@@ -157,13 +157,13 @@ export default function History({ onRefresh }) {
             <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={() => handleAddFoodToDate(selectedDate)}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-2 rounded-lg text-sm transition-colors"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-1 rounded text-xs transition-colors"
               >
                 + Food
               </button>
               <button
                 onClick={() => handleAddExerciseToDate(selectedDate)}
-                className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-2 rounded-lg text-sm transition-colors"
+                className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2 px-1 rounded text-xs transition-colors"
               >
                 + Exercise
               </button>
@@ -216,13 +216,13 @@ export default function History({ onRefresh }) {
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       onClick={() => handleAddFoodToDate(day.date)}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-2 rounded-lg text-sm transition-colors"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-1 rounded text-xs transition-colors"
                     >
                       + Food
                     </button>
                     <button
                       onClick={() => handleAddExerciseToDate(day.date)}
-                      className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-2 rounded-lg text-sm transition-colors"
+                      className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2 px-1 rounded text-xs transition-colors"
                     >
                       + Exercise
                     </button>
