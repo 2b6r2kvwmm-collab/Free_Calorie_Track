@@ -212,6 +212,54 @@ All items implemented:
 
 ---
 
+## URL Consistency & Trailing Slashes
+
+### Problem: Duplicate URLs
+
+Without explicit trailing slash configuration, Astro and web servers can serve the same content at two different URLs:
+
+- `https://freecalorietrack.com/blog/high-protein-low-calorie-foods`
+- `https://freecalorietrack.com/blog/high-protein-low-calorie-foods/`
+
+This causes several SEO issues:
+
+1. **Duplicate Content** - Search engines see two versions of the same page
+2. **Link Equity Dilution** - Backlinks split between both URLs
+3. **Canonical Tag Warnings** - Google Search Console flags as "alternate page with proper canonical tag"
+4. **Analytics Confusion** - Traffic metrics split across two URLs
+
+### Solution: Enforce No Trailing Slashes
+
+**Configuration in `astro.config.mjs`:**
+```javascript
+export default defineConfig({
+  site: 'https://freecalorietrack.com',
+  trailingSlash: 'never', // Enforce consistent URLs without trailing slashes
+  // ...
+});
+```
+
+**Canonical URL Generation in Layouts:**
+```typescript
+// Strip any trailing slashes before generating canonical URL
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonicalURL = new URL(pathname, Astro.site);
+```
+
+This ensures:
+- ✅ All URLs consistently have no trailing slash
+- ✅ Canonical tags always match the actual URL
+- ✅ Search engines treat each page as a single, unique URL
+- ✅ No "alternate page" warnings in Google Search Console
+
+**Impact:**
+- One canonical version of each URL
+- All link equity flows to a single URL
+- Clean analytics with no split metrics
+- No duplicate content penalties
+
+---
+
 ## Verification Steps
 
 ### After Deployment
