@@ -287,4 +287,52 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
     </div>
 
   </main>
+
+  <!-- FAQ Schema for Google Rich Results -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a macro tracker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A macro tracker is an app that helps you track your daily intake of macronutrients: protein, carbohydrates, and fat. Unlike simple calorie counters, macro trackers show you the breakdown of where your calories come from, helping you optimize your diet for muscle gain, fat loss, or athletic performance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this macro tracker really free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this macro tracker is completely free with no paywalls, no premium tier, and no subscription required. All features including barcode scanning, custom macro goals, and detailed trends are free forever. There are also no ads."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate my macro goals?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The app automatically calculates macro goals based on your weight, height, age, activity level, and fitness goal (weight loss, muscle gain, or maintenance). It uses research-backed formulas to determine optimal protein, carb, and fat targets. You can also set custom macro targets or choose from 6 preset macro splits (High Protein, Keto, Athletic, etc.)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What are good macro ratios for weight loss?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For weight loss, a high-protein macro split like 40% protein, 30% carbs, 30% fat (40/30/30) is effective. High protein helps preserve muscle mass during a calorie deficit and increases satiety. The app includes this as a preset called 'High Protein' and automatically calculates the gram targets based on your TDEE and calorie goal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I track macros without an internet connection?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, this macro tracker works completely offline. You can install it on any device as a Progressive Web App (PWA) and track macros without internet. All your food data and macro history is stored locally on your device."
+        }
+      }
+    ]
+  })} />
 </LandingPageLayout>
