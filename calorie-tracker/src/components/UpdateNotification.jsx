@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { APP_VERSION } from '../version';
 
 export default function UpdateNotification() {
   const [showUpdate, setShowUpdate] = useState(false);
+  const updateCheckRef = useRef(false); // Prevent multiple simultaneous update checks
+  const intervalIdRef = useRef(null); // Track interval for cleanup
 
   const {
     needRefresh: [needRefresh, setNeedRefresh],
@@ -11,16 +13,21 @@ export default function UpdateNotification() {
   } = useRegisterSW({
     onRegistered(r) {
       console.log('SW Registered: ' + r);
-      // Check for updates more frequently on initial load
-      if (r) {
-        // Check immediately after 1 second
-        setTimeout(() => {
-          console.log('Initial update check...');
-          r.update();
-        }, 1000);
 
-        // Then check every 30 minutes for better update detection
-        setInterval(() => {
+      // Prevent duplicate registrations from setting up multiple timers
+      if (updateCheckRef.current || !r) return;
+      updateCheckRef.current = true;
+
+      // Check immediately after 1 second
+      setTimeout(() => {
+        console.log('Initial update check...');
+        r.update();
+      }, 1000);
+
+      // Only set up interval if one doesn't already exist
+      if (!intervalIdRef.current) {
+        // Check every 30 minutes for better update detection
+        intervalIdRef.current = setInterval(() => {
           console.log('Periodic update check...');
           r.update();
         }, 30 * 60 * 1000); // Check every 30 minutes
@@ -33,6 +40,16 @@ export default function UpdateNotification() {
       console.log('SW needs refresh - update available!');
     },
   });
+
+  // Cleanup interval on unmount
+  useEffect(() => {
+    return () => {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (needRefresh) {
