@@ -138,7 +138,7 @@ export default function History({ onRefresh }) {
       {/* Add to Any Date */}
       <div className="card">
         <h3 className="text-sm font-semibold mb-3">Log to a Different Day</h3>
-        <div className="space-y-3 max-w-full">
+        <div className="space-y-3">
           <input
             type="date"
             className="input-field w-full"
@@ -154,16 +154,16 @@ export default function History({ onRefresh }) {
             aria-label="Select date to add entries"
           />
           {selectedDate && (
-            <div className="flex gap-2 sm:gap-3">
+            <div className="flex gap-2">
               <button
                 onClick={() => handleAddFoodToDate(selectedDate)}
-                className="btn-primary flex-1"
+                className="btn-primary flex-1 min-w-0"
               >
                 + Add Food
               </button>
               <button
                 onClick={() => handleAddExerciseToDate(selectedDate)}
-                className="btn-secondary flex-1"
+                className="btn-secondary flex-1 min-w-0"
               >
                 + Add Exercise
               </button>
@@ -213,16 +213,16 @@ export default function History({ onRefresh }) {
               {expandedDate === day.date && (
                 <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 space-y-6">
                   {/* Add Entry Buttons */}
-                  <div className="flex gap-3">
+                  <div className="flex gap-2">
                     <button
                       onClick={() => handleAddFoodToDate(day.date)}
-                      className="btn-primary flex-1"
+                      className="btn-primary flex-1 min-w-0"
                     >
                       + Food
                     </button>
                     <button
                       onClick={() => handleAddExerciseToDate(day.date)}
-                      className="btn-secondary flex-1"
+                      className="btn-secondary flex-1 min-w-0"
                     >
                       + Exercise
                     </button>
