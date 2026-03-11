@@ -63,7 +63,10 @@ export default function CommonFoods({ onAddFood, onClose }) {
     const state = getRawCookedState(food.name);
     if (!state) return true; // Keep foods without raw/cooked
 
-    const baseName = food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
+    const baseName = food.name
+      .replace(/\s*\(raw[^)]*\)/i, '')      // Handles (raw), (raw, sushi), etc.
+      .replace(/\s*\(cooked[^)]*\)/i, '')    // Handles (cooked), (cooked, boiled), etc.
+      .trim();
 
     // Only show raw version, skip cooked if we've seen this food
     if (state === 'cooked' && seenBaseNames.has(baseName)) {
@@ -83,7 +86,10 @@ export default function CommonFoods({ onAddFood, onClose }) {
   const getDisplayName = (food) => {
     const state = getRawCookedState(food.name);
     if (state && hasRawCookedPair(food)) {
-      return food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
+      return food.name
+        .replace(/\s*\(raw[^)]*\)/i, '')      // Handles (raw), (raw, sushi), etc.
+        .replace(/\s*\(cooked[^)]*\)/i, '')    // Handles (cooked), (cooked, boiled), etc.
+        .trim();
     }
     return food.name;
   };

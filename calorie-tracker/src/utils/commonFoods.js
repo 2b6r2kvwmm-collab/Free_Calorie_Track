@@ -40,16 +40,25 @@ export const commonFoods = [
   { name: 'Smoked Salmon (lox)', calories: 117, protein: 18, carbs: 0, fat: 4.3, servingSize: '100g (3.5 oz)', category: 'Protein' },
   { name: 'Tuna (raw, sushi/sashimi)', calories: 144, protein: 23, carbs: 0, fat: 5, servingSize: '100g', category: 'Protein' },
   { name: 'Tuna (canned in water)', calories: 116, protein: 26, carbs: 0, fat: 1, servingSize: '100g', category: 'Protein' },
+  { name: 'Tilapia (raw)', calories: 96, protein: 20, carbs: 0, fat: 1.7, servingSize: '100g', category: 'Protein' },
   { name: 'Tilapia (cooked)', calories: 128, protein: 26, carbs: 0, fat: 2.7, servingSize: '100g', category: 'Protein' },
+  { name: 'Halibut (raw)', calories: 110, protein: 21, carbs: 0, fat: 2.3, servingSize: '100g', category: 'Protein' },
   { name: 'Halibut (cooked)', calories: 140, protein: 27, carbs: 0, fat: 3, servingSize: '100g', category: 'Protein' },
+  { name: 'Mahi-mahi (raw)', calories: 85, protein: 18, carbs: 0, fat: 0.7, servingSize: '100g', category: 'Protein' },
   { name: 'Mahi-mahi (cooked)', calories: 109, protein: 24, carbs: 0, fat: 0.9, servingSize: '100g', category: 'Protein' },
+  { name: 'Sea Bass (raw)', calories: 97, protein: 18, carbs: 0, fat: 2, servingSize: '100g', category: 'Protein' },
   { name: 'Sea Bass (cooked)', calories: 124, protein: 24, carbs: 0, fat: 2.6, servingSize: '100g', category: 'Protein' },
+  { name: 'Shrimp (raw)', calories: 85, protein: 20, carbs: 0, fat: 0.5, servingSize: '100g', category: 'Protein' },
   { name: 'Shrimp (cooked)', calories: 99, protein: 24, carbs: 0, fat: 0.3, servingSize: '100g', category: 'Protein' },
+  { name: 'Scallops (raw)', calories: 88, protein: 16, carbs: 2.4, fat: 0.8, servingSize: '100g', category: 'Protein' },
   { name: 'Scallops (cooked)', calories: 111, protein: 21, carbs: 3, fat: 1, servingSize: '100g', category: 'Protein' },
+  { name: 'Mussels (raw)', calories: 86, protein: 12, carbs: 3.7, fat: 2.2, servingSize: '100g', category: 'Protein' },
   { name: 'Mussels (cooked)', calories: 172, protein: 24, carbs: 7, fat: 4.5, servingSize: '100g', category: 'Protein' },
+  { name: 'Clams (raw)', calories: 74, protein: 13, carbs: 2.6, fat: 1, servingSize: '100g', category: 'Protein' },
   { name: 'Clams (cooked)', calories: 148, protein: 26, carbs: 5, fat: 2, servingSize: '100g', category: 'Protein' },
   { name: 'Calamari (fried)', calories: 175, protein: 15, carbs: 8, fat: 9, servingSize: '100g', category: 'Protein' },
   { name: 'Anchovies (5 fillets)', calories: 42, protein: 6, carbs: 0, fat: 2, servingSize: '5 fillets (20g)', category: 'Protein' },
+  { name: 'Cod (raw)', calories: 82, protein: 18, carbs: 0, fat: 0.7, servingSize: '100g', category: 'Protein' },
   { name: 'Cod (cooked)', calories: 105, protein: 23, carbs: 0, fat: 0.9, servingSize: '100g', category: 'Protein' },
 
   // Proteins - Eggs & Dairy
@@ -110,8 +119,11 @@ export const commonFoods = [
   { name: 'Beyond Burger (1 patty)', calories: 250, protein: 20, carbs: 3, fat: 18, servingSize: '1 patty (113g)', category: 'Protein' },
   { name: 'Impossible Burger (1 patty)', calories: 240, protein: 19, carbs: 9, fat: 14, servingSize: '1 patty (113g)', category: 'Protein' },
   { name: 'Tofu (firm)', calories: 144, protein: 17, carbs: 3, fat: 9, servingSize: '100g', category: 'Protein' },
+  { name: 'Black Beans (raw)', calories: 341, protein: 21, carbs: 62, fat: 1.4, servingSize: '100g', category: 'Protein' },
   { name: 'Black Beans (cooked)', calories: 132, protein: 9, carbs: 24, fat: 0.5, servingSize: '100g', category: 'Protein' },
+  { name: 'Chickpeas (raw)', calories: 364, protein: 19, carbs: 61, fat: 6, servingSize: '100g', category: 'Protein' },
   { name: 'Chickpeas (cooked)', calories: 164, protein: 9, carbs: 27, fat: 2.6, servingSize: '100g', category: 'Protein' },
+  { name: 'Lentils (raw)', calories: 352, protein: 25, carbs: 63, fat: 1, servingSize: '100g', category: 'Protein' },
   { name: 'Lentils (cooked)', calories: 116, protein: 9, carbs: 20, fat: 0.4, servingSize: '100g', category: 'Protein' },
   { name: 'Peanut Butter (2 tbsp)', calories: 188, protein: 8, carbs: 6, fat: 16, servingSize: '2 tbsp (32g)', category: 'Protein' },
   { name: 'Peanut Butter (1 tbsp)', calories: 94, protein: 4, carbs: 3, fat: 8, servingSize: '1 tbsp (16g)', category: 'Protein' },
@@ -144,6 +156,7 @@ export const commonFoods = [
   { name: 'Coconut Milk (canned, full fat)', calories: 230, protein: 2.3, carbs: 6, fat: 24, servingSize: '100ml', category: 'Drinks' },
   { name: 'Coconut Milk (beverage)', calories: 20, protein: 0, carbs: 1.7, fat: 2, servingSize: '100ml', category: 'Drinks' },
   { name: 'Tempeh', calories: 195, protein: 20, carbs: 9, fat: 11, servingSize: '100g', category: 'Protein' },
+  { name: 'Edamame (raw)', calories: 109, protein: 10, carbs: 8.9, fat: 4.7, servingSize: '100g', category: 'Protein' },
   { name: 'Edamame (cooked)', calories: 122, protein: 11, carbs: 10, fat: 5, servingSize: '100g', category: 'Protein' },
   { name: 'Seitan', calories: 370, protein: 75, carbs: 14, fat: 1.9, servingSize: '100g', category: 'Protein' },
   { name: 'Tahini (1 tbsp)', calories: 89, protein: 2.6, carbs: 3.2, fat: 8, servingSize: '1 tbsp (15g)', category: 'Protein' },
@@ -307,6 +320,7 @@ export const commonFoods = [
   { name: 'Snap Peas (raw)', calories: 42, protein: 2.8, carbs: 7.6, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
   { name: 'Cherry Tomatoes (raw)', calories: 18, protein: 0.9, carbs: 3.9, fat: 0.2, servingSize: '100g (6-7 tomatoes)', category: 'Vegetables' },
   { name: 'Cauliflower (raw)', calories: 25, protein: 1.9, carbs: 5, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Asparagus (raw)', calories: 20, protein: 2.2, carbs: 3.9, fat: 0.1, servingSize: '100g (5-6 spears)', category: 'Vegetables' },
   { name: 'Asparagus (cooked)', calories: 22, protein: 2.4, carbs: 4.1, fat: 0.2, servingSize: '100g (5-6 spears)', category: 'Vegetables' },
   { name: 'Brussels Sprouts (cooked)', calories: 43, protein: 3.4, carbs: 8.9, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
   { name: 'Kale (raw)', calories: 33, protein: 2.9, carbs: 6, fat: 0.9, servingSize: '100g', category: 'Vegetables' },
@@ -1182,12 +1196,19 @@ export const commonFoods = [
   { name: 'Octopus', calories: 82, protein: 15, carbs: 2.2, fat: 1, servingSize: '100g', category: 'Protein' },
   { name: 'Crayfish', calories: 77, protein: 16, carbs: 0, fat: 1, servingSize: '100g', category: 'Protein' },
   { name: 'Crab Cake', calories: 210, protein: 12, carbs: 16, fat: 11, servingSize: '1 cake (85g)', category: 'Protein' },
+  { name: 'Kidney Beans (raw)', calories: 333, protein: 24, carbs: 60, fat: 0.8, servingSize: '100g', category: 'Protein' },
   { name: 'Kidney Beans (cooked)', calories: 127, protein: 9, carbs: 23, fat: 0.5, servingSize: '100g', category: 'Protein' },
+  { name: 'Pinto Beans (raw)', calories: 347, protein: 21, carbs: 63, fat: 1.2, servingSize: '100g', category: 'Protein' },
   { name: 'Pinto Beans (cooked)', calories: 143, protein: 9, carbs: 26, fat: 0.7, servingSize: '100g', category: 'Protein' },
+  { name: 'Navy Beans (raw)', calories: 337, protein: 22, carbs: 61, fat: 1.5, servingSize: '100g', category: 'Protein' },
   { name: 'Navy Beans (cooked)', calories: 140, protein: 8, carbs: 26, fat: 0.6, servingSize: '100g', category: 'Protein' },
+  { name: 'Lentils (green, raw)', calories: 352, protein: 25, carbs: 63, fat: 1, servingSize: '100g', category: 'Protein' },
   { name: 'Lentils (green, cooked)', calories: 116, protein: 9, carbs: 20, fat: 0.4, servingSize: '100g', category: 'Protein' },
+  { name: 'Lentils (red, raw)', calories: 358, protein: 26, carbs: 63, fat: 1.1, servingSize: '100g', category: 'Protein' },
   { name: 'Lentils (red, cooked)', calories: 116, protein: 9, carbs: 20, fat: 0.4, servingSize: '100g', category: 'Protein' },
+  { name: 'Split Peas (raw)', calories: 341, protein: 25, carbs: 60, fat: 1.2, servingSize: '100g', category: 'Protein' },
   { name: 'Split Peas (cooked)', calories: 118, protein: 8, carbs: 21, fat: 0.4, servingSize: '100g', category: 'Protein' },
+  { name: 'Soybeans (raw)', calories: 446, protein: 36, carbs: 30, fat: 20, servingSize: '100g', category: 'Protein' },
   { name: 'Soybeans (cooked)', calories: 173, protein: 17, carbs: 10, fat: 9, servingSize: '100g', category: 'Protein' },
   { name: 'Beyond Burger patty', calories: 250, protein: 20, carbs: 3, fat: 18, servingSize: '1 patty (113g)', category: 'Protein' },
   { name: 'Impossible Burger patty', calories: 240, protein: 19, carbs: 9, fat: 14, servingSize: '1 patty (113g)', category: 'Protein' },
@@ -1220,6 +1241,7 @@ export const commonFoods = [
   { name: 'Parsnips', calories: 75, protein: 1.2, carbs: 18, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
   { name: 'Turnips', calories: 28, protein: 0.9, carbs: 6.4, fat: 0.1, servingSize: '100g', category: 'Vegetables' },
   { name: 'Sweet Potato (raw)', calories: 86, protein: 1.6, carbs: 20, fat: 0.1, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Sweet Potato (cooked)', calories: 90, protein: 2, carbs: 21, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
   { name: 'Purple Sweet Potato', calories: 105, protein: 2, carbs: 24, fat: 0.1, servingSize: '100g', category: 'Vegetables' },
   { name: 'Yam', calories: 118, protein: 1.5, carbs: 28, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
   { name: 'Cassava (yuca)', calories: 160, protein: 1.4, carbs: 38, fat: 0.3, servingSize: '100g', category: 'Vegetables' },
@@ -1271,7 +1293,9 @@ export const commonFoods = [
   { name: 'Wax Beans', calories: 31, protein: 1.8, carbs: 7, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
   { name: 'Sugar Snap Peas (raw)', calories: 42, protein: 2.8, carbs: 7.6, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
   { name: 'Snow Peas (raw)', calories: 42, protein: 2.8, carbs: 7.6, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Lima Beans (raw)', calories: 338, protein: 21, carbs: 63, fat: 0.7, servingSize: '100g', category: 'Vegetables' },
   { name: 'Lima Beans (cooked)', calories: 115, protein: 8, carbs: 21, fat: 0.4, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Fava Beans (raw)', calories: 341, protein: 26, carbs: 58, fat: 1.5, servingSize: '100g', category: 'Vegetables' },
   { name: 'Fava Beans (cooked)', calories: 110, protein: 8, carbs: 19, fat: 0.4, servingSize: '100g', category: 'Vegetables' },
   { name: 'Okra (raw)', calories: 33, protein: 1.9, carbs: 7.5, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
   { name: 'Corn on the Cob (cooked)', calories: 96, protein: 3.4, carbs: 21, fat: 1.5, servingSize: '1 ear (90g)', category: 'Vegetables' },
@@ -3115,8 +3139,8 @@ export function hasRawCookedPair(food) {
 // Get the base name without (raw) or (cooked) suffix
 function getBaseName(foodName) {
   return foodName
-    .replace(/\s*\(raw\)/i, '')
-    .replace(/\s*\(cooked\)/i, '')
+    .replace(/\s*\(raw[^)]*\)/i, '')      // Handles (raw), (raw, sushi), etc.
+    .replace(/\s*\(cooked[^)]*\)/i, '')    // Handles (cooked), (cooked, boiled), etc.
     .replace(/,?\s*raw$/i, '')
     .replace(/,?\s*cooked$/i, '')
     .trim();

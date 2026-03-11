@@ -25,13 +25,10 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
   const [isRaw, setIsRaw] = useState(getRawCookedState(food.name) === 'raw');
 
   // Get display name without (raw) or (cooked)
-  const displayName = food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
-
-  // Debug: Log food and pair detection
-  const hasPair = hasRawCookedPair(food);
-  console.log('PortionSelector - food.name:', food.name);
-  console.log('PortionSelector - hasRawCookedPair:', hasPair);
-  console.log('PortionSelector - getRawCookedState:', getRawCookedState(food.name));
+  const displayName = food.name
+    .replace(/\s*\(raw[^)]*\)/i, '')      // Handles (raw), (raw, sushi), etc.
+    .replace(/\s*\(cooked[^)]*\)/i, '')    // Handles (cooked), (cooked, boiled), etc.
+    .trim();
 
   // Lock body scroll when modal opens
   useEffect(() => {

@@ -152,7 +152,10 @@ export default function RecipeBuilder({ onSave, onClose }) {
     const state = getRawCookedState(food.name);
     if (!state) return true; // Keep foods without raw/cooked
 
-    const baseName = food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
+    const baseName = food.name
+      .replace(/\s*\(raw[^)]*\)/i, '')      // Handles (raw), (raw, sushi), etc.
+      .replace(/\s*\(cooked[^)]*\)/i, '')    // Handles (cooked), (cooked, boiled), etc.
+      .trim();
 
     // Only show raw version, skip cooked if we've seen this food
     if (state === 'cooked' && seenBaseNames.has(baseName)) {
@@ -172,7 +175,10 @@ export default function RecipeBuilder({ onSave, onClose }) {
   const getDisplayName = (food) => {
     const state = getRawCookedState(food.name);
     if (state) {
-      return food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
+      return food.name
+        .replace(/\s*\(raw[^)]*\)/i, '')      // Handles (raw), (raw, sushi), etc.
+        .replace(/\s*\(cooked[^)]*\)/i, '')    // Handles (cooked), (cooked, boiled), etc.
+        .trim();
     }
     return food.name;
   };
@@ -345,7 +351,12 @@ export default function RecipeBuilder({ onSave, onClose }) {
                   <div className="flex justify-between items-start gap-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <div className="font-semibold">{ing.name}</div>
+                        <div className="font-semibold">
+                          {ing.name
+                            .replace(/\s*\(raw[^)]*\)/i, '')
+                            .replace(/\s*\(cooked[^)]*\)/i, '')
+                            .trim()}
+                        </div>
                         {getRawCookedState(ing.name) && (
                           <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-1.5 py-0.5 rounded">
                             {getRawCookedState(ing.name)}
