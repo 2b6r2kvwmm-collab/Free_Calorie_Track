@@ -157,13 +157,13 @@ export default function History({ onRefresh }) {
             <div className="flex gap-2">
               <button
                 onClick={() => handleAddFoodToDate(selectedDate)}
-                className="btn-primary flex-1 min-w-0"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
               >
                 + Add Food
               </button>
               <button
                 onClick={() => handleAddExerciseToDate(selectedDate)}
-                className="btn-secondary flex-1 min-w-0"
+                className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
               >
                 + Add Exercise
               </button>
@@ -216,13 +216,13 @@ export default function History({ onRefresh }) {
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleAddFoodToDate(day.date)}
-                      className="btn-primary flex-1 min-w-0"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
                     >
                       + Food
                     </button>
                     <button
                       onClick={() => handleAddExerciseToDate(day.date)}
-                      className="btn-secondary flex-1 min-w-0"
+                      className="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-semibold py-2.5 px-3 sm:py-3 sm:px-6 rounded-lg transition-colors flex-1 min-w-0"
                     >
                       + Exercise
                     </button>
