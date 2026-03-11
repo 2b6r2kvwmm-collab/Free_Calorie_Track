@@ -8,7 +8,8 @@ import {
   supportsBowlToppings, bowlToppings,
   supportsOatmealToppings, oatmealToppings,
   supportsTacoToppings, tacoToppings,
-  supportsStirFryToppings, stirFryToppings
+  supportsStirFryToppings, stirFryToppings,
+  hasRawCookedPair, getRawCookedPair, getRawCookedState
 } from '../utils/commonFoods';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
@@ -18,6 +19,10 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
   const [servings, setServings] = useState('1');
   // selectedToppings: array of { topping, multiplier }
   const [selectedToppings, setSelectedToppings] = useState([]);
+
+  // Raw/Cooked toggle state
+  const [currentFood, setCurrentFood] = useState(food);
+  const [isRaw, setIsRaw] = useState(getRawCookedState(food.name) === 'raw');
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -95,10 +100,10 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     { calories: 0, protein: 0, carbs: 0, fat: 0 }
   );
 
-  const baseCalories = food.calories * multiplier;
-  const baseProtein = (food.protein || 0) * multiplier;
-  const baseCarbs = (food.carbs || 0) * multiplier;
-  const baseFat = (food.fat || 0) * multiplier;
+  const baseCalories = currentFood.calories * multiplier;
+  const baseProtein = (currentFood.protein || 0) * multiplier;
+  const baseCarbs = (currentFood.carbs || 0) * multiplier;
+  const baseFat = (currentFood.fat || 0) * multiplier;
 
   const adjustedCalories = Math.round(baseCalories + toppingsTotal.calories);
   const adjustedProtein = Math.round((baseProtein + toppingsTotal.protein) * 10) / 10;
@@ -149,7 +154,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     }
 
     onConfirm({
-      ...food,
+      ...currentFood,
       name,
       calories: adjustedCalories,
       protein: adjustedProtein,
@@ -180,6 +185,15 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     );
   };
 
+  // Handle raw/cooked toggle
+  const toggleRawCooked = () => {
+    const pair = getRawCookedPair(currentFood);
+    if (pair) {
+      setCurrentFood(pair);
+      setIsRaw(!isRaw);
+    }
+  };
+
   // Quick multiplier buttons
   const quickOptions = [0.5, 1, 1.5, 2, 2.5, 3];
 
@@ -202,9 +216,42 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
         {/* Food Info */}
         {!isBuildYourOwn && (
           <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
-            <h3 className="font-semibold text-lg mb-2">{food.name}</h3>
+            <h3 className="font-semibold text-lg mb-2">{currentFood.name}</h3>
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              Base serving: {food.servingSize}
+              Base serving: {currentFood.servingSize}
+            </div>
+          </div>
+        )}
+
+        {/* Raw/Cooked Toggle */}
+        {hasRawCookedPair(food) && (
+          <div className="mb-6">
+            <label className="block text-sm font-semibold mb-2">Preparation</label>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  if (!isRaw) toggleRawCooked();
+                }}
+                className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                  isRaw
+                    ? 'bg-emerald-600 text-white border-emerald-500'
+                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                }`}
+              >
+                🥗 Raw
+              </button>
+              <button
+                onClick={() => {
+                  if (isRaw) toggleRawCooked();
+                }}
+                className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                  !isRaw
+                    ? 'bg-emerald-600 text-white border-emerald-500'
+                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                }`}
+              >
+                🔥 Cooked
+              </button>
             </div>
           </div>
         )}
@@ -260,7 +307,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
               <div className="text-xs text-gray-500 mt-2">
                 {isPizza && Number.isInteger(multiplier)
                   ? (multiplier === 1 ? '1 slice' : `${multiplier} slices`)
-                  : `${multiplier}x ${food.servingSize}`
+                  : `${multiplier}x ${currentFood.servingSize}`
                 }
               </div>
             )}

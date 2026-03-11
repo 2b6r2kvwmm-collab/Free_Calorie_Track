@@ -52,9 +52,31 @@ export default function CommonFoods({ onAddFood, onClose }) {
   }, [debouncedSearchQuery]);
 
   // Filter by category if not "All"
-  const filteredFoods = selectedCategory === 'All'
+  let filteredFoods = selectedCategory === 'All'
     ? allFoods
     : allFoods.filter(food => food.category === selectedCategory);
+
+  // Remove duplicate raw/cooked entries - only show raw version (user toggles in PortionSelector)
+  const seenBaseNames = new Set();
+  filteredFoods = filteredFoods.filter(food => {
+    const state = getRawCookedState(food.name);
+    if (!state) return true; // Keep foods without raw/cooked
+
+    const baseName = food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
+
+    // Only show raw version, skip cooked if we've seen this food
+    if (state === 'cooked' && seenBaseNames.has(baseName)) {
+      return false; // Skip cooked duplicate
+    }
+
+    // Prefer raw over cooked
+    if (state === 'raw' || !seenBaseNames.has(baseName)) {
+      seenBaseNames.add(baseName);
+      return true;
+    }
+
+    return false;
+  });
 
   const handleFoodClick = (food) => {
     setSelectedFood(food);
@@ -166,11 +188,6 @@ export default function CommonFoods({ onAddFood, onClose }) {
                       <span className="text-xs bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">
                         {food.category}
                       </span>
-                      {hasRawCookedPair(food) && (
-                        <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-1 rounded">
-                          {getRawCookedState(food.name)}
-                        </span>
-                      )}
                     </div>
                     <div className="text-gray-600 dark:text-gray-400">
                       <div className="font-semibold text-lg">{food.calories} cal</div>
@@ -189,19 +206,6 @@ export default function CommonFoods({ onAddFood, onClose }) {
                     >
                       {isFavoriteFood(food) ? '⭐' : '☆'}
                     </button>
-                    {hasRawCookedPair(food) && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          const pair = getRawCookedPair(food);
-                          if (pair) handleFoodClick(pair);
-                        }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs sm:text-sm whitespace-nowrap"
-                        title={`Switch to ${getRawCookedState(food.name) === 'raw' ? 'cooked' : 'raw'}`}
-                      >
-                        {getRawCookedState(food.name) === 'raw' ? '🔥' : '🥗'}
-                      </button>
-                    )}
                     <button
                       onClick={() => handleFoodClick(food)}
                       className="btn-primary whitespace-nowrap text-sm sm:text-base px-3 sm:px-4"

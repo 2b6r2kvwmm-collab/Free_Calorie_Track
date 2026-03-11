@@ -139,11 +139,33 @@ export default function RecipeBuilder({ onSave, onClose }) {
     onSave(recipe);
   };
 
-  const filteredFoods = searchQuery.trim()
+  let filteredFoods = searchQuery.trim()
     ? commonFoods.filter(food =>
         food.name.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : commonFoods.slice(0, 50);
+
+  // Remove duplicate raw/cooked entries - only show raw version
+  const seenBaseNames = new Set();
+  filteredFoods = filteredFoods.filter(food => {
+    const state = getRawCookedState(food.name);
+    if (!state) return true; // Keep foods without raw/cooked
+
+    const baseName = food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
+
+    // Only show raw version, skip cooked if we've seen this food
+    if (state === 'cooked' && seenBaseNames.has(baseName)) {
+      return false; // Skip cooked duplicate
+    }
+
+    // Prefer raw over cooked
+    if (state === 'raw' || !seenBaseNames.has(baseName)) {
+      seenBaseNames.add(baseName);
+      return true;
+    }
+
+    return false;
+  });
 
   const totals = calculateTotals();
 
