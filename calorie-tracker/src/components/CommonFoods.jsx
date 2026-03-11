@@ -76,6 +76,16 @@ export default function CommonFoods({ onAddFood, onClose }) {
     }
 
     return false;
+  }).map(food => {
+    // Remove (raw) or (cooked) from display name if it has a pair
+    const state = getRawCookedState(food.name);
+    if (state && hasRawCookedPair(food)) {
+      return {
+        ...food,
+        name: food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim()
+      };
+    }
+    return food;
   });
 
   const handleFoodClick = (food) => {

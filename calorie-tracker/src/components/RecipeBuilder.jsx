@@ -165,6 +165,16 @@ export default function RecipeBuilder({ onSave, onClose }) {
     }
 
     return false;
+  }).map(food => {
+    // Remove (raw) or (cooked) from display name
+    const state = getRawCookedState(food.name);
+    if (state) {
+      return {
+        ...food,
+        name: food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim()
+      };
+    }
+    return food;
   });
 
   const totals = calculateTotals();

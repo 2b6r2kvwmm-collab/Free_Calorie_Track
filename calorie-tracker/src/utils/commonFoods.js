@@ -18,13 +18,20 @@ export const commonFoods = [
   { name: 'Burrito (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Mexican' },
   { name: 'Stir-Fry (build your own)', calories: 0, protein: 0, carbs: 0, fat: 0, servingSize: 'base', category: 'Asian' },
 
-  // Proteins - Meat & Poultry (cooked only)
+  // Proteins - Meat & Poultry (raw and cooked)
+  { name: 'Chicken Breast (raw)', calories: 120, protein: 22.5, carbs: 0, fat: 2.6, servingSize: '100g', category: 'Protein' },
   { name: 'Chicken Breast (cooked)', calories: 195, protein: 35, carbs: 0, fat: 5, servingSize: '100g', category: 'Protein' },
+  { name: 'Chicken Thigh (raw)', calories: 179, protein: 18.6, carbs: 0, fat: 11.2, servingSize: '100g', category: 'Protein' },
   { name: 'Chicken Thigh (cooked)', calories: 247, protein: 28, carbs: 0, fat: 14, servingSize: '100g', category: 'Protein' },
+  { name: 'Ground Beef (raw)', calories: 215, protein: 18.6, carbs: 0, fat: 15, servingSize: '100g', category: 'Protein' },
   { name: 'Ground Beef (cooked)', calories: 250, protein: 26, carbs: 0, fat: 15, servingSize: '100g', category: 'Protein' },
+  { name: 'Steak (raw)', calories: 217, protein: 20, carbs: 0, fat: 14.5, servingSize: '100g', category: 'Protein' },
   { name: 'Steak (cooked)', calories: 250, protein: 26, carbs: 0, fat: 15, servingSize: '100g', category: 'Protein' },
+  { name: 'Pork Chop (raw)', calories: 206, protein: 21, carbs: 0, fat: 13, servingSize: '100g', category: 'Protein' },
   { name: 'Pork Chop (cooked)', calories: 242, protein: 28, carbs: 0, fat: 14, servingSize: '100g', category: 'Protein' },
+  { name: 'Bacon (raw)', calories: 417, protein: 12.6, carbs: 1.4, fat: 41.8, servingSize: '100g', category: 'Protein' },
   { name: 'Bacon (cooked)', calories: 541, protein: 37, carbs: 1, fat: 42, servingSize: '100g', category: 'Protein' },
+  { name: 'Turkey Breast (raw)', calories: 111, protein: 23.6, carbs: 0, fat: 1.7, servingSize: '100g', category: 'Protein' },
   { name: 'Turkey Breast (cooked)', calories: 189, protein: 29, carbs: 0, fat: 7, servingSize: '100g', category: 'Protein' },
 
   // Proteins - Fish & Seafood (raw for sushi/sashimi, cooked for others)
@@ -243,6 +250,18 @@ export const commonFoods = [
   { name: 'Potato (baked with skin)', calories: 93, protein: 2.5, carbs: 21, fat: 0.1, servingSize: '100g', category: 'Carbs' },
   { name: 'Sweet Potato (baked)', calories: 90, protein: 2, carbs: 21, fat: 0.2, servingSize: '100g', category: 'Carbs' },
   { name: 'Corn (cooked)', calories: 96, protein: 3.4, carbs: 21, fat: 1.5, servingSize: '100g', category: 'Carbs' },
+
+  // Vegetables - Additional raw/cooked pairs
+  { name: 'Broccoli (raw)', calories: 34, protein: 2.8, carbs: 6.6, fat: 0.4, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Carrots (cooked)', calories: 35, protein: 0.8, carbs: 8.2, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Mushrooms (cooked)', calories: 28, protein: 3.6, carbs: 5.3, fat: 0.5, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Zucchini (cooked)', calories: 20, protein: 1.5, carbs: 3.5, fat: 0.4, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Cauliflower (cooked)', calories: 23, protein: 1.8, carbs: 4.1, fat: 0.5, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Kale (cooked)', calories: 28, protein: 2.5, carbs: 5.6, fat: 0.4, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Cabbage (cooked)', calories: 23, protein: 1.3, carbs: 5.5, fat: 0.1, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Green Beans (raw)', calories: 31, protein: 1.8, carbs: 7, fat: 0.1, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Bell Pepper (cooked)', calories: 28, protein: 0.9, carbs: 6.7, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
+  { name: 'Onion (cooked)', calories: 44, protein: 1.4, carbs: 10.1, fat: 0.2, servingSize: '100g', category: 'Vegetables' },
 
   // Fruits
   { name: 'Apple (1 medium)', calories: 95, protein: 0.5, carbs: 25, fat: 0.3, servingSize: '1 apple (182g)', category: 'Fruits' },

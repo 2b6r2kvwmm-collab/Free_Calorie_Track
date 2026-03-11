@@ -24,6 +24,9 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
   const [currentFood, setCurrentFood] = useState(food);
   const [isRaw, setIsRaw] = useState(getRawCookedState(food.name) === 'raw');
 
+  // Get display name without (raw) or (cooked)
+  const displayName = food.name.replace(/\s*\(raw\)/i, '').replace(/\s*\(cooked\)/i, '').trim();
+
   // Lock body scroll when modal opens
   useEffect(() => {
     lockScroll();
@@ -116,7 +119,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     if (isBuildYourOwn && !isPizza && selectedToppings.length === 0) return;
     if (isBuildYourOwn && isPizza && (multiplier <= 0 || selectedToppings.length === 0)) return;
 
-    let name = food.name;
+    let name = displayName;
     if (selectedToppings.length > 0) {
       const toppingNames = selectedToppings.map((item) => {
         const multiplierText = item.multiplier !== 1 ? ` (${item.multiplier}x)` : '';
@@ -136,7 +139,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
 
         name = header + ': ' + toppingNames;
       } else {
-        name = `${food.name} + ${toppingNames}`;
+        name = `${displayName} + ${toppingNames}`;
       }
     }
 
@@ -202,7 +205,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
       <div className="card max-w-md w-full my-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">
-            {isBuildYourOwn ? food.name : 'Select Portion Size'}
+            {isBuildYourOwn ? displayName : 'Select Portion Size'}
           </h2>
           <button
             onClick={onCancel}
@@ -216,7 +219,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
         {/* Food Info */}
         {!isBuildYourOwn && (
           <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg mb-6">
-            <h3 className="font-semibold text-lg mb-2">{currentFood.name}</h3>
+            <h3 className="font-semibold text-lg mb-2">{displayName}</h3>
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Base serving: {currentFood.servingSize}
             </div>
