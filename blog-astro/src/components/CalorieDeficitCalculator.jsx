@@ -44,8 +44,8 @@ export default function CalorieDeficitCalculator() {
     const deficitInfo = deficitRanges[formData.pace];
     const targetCalories = Math.round(tdee - deficitInfo.deficit);
 
-    // Safety checks
-    const minimumCalories = formData.sex === 'female' ? 1200 : 1500;
+    // Safety checks - using conservative minimums
+    const minimumCalories = formData.sex === 'female' ? 1500 : 1800;
     const isTooLow = targetCalories < minimumCalories;
 
     setResult({
@@ -292,7 +292,7 @@ export default function CalorieDeficitCalculator() {
               <li>Slower weight loss (0.5-1 lb/week) is more sustainable and preserves muscle</li>
               <li>Track your weight weekly and adjust calories if you're losing faster than expected</li>
               <li>Prioritize protein intake (0.7-1g per lb body weight) to preserve muscle mass</li>
-              <li>Don't go below {formData.sex === 'female' ? '1200' : '1500'} calories/day without medical supervision</li>
+              <li>Don't go below {formData.sex === 'female' ? '1500' : '1800'} calories/day for safe, sustainable weight loss</li>
             </ul>
           </div>
         </div>
