@@ -56,6 +56,18 @@ export default function CommonFoods({ onAddFood, onClose }) {
     ? allFoods
     : allFoods.filter(food => food.category === selectedCategory);
 
+  // Sort to ensure raw entries appear before cooked entries (for proper deduplication)
+  filteredFoods = filteredFoods.sort((a, b) => {
+    const stateA = getRawCookedState(a.name);
+    const stateB = getRawCookedState(b.name);
+    // If both have states, prioritize raw over cooked
+    if (stateA && stateB) {
+      if (stateA === 'raw' && stateB === 'cooked') return -1;
+      if (stateA === 'cooked' && stateB === 'raw') return 1;
+    }
+    return 0; // Keep original order for others
+  });
+
   // Remove duplicate raw/cooked entries - only show raw version (user toggles in PortionSelector)
   // IMPORTANT: Keep the original food object intact - only change display in UI
   const seenBaseNames = new Set();
@@ -68,18 +80,14 @@ export default function CommonFoods({ onAddFood, onClose }) {
       .replace(/\s*\(cooked[^)]*\)/i, '')    // Handles (cooked), (cooked, boiled), etc.
       .trim();
 
-    // Only show raw version, skip cooked if we've seen this food
-    if (state === 'cooked' && seenBaseNames.has(baseName)) {
-      return false; // Skip cooked duplicate
+    // Skip if we've already shown this food
+    if (seenBaseNames.has(baseName)) {
+      return false;
     }
 
-    // Prefer raw over cooked
-    if (state === 'raw' || !seenBaseNames.has(baseName)) {
-      seenBaseNames.add(baseName);
-      return true;
-    }
-
-    return false;
+    // Show this entry and mark base name as seen
+    seenBaseNames.add(baseName);
+    return true;
   });
 
   // Helper function to get clean display name
