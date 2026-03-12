@@ -45,6 +45,11 @@
 
   <!-- Blog Articles - Calculators -->
   <url>
+    <loc>https://freecalorietrack.com/blog/calorie-deficit-calculator</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://freecalorietrack.com/blog/macro-calculator-guide</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
