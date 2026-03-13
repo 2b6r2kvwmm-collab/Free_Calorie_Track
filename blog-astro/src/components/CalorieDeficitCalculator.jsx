@@ -44,8 +44,11 @@ export default function CalorieDeficitCalculator() {
     const deficitInfo = deficitRanges[formData.pace];
     const targetCalories = Math.round(tdee - deficitInfo.deficit);
 
-    // Safety checks - using conservative minimums
-    const minimumCalories = formData.sex === 'female' ? 1500 : 1800;
+    // Safety checks - use percentage-based minimum with absolute floor
+    // Never exceed 25% deficit (backed by CALERIE study), and never go below 1200/1500 cal
+    const absoluteMinimum = formData.sex === 'female' ? 1200 : 1500;
+    const percentageBasedMinimum = Math.round(tdee * 0.75); // Max 25% deficit
+    const minimumCalories = Math.max(absoluteMinimum, percentageBasedMinimum);
     const isTooLow = targetCalories < minimumCalories;
 
     setResult({
@@ -69,10 +72,6 @@ export default function CalorieDeficitCalculator() {
       <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
         Calorie Deficit Calculator
       </h3>
-
-      <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6 text-sm text-gray-700 dark:text-gray-300">
-        <strong>⚠️ Important:</strong> This calculator provides estimates only. Always consult a healthcare provider before making significant dietary changes, especially if you have any medical conditions or take medications that affect metabolism.
-      </div>
 
       <form onSubmit={handleCalculate} className="space-y-4">
         {/* Unit Toggle */}
@@ -202,7 +201,7 @@ export default function CalorieDeficitCalculator() {
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
           >
             <option value="slow">Slow & Sustainable (0.5 lbs/week)</option>
-            <option value="moderate">Moderate (1 lb/week) - Recommended</option>
+            <option value="moderate">Moderate (1 lb/week)</option>
             <option value="aggressive">Aggressive (1.5 lbs/week) - Max Safe</option>
           </select>
         </div>
@@ -233,7 +232,7 @@ export default function CalorieDeficitCalculator() {
               </h4>
               <p className="text-sm text-red-800 dark:text-red-200 mb-3">
                 Your selected pace would result in only <strong>{result.targetCalories} calories/day</strong>,
-                which is below the minimum safe intake of <strong>{result.minimumCalories} calories/day</strong> for {formData.sex === 'female' ? 'women' : 'men'}.
+                which is below the safe minimum of <strong>{result.minimumCalories} calories/day</strong>. This deficit would exceed 25% of your TDEE, which research shows increases risks of muscle loss and metabolic adaptation.
               </p>
               <p className="text-sm text-red-800 dark:text-red-200 mb-3">
                 <strong>Eating too few calories can:</strong>
@@ -292,7 +291,7 @@ export default function CalorieDeficitCalculator() {
               <li>Slower weight loss (0.5-1 lb/week) is more sustainable and preserves muscle</li>
               <li>Track your weight weekly and adjust calories if you're losing faster than expected</li>
               <li>Prioritize protein intake (0.7-1g per lb body weight) to preserve muscle mass</li>
-              <li>Don't go below {formData.sex === 'female' ? '1500' : '1800'} calories/day for safe, sustainable weight loss</li>
+              <li>Don't exceed a 25% deficit - larger deficits cause muscle loss and metabolic slowdown</li>
             </ul>
           </div>
         </div>

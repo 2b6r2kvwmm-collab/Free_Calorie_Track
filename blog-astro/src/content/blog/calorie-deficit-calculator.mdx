@@ -15,7 +15,7 @@ import CalorieDeficitCalculator from '../../components/CalorieDeficitCalculator.
   <ul class="mb-0 space-y-2 text-gray-800 dark:text-gray-200">
     <li><strong>Calorie deficit</strong> means eating fewer calories than your body burns each day</li>
     <li>Safe weight loss: <strong>0.5-1 lb per week</strong> (250-500 calorie deficit)</li>
-    <li>Recommended minimums: <strong>1,500 cal/day (women)</strong> or <strong>1,800 cal/day (men)</strong> for safe, sustainable weight loss</li>
+    <li>Never exceed a <strong>25% deficit</strong> (eat at least 75% of your TDEE), with absolute minimums of 1,200 cal (women) / 1,500 cal (men)</li>
     <li>Use the calculator below to find your personalized deficit target</li>
   </ul>
 </div>
@@ -103,7 +103,7 @@ Your TDEE is based on:
 
 <div class="grid md:grid-cols-2 gap-4 my-6">
   <div class="bg-emerald-50 dark:bg-emerald-900/20 border-2 border-emerald-200 dark:border-emerald-800 rounded-lg p-5">
-    <h4 class="text-emerald-700 dark:text-emerald-400 font-bold mt-0 mb-3">✅ Recommended: 0.5-1 lb/week</h4>
+    <h4 class="text-emerald-700 dark:text-emerald-400 font-bold mt-0 mb-3">✅ Safe & Sustainable: 0.5-1 lb/week</h4>
     <p class="text-sm mb-3"><strong>Deficit: 250-500 calories/day</strong></p>
     <p class="text-sm mb-2"><strong>Best for:</strong></p>
     <ul class="text-sm mb-2 space-y-1">
@@ -161,36 +161,61 @@ Once you know your TDEE and chosen deficit, subtract the deficit from your TDEE:
   </ul>
 </div>
 
-### Step 4: Respect Minimum Calorie Thresholds
+### Step 4: Respect Safe Deficit Limits
+
+Any diet plan should be made in consultation with a doctor or registered dietitian. That said, if you're considering larger deficits, here are two research-backed safety rules of thumb to keep in mind.
+
+**Use whichever number is higher** from the two rules below as your minimum calorie intake:
 
 <div class="bg-red-50 dark:bg-red-900/20 border-2 border-red-300 dark:border-red-800 rounded-lg p-5 my-6">
-  <h4 class="text-red-800 dark:text-red-300 font-bold mt-0 mb-3">🚨 Recommended Minimum Calories</h4>
+  <h4 class="text-red-800 dark:text-red-300 font-bold mt-0 mb-3">🚨 Safety Rule #1: Never Exceed 25% Deficit</h4>
+  <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">Research from the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9036397/" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 underline hover:no-underline">CALERIE clinical study</a> prescribed a 25% calorie deficit—the maximum tested in controlled trials without increased health risks. Larger deficits increase muscle loss, metabolic adaptation, and hormonal disruption. Note that CALERIE participants were under medical supervision, and regular health monitoring (bloodwork, bone density) is recommended if maintaining a deficit for more than 12-16 weeks.</p>
+  <p class="text-sm font-bold text-gray-900 dark:text-gray-100 mb-2">Practical formula:</p>
+  <p class="text-sm text-gray-700 dark:text-gray-300 mb-0"><strong>Your minimum calories = Your TDEE × 0.75</strong></p>
+</div>
+
+<div class="bg-red-50 dark:bg-red-900/20 border-2 border-red-300 dark:border-red-800 rounded-lg p-5 my-6">
+  <h4 class="text-red-800 dark:text-red-300 font-bold mt-0 mb-3">🚨 Safety Rule #2: Absolute Minimums</h4>
+  <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">According to <a href="https://www.health.harvard.edu/healthy-aging-and-longevity/calorie-counting-made-easy" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 underline hover:no-underline">Harvard Health</a>, never go below these absolute minimums regardless of your TDEE:</p>
   <div class="grid md:grid-cols-2 gap-4">
     <div>
-      <p class="font-bold mb-1 text-red-900 dark:text-red-200">Women: 1,500 cal/day minimum</p>
-      <p class="text-sm mb-0 text-gray-700 dark:text-gray-300">Ensures adequate nutrition while supporting metabolic health</p>
+      <p class="font-bold mb-1 text-red-900 dark:text-red-200">Women: 1,200 cal/day minimum</p>
+      <p class="text-sm mb-0 text-gray-700 dark:text-gray-300">Below this, it's extremely difficult to meet micronutrient needs</p>
     </div>
     <div>
-      <p class="font-bold mb-1 text-red-900 dark:text-red-200">Men: 1,800 cal/day minimum</p>
-      <p class="text-sm mb-0 text-gray-700 dark:text-gray-300">Men have higher baseline calorie needs due to muscle mass</p>
+      <p class="font-bold mb-1 text-red-900 dark:text-red-200">Men: 1,500 cal/day minimum</p>
+      <p class="text-sm mb-0 text-gray-700 dark:text-gray-300">Men have higher baseline needs due to greater muscle mass</p>
     </div>
   </div>
-  <p class="text-sm mt-4 mb-0 text-gray-700 dark:text-gray-300"><strong>If your calculated target falls below these minimums, do NOT go below them.</strong> Instead, increase physical activity to create a larger deficit, or accept a slower rate of weight loss (which is healthier anyway).</p>
 </div>
 
 <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-4 my-6 text-sm text-gray-700 dark:text-gray-300">
-  <strong>📊 Note on Different Thresholds:</strong> Many sources, including <a href="https://www.health.harvard.edu/healthy-aging-and-longevity/calorie-counting-made-easy" target="_blank" rel="noopener noreferrer" class="text-emerald-600 dark:text-emerald-400 underline hover:no-underline">Harvard Health</a>, cite lower minimums (1,200 cal for women, 1,500 cal for men). While these can be safe under medical supervision for some individuals, the higher thresholds recommended above provide a greater safety margin for most people. They make it easier to:
-  <ul class="mt-2 mb-0 space-y-1">
-    <li>Meet all micronutrient needs</li>
-    <li>Maintain energy levels for daily activities and exercise</li>
-    <li>Preserve lean muscle mass</li>
-    <li>Support healthy hormone production</li>
-    <li>Sustain the diet long-term without excessive hunger or fatigue</li>
-  </ul>
-</div>
+  <h4 class="text-blue-900 dark:text-blue-100 font-bold mt-0 mb-3">📊 Why This Two-Rule System Works</h4>
+  <p class="mb-3">Using <strong>the higher of</strong> the two minimums ensures the approach scales appropriately with body size:</p>
 
-<div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 my-6 text-sm text-gray-700 dark:text-gray-300">
-  <strong>Medical supervision required:</strong> Very Low Calorie Diets (VLCDs) under 1,200 calories require supervision by a healthcare provider. These are only appropriate for severe obesity cases and carry significant health risks without proper medical monitoring, including supplementation and regular health assessments.
+  <p class="font-bold mb-2">Example 1: Shorter woman (5'2", 160 lbs, TDEE 1,680 cal)</p>
+  <ul class="mb-3 space-y-1">
+    <li>25% rule: 1,680 × 0.75 = 1,260 calories</li>
+    <li>Absolute minimum: 1,200 calories</li>
+    <li><strong>Safe minimum: 1,260 cal</strong> (the higher value) ✅</li>
+    <li>Allows a 420 cal deficit for healthy weight loss</li>
+  </ul>
+
+  <p class="font-bold mb-2">Example 2: Taller woman (5'10", 180 lbs, TDEE 2,200 cal)</p>
+  <ul class="mb-3 space-y-1">
+    <li>25% rule: 2,200 × 0.75 = 1,650 calories</li>
+    <li>Absolute minimum: 1,200 calories</li>
+    <li><strong>Safe minimum: 1,650 cal</strong> (the higher value) ✅</li>
+    <li>Allows a 550 cal deficit without exceeding 25%</li>
+  </ul>
+
+  <p class="font-bold mb-2">Example 3: Very small/sedentary woman (5'0", 120 lbs, TDEE 1,400 cal)</p>
+  <ul class="mb-0 space-y-1">
+    <li>25% rule: 1,400 × 0.75 = 1,050 calories</li>
+    <li>Absolute minimum: 1,200 calories</li>
+    <li><strong>Safe minimum: 1,200 cal</strong> (the higher value) ✅</li>
+    <li>Protected by the absolute floor despite very low TDEE</li>
+  </ul>
 </div>
 
 ## Common Mistakes When Creating a Calorie Deficit
