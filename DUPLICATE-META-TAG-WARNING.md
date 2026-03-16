@@ -22,13 +22,25 @@ This has happened **multiple times** on this project. The pattern is:
 
 ## The Solution
 
-### For React Pages (Main App):
-1. **Remove static meta tags** from `index.html` (except basic charset, viewport)
-2. **Let React Helmet manage ALL meta tags** in the component
-3. **Add comment** in index.html explaining why tag is removed:
+### For React SPA Homepage (Main App):
+**IMPORTANT**: The homepage is special - crawlers need to see meta tags without executing JavaScript.
+
+1. **Static meta tags in index.html** (for crawlers that don't execute JS)
    ```html
-   <!-- Meta description managed by React Helmet in LandingPage.jsx to avoid duplicates -->
+   <meta name="description" content="Your description here">
    ```
+2. **NO React Helmet on the homepage component** (prevents duplicates when JS executes)
+3. **Add static H1 inside #root div** (for crawlers, React replaces it on mount)
+   ```html
+   <div id="root">
+     <h1 style="position: absolute; left: -9999px;">Your H1 Here</h1>
+   </div>
+   ```
+
+### For React Dynamic Routes (Blog Posts, etc):
+1. **Use React Helmet** for dynamic content (different meta tags per route)
+2. **No static meta tags** in index.html for these fields
+3. React Helmet updates the tags when routes change
 
 ### For Astro Pages (Blog/Landing Pages):
 1. **One layout, one set of meta tags** - Use `LandingPageLayout.astro` or `BlogLayout.astro`
@@ -85,8 +97,11 @@ curl https://freecalorietrack.com/ | grep 'meta name="description"'
 - Confuses crawlers about which description to index
 
 **Previous Incidents:**
-1. March 16, 2026 - Homepage had duplicate meta description (index.html + React Helmet)
-2. [Add date when this happens again - hopefully never!]
+1. March 16, 2026 (morning) - Homepage had duplicate meta description (index.html + React Helmet)
+2. March 16, 2026 (afternoon) - Removed static meta description to fix duplicates, but then Bing reported missing meta tags (crawler doesn't execute JS)
+3. March 16, 2026 (final fix) - Learned correct SPA pattern: static tags in HTML + no React Helmet on homepage
+
+**Lesson Learned**: For SPA homepages, use static meta tags. React Helmet is for dynamic routes only.
 
 ## Remember:
 
