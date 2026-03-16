@@ -14,46 +14,23 @@ const keywords = "calorie counter, how to count calories, count calories, calori
       <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
         <!-- Left: Text -->
         <div class="flex-1 text-center md:text-left max-w-xl">
-          <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">How to Count Calories: The Complete Guide</h1>
-          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+          <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100"><span class="text-emerald-600 dark:text-emerald-400">How to Count Calories:</span> The Complete Guide</h1>
+          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
             Learn the fundamentals of calorie counting for <span class="font-bold text-emerald-600 dark:text-emerald-400">sustainable weight loss</span>. Master the method, avoid common mistakes, and start tracking with our free tool.
           </p>
-          <a
-            href="/?from=landing-page"
-            class="inline-block bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
-          >
-            Start Counting Calories Free
-          </a>
         </div>
 
-        <!-- Right: App Screenshot -->
+        <!-- Right: Hero Image -->
         <div class="flex-1 w-full max-w-sm md:max-w-3xl">
-          <picture>
-            <!-- Desktop: Multi-phone composite -->
-            <source
-              srcset="/hero-screenshot.webp"
-              type="image/webp"
-              media="(min-width: 768px)"
-            />
-
-            <!-- Mobile: Single phone -->
-            <source
-              srcset="/hero-mobile.webp"
-              type="image/webp"
-              media="(max-width: 767px)"
-            />
-
-            <!-- Fallback -->
-            <img
-              src="/hero-screenshot.webp"
-              alt="Free calorie counter showing daily calorie tracking and food log"
-              width="5000"
-              height="3000"
-              class="w-full h-auto rounded-xl shadow-2xl"
-              loading="eager"
-              style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
-            />
-          </picture>
+          <img
+            src="/images/blog/how-to-count-calories.webp"
+            alt="Woman using the calorie counter app to log a meal"
+            width="1200"
+            height="800"
+            class="w-full h-auto rounded-xl shadow-2xl"
+            loading="eager"
+            style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
+          />
         </div>
       </div>
     </div>
@@ -169,6 +146,18 @@ const keywords = "calorie counter, how to count calories, count calories, calori
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Mid-Page CTA -->
+    <div class="text-center bg-white dark:bg-gray-800 rounded-2xl p-10 mb-12 shadow-lg border-2 border-emerald-200 dark:border-emerald-800">
+      <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">Ready to Start Counting Calories?</h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">Use our free calorie counter with barcode scanning and 220,000+ foods. No subscription required.</p>
+      <a
+        href="/?from=landing-page"
+        class="inline-block bg-emerald-600 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+      >
+        Start Counting Calories Free
+      </a>
     </div>
 
     <!-- Common Mistakes Section -->
