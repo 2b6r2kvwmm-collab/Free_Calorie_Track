@@ -1,0 +1,341 @@
+---
+import LandingPageLayout from '../layouts/LandingPageLayout.astro';
+
+const title = "Calorie Counter Guide: How to Count Calories to Lose Weight";
+const description = "Learn how to count calories effectively for weight loss. Free calorie counter tool with barcode scanner and 220,000+ foods.";
+const keywords = "calorie counter, how to count calories, count calories, calorie counting, calorie counter app, free calorie counter, daily calorie counter";
+---
+
+<LandingPageLayout title={title} description={description} keywords={keywords}>
+
+  <!-- Hero -->
+  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+        <!-- Left: Text -->
+        <div class="flex-1 text-center md:text-left max-w-xl">
+          <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">How to Count Calories: The Complete Guide</h1>
+          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            Learn the fundamentals of calorie counting for <span class="font-bold text-emerald-600 dark:text-emerald-400">sustainable weight loss</span>. Master the method, avoid common mistakes, and start tracking with our free tool.
+          </p>
+          <a
+            href="/?from=landing-page"
+            class="inline-block bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+          >
+            Start Counting Calories Free
+          </a>
+        </div>
+
+        <!-- Right: App Screenshot -->
+        <div class="flex-1 w-full max-w-sm md:max-w-3xl">
+          <picture>
+            <!-- Desktop: Multi-phone composite -->
+            <source
+              srcset="/hero-screenshot.webp"
+              type="image/webp"
+              media="(min-width: 768px)"
+            />
+
+            <!-- Mobile: Single phone -->
+            <source
+              srcset="/hero-mobile.webp"
+              type="image/webp"
+              media="(max-width: 767px)"
+            />
+
+            <!-- Fallback -->
+            <img
+              src="/hero-screenshot.webp"
+              alt="Free calorie counter showing daily calorie tracking and food log"
+              width="5000"
+              height="3000"
+              class="w-full h-auto rounded-xl shadow-2xl"
+              loading="eager"
+              style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
+            />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-4 py-12">
+
+    <!-- What Is Calorie Counting Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">What Is Calorie Counting?</h2>
+      <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">
+        Calorie counting is the practice of tracking the energy content of the foods you eat. By counting calories, you create awareness of your intake and can adjust your diet to meet weight loss, maintenance, or muscle gain goals.
+      </p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-6 border-2 border-emerald-200 dark:border-emerald-800">
+          <div class="text-4xl mb-3">📊</div>
+          <h3 class="font-bold text-lg mb-2 text-emerald-700 dark:text-emerald-400">Track Your Intake</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Record everything you eat and drink throughout the day to measure total calorie consumption.</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border-2 border-blue-200 dark:border-blue-800">
+          <div class="text-4xl mb-3">🎯</div>
+          <h3 class="font-bold text-lg mb-2 text-blue-700 dark:text-blue-400">Compare to Your Goal</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Match your daily calories against your target based on your TDEE and weight loss goal.</p>
+        </div>
+        <div class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border-2 border-purple-200 dark:border-purple-800">
+          <div class="text-4xl mb-3">📉</div>
+          <h3 class="font-bold text-lg mb-2 text-purple-700 dark:text-purple-400">Adjust as Needed</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Monitor your progress and fine-tune your intake based on actual weight loss results.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why Count Calories Section -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-8 text-center">Why Count Calories for Weight Loss?</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">✓</span>
+            <div>
+              <h3 class="font-bold text-lg mb-2">Creates Awareness</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Most people underestimate how much they eat. Counting calories reveals the truth about portion sizes and "hidden" calories in cooking oils, dressings, and drinks.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">✓</span>
+            <div>
+              <h3 class="font-bold text-lg mb-2">Based on Science</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Weight loss requires a calorie deficit. Counting ensures you're actually eating less than you burn, rather than guessing or hoping.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">✓</span>
+            <div>
+              <h3 class="font-bold text-lg mb-2">Flexible Eating</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">No foods are off-limits when you count calories. Fit treats into your daily budget instead of following restrictive diet rules.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">✓</span>
+            <div>
+              <h3 class="font-bold text-lg mb-2">Measurable Progress</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Tracking calories lets you see patterns, identify problems, and make data-driven adjustments when weight loss stalls.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- How to Count Calories Section -->
+    <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-8 text-center">How to Count Calories in 5 Steps</h2>
+      <div class="space-y-6 max-w-2xl mx-auto">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">1</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Calculate Your TDEE</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Your Total Daily Energy Expenditure (TDEE) is how many calories you burn per day. Use a <a href="/blog/how-to-calculate-tdee" class="text-emerald-600 dark:text-emerald-400 underline">TDEE calculator</a> based on your age, sex, height, weight, and activity level.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">2</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Set Your Calorie Goal</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">For weight loss, subtract 300-500 calories from your TDEE. For muscle gain, add 200-300 calories. For maintenance, eat at your TDEE. Learn more about <a href="/blog/calorie-deficit-calculator" class="text-emerald-600 dark:text-emerald-400 underline">calorie deficits</a>.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">3</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Weigh Your Food</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Use a <a href="/blog/how-to-use-a-food-scale" class="text-emerald-600 dark:text-emerald-400 underline">food scale</a> to measure portions in grams or ounces. Eyeballing portions is notoriously inaccurate—1 tablespoon of peanut butter can easily become 2-3 tablespoons (200+ hidden calories).</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">4</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Log Everything You Eat</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Track all meals, snacks, drinks, cooking oils, condiments, and "just a bite" tastes. Use a calorie counter app with a barcode scanner to make logging fast and accurate.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">5</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Review & Adjust Weekly</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Weigh yourself weekly and track trends. If you're not losing 0.5-1 lb per week, reduce calories by 100-200. If you're losing faster than 2 lbs/week, increase slightly to preserve muscle.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common Mistakes Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">Common Calorie Counting Mistakes</h2>
+      <div class="space-y-6">
+        <div class="border-l-4 border-red-500 pl-4">
+          <h3 class="font-bold text-lg mb-2">Not Counting Cooking Oils</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">1 tablespoon of olive oil = 120 calories. If you cook with 2-3 tablespoons daily, that's 240-360 untracked calories—enough to wipe out your deficit.</p>
+        </div>
+        <div class="border-l-4 border-red-500 pl-4">
+          <h3 class="font-bold text-lg mb-2">Eyeballing Portions</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">"A handful" of nuts can range from 150-400 calories depending on hand size. Weigh food with a scale for accuracy, especially calorie-dense items like nuts, cheese, and peanut butter.</p>
+        </div>
+        <div class="border-l-4 border-red-500 pl-4">
+          <h3 class="font-bold text-lg mb-2">Forgetting About Drinks</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Lattes, smoothies, alcohol, and juice add up fast. A large latte can be 300+ calories. Track all beverages except water, black coffee, and unsweetened tea.</p>
+        </div>
+        <div class="border-l-4 border-red-500 pl-4">
+          <h3 class="font-bold text-lg mb-2">Weekend Overeating</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Staying strict Monday-Friday but overeating Saturday-Sunday can erase your weekly deficit. Track every day consistently, or plan higher-calorie days into your weekly average.</p>
+        </div>
+        <div class="border-l-4 border-red-500 pl-4">
+          <h3 class="font-bold text-lg mb-2">Not Adjusting as You Lose Weight</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">As you lose weight, your TDEE decreases. Recalculate your calorie goal every 10-15 lbs lost, or when weight loss stalls for 3+ weeks.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools Section -->
+    <div class="bg-gradient-to-br from-gray-50 to-emerald-50 dark:from-gray-800 dark:to-emerald-900/20 rounded-2xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">Essential Tools for Counting Calories</h2>
+      <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">Free Calorie Counter App</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Use a calorie tracking app with barcode scanning to log food quickly. Free Calorie Track includes 220,000+ foods, barcode scanner, and no subscription fees.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">Digital Food Scale</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Weigh portions in grams for accuracy. A basic digital scale costs $10-15 and is the single best investment for successful calorie counting.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">TDEE Calculator</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Calculate how many calories you burn daily based on your stats and activity level. Included automatically in Free Calorie Track.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+          <div>
+            <h3 class="font-bold mb-1">Weekly Weight Tracking</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Weigh yourself once per week at the same time (e.g., Friday morning after using bathroom). Track the trend over 3-4 weeks, not daily fluctuations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-8 text-center">Pro Tips for Successful Calorie Counting</h2>
+      <div class="space-y-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <div>
+              <h3 class="font-bold mb-1">Pre-log Your Day</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Plan and log breakfast, lunch, and dinner in the morning. This lets you see how many calories you have left for snacks and prevents overeating.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <div>
+              <h3 class="font-bold mb-1">Track Before You Eat</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Log meals as you prepare them, not at the end of the day. Trying to remember everything you ate 10 hours ago leads to forgotten snacks and inaccurate counts.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <div>
+              <h3 class="font-bold mb-1">Save Favorite Meals</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">If you eat the same breakfast or lunch regularly, save it as a favorite or recipe to log it in seconds instead of re-entering every ingredient.</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+          <div class="flex items-start gap-3">
+            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <div>
+              <h3 class="font-bold mb-1">Focus on Protein</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Prioritize hitting your <a href="/protein-tracker" class="text-emerald-600 dark:text-emerald-400 underline">protein goal</a> (0.7-1g per lb body weight) while counting calories. High protein preserves muscle during weight loss and increases satiety.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="text-center bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-12 text-white shadow-2xl">
+      <h2 class="text-3xl font-bold mb-4">Ready to Start Counting Calories?</h2>
+      <p class="text-xl text-emerald-100 mb-8">Use our free calorie counter with barcode scanning, 220,000+ foods, and no subscription fees.</p>
+      <a
+        href="/?from=landing-page"
+        class="inline-block bg-white text-emerald-700 font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95"
+      >
+        Start Counting Calories Free
+      </a>
+      <p class="text-emerald-100 text-sm mt-4">No account required—opens instantly in your browser</p>
+    </div>
+
+  </main>
+
+  <!-- FAQ Schema for Google Rich Results -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I start counting calories?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Start by calculating your TDEE (Total Daily Energy Expenditure) using a calculator that factors in your age, sex, height, weight, and activity level. Set a calorie goal based on your objective (subtract 300-500 for weight loss). Get a digital food scale to weigh portions accurately. Use a free calorie counter app with barcode scanning to log everything you eat. Review your progress weekly and adjust calories as needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best free calorie counter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The best free calorie counter has barcode scanning, a large food database, no subscription fees, and works offline. Free Calorie Track includes all these features: barcode scanner for 220,000+ products, thousands of common foods, macro tracking, and no paywalls or ads. It runs as a Progressive Web App so you can use it on any device without app store downloads."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many calories should I eat to lose weight?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To lose weight safely, eat 300-500 calories below your TDEE (maintenance calories). This creates a deficit that results in 0.5-1 lb of weight loss per week. Never go below 1,200 calories per day for women or 1,500 calories per day for men without medical supervision. Use a TDEE calculator to find your maintenance calories, then subtract 300-500 to find your weight loss target."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to count calories every day?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "For best results, count calories every day including weekends. Many people are strict Monday-Friday but overeat on weekends, erasing their weekly deficit. Consistency is key. Once you reach your goal weight, you can transition to maintenance by counting calories most days or using your learned portion awareness to maintain without strict tracking."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What foods should I count calories for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Count calories for everything: all meals, snacks, drinks (except water, black coffee, unsweetened tea), cooking oils, condiments, salad dressings, sauces, and even 'just a bite' tastes. Hidden calories in oils, dressings, and beverages are the most commonly forgotten items. A tablespoon of olive oil is 120 calories. A latte can be 300+ calories. Track it all for accuracy."
+        }
+      }
+    ]
+  })} />
+</LandingPageLayout>
