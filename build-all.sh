@@ -38,6 +38,9 @@ fi
 if [ -d "blog-astro/dist/macro-tracker" ]; then
   cp -r blog-astro/dist/macro-tracker calorie-tracker/dist/
 fi
+if [ -d "blog-astro/dist/calorie-counter" ]; then
+  cp -r blog-astro/dist/calorie-counter calorie-tracker/dist/
+fi
 
 # Copy static assets (_astro directory)
 if [ -d "blog-astro/dist/_astro" ]; then
@@ -51,7 +54,16 @@ if [ -d "blog-astro/public/images/blog" ]; then
   cp -r blog-astro/public/images/blog/* calorie-tracker/dist/images/blog/
 fi
 
+# Copy sitemap files
+echo "🗺️  Copying sitemap..."
+if [ -f "blog-astro/dist/sitemap-index.xml" ]; then
+  cp blog-astro/dist/sitemap-index.xml calorie-tracker/dist/
+fi
+if [ -f "blog-astro/dist/sitemap-0.xml" ]; then
+  cp blog-astro/dist/sitemap-0.xml calorie-tracker/dist/
+fi
+
 echo "✅ Build complete! Output in calorie-tracker/dist"
 echo "   - Main app: /calorie-tracker/dist"
 echo "   - Blog: /calorie-tracker/dist/blog"
-echo "   - Landing pages: /calorie-tracker/dist/protein-tracker, /macro-tracker"
+echo "   - Landing pages: /calorie-tracker/dist/protein-tracker, /macro-tracker, /calorie-counter"

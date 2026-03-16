@@ -5,6 +5,7 @@
   "rewrites": [
     { "source": "/protein-tracker", "destination": "/protein-tracker/index.html" },
     { "source": "/macro-tracker", "destination": "/macro-tracker/index.html" },
+    { "source": "/calorie-counter", "destination": "/calorie-counter/index.html" },
     { "source": "/(dashboard|trends|history|settings)", "destination": "/index.html" },
     { "source": "/", "destination": "/index.html" }
   ],
