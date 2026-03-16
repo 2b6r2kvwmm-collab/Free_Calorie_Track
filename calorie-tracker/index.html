@@ -31,7 +31,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <title>Best Free Calorie Counter & Tracker | No Subscription</title>
-    <!-- Meta description managed by React Helmet in LandingPage.jsx to avoid duplicates -->
+    <meta name="description" content="Free calorie counter with no subscription. Count calories, track macros, scan barcodes. No ads, no paywalls. Works offline.">
     <meta name="author" content="FCT Staff">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
@@ -338,7 +338,10 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Static H1 for crawlers that don't execute JavaScript. React will replace this entire div on mount. -->
+      <h1 style="position: absolute; left: -9999px;">The #1 Free Calorie Counter and Tracker</h1>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
 
     <div class="app-footer">

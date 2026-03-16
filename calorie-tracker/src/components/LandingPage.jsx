@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import SEO from './SEO';
 
 const FAQ_SECTIONS = [
   {
@@ -355,14 +354,7 @@ export default function LandingPage({ onGetStarted }) {
 
   return (
     <>
-      <SEO
-        title="Best Free Calorie Counter & Tracker | No Subscription"
-        description="Free calorie counter with no subscription. Count calories, track macros, scan barcodes. No ads, no paywalls. Works offline."
-        keywords={['calorie counter', 'calorie tracker', 'free calorie counter', 'free calorie tracker', 'best free calorie counter', 'free calorie counter app no subscription', 'calorie counter app', 'calorie tracker app', 'macro tracker', 'protein tracker', 'free macro tracker', 'free protein tracker', 'barcode scanner nutrition', 'no account calorie tracker', 'offline calorie tracker']}
-        url="/"
-        type="website"
-        skipSiteName={true}
-      />
+      {/* SEO meta tags managed in static index.html to ensure crawlers see them without requiring JavaScript execution */}
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Hero */}
       <div className="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
