@@ -271,35 +271,39 @@ export default function Dashboard({ onRefresh }) {
     }
   }, [hasGoalMismatch]);
 
-  // Get previous 3 days net calories
-  const foodLog = getFoodLog();
-  const exerciseLog = getExerciseLog();
-  const daysTracked = new Set(foodLog.map(e => e.date)).size;
+  // Get previous 3 days net calories - memoize expensive calculation (reduces INP)
+  const foodLog = useMemo(() => getFoodLog(), [goalRefreshKey]);
+  const exerciseLog = useMemo(() => getExerciseLog(), [goalRefreshKey]);
+  const daysTracked = useMemo(() => new Set(foodLog.map(e => e.date)).size, [foodLog]);
 
-  const today = new Date();
-  const previousDays = [];
+  const previousDays = useMemo(() => {
+    const today = new Date();
+    const days = [];
 
-  for (let i = 1; i <= 3; i++) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
+    for (let i = 1; i <= 3; i++) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split('T')[0];
 
-    const dayFood = foodLog.filter(entry => entry.date === dateStr);
-    const dayExercise = exerciseLog.filter(entry => entry.date === dateStr);
+      const dayFood = foodLog.filter(entry => entry.date === dateStr);
+      const dayExercise = exerciseLog.filter(entry => entry.date === dateStr);
 
-    const eaten = dayFood.reduce((sum, entry) => sum + entry.calories, 0);
-    const burned = tdee + // Full day's resting calories (lifestyle TDEE)
-                   dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
+      const eaten = dayFood.reduce((sum, entry) => sum + entry.calories, 0);
+      const burned = tdee + // Full day's resting calories (lifestyle TDEE)
+                     dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
 
-    // Only calculate net calories if there's data for the day (food or exercise logged)
-    const hasData = dayFood.length > 0 || dayExercise.length > 0;
+      // Only calculate net calories if there's data for the day (food or exercise logged)
+      const hasData = dayFood.length > 0 || dayExercise.length > 0;
 
-    previousDays.push({
-      label: i === 1 ? 'Yesterday' : `${i} days ago`,
-      netCal: hasData ? eaten - burned : null,
-      hasData
-    });
-  }
+      days.push({
+        label: i === 1 ? 'Yesterday' : `${i} days ago`,
+        netCal: hasData ? eaten - burned : null,
+        hasData
+      });
+    }
+
+    return days;
+  }, [foodLog, exerciseLog, tdee]);
 
   // Today's date formatting
   const todayFormatted = today.toLocaleDateString('en-US', {
@@ -662,14 +666,14 @@ export default function Dashboard({ onRefresh }) {
     if (onRefresh) onRefresh(); // Notify parent to refresh
   };
 
-  // Group foods by meal type
+  // Group foods by meal type - memoize to prevent recalculation on every render (reduces INP)
   const mealCategories = ['Breakfast', 'Lunch', 'Dinner', 'Snacks', 'Unspecified'];
-  const groupedFoods = entries.food.reduce((acc, entry) => {
+  const groupedFoods = useMemo(() => entries.food.reduce((acc, entry) => {
     const mealType = entry.mealType || 'Unspecified';
     if (!acc[mealType]) acc[mealType] = [];
     acc[mealType].push(entry);
     return acc;
-  }, {});
+  }, {}), [entries.food]);
 
   return (
     <div className="space-y-6">

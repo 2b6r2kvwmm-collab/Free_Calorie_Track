@@ -27,10 +27,11 @@ async function validateAndParseResponse(response) {
   return JSON.parse(text);
 }
 
-export async function searchFoods(query) {
+export async function searchFoods(query, signal = null) {
   try {
     const response = await fetch(
-      `${API_BASE}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&page_size=20&json=true&fields=product_name,nutriments,serving_size,brands,code`
+      `${API_BASE}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&page_size=20&json=true&fields=product_name,nutriments,serving_size,brands,code`,
+      { signal } // Support AbortController for request cancellation (reduces INP)
     );
 
     if (!response.ok) {
@@ -83,9 +84,12 @@ export async function searchFoods(query) {
   }
 }
 
-export async function getFoodByBarcode(barcode) {
+export async function getFoodByBarcode(barcode, signal = null) {
   try {
-    const response = await fetch(`${API_BASE}/api/v0/product/${barcode}.json`);
+    const response = await fetch(
+      `${API_BASE}/api/v0/product/${barcode}.json`,
+      { signal } // Support AbortController for request cancellation
+    );
 
     if (!response.ok) {
       throw new Error('Barcode lookup failed');

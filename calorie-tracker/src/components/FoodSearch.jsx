@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { searchFoods } from '../utils/openfoodfacts';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
+import { useDebounce } from '../hooks/useDebounce';
 
 export default function FoodSearch({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -10,8 +11,10 @@ export default function FoodSearch({ onAddFood, onClose }) {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const scrollRef = useRef(null);
-  const lastSearchTime = useRef(0);
-  const SEARCH_COOLDOWN = 500; // 500ms minimum between searches
+  const abortControllerRef = useRef(null);
+
+  // Debounce query to reduce INP during typing
+  const debouncedQuery = useDebounce(query, 300);
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -28,23 +31,50 @@ export default function FoodSearch({ onAddFood, onClose }) {
     }
   }, [results, searched]);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!query.trim()) return;
-
-    // Rate limiting: prevent searches more frequent than cooldown period
-    const now = Date.now();
-    const timeSinceLastSearch = now - lastSearchTime.current;
-    if (timeSinceLastSearch < SEARCH_COOLDOWN) {
-      return; // Ignore rapid successive searches
+  // Auto-search when debounced query changes (improves UX and reduces INP)
+  useEffect(() => {
+    if (!debouncedQuery.trim()) {
+      setResults([]);
+      setSearched(false);
+      return;
     }
 
-    lastSearchTime.current = now;
-    setLoading(true);
-    setSearched(true);
-    const foods = await searchFoods(query);
-    setResults(foods);
-    setLoading(false);
+    // Cancel previous search if still running
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    const performSearch = async () => {
+      abortControllerRef.current = new AbortController();
+      setLoading(true);
+      setSearched(true);
+
+      try {
+        const foods = await searchFoods(debouncedQuery, abortControllerRef.current.signal);
+        setResults(foods);
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Search failed:', error);
+          setResults([]);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    performSearch();
+
+    // Cleanup: abort on unmount
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [debouncedQuery]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // Search now handled by useEffect with debounced query
   };
 
   const handleAddFood = (food) => {

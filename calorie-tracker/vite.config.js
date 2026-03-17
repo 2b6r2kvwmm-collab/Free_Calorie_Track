@@ -8,6 +8,18 @@ export default defineConfig({
     host: true, // Listen on all addresses including LAN
     port: 5173,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split vendor libraries into separate chunks to improve caching and reduce INP
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'chart-vendor': ['recharts'],
+          'barcode-vendor': ['html5-qrcode'],
+        }
+      }
+    }
+  },
   plugins: [
     react(),
     footerInjectionPlugin(),

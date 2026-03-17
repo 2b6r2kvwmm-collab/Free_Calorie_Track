@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   getFoodLog,
   getExerciseLog,
@@ -34,22 +34,26 @@ export default function Trends() {
   const foodLog = getFoodLog();
   const exerciseLog = getExerciseLog();
 
-  const bmr = calculateBMR(profile);
-  const baselineTDEE = getBaselineTDEE(bmr); // Use sedentary baseline
+  const bmr = useMemo(() => calculateBMR(profile), [profile]);
+  const baselineTDEE = useMemo(() => getBaselineTDEE(bmr), [bmr]);
 
-  // Calculate date range
-  const today = new Date();
-  const daysToShow = period === 'week' ? 7 : 30;
-  const dates = [];
+  // Calculate date range - memoize to prevent recalculation on every render
+  const dates = useMemo(() => {
+    const today = new Date();
+    const daysToShow = period === 'week' ? 7 : 30;
+    const dateList = [];
 
-  for (let i = daysToShow - 1; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    dates.push(date.toISOString().split('T')[0]);
-  }
+    for (let i = daysToShow - 1; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      dateList.push(date.toISOString().split('T')[0]);
+    }
 
-  // Aggregate data by date
-  const chartData = dates.map((date) => {
+    return dateList;
+  }, [period]);
+
+  // Aggregate data by date - memoize expensive calculation (reduces INP significantly)
+  const chartData = useMemo(() => dates.map((date) => {
     const dayFood = foodLog.filter((entry) => entry.date === date);
     const dayExercise = exerciseLog.filter((entry) => entry.date === date);
 
@@ -78,10 +82,10 @@ export default function Trends() {
       carbs: Math.round(carbs),
       fat: Math.round(fat),
     };
-  });
+  }), [dates, foodLog, exerciseLog, baselineTDEE, period]);
 
-  // Calculate 7-day rolling average
-  const dataWithAverage = chartData.map((day, index) => {
+  // Calculate 7-day rolling average - memoize to prevent recalculation
+  const dataWithAverage = useMemo(() => chartData.map((day, index) => {
     if (index < 6) {
       return { ...day, average: null };
     }
@@ -92,19 +96,22 @@ export default function Trends() {
     );
 
     return { ...day, average };
-  });
+  }), [chartData]);
 
-  // Calculate macro targets
-  const customMacros = getCustomMacros();
-  const customCalorieGoal = getCustomCalorieGoal();
+  // Calculate macro targets - memoize
+  const customMacros = useMemo(() => getCustomMacros(), []);
+  const customCalorieGoal = useMemo(() => getCustomCalorieGoal(), []);
   const usingCustomGoals = !!(customMacros && customCalorieGoal !== null);
-  const tdee = calculateTDEE(bmr, profile.activityLevel);
-  const macroTargets = usingCustomGoals
-    ? customMacros
-    : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null);
+  const tdee = useMemo(() => calculateTDEE(bmr, profile.activityLevel), [bmr, profile.activityLevel]);
+  const macroTargets = useMemo(() =>
+    usingCustomGoals
+      ? customMacros
+      : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null),
+    [usingCustomGoals, customMacros, profile.fitnessGoal, profile.weight, tdee]
+  );
 
-  // Calculate weekly macro averages (last 7 days)
-  const weeklyMacros = (() => {
+  // Calculate weekly macro averages (last 7 days) - memoize expensive loop
+  const weeklyMacros = useMemo(() => {
     const weekStart = new Date();
     weekStart.setDate(weekStart.getDate() - 6);
     const weekDates = [];
@@ -137,10 +144,10 @@ export default function Trends() {
       avgFat: Math.round(totalFat / daysWithData),
       daysWithData,
     };
-  })();
+  }, [foodLog]);
 
-  // Calculate monthly macro averages (last 30 days)
-  const monthlyMacros = (() => {
+  // Calculate monthly macro averages (last 30 days) - memoize expensive loop
+  const monthlyMacros = useMemo(() => {
     const monthStart = new Date();
     monthStart.setDate(monthStart.getDate() - 29);
     const monthDates = [];
@@ -173,10 +180,10 @@ export default function Trends() {
       avgFat: Math.round(totalFat / daysWithData),
       daysWithData,
     };
-  })();
+  }, [foodLog]);
 
-  // Calculate protein goal achievement (last 7 days)
-  const proteinAchievement = (() => {
+  // Calculate protein goal achievement (last 7 days) - memoize expensive loop
+  const proteinAchievement = useMemo(() => {
     if (!macroTargets) return null;
 
     const weekStart = new Date();
@@ -207,7 +214,7 @@ export default function Trends() {
       daysWithData,
       percentage: daysWithData > 0 ? Math.round((daysMetGoal / daysWithData) * 100) : 0,
     };
-  })();
+  }, [macroTargets, foodLog]);
 
 
   return (

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
@@ -7,12 +7,21 @@ import LandingPage from './components/LandingPage';
 import InstallPrompt from './components/InstallPrompt';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
-import Trends from './components/Trends';
-import History from './components/History';
-import Settings from './components/Settings';
-import UserManager from './components/UserManager';
 import UpdateNotification from './components/UpdateNotification';
-import ShareModal from './components/ShareModal';
+
+// Code split heavy components to reduce INP - load only when needed
+const Trends = lazy(() => import('./components/Trends'));
+const History = lazy(() => import('./components/History'));
+const Settings = lazy(() => import('./components/Settings'));
+const UserManager = lazy(() => import('./components/UserManager'));
+const ShareModal = lazy(() => import('./components/ShareModal'));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center py-12">
+    <div className="text-gray-500 dark:text-gray-400">Loading...</div>
+  </div>
+);
 
 function App() {
   const location = useLocation();
@@ -172,37 +181,39 @@ function App() {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 py-6">
-        <Routes>
-          <Route
-            path="/"
-            element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
-          />
-          <Route
-            path="/add-food"
-            element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
-          />
-          <Route
-            path="/log-exercise"
-            element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
-          />
-          <Route
-            path="/trends"
-            element={<Trends key={refreshKey} />}
-          />
-          <Route
-            path="/history"
-            element={<History key={refreshKey} onRefresh={handleRefresh} />}
-          />
-          <Route
-            path="/settings"
-            element={
-              <Settings
-                onUpdateProfile={handleUpdateProfile}
-                onClose={() => navigate('/')}
-              />
-            }
-          />
-        </Routes>
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route
+              path="/"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/add-food"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/log-exercise"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/trends"
+              element={<Trends key={refreshKey} />}
+            />
+            <Route
+              path="/history"
+              element={<History key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/settings"
+              element={
+                <Settings
+                  onUpdateProfile={handleUpdateProfile}
+                  onClose={() => navigate('/')}
+                />
+              }
+            />
+          </Routes>
+        </Suspense>
       </div>
 
       {/* Bottom Navigation */}
@@ -271,15 +282,19 @@ function App() {
 
       {/* User Manager Modal */}
       {showUserManager && (
-        <UserManager
-          onUserSwitch={handleUserSwitch}
-          onClose={() => setShowUserManager(false)}
-        />
+        <Suspense fallback={null}>
+          <UserManager
+            onUserSwitch={handleUserSwitch}
+            onClose={() => setShowUserManager(false)}
+          />
+        </Suspense>
       )}
 
       {/* Share Modal - shown after 5 days of tracking */}
       {showShareModal && (
-        <ShareModal onClose={handleShareModalClose} daysTracked={userDaysTracked} />
+        <Suspense fallback={null}>
+          <ShareModal onClose={handleShareModalClose} daysTracked={userDaysTracked} />
+        </Suspense>
       )}
 
       {/* Update Notification */}
