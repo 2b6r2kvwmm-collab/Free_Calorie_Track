@@ -138,7 +138,7 @@ You don't need to hit your macros exactly every day. Aim for weekly averages. If
 
 ## Track Your Macros with Free Calorie Track
 
-Free Calorie Track makes macro tracking simple:
+Free Calorie Track makes [macro tracking](/macro-tracker) simple:
 
 - ✅ Set custom macro goals (or use our calculator)
 - ✅ See real-time progress bars for protein, carbs, and fat
@@ -158,6 +158,11 @@ Free Calorie Track makes macro tracking simple:
 ## Related Articles
 
 <div class="grid md:grid-cols-2 gap-4">
+  <a href="/macro-tracker" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">📊</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Free Macro Tracker</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Track protein, carbs, and fat with real-time progress bars</p>
+  </a>
   <a href="/blog/what-are-calories" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">⚡</div>
     <h4 class="font-semibold text-gray-900 dark:text-white mb-1">What Are Calories?</h4>

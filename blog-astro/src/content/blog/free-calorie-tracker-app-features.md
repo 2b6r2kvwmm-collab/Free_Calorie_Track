@@ -82,7 +82,7 @@ Free Calorie Track is a web-based calorie counting and macro tracking app design
 - **Carbs** - Energy and performance
 - **Fat** - Hormone production and satiety
 
-**Visual progress bars** show you how much of each macro you've consumed vs. your daily goal.
+**Visual progress bars** show you how much of each macro you've consumed vs. your daily goal. Learn more about [tracking your macros](/macro-tracker) with real-time progress.
 
 **Why macros matter:**
 - Calories determine weight change (gain/loss/maintenance)
@@ -351,7 +351,7 @@ Invest in a $15 food scale. It's the difference between guessing and knowing you
 
 ### 3. Prioritize Protein
 
-Protein keeps you full, preserves muscle, and has a high thermic effect. Aim for 0.7-1g per lb body weight.
+Protein keeps you full, preserves muscle, and has a high thermic effect. Aim for 0.7-1g per lb body weight. Use our [free protein tracker](/protein-tracker) to monitor your daily intake.
 
 👉 [High protein low calorie foods](/blog/high-protein-low-calorie-foods)
 
@@ -435,14 +435,24 @@ Free Calorie Track gives you everything you need to take control of your nutriti
 ## Related Articles
 
 <div class="grid md:grid-cols-2 gap-4">
-  <a href="/blog/how-to-count-calories" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+  <a href="/calorie-counter" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">📊</div>
     <h4 class="font-semibold text-gray-900 dark:text-white mb-1">How to Count Calories</h4>
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Complete beginner's guide to calorie counting</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Complete guide to accurate calorie tracking</p>
   </a>
-  <a href="/blog/how-many-calories-should-i-eat-to-lose-weight" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-    <div class="text-2xl mb-2">🎯</div>
-    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">How Many Calories to Lose Weight</h4>
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Calculate your perfect calorie deficit</p>
+  <a href="/macro-tracker" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">🍎</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Free Macro Tracker</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Track protein, carbs, and fat with real-time progress</p>
+  </a>
+  <a href="/protein-tracker" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">🥩</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Free Protein Tracker</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Track daily protein intake with automatic goals</p>
+  </a>
+  <a href="/blog/calorie-deficit-calculator" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">📉</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Calorie Deficit Calculator</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Calculate your deficit for safe weight loss</p>
   </a>
 </div>

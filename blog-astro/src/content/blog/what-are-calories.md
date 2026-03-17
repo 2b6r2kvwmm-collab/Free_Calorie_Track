@@ -140,6 +140,11 @@ Free Calorie Track makes calorie tracking simple:
 ## Related Articles
 
 <div class="grid md:grid-cols-2 gap-4">
+  <a href="/calorie-counter" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">📊</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">How to Count Calories</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Step-by-step guide to calorie tracking</p>
+  </a>
   <a href="/blog/what-are-macros" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">🍎</div>
     <h4 class="font-semibold text-gray-900 dark:text-white mb-1">What Are Macros?</h4>

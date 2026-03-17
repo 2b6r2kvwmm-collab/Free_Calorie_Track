@@ -280,7 +280,7 @@ Track your protein intake with Free Calorie Track to ensure you're hitting your 
 
 ## Track Your Protein with Free Calorie Track
 
-Free Calorie Track makes it easy to hit your protein goals every day:
+Free Calorie Track makes it easy to [track your daily protein intake](/protein-tracker) and hit your protein goals every day:
 
 - ✅ Barcode scanner for packaged foods
 - ✅ Macro breakdown for every meal
@@ -299,6 +299,11 @@ Free Calorie Track makes it easy to hit your protein goals every day:
 ## Related Articles
 
 <div class="grid md:grid-cols-2 gap-4">
+  <a href="/protein-tracker" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">🥩</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Free Protein Tracker</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Track daily protein with real-time progress bars</p>
+  </a>
   <a href="/blog/what-are-macros" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">🍎</div>
     <h4 class="font-semibold text-gray-900 dark:text-white mb-1">What Are Macros?</h4>
