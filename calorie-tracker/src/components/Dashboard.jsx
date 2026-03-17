@@ -276,12 +276,14 @@ export default function Dashboard({ onRefresh }) {
   const exerciseLog = useMemo(() => getExerciseLog(), [goalRefreshKey]);
   const daysTracked = useMemo(() => new Set(foodLog.map(e => e.date)).size, [foodLog]);
 
+  const today = new Date();
+
   const previousDays = useMemo(() => {
-    const today = new Date();
     const days = [];
+    const todayDate = new Date();
 
     for (let i = 1; i <= 3; i++) {
-      const date = new Date(today);
+      const date = new Date(todayDate);
       date.setDate(date.getDate() - i);
       const dateStr = date.toISOString().split('T')[0];
 
