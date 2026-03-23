@@ -30,6 +30,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [weight, setWeight] = useState('');
   const [useWeightedVest, setUseWeightedVest] = useState(false);
   const [vestWeight, setVestWeight] = useState('10-15');
+  const [loadType, setLoadType] = useState('vest'); // 'vest' or 'backpack' for walking exercises
   const [distance, setDistance] = useState('');
   const [distanceUnit, setDistanceUnit] = useState('miles');
   const [pace, setPace] = useState(''); // For pace-based cardio tracking
@@ -69,6 +70,16 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   // Check if exercise is walking
   const isWalkingExercise = selectedExercise && selectedExercise.category === 'Walking';
 
+  // Check if exercise supports weighted vest (bodyweight + specific exercises)
+  const supportsWeightedVest = selectedExercise && (
+    selectedExercise.category === 'Bodyweight' ||
+    selectedExercise.name === 'Pull-ups' ||
+    selectedExercise.name === 'Chin-ups' ||
+    selectedExercise.name === 'Push-ups' ||
+    selectedExercise.name === 'Air Squats' ||
+    selectedExercise.name === 'Lunges (bodyweight)'
+  );
+
   // Check if exercise requires distance input (Running/Cycling)
   const requiresDistance = selectedExercise && selectedExercise.requiresDistance;
 
@@ -85,14 +96,19 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       // Estimate duration: ~2,000 steps per 20 minutes = 100 steps/min
       const estimatedDuration = Math.round(numSteps / 100);
 
-      // Apply weighted vest bonus if enabled
+      // Apply weighted load bonus if enabled
       if (useWeightedVest) {
-        const vestBonus = getVestCalorieMultiplier(vestWeight);
-        caloriesBurned = Math.round(caloriesBurned * vestBonus);
+        let loadBonus = getVestCalorieMultiplier(vestWeight);
+        // Backpacks burn ~7% more calories than vests
+        if (loadType === 'backpack') {
+          loadBonus = loadBonus * 1.07;
+        }
+        caloriesBurned = Math.round(caloriesBurned * loadBonus);
       }
 
+      const loadText = loadType === 'backpack' ? 'backpack' : 'vest';
       const exerciseName = useWeightedVest
-        ? `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi, ${vestWeight} lb vest)`
+        ? `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi, ${vestWeight} lb ${loadText})`
         : `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi)`;
 
       onAddExercise({
@@ -113,14 +129,19 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       // Estimate duration: average walking speed of 3.5 mph
       const estimatedDuration = Math.round((distanceMiles / 3.5) * 60);
 
-      // Apply weighted vest bonus if enabled
+      // Apply weighted load bonus if enabled
       if (useWeightedVest) {
-        const vestBonus = getVestCalorieMultiplier(vestWeight);
-        caloriesBurned = Math.round(caloriesBurned * vestBonus);
+        let loadBonus = getVestCalorieMultiplier(vestWeight);
+        // Backpacks burn ~7% more calories than vests
+        if (loadType === 'backpack') {
+          loadBonus = loadBonus * 1.07;
+        }
+        caloriesBurned = Math.round(caloriesBurned * loadBonus);
       }
 
+      const loadText = loadType === 'backpack' ? 'backpack' : 'vest';
       const exerciseName = useWeightedVest
-        ? `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi, ${vestWeight} lb vest)`
+        ? `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi, ${vestWeight} lb ${loadText})`
         : `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi)`;
 
       onAddExercise({
@@ -210,6 +231,16 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
           selectedExercise.speed,
           vestWeight
         );
+        // Backpacks burn ~7% more calories than vests
+        if (loadType === 'backpack') {
+          metValue = metValue * 1.07;
+        }
+        const loadText = loadType === 'backpack' ? 'backpack' : 'vest';
+        exerciseName = `${selectedExercise.name} (${vestWeight} lb ${loadText})`;
+      } else if (supportsWeightedVest && useWeightedVest) {
+        // Apply weighted vest multiplier to bodyweight exercises
+        const vestBonus = getVestCalorieMultiplier(vestWeight);
+        metValue = selectedExercise.met * vestBonus;
         exerciseName = `${selectedExercise.name} (${vestWeight} lb vest)`;
       }
 
@@ -457,8 +488,8 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
               </div>
             )}
 
-            {/* Weighted Vest Options (for all walking tracking modes) */}
-            {isWalkingExercise && (
+            {/* Weighted Load Options (for walking and bodyweight exercises) */}
+            {(isWalkingExercise || supportsWeightedVest) && (
               <div>
                 <div className="flex items-center mb-3">
                   <input
@@ -469,25 +500,63 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     className="w-5 h-5 text-emerald-600 rounded focus:ring-emerald-500"
                   />
                   <label htmlFor="weighted-vest" className="ml-3 text-lg font-semibold">
-                    Add Weighted Vest
+                    {isWalkingExercise ? 'Add Weighted Load' : 'Add Weighted Vest'}
                   </label>
                 </div>
 
                 {useWeightedVest && (
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">
-                      Vest Weight
-                    </label>
-                    <select
-                      value={vestWeight}
-                      onChange={(e) => setVestWeight(e.target.value)}
-                      className="input-field"
-                    >
-                      <option value="10-15">10-15 lbs</option>
-                      <option value="20">20 lbs</option>
-                      <option value="30">30 lbs</option>
-                      <option value="40+">40+ lbs</option>
-                    </select>
+                  <div className="space-y-3">
+                    {/* Load type toggle (only for walking) */}
+                    {isWalkingExercise && (
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">
+                          Load Type
+                        </label>
+                        <div className="grid grid-cols-2 gap-3">
+                          <button
+                            type="button"
+                            onClick={() => setLoadType('vest')}
+                            className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                              loadType === 'vest'
+                                ? 'bg-emerald-600 text-white border-emerald-500'
+                                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                            }`}
+                          >
+                            Vest
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setLoadType('backpack')}
+                            className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                              loadType === 'backpack'
+                                ? 'bg-emerald-600 text-white border-emerald-500'
+                                : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                            }`}
+                          >
+                            Backpack
+                          </button>
+                        </div>
+                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                          Backpacks burn ~7% more calories than vests
+                        </p>
+                      </div>
+                    )}
+
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">
+                        Weight
+                      </label>
+                      <select
+                        value={vestWeight}
+                        onChange={(e) => setVestWeight(e.target.value)}
+                        className="input-field"
+                      >
+                        <option value="10-15">10-15 lbs</option>
+                        <option value="20">20 lbs</option>
+                        <option value="30">30 lbs</option>
+                        <option value="40+">40+ lbs</option>
+                      </select>
+                    </div>
                   </div>
                 )}
               </div>
@@ -682,6 +751,14 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                           }
                         } else if (isWalkingExercise && useWeightedVest) {
                           met = calculateWeightedVestMET(selectedExercise.met, selectedExercise.speed, vestWeight);
+                          // Backpacks burn ~7% more calories than vests
+                          if (loadType === 'backpack') {
+                            met = met * 1.07;
+                          }
+                        } else if (supportsWeightedVest && useWeightedVest) {
+                          // Apply weighted vest multiplier to bodyweight exercises
+                          const vestBonus = getVestCalorieMultiplier(vestWeight);
+                          met = selectedExercise.met * vestBonus;
                         }
                         return calculateExerciseCalories(profile.weight, met, estimatedDuration);
                       })()}{' '}
@@ -797,6 +874,7 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                   setSelectedExercise(null);
                   setUseWeightedVest(false);
                   setVestWeight('10-15');
+                  setLoadType('vest');
                 }}
                 className="btn-secondary flex-1"
               >
