@@ -3,6 +3,7 @@ title: "Breville Barista Express Review: The Greatest Product I Own"
 description: "Honest review of the Breville Barista Express after 6+ years of daily use. Why this espresso machine has saved us thousands on coffee."
 pubDate: 2026-03-02
 author: "FCT Staff"
+category: "Gear Reviews"
 image: "/images/blog/breville-barista-express.webp"
 ---
 

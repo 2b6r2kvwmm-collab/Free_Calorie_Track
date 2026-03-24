@@ -3,6 +3,7 @@ title: "What Are Calories? A Complete Guide to Calorie Tracking"
 description: "Learn what calories actually are, how calorie tracking works, and why it's the most effective method for weight management."
 pubDate: 2026-02-25
 author: "FCT Staff"
+category: "Guides"
 image: "/images/blog/calories-guide.webp"
 ---
 

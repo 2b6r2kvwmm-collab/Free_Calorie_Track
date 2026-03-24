@@ -3,6 +3,7 @@ title: "How to Use a Food Scale for Accurate Calorie Counting"
 description: "Master the most important tool for calorie counting. Learn to weigh food correctly, avoid common mistakes, and improve tracking accuracy."
 pubDate: 2026-03-02
 author: "FCT Staff"
+category: "Guides"
 image: "/images/blog/food-scale-guide.webp"
 ---
 

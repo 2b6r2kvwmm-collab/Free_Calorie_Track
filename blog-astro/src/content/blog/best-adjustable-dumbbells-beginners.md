@@ -3,6 +3,7 @@ title: "Best Adjustable Dumbbells for Beginners and Intermediate Lifters"
 description: "My review of the Core Fitness Adjustable Dumbbells—the perfect space-saving weight set with a twist-to-select mechanism (5-50 lbs)."
 pubDate: 2026-02-26
 author: "FCT Staff"
+category: "Gear Reviews"
 image: "/images/blog/core-fitness-dumbbells.webp"
 ---
 

@@ -3,6 +3,7 @@ title: "Best Heavy Adjustable Dumbbells (Up to 80 lbs)"
 description: "The best heavy-duty adjustable dumbbells that go up to 80 lbs—perfect for serious lifters who need more weight."
 pubDate: 2026-02-26
 author: "FCT Staff"
+category: "Gear Reviews"
 image: "/images/blog/nuobell-dumbbells.webp"
 ---
 

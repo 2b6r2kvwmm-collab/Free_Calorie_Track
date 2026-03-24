@@ -8,6 +8,7 @@ const blog = defineCollection({
     pubDate: z.date(),
     author: z.string().default('FCT Staff'),
     image: z.string().optional(),
+    category: z.enum(['Guides', 'Gear Reviews', 'Calculators']).default('Guides'),
   }),
 });
 

@@ -7,51 +7,12 @@ const blogEntries = await getCollection('blog');
 // Sort by date, newest first
 blogEntries.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
-// Map to include category info from blogPosts.js
+// Map to include metadata - category comes from frontmatter
 const postsWithMeta = blogEntries.map(entry => {
-  const slug = entry.slug;
-  let category = 'Guides';
-  let emoji = '📝';
-  let readTime = 5;
+  const category = entry.data.category;
+  const readTime = 5; // Default read time
 
-  // Gear Reviews: Product reviews and equipment guides
-  if (slug.includes('dumbbells') || slug.includes('blender') || slug.includes('review')) {
-    category = 'Gear Reviews';
-    if (slug.includes('advanced')) {
-      emoji = '💪';
-    } else if (slug.includes('barista') || slug.includes('espresso')) {
-      emoji = '☕';
-      readTime = 6;
-    } else if (slug.includes('vest')) {
-      emoji = '🎒';
-      readTime = 6;
-    } else if (slug.includes('blender')) {
-      emoji = '🫐';
-      readTime = 6;
-    } else {
-      emoji = '🏋️';
-    }
-  // Calculators: Interactive tools and calculation guides
-  } else if (slug.includes('calculator') || slug.includes('tdee') || slug.includes('bmi') || slug.includes('ffmi')) {
-    category = 'Calculators';
-    emoji = '🧮';
-    if (slug.includes('tdee')) {
-      emoji = '🔥';
-      readTime = 7;
-    } else if (slug.includes('macro')) {
-      readTime = 6;
-    }
-  // Custom emojis for specific guide posts
-  } else if (slug === 'what-are-calories') {
-    emoji = '⚡';
-  } else if (slug === 'what-are-macros') {
-    emoji = '🍎';
-  } else if (slug.includes('rucking')) {
-    emoji = '🥾';
-    readTime = 8;
-  }
-
-  return { ...entry, category, emoji, readTime };
+  return { ...entry, category, readTime };
 });
 ---
 

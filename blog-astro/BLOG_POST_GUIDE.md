@@ -75,6 +75,7 @@ title: "Your Article Title (60 chars max for SEO)"
 description: "SEO meta description - 150-160 characters. Include primary keyword. This appears in search results."
 pubDate: 2026-02-28
 author: "FCT Staff"
+category: "Guides"
 image: "/images/blog/your-image.webp"
 ---
 ```
@@ -102,6 +103,15 @@ image: "/images/blog/your-image.webp"
 
 **author:**
 - Use `"FCT Staff"` for consistency
+
+**category:**
+- **Required field** - must be one of three values:
+  - `"Guides"` - Educational content, how-to articles, nutrition guides
+  - `"Gear Reviews"` - Product reviews and equipment recommendations
+  - `"Calculators"` - Interactive tools, calculation guides
+- **Exact spelling required** - case-sensitive, must match exactly
+- **Example:** `category: "Gear Reviews"`
+- This controls which filter shows the post on the blog index page
 
 **image:**
 - **Path:** `/images/blog/filename.webp`
@@ -421,6 +431,7 @@ title: "Best Adjustable Dumbbells for Home Gyms"
 description: "In-depth review of the best adjustable dumbbells for home workouts. Compare weight ranges, build quality, and value to find the perfect set."
 pubDate: 2026-02-28
 author: "FCT Staff"
+category: "Gear Reviews"
 image: "/images/blog/adjustable-dumbbells.webp"
 ---
 
@@ -671,9 +682,9 @@ All automatic via frontmatter:
 
 ### How Categories Work
 
-Blog posts are automatically categorized for the filter UI on `/blog` based on **slug patterns**. The categorization logic is in `/src/pages/blog/index.astro`.
+Blog posts are categorized using the `category` field in frontmatter. Each post **must** include a category field that specifies which filter it appears under on the `/blog` page.
 
-**Three main categories:**
+**Three valid categories:**
 
 1. **Guides** (Default)
    - Educational content, how-to articles, nutrition guides
@@ -687,72 +698,49 @@ Blog posts are automatically categorized for the filter UI on `/blog` based on *
    - Interactive tools, calculation guides, and measurement articles
    - Examples: tdee-calculator, macro-calculator-guide, bmi-vs-ffmi
 
-### Categorization Rules
+### Adding a Category to Your Post
 
-Posts are categorized based on **slug keyword matching**:
+**In your frontmatter, add the category field:**
 
-```javascript
-// Gear Reviews: slug contains any of these
-if (slug.includes('dumbbells') ||
-    slug.includes('blender') ||
-    slug.includes('review')) {
-  category = 'Gear Reviews';
-}
-
-// Calculators: slug contains any of these
-else if (slug.includes('calculator') ||
-         slug.includes('tdee') ||
-         slug.includes('bmi') ||
-         slug.includes('ffmi')) {
-  category = 'Calculators';
-}
-
-// Everything else defaults to Guides
-else {
-  category = 'Guides';
-}
+```markdown
+---
+title: "Your Article Title"
+description: "Your description"
+pubDate: 2026-02-28
+author: "FCT Staff"
+category: "Guides"
+image: "/images/blog/your-image.webp"
+---
 ```
 
-### Adding New Posts
+**Valid category values:**
+- `"Guides"`
+- `"Gear Reviews"`
+- `"Calculators"`
 
-**When creating a new post, choose a slug that matches your intended category:**
+**Important:**
+- Must use exact spelling (case-sensitive)
+- Must include quotes
+- Only one category per post
+- Defaults to "Guides" if not specified
 
-**For Gear Reviews:**
-- Include 'review' in the slug: `product-name-review.md`
-- Or use specific gear keywords: `best-dumbbells-*.md`, `*-blender-*.md`
-- Examples: `breville-barista-express-review.md`, `zelus-weighted-vest-review.md`
+### Choosing the Right Category
 
-**For Calculators:**
-- Include 'calculator' in the slug: `*-calculator-*.md`
-- Or use measurement keywords: `tdee`, `bmi`, `ffmi`
-- Examples: `macro-calculator-guide.md`, `bmi-vs-ffmi.mdx`
+**Use "Guides" for:**
+- Educational articles (What are calories?)
+- How-to content (How to use a food scale)
+- Nutrition information (High protein foods)
+- General fitness advice
 
-**For Guides:**
-- Use any other slug - these default to Guides
-- Examples: `what-are-calories.md`, `how-to-use-a-food-scale.md`
+**Use "Gear Reviews" for:**
+- Product reviews (ZELUS vest review)
+- Equipment comparisons (Best dumbbells)
+- Gear recommendations (Best blenders)
 
-### Updating Categorization Logic
-
-**Location:** `/src/pages/blog/index.astro` (lines 10-40)
-
-If you add a new type of content that doesn't fit the existing patterns:
-
-1. **Add the keyword pattern** to the categorization logic
-2. **Assign an emoji** for visual distinction
-3. **Update this documentation**
-
-**Example - Adding a new pattern:**
-
-```javascript
-// In /src/pages/blog/index.astro
-
-if (slug.includes('dumbbells') || slug.includes('blender') || slug.includes('review')) {
-  category = 'Gear Reviews';
-  if (slug.includes('vest')) {
-    emoji = '🎒';  // Custom emoji for vest reviews
-  }
-}
-```
+**Use "Calculators" for:**
+- Tools with calculations (TDEE calculator)
+- Measurement guides (BMI vs FFMI)
+- Formula-based content (Macro calculator)
 
 ### Testing Filters
 
@@ -766,17 +754,19 @@ After adding a new post:
 ### Common Issues
 
 **Post not showing in expected category:**
-- Check the slug contains the correct keyword
-- Look at the categorization logic in `/src/pages/blog/index.astro`
-- If needed, rename the file or update the logic
+- Check the `category` field in frontmatter
+- Ensure exact spelling: `"Guides"`, `"Gear Reviews"`, or `"Calculators"`
+- Make sure category is in quotes
+- Build may be cached - try restarting dev server
 
-**Post showing in multiple categories:**
-- Not possible - each post has exactly one category
-- First matching pattern wins (check order in if/else chain)
+**Build fails with category error:**
+- Category must be one of the three valid values
+- Check for typos or incorrect capitalization
+- Make sure quotes are straight quotes, not curly quotes
 
 **Filter button not working:**
-- Check the `data-category` attribute on post cards matches button values
-- JavaScript reads these attributes to show/hide posts
+- The category from frontmatter automatically sets the `data-category` attribute
+- No manual intervention needed - it's all handled by the build process
 
 ---
 

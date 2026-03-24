@@ -3,6 +3,7 @@ title: "NutriBullet Pro 900 Review: 2 Years of Daily Use"
 description: "My honest review of the NutriBullet Pro 900 after using it daily for 2+ years to make protein shakes and smoothies. Best blender for protein shakes."
 pubDate: 2026-02-25
 author: "FCT Staff"
+category: "Gear Reviews"
 image: "/images/blog/nutribullet-pro-900.webp"
 ---
 
