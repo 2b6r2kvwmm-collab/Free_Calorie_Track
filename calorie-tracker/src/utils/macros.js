@@ -1,4 +1,5 @@
 // Research-based macro calculations for different fitness goals
+import { getReproductiveStatusProteinAdjustment } from './calculations';
 
 /**
  * Calculate macro targets based on user profile and fitness goals
@@ -63,9 +64,10 @@ export const GOAL_INFO = {
  * @param {number} weight - Body weight in kg
  * @param {number} tdee - Total Daily Energy Expenditure
  * @param {string} goal - Fitness goal from FITNESS_GOALS
+ * @param {object} profile - User profile (optional, for reproductive status adjustments)
  * @returns {object} - { calories, protein, carbs, fat, explanation, calorieAdjustment }
  */
-export function calculateMacroTargets(weight, tdee, goal) {
+export function calculateMacroTargets(weight, tdee, goal, profile = null) {
   const goalInfo = GOAL_INFO[goal] || GOAL_INFO[FITNESS_GOALS.MAINTENANCE];
 
   // Calculate calorie adjustment based on TDEE percentage (scales with body size)
@@ -83,8 +85,12 @@ export function calculateMacroTargets(weight, tdee, goal) {
   // Calculate target calories
   const targetCalories = tdee + calorieAdjustment;
 
-  // Calculate protein (g)
-  const proteinGrams = Math.round(weight * goalInfo.proteinPerKg);
+  // Calculate protein (g) with reproductive status adjustment if applicable
+  let proteinGrams = Math.round(weight * goalInfo.proteinPerKg);
+  if (profile) {
+    const proteinAdjustment = getReproductiveStatusProteinAdjustment(profile);
+    proteinGrams += proteinAdjustment;
+  }
   const proteinCalories = proteinGrams * 4; // 4 cal/g
 
   // Calculate fat (g)

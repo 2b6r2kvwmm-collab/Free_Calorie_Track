@@ -1,3 +1,93 @@
+// Get calorie adjustment for pregnancy/breastfeeding status
+export function getReproductiveStatusCalorieAdjustment(profile) {
+  if (!profile || profile.sex !== 'female') return 0;
+
+  const adjustments = {
+    'none': 0,
+    'first-trimester': 0,
+    'second-trimester': 340,
+    'third-trimester': 450,
+    'breastfeeding-exclusive': 500,
+    'breastfeeding-partial': 300,
+    'postpartum': 0, // First 6-12 weeks after delivery
+  };
+
+  // If pregnant, determine trimester based on due date or manual selection
+  if (profile.reproductiveStatus === 'pregnant') {
+    if (profile.dueDate) {
+      // Auto-calculate trimester from due date (handles overdue automatically)
+      const calculatedTrimester = getCurrentTrimester(profile.dueDate);
+      return adjustments[calculatedTrimester] || 0;
+    } else if (profile.manualTrimester) {
+      // Use manual trimester selection
+      return adjustments[profile.manualTrimester] || 0;
+    }
+    // Default to first trimester if no date or manual selection
+    return 0;
+  }
+
+  return adjustments[profile.reproductiveStatus] || 0;
+}
+
+// Get protein adjustment (grams) for pregnancy/breastfeeding
+export function getReproductiveStatusProteinAdjustment(profile) {
+  if (!profile || profile.sex !== 'female') return 0;
+
+  const adjustments = {
+    'none': 0,
+    'first-trimester': 25,
+    'second-trimester': 25,
+    'third-trimester': 25,
+    'breastfeeding-exclusive': 25,
+    'breastfeeding-partial': 20,
+    'postpartum': 0,
+  };
+
+  // If pregnant, determine trimester based on due date or manual selection
+  if (profile.reproductiveStatus === 'pregnant') {
+    if (profile.dueDate) {
+      // Auto-calculate trimester from due date (handles overdue automatically)
+      const calculatedTrimester = getCurrentTrimester(profile.dueDate);
+      return adjustments[calculatedTrimester] || 0;
+    } else if (profile.manualTrimester) {
+      // Use manual trimester selection
+      return adjustments[profile.manualTrimester] || 0;
+    }
+    // Default to first trimester if no date or manual selection
+    return 25;
+  }
+
+  return adjustments[profile.reproductiveStatus] || 0;
+}
+
+// Calculate current trimester from due date
+export function getCurrentTrimester(dueDate) {
+  if (!dueDate) return null;
+
+  const today = new Date();
+  const due = new Date(dueDate);
+  const weeksUntilDue = (due - today) / (1000 * 60 * 60 * 24 * 7);
+  const weeksPregnant = 40 - weeksUntilDue;
+
+  if (weeksPregnant < 0) return 'postpartum';
+  if (weeksPregnant < 13) return 'first-trimester';
+  if (weeksPregnant < 27) return 'second-trimester';
+  if (weeksPregnant <= 42) return 'third-trimester';
+  return 'postpartum';
+}
+
+// Get weeks pregnant from due date
+export function getWeeksPregnant(dueDate) {
+  if (!dueDate) return null;
+
+  const today = new Date();
+  const due = new Date(dueDate);
+  const weeksUntilDue = (due - today) / (1000 * 60 * 60 * 24 * 7);
+  const weeksPregnant = 40 - weeksUntilDue;
+
+  return Math.max(0, Math.min(42, Math.round(weeksPregnant)));
+}
+
 // Calculate BMR using Mifflin-St Jeor Equation
 export function calculateBMR(profile) {
   const { weight, height, age, sex } = profile;
@@ -30,6 +120,14 @@ export function calculateTDEE(bmr, activityLevel) {
 // Get baseline resting calories (sedentary TDEE to avoid double-counting exercise)
 export function getBaselineTDEE(bmr) {
   return Math.round(bmr * 1.2); // Sedentary multiplier
+}
+
+// Get TDEE adjusted for pregnancy/breastfeeding
+export function getAdjustedTDEE(profile) {
+  const bmr = calculateBMR(profile);
+  const baseTDEE = calculateTDEE(bmr, profile.activityLevel);
+  const reproductiveAdjustment = getReproductiveStatusCalorieAdjustment(profile);
+  return baseTDEE + reproductiveAdjustment;
 }
 
 // MET (Metabolic Equivalent of Task) values for common exercises

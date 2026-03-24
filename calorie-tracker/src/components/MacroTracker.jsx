@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { calculateMacroTargets, GOAL_INFO } from '../utils/macros';
-import { calculateBMR, calculateTDEE } from '../utils/calculations';
+import { calculateBMR, calculateTDEE, getReproductiveStatusCalorieAdjustment } from '../utils/calculations';
 
 export default function MacroTracker({
   profile,
@@ -49,8 +49,10 @@ export default function MacroTracker({
   } else {
     // Fallback: Calculate based on fitness goal
     const bmr = calculateBMR(profile);
-    const tdee = calculateTDEE(bmr, profile.activityLevel);
-    baseMacroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal);
+    const baseTdee = calculateTDEE(bmr, profile.activityLevel);
+    const reproductiveAdjustment = getReproductiveStatusCalorieAdjustment(profile);
+    const tdee = baseTdee + reproductiveAdjustment;
+    baseMacroTargets = calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal, profile);
   }
 
   // Adjust macro targets based on exercise

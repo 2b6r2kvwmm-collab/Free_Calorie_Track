@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
@@ -8,6 +8,7 @@ import InstallPrompt from './components/InstallPrompt';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
 import UpdateNotification from './components/UpdateNotification';
+import VersionUpdateModal from './components/VersionUpdateModal';
 
 // Code split heavy components to reduce INP - load only when needed
 const Trends = lazy(() => import('./components/Trends'));
@@ -102,9 +103,9 @@ function App() {
     setRefreshKey(prev => prev + 1);
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
     setRefreshKey(prev => prev + 1);
-  };
+  }, []);
 
   const handleUserSwitch = (newUserId) => {
     setCurrentUserId(newUserId);
@@ -296,6 +297,9 @@ function App() {
           <ShareModal onClose={handleShareModalClose} daysTracked={userDaysTracked} />
         </Suspense>
       )}
+
+      {/* Version Update Modal - shown once for existing users on version updates */}
+      <VersionUpdateModal />
 
       {/* Update Notification */}
       <UpdateNotification />

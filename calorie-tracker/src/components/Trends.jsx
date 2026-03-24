@@ -10,6 +10,7 @@ import {
   calculateBMR,
   getBaselineTDEE,
   calculateTDEE,
+  getReproductiveStatusCalorieAdjustment,
 } from '../utils/calculations';
 import { calculateMacroTargets } from '../utils/macros';
 import {
@@ -30,9 +31,22 @@ import WeightTracker from './WeightTracker';
 export default function Trends() {
   const [period, setPeriod] = useState('week'); // week or month
 
+  // Get current data - don't memoize as it needs to update when entries change
   const profile = getProfile();
   const foodLog = getFoodLog();
   const exerciseLog = getExerciseLog();
+
+  // Guard: if no profile set up, show message
+  if (!profile) {
+    return (
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-4">Trends</h2>
+        <p className="text-gray-600 dark:text-gray-400">
+          Please set up your profile in Settings to view trends.
+        </p>
+      </div>
+    );
+  }
 
   const bmr = useMemo(() => calculateBMR(profile), [profile]);
   const baselineTDEE = useMemo(() => getBaselineTDEE(bmr), [bmr]);
@@ -102,12 +116,14 @@ export default function Trends() {
   const customMacros = useMemo(() => getCustomMacros(), []);
   const customCalorieGoal = useMemo(() => getCustomCalorieGoal(), []);
   const usingCustomGoals = !!(customMacros && customCalorieGoal !== null);
-  const tdee = useMemo(() => calculateTDEE(bmr, profile.activityLevel), [bmr, profile.activityLevel]);
+  const baseTdee = useMemo(() => calculateTDEE(bmr, profile.activityLevel), [bmr, profile.activityLevel]);
+  const reproductiveAdjustment = useMemo(() => getReproductiveStatusCalorieAdjustment(profile), [profile]);
+  const tdee = baseTdee + reproductiveAdjustment;
   const macroTargets = useMemo(() =>
     usingCustomGoals
       ? customMacros
-      : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null),
-    [usingCustomGoals, customMacros, profile.fitnessGoal, profile.weight, tdee]
+      : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal, profile) : null),
+    [usingCustomGoals, customMacros, profile.fitnessGoal, profile.weight, tdee, profile]
   );
 
   // Calculate weekly macro averages (last 7 days) - memoize expensive loop

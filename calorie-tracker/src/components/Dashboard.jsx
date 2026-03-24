@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   getTodayEntries,
@@ -30,6 +30,7 @@ import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import {
   calculateBMR,
   calculateTDEE,
+  getReproductiveStatusCalorieAdjustment,
 } from '../utils/calculations';
 import {
   updateDailyStreak,
@@ -67,8 +68,9 @@ export default function Dashboard({ onRefresh }) {
   const [showBackupReminder, setShowBackupReminder] = useState(false);
   const [showGoalMismatchWarning, setShowGoalMismatchWarning] = useState(false);
   const [goalRefreshKey, setGoalRefreshKey] = useState(0); // Force re-render when goal changes
-  const waterTrackerEnabled = getWaterTrackerEnabled();
-  const dashboardFocus = getDashboardFocus();
+  // Memoize storage reads to prevent synchronous localStorage access on every render
+  const waterTrackerEnabled = useMemo(() => getWaterTrackerEnabled(), []);
+  const dashboardFocus = useMemo(() => getDashboardFocus(), []);
 
   // State locking for async operations
   const [isProcessing, setIsProcessing] = useState(false);
@@ -76,7 +78,7 @@ export default function Dashboard({ onRefresh }) {
   // Toast notification state
   const [toast, setToast] = useState(null); // { message, type: 'success' | 'error' }
 
-  const profile = getProfile();
+  const profile = useMemo(() => getProfile(), [goalRefreshKey]);
 
   // Auto-open/close modals based on URL
   useEffect(() => {
@@ -104,7 +106,9 @@ export default function Dashboard({ onRefresh }) {
 
   // Memoize BMR/TDEE calculations - only recalculate when profile changes
   const bmr = useMemo(() => calculateBMR(profile), [profile]);
-  const tdee = useMemo(() => calculateTDEE(bmr, profile.activityLevel), [bmr, profile.activityLevel]);
+  const baseTdee = useMemo(() => calculateTDEE(bmr, profile.activityLevel), [bmr, profile.activityLevel]);
+  const reproductiveAdjustment = useMemo(() => getReproductiveStatusCalorieAdjustment(profile), [profile]);
+  const tdee = baseTdee + reproductiveAdjustment; // TDEE adjusted for pregnancy/breastfeeding
   const restingBurned = tdee; // Full day's resting calories (end-of-day calculation)
 
   // Memoize calorie/macro totals - only recalculate when entries change
@@ -121,16 +125,16 @@ export default function Dashboard({ onRefresh }) {
   const totalBurned = restingBurned + exerciseBurned;
   const netCalories = caloriesEaten - totalBurned;
 
-  // Gamification
-  const gamificationData = getGamificationData();
-  const customMacros = getCustomMacros();
-  const customCalorieGoal = getCustomCalorieGoal();
+  // Gamification - memoize to prevent repeated storage reads
+  const gamificationData = useMemo(() => getGamificationData(), []);
+  const customMacros = useMemo(() => getCustomMacros(), [goalRefreshKey]);
+  const customCalorieGoal = useMemo(() => getCustomCalorieGoal(), [goalRefreshKey]);
 
   // Determine if using custom goals (both custom macros AND custom calorie goal must be set)
   const usingCustomGoals = !!(customMacros && customCalorieGoal !== null);
 
   // Check for manual goal early so we can use it in macro calculations
-  const manualDailyGoal = getDailyGoal();
+  const manualDailyGoal = useMemo(() => getDailyGoal(), [goalRefreshKey]);
   const hasManualGoal = manualDailyGoal !== null; // null means not manually set
 
   // Memoize macro targets calculation - only recalculate when dependencies change
@@ -138,7 +142,7 @@ export default function Dashboard({ onRefresh }) {
     // Calculate base macro targets
     let targets = usingCustomGoals
       ? customMacros
-      : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal) : null);
+      : (profile.fitnessGoal ? calculateMacroTargets(profile.weight, tdee, profile.fitnessGoal, profile) : null);
 
     // If user has manually set a goal that differs from calculated, recalculate macros
     if (hasManualGoal && !usingCustomGoals && targets) {
@@ -271,9 +275,9 @@ export default function Dashboard({ onRefresh }) {
     }
   }, [hasGoalMismatch]);
 
-  // Get previous 3 days net calories - memoize expensive calculation (reduces INP)
-  const foodLog = useMemo(() => getFoodLog(), [goalRefreshKey]);
-  const exerciseLog = useMemo(() => getExerciseLog(), [goalRefreshKey]);
+  // Get previous 3 days net calories - read fresh data each time
+  const foodLog = getFoodLog();
+  const exerciseLog = getExerciseLog();
   const daysTracked = useMemo(() => new Set(foodLog.map(e => e.date)).size, [foodLog]);
 
   const today = new Date();
@@ -388,7 +392,35 @@ export default function Dashboard({ onRefresh }) {
     }
   }, [toast]);
 
-  const handleAddFood = async (food) => {
+  // Memoize navigation handlers to prevent unnecessary re-renders
+  const handleNavigateToAddFood = useCallback(() => {
+    navigate('/add-food');
+  }, [navigate]);
+
+  const handleNavigateToLogExercise = useCallback(() => {
+    navigate('/log-exercise');
+  }, [navigate]);
+
+  const handleNavigateToDashboard = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
+
+  // Memoize modal close handlers
+  const handleCloseFoodInput = useCallback(() => {
+    setShowFoodInput(false);
+    if (location.pathname === '/add-food') {
+      navigate('/');
+    }
+  }, [location.pathname, navigate]);
+
+  const handleCloseExerciseLog = useCallback(() => {
+    setShowExerciseLog(false);
+    if (location.pathname === '/log-exercise') {
+      navigate('/');
+    }
+  }, [location.pathname, navigate]);
+
+  const handleAddFood = useCallback(async (food) => {
     if (isProcessing) return; // Prevent double-tap
 
     // Create entry with timestamp for optimistic update
@@ -444,9 +476,9 @@ export default function Dashboard({ onRefresh }) {
     } finally {
       setIsProcessing(false);
     }
-  };
+  }, [isProcessing, onRefresh]);
 
-  const handleAddExercise = async (exercise) => {
+  const handleAddExercise = useCallback(async (exercise) => {
     if (isProcessing) return; // Prevent double-tap
 
     // Create entry with timestamp for optimistic update
@@ -490,7 +522,7 @@ export default function Dashboard({ onRefresh }) {
     } finally {
       setIsProcessing(false);
     }
-  };
+  }, [isProcessing, onRefresh]);
 
   const handleDeleteFood = (timestamp) => {
     deleteFoodEntry(timestamp);
@@ -999,10 +1031,10 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Action Buttons */}
       <div className="grid grid-cols-2 gap-4">
-        <button onClick={() => navigate('/add-food')} className="btn-primary">
+        <button onClick={handleNavigateToAddFood} className="btn-primary">
           Add Food
         </button>
-        <button onClick={() => navigate('/log-exercise')} className="btn-primary">
+        <button onClick={handleNavigateToLogExercise} className="btn-primary">
           Log Exercise
         </button>
       </div>
@@ -1296,12 +1328,7 @@ export default function Dashboard({ onRefresh }) {
       {showFoodInput && (
         <FoodInput
           onAddFood={handleAddFood}
-          onClose={() => {
-            setShowFoodInput(false);
-            if (location.pathname === '/add-food') {
-              navigate('/');
-            }
-          }}
+          onClose={handleCloseFoodInput}
           onRefresh={onRefresh}
         />
       )}
@@ -1309,12 +1336,7 @@ export default function Dashboard({ onRefresh }) {
       {showExerciseLog && (
         <ExerciseLog
           onAddExercise={handleAddExercise}
-          onClose={() => {
-            setShowExerciseLog(false);
-            if (location.pathname === '/log-exercise') {
-              navigate('/');
-            }
-          }}
+          onClose={handleCloseExerciseLog}
           onRefresh={onRefresh}
         />
       )}

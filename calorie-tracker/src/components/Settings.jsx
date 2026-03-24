@@ -1,7 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getWaterGoal, saveWaterGoal, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats, ozToMl, mlToOz } from '../utils/storage';
-import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
+import { calculateBMR, calculateTDEE, getBaselineTDEE, getReproductiveStatusCalorieAdjustment, getCurrentTrimester, getWeeksPregnant } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
 import { handleExport } from '../utils/backupExport';
@@ -9,7 +9,8 @@ import { sanitizeObject } from '../utils/sanitize';
 import ConfirmationModal from './ConfirmationModal';
 
 export default function Settings({ onUpdateProfile, onClose }) {
-  const currentProfile = getProfile();
+  // Memoize storage reads to prevent synchronous localStorage access on every render
+  const currentProfile = useMemo(() => getProfile(), []);
   const fileInputRef = useRef(null);
   const [importMessage, setImportMessage] = useState('');
   const [showImportConfirm, setShowImportConfirm] = useState(false);
@@ -40,7 +41,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const [dashboardFocus, setDashboardFocus] = useState(getDashboardFocus());
 
   // Water goal state (stored in mL, displayed in user's preferred unit)
-  const waterGoalMl = getWaterGoal();
+  const waterGoalMl = useMemo(() => getWaterGoal(), []);
   const defaultWaterGoalMl = currentProfile.unit === 'imperial' ? ozToMl(64) : 2000;
   const [customWaterGoal, setCustomWaterGoal] = useState(
     waterGoalMl
@@ -65,6 +66,9 @@ export default function Settings({ onUpdateProfile, onClose }) {
     activityLevel: currentProfile.activityLevel,
     unit: currentProfile.unit,
     fitnessGoal: currentProfile.fitnessGoal || FITNESS_GOALS.MAINTENANCE,
+    reproductiveStatus: currentProfile.reproductiveStatus || 'none',
+    dueDate: currentProfile.dueDate || '',
+    manualTrimester: currentProfile.manualTrimester || '',
   });
 
   const handleSubmit = (e) => {
@@ -87,7 +91,17 @@ export default function Settings({ onUpdateProfile, onClose }) {
       activityLevel: formData.activityLevel,
       unit: formData.unit,
       fitnessGoal: formData.fitnessGoal,
+      reproductiveStatus: formData.reproductiveStatus || 'none',
+      dueDate: formData.dueDate || null,
+      manualTrimester: formData.manualTrimester || null,
     };
+
+    // If sex changed from female to male, reset reproductive status
+    if (formData.sex === 'male') {
+      profile.reproductiveStatus = 'none';
+      profile.dueDate = null;
+      profile.manualTrimester = null;
+    }
 
     // Save or clear custom goals
     if (useCustomGoals) {
@@ -399,12 +413,25 @@ export default function Settings({ onUpdateProfile, onClose }) {
       </div>
 
       <div className="card">
-        <h2 className="text-2xl font-bold mb-6">Profile Settings</h2>
+        <h2 className="text-2xl font-bold mb-4">Profile Settings</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Unit System */}
-          <div>
-            <label className="block text-lg font-semibold mb-3">Unit System</label>
+        {/* Privacy Statement */}
+        <div className="mb-6 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
+          <p className="text-sm text-gray-700 dark:text-gray-300">
+            <span className="font-semibold">🔒 Privacy First:</span> Unlike other apps, all your health data (including pregnancy information, weight, and food logs) stays locally on your device. We never collect, transmit, or sell any of your personal information.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* SECTION: Basic Information */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 border-b-2 border-gray-200 dark:border-gray-700 pb-2">
+              Basic Information
+            </h3>
+
+            {/* Unit System */}
+            <div>
+              <label className="block text-lg font-semibold mb-3">Unit System</label>
             <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
@@ -474,6 +501,111 @@ export default function Settings({ onUpdateProfile, onClose }) {
             </div>
           </div>
 
+          {/* Pregnancy/Breastfeeding - Only shown for female */}
+          {formData.sex === 'female' && (
+            <div className="p-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border-2 border-purple-200 dark:border-purple-800">
+              <label className="block text-lg font-semibold mb-3">Pregnancy & Breastfeeding</label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Adjusts your calorie and protein goals based on evidence-based guidelines.
+              </p>
+
+              {/* Status Selection */}
+              <select
+                value={formData.reproductiveStatus}
+                onChange={(e) => {
+                  updateField('reproductiveStatus', e.target.value);
+                  // Clear dates when status changes
+                  if (e.target.value === 'none') {
+                    updateField('dueDate', '');
+                    updateField('manualTrimester', '');
+                  }
+                }}
+                className="input-field mb-4"
+              >
+                <option value="none">Not applicable</option>
+                <option value="pregnant">Pregnant</option>
+                <option value="breastfeeding-exclusive">Breastfeeding (exclusive)</option>
+                <option value="breastfeeding-partial">Breastfeeding (partial)</option>
+              </select>
+
+              {/* Pregnancy Options */}
+              {formData.reproductiveStatus === 'pregnant' && (
+                <div className="space-y-4 pl-3 border-l-2 border-purple-300 dark:border-purple-700">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2">
+                      Due Date (optional - enables automatic trimester calculation)
+                    </label>
+                    <input
+                      type="date"
+                      value={formData.dueDate}
+                      onChange={(e) => updateField('dueDate', e.target.value)}
+                      className="input-field"
+                      max={new Date(Date.now() + 280 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                    />
+                    {formData.dueDate && (() => {
+                      const trimester = getCurrentTrimester(formData.dueDate);
+                      const weeks = getWeeksPregnant(formData.dueDate);
+
+                      // Show warning if past due date (postpartum status)
+                      if (trimester === 'postpartum') {
+                        const dueDate = new Date(formData.dueDate);
+                        const today = new Date();
+                        const daysOverdue = Math.floor((today - dueDate) / (1000 * 60 * 60 * 24));
+
+                        return (
+                          <div className="mt-2 p-3 bg-orange-100 dark:bg-orange-900/20 rounded border border-orange-300 dark:border-orange-700">
+                            <p className="text-sm font-semibold text-orange-800 dark:text-orange-300">
+                              ⚠️ Past due date ({daysOverdue > 0 ? `${daysOverdue} days ago` : 'today'})
+                            </p>
+                            <p className="text-xs text-orange-700 dark:text-orange-400 mt-1">
+                              Once you've delivered, update to "Breastfeeding" if applicable, or "Not applicable" if formula feeding.
+                            </p>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <p className="text-sm text-purple-600 dark:text-purple-400 mt-2">
+                          📅 {weeks} weeks pregnant ({trimester === 'first-trimester' ? '1st' : trimester === 'second-trimester' ? '2nd' : '3rd'} trimester)
+                        </p>
+                      );
+                    })()}
+                  </div>
+
+                  {/* Manual Trimester - only show if no due date */}
+                  {!formData.dueDate && (
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Or select trimester manually</label>
+                      <select
+                        value={formData.manualTrimester}
+                        onChange={(e) => updateField('manualTrimester', e.target.value)}
+                        className="input-field"
+                      >
+                        <option value="">Select trimester...</option>
+                        <option value="first-trimester">1st Trimester (weeks 1-12)</option>
+                        <option value="second-trimester">2nd Trimester (weeks 13-26)</option>
+                        <option value="third-trimester">3rd Trimester (weeks 27-40)</option>
+                      </select>
+                    </div>
+                  )}
+                </div>
+              )}
+
+
+              {/* Medical Disclaimer */}
+              <div className="mt-4 p-3 bg-white dark:bg-gray-800 rounded text-xs text-gray-600 dark:text-gray-400">
+                ⚕️ These are general guidelines. Individual needs vary. Consult your healthcare provider for personalized nutrition recommendations.
+              </div>
+            </div>
+          )}
+          </div>
+
+          {/* SECTION: Physical Measurements */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 border-b-2 border-gray-200 dark:border-gray-700 pb-2">
+              Physical Measurements
+            </h3>
+
           {/* Height */}
           <div>
             <label className="block text-lg font-semibold mb-3">
@@ -509,6 +641,13 @@ export default function Settings({ onUpdateProfile, onClose }) {
               placeholder={formData.unit === 'metric' ? '70' : '154'}
             />
           </div>
+          </div>
+
+          {/* SECTION: Activity & Goals */}
+          <div className="space-y-6">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 border-b-2 border-gray-200 dark:border-gray-700 pb-2">
+              Activity & Goals
+            </h3>
 
           {/* Activity Level */}
           <div>
@@ -562,13 +701,74 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                 Automatically sets your net calorie goal and research-based macro targets
               </p>
+
+              {/* Pregnancy/Breastfeeding Safety Warnings */}
+              {(() => {
+                const currentTrimester = formData.dueDate ? getCurrentTrimester(formData.dueDate) : formData.manualTrimester;
+                const isPregnant = formData.reproductiveStatus === 'pregnant' || ['first-trimester', 'second-trimester', 'third-trimester'].includes(currentTrimester);
+                const isBreastfeeding = formData.reproductiveStatus === 'breastfeeding-exclusive' || formData.reproductiveStatus === 'breastfeeding-partial';
+                const deficit = formData.fitnessGoal === FITNESS_GOALS.FAT_LOSS;
+
+                if (isPregnant && deficit) {
+                  return (
+                    <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/20 border-2 border-red-300 dark:border-red-800 rounded-lg">
+                      <p className="text-sm font-semibold text-red-700 dark:text-red-300 mb-2">
+                        ⚠️ Weight loss is not recommended during pregnancy
+                      </p>
+                      <p className="text-xs text-red-600 dark:text-red-400">
+                        Consider maintaining your weight or consult your healthcare provider for personalized guidance.
+                      </p>
+                    </div>
+                  );
+                }
+
+                if (isBreastfeeding && deficit) {
+                  const bmrPreview = calculateBMR({ ...bmrProfile, sex: formData.sex });
+                  const tdeePreview = calculateTDEE(bmrPreview, formData.activityLevel);
+                  const reproAdj = getReproductiveStatusCalorieAdjustment({ sex: formData.sex, reproductiveStatus: formData.reproductiveStatus });
+                  const adjustedTDEE = tdeePreview + reproAdj;
+                  const previewTargets = calculateMacroTargets(metricWeight, adjustedTDEE, formData.fitnessGoal);
+                  const totalIntake = adjustedTDEE + previewTargets.calorieAdjustment;
+                  const deficitSize = Math.abs(previewTargets.calorieAdjustment);
+
+                  if (deficitSize > 500 || totalIntake < 1800) {
+                    return (
+                      <div className="mb-4 p-4 bg-orange-50 dark:bg-orange-900/20 border-2 border-orange-300 dark:border-orange-800 rounded-lg">
+                        <p className="text-sm font-semibold text-orange-700 dark:text-orange-300 mb-2">
+                          ⚠️ Large calorie deficits may impact milk supply
+                        </p>
+                        <p className="text-xs text-orange-600 dark:text-orange-400">
+                          Consider a smaller deficit (0.5-1 lb/week) and ensure you're eating at least 1,800 calories per day. Stay well-hydrated and maintain adequate protein intake.
+                        </p>
+                      </div>
+                    );
+                  } else if (deficitSize >= 250) {
+                    return (
+                      <div className="mb-4 p-4 bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-300 dark:border-blue-800 rounded-lg">
+                        <p className="text-sm font-semibold text-blue-700 dark:text-blue-300 mb-2">
+                          ℹ️ Gradual weight loss is generally safe while breastfeeding
+                        </p>
+                        <p className="text-xs text-blue-600 dark:text-blue-400">
+                          Stay well-hydrated and ensure adequate protein intake to support milk production.
+                        </p>
+                      </div>
+                    );
+                  }
+                }
+
+                return null;
+              })()}
+
             <div className="space-y-3">
               {Object.values(FITNESS_GOALS).map((goalKey) => {
                 const goal = GOAL_INFO[goalKey];
                 // Calculate net goal based on current weight (preview)
                 const previewBMR = calculateBMR(bmrProfile);
                 const previewTDEE = calculateTDEE(previewBMR, formData.activityLevel);
-                const previewTargets = calculateMacroTargets(metricWeight, previewTDEE, goalKey);
+                // Add reproductive status adjustment to TDEE
+                const reproAdj = getReproductiveStatusCalorieAdjustment({ sex: formData.sex, reproductiveStatus: formData.reproductiveStatus });
+                const adjustedTDEE = previewTDEE + reproAdj;
+                const previewTargets = calculateMacroTargets(metricWeight, adjustedTDEE, goalKey, { sex: formData.sex, reproductiveStatus: formData.reproductiveStatus });
                 const netCalorieGoal = previewTargets.calorieAdjustment;
 
                 return (
@@ -612,7 +812,10 @@ export default function Settings({ onUpdateProfile, onClose }) {
           {/* Custom Goals Inputs - Only shown when using custom goals */}
           {useCustomGoals && (() => {
             const totalCaloriesFromMacros = (customMacros.protein * 4) + (customMacros.carbs * 4) + (customMacros.fat * 9);
-            const netCalorieGoal = totalCaloriesFromMacros - tdee;
+            // Use adjusted TDEE that includes reproductive status
+            const reproAdj = getReproductiveStatusCalorieAdjustment({ sex: formData.sex, reproductiveStatus: formData.reproductiveStatus });
+            const adjustedTDEE = tdee + reproAdj;
+            const netCalorieGoal = totalCaloriesFromMacros - adjustedTDEE;
 
             return (
               <div className="space-y-4 p-4 border-2 border-emerald-500 rounded-lg bg-emerald-50 dark:bg-emerald-900/10">
@@ -778,8 +981,15 @@ export default function Settings({ onUpdateProfile, onClose }) {
                       </div>
                       <div className="flex justify-between text-gray-600 dark:text-gray-400">
                         <span>- Lifestyle TDEE:</span>
-                        <span className="font-semibold">-{tdee} cal</span>
+                        <span className="font-semibold">-{adjustedTDEE} cal</span>
                       </div>
+                      {reproAdj > 0 && (
+                        <div className="flex justify-between text-xs text-purple-600 dark:text-purple-400">
+                          <span className="italic">
+                            (includes +{reproAdj} cal for {formData.reproductiveStatus === 'breastfeeding-exclusive' ? 'breastfeeding' : formData.reproductiveStatus === 'breastfeeding-partial' ? 'breastfeeding' : 'pregnancy'})
+                          </span>
+                        </div>
+                      )}
                       <div className="border-t-2 border-emerald-500 dark:border-emerald-600 pt-2 mt-2">
                         <div className="flex justify-between font-bold text-lg">
                           <span>net Calorie Goal:</span>
@@ -797,8 +1007,9 @@ export default function Settings({ onUpdateProfile, onClose }) {
               </div>
             );
           })()}
+          </div>
 
-          <button type="submit" className="btn-primary w-full">
+          <button type="submit" className="btn-primary w-full mt-8">
             Save Changes
           </button>
         </form>
