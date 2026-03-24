@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getGamificationData, ACHIEVEMENTS, getAchievementProgress } from '../utils/gamification';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
-export default function Achievements({ onClose }) {
+function Achievements({ onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
   const [activeTab, setActiveTab] = useState('unlocked');
   const data = getGamificationData();
@@ -194,3 +194,5 @@ export default function Achievements({ onClose }) {
     </div>
   );
 }
+
+export default Achievements;

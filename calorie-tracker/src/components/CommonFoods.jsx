@@ -12,6 +12,7 @@ export default function CommonFoods({ onAddFood, onClose }) {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedFood, setSelectedFood] = useState(null);
   const [favorites, setFavorites] = useState(getFavorites());
+  const [displayLimit, setDisplayLimit] = useState(50); // Only show 50 foods initially
   const scrollRef = useRef(null);
 
   // Lock body scroll when modal opens
@@ -31,11 +32,12 @@ export default function CommonFoods({ onAddFood, onClose }) {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Scroll to top when search or category changes
+  // Scroll to top and reset display limit when search or category changes
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = 0;
     }
+    setDisplayLimit(50); // Reset to showing first 50 foods
   }, [debouncedSearchQuery, selectedCategory]);
 
   const categories = ['All', ...getCategories()];
@@ -89,6 +91,10 @@ export default function CommonFoods({ onAddFood, onClose }) {
     seenBaseNames.add(baseName);
     return true;
   });
+
+  // Limit displayed foods for performance
+  const displayedFoods = filteredFoods.slice(0, displayLimit);
+  const hasMore = filteredFoods.length > displayLimit;
 
   // Helper function to get clean display name
   const getDisplayName = (food) => {
@@ -200,7 +206,7 @@ export default function CommonFoods({ onAddFood, onClose }) {
           </div>
         ) : (
           <div className="space-y-3">
-            {filteredFoods.map((food, index) => (
+            {displayedFoods.map((food, index) => (
               <div
                 key={index}
                 className="border-2 border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-emerald-500 transition-colors"
@@ -243,8 +249,20 @@ export default function CommonFoods({ onAddFood, onClose }) {
           </div>
         )}
 
+        {/* Load More Button */}
+        {hasMore && (
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => setDisplayLimit(prev => prev + 50)}
+              className="btn-secondary px-6 py-3"
+            >
+              Load More ({filteredFoods.length - displayLimit} remaining)
+            </button>
+          </div>
+        )}
+
         <div className="mt-6 text-center text-sm text-gray-500">
-          Showing {filteredFoods.length} food{filteredFoods.length !== 1 ? 's' : ''}
+          Showing {displayedFoods.length} of {filteredFoods.length} food{filteredFoods.length !== 1 ? 's' : ''}
         </div>
       </div>
 

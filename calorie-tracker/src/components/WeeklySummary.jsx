@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { getFoodLog, getExerciseLog, getProfile } from '../utils/storage';
 import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
@@ -7,70 +7,94 @@ import { getCurrentMacros } from '../utils/macros';
 export default function WeeklySummary() {
   const [viewMode, setViewMode] = useState('week'); // 'week' or 'month'
 
+  // Get current data - don't memoize as it needs to update when entries change
   const profile = getProfile();
-  const bmr = calculateBMR(profile);
-  const baselineTDEE = getBaselineTDEE(bmr);
-
   const foodLog = getFoodLog();
   const exerciseLog = getExerciseLog();
 
-  const today = new Date();
-  const daysToShow = viewMode === 'week' ? 7 : 30;
-
-  // Generate data for the chart
-  const chartData = [];
-  let totalNetCal = 0;
-  let totalProtein = 0;
-  let totalCarbs = 0;
-  let totalFat = 0;
-  let totalExerciseCalories = 0;
-  let daysWithData = 0;
-
-  for (let i = daysToShow - 1; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    const dateStr = date.toISOString().split('T')[0];
-
-    const dayFood = foodLog.filter(entry => entry.date === dateStr);
-    const dayExercise = exerciseLog.filter(entry => entry.date === dateStr);
-
-    const eaten = dayFood.reduce((sum, entry) => sum + entry.calories, 0);
-    const burned = baselineTDEE + // Full day's resting calories
-                   dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
-    const netCal = eaten - burned;
-
-    const dayMacros = getCurrentMacros(dayFood);
-    const exerciseCalories = dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
-
-    if (dayFood.length > 0 || dayExercise.length > 0) {
-      daysWithData++;
-      totalNetCal += netCal;
-      totalProtein += dayMacros.protein;
-      totalCarbs += dayMacros.carbs;
-      totalFat += dayMacros.fat;
-      totalExerciseCalories += exerciseCalories;
-    }
-
-    chartData.push({
-      date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-      netCalories: netCal,
-      eaten: eaten,
-      burned: burned,
-      protein: Math.round(dayMacros.protein),
-      carbs: Math.round(dayMacros.carbs),
-      fat: Math.round(dayMacros.fat),
-    });
+  // Guard: if no profile, return null (don't crash)
+  if (!profile) {
+    return null;
   }
 
-  const avgNetCal = daysWithData > 0 ? Math.round(totalNetCal / daysWithData) : 0;
-  const avgProtein = daysWithData > 0 ? Math.round(totalProtein / daysWithData) : 0;
-  const avgCarbs = daysWithData > 0 ? Math.round(totalCarbs / daysWithData) : 0;
-  const avgFat = daysWithData > 0 ? Math.round(totalFat / daysWithData) : 0;
-  const avgExerciseCalories = daysWithData > 0 ? Math.round(totalExerciseCalories / daysWithData) : 0;
+  // Memoize expensive calculations
+  const bmr = useMemo(() => calculateBMR(profile), [profile]);
+  const baselineTDEE = useMemo(() => getBaselineTDEE(bmr), [bmr]);
 
-  // Calculate expected weight change (3500 cal = 1 lb = 0.45 kg)
-  const totalDeficit = totalNetCal;
-  const expectedWeightChange = (totalDeficit / 3500) * (profile.unit === 'metric' ? 0.45 : 1);
+  // Memoize expensive weekly/monthly calculations to prevent re-computation on every render
+  const summaryData = useMemo(() => {
+    const today = new Date();
+    const daysToShow = viewMode === 'week' ? 7 : 30;
+
+    // Generate data for the chart
+    const chartData = [];
+    let totalNetCal = 0;
+    let totalProtein = 0;
+    let totalCarbs = 0;
+    let totalFat = 0;
+    let totalExerciseCalories = 0;
+    let daysWithData = 0;
+
+    for (let i = daysToShow - 1; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i);
+      const dateStr = date.toISOString().split('T')[0];
+
+      const dayFood = foodLog.filter(entry => entry.date === dateStr);
+      const dayExercise = exerciseLog.filter(entry => entry.date === dateStr);
+
+      const eaten = dayFood.reduce((sum, entry) => sum + entry.calories, 0);
+      const burned = baselineTDEE + // Full day's resting calories
+                     dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
+      const netCal = eaten - burned;
+
+      const dayMacros = getCurrentMacros(dayFood);
+      const exerciseCalories = dayExercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
+
+      if (dayFood.length > 0 || dayExercise.length > 0) {
+        daysWithData++;
+        totalNetCal += netCal;
+        totalProtein += dayMacros.protein;
+        totalCarbs += dayMacros.carbs;
+        totalFat += dayMacros.fat;
+        totalExerciseCalories += exerciseCalories;
+      }
+
+      chartData.push({
+        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        netCalories: netCal,
+        eaten: eaten,
+        burned: burned,
+        protein: Math.round(dayMacros.protein),
+        carbs: Math.round(dayMacros.carbs),
+        fat: Math.round(dayMacros.fat),
+      });
+    }
+
+    const avgNetCal = daysWithData > 0 ? Math.round(totalNetCal / daysWithData) : 0;
+    const avgProtein = daysWithData > 0 ? Math.round(totalProtein / daysWithData) : 0;
+    const avgCarbs = daysWithData > 0 ? Math.round(totalCarbs / daysWithData) : 0;
+    const avgFat = daysWithData > 0 ? Math.round(totalFat / daysWithData) : 0;
+    const avgExerciseCalories = daysWithData > 0 ? Math.round(totalExerciseCalories / daysWithData) : 0;
+
+    // Calculate expected weight change (3500 cal = 1 lb = 0.45 kg)
+    const totalDeficit = totalNetCal;
+    const expectedWeightChange = (totalDeficit / 3500) * (profile.unit === 'metric' ? 0.45 : 1);
+
+    return {
+      chartData,
+      avgNetCal,
+      avgProtein,
+      avgCarbs,
+      avgFat,
+      avgExerciseCalories,
+      expectedWeightChange,
+      totalNetCal,
+      daysWithData,
+    };
+  }, [viewMode, foodLog, exerciseLog, baselineTDEE, profile]);
+
+  const { chartData, avgNetCal, avgProtein, avgCarbs, avgFat, avgExerciseCalories, expectedWeightChange, totalNetCal, daysWithData } = summaryData;
 
   return (
     <div className="card">

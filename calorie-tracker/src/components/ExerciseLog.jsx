@@ -17,11 +17,12 @@ function getVestCalorieMultiplier(vestWeight) {
   return weightMap[vestWeight] || 1.0;
 }
 
-export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
+function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const modalRef = useModalAccessibility(true, onClose);
   const [selectedExercise, setSelectedExercise] = useState(null);
   const [duration, setDuration] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [trackingMode, setTrackingMode] = useState('duration'); // 'duration' or 'reps'
   const [walkingTrackingMode, setWalkingTrackingMode] = useState('duration'); // 'duration', 'steps', or 'distance'
   const [cardioTrackingMode, setCardioTrackingMode] = useState('distanceDuration'); // 'distanceDuration', 'paceDistance', or 'paceDuration'
@@ -40,7 +41,8 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [showWorkoutTemplates, setShowWorkoutTemplates] = useState(false);
   const scrollRef = useRef(null);
 
-  const profile = getProfile();
+  // Get current profile - needs to be fresh if user updates profile while modal is open
+  const profile = getProfile() || { weight: 70, unit: 'metric' }; // Default fallback
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -57,9 +59,18 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
     }
   }, [selectedExercise]);
 
-  const filteredExercises = searchQuery
+  // Debounce search query to reduce filtering operations during typing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 300); // 300ms debounce delay
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const filteredExercises = debouncedSearchQuery
     ? exercises.filter(ex =>
-        ex.name.toLowerCase().includes(searchQuery.toLowerCase())
+        ex.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
       )
     : exercises;
 
@@ -891,3 +902,5 @@ export default function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
     </div>
   );
 }
+
+export default ExerciseLog;

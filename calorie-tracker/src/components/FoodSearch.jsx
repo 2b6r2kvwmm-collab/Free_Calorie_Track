@@ -10,6 +10,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [error, setError] = useState(null);
   const scrollRef = useRef(null);
   const abortControllerRef = useRef(null);
 
@@ -36,6 +37,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
     if (!debouncedQuery.trim()) {
       setResults([]);
       setSearched(false);
+      setError(null);
       return;
     }
 
@@ -48,14 +50,17 @@ export default function FoodSearch({ onAddFood, onClose }) {
       abortControllerRef.current = new AbortController();
       setLoading(true);
       setSearched(true);
+      setError(null);
 
       try {
         const foods = await searchFoods(debouncedQuery, abortControllerRef.current.signal);
         setResults(foods);
+        setError(null);
       } catch (error) {
         if (error.name !== 'AbortError') {
           console.error('Search failed:', error);
           setResults([]);
+          setError('The food database is temporarily unavailable. Please try again later or use Quick Add instead.');
         }
       } finally {
         setLoading(false);
@@ -131,7 +136,16 @@ export default function FoodSearch({ onAddFood, onClose }) {
           </div>
         )}
 
-        {!loading && searched && results.length === 0 && (
+        {error && (
+          <div className="text-center py-12">
+            <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 rounded-lg p-6">
+              <div className="text-lg font-semibold text-red-700 dark:text-red-400 mb-2">⚠️ Service Unavailable</div>
+              <div className="text-sm text-red-600 dark:text-red-300">{error}</div>
+            </div>
+          </div>
+        )}
+
+        {!loading && !error && searched && results.length === 0 && (
           <div className="text-center py-12 text-gray-500">
             <div className="text-lg">No foods found. Try a different search.</div>
           </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { getFoodLog, getExerciseLog, getProfile, deleteFoodEntry, deleteExerciseEntry, addFoodEntry, addExerciseEntry } from '../utils/storage';
 import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
 import FoodInput from './FoodInput';
@@ -12,9 +12,12 @@ export default function History({ onRefresh }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [datePickerValue, setDatePickerValue] = useState('');
 
+  // Get current profile and calculate TDEE
   const profile = getProfile();
-  const bmr = calculateBMR(profile);
-  const baselineTDEE = getBaselineTDEE(bmr);
+
+  // Guard: if no profile, use default values
+  const bmr = useMemo(() => profile ? calculateBMR(profile) : 1500, [profile]);
+  const baselineTDEE = useMemo(() => getBaselineTDEE(bmr), [bmr]);
 
   useEffect(() => {
     loadHistory();

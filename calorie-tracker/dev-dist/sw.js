@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-959db468'], (function (workbox) { 'use strict';
+define(['./workbox-3f1afc6c'], (function (workbox) { 'use strict';
 
   self.addEventListener('message', event => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
@@ -85,15 +85,16 @@ define(['./workbox-959db468'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "/index.html",
-    "revision": "0.3h7epmhg7r4"
+    "revision": "0.u64k924vbsg"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/index.html"), {
     allowlist: [/^\/$/],
     denylist: [/^\/blog/]
   }));
-  workbox.registerRoute(/^https:\/\/world\.openfoodfacts\.org\/.*/i, new workbox.CacheFirst({
+  workbox.registerRoute(/^https:\/\/world\.openfoodfacts\.org\/.*/i, new workbox.NetworkFirst({
     "cacheName": "openfoodfacts-cache",
+    "networkTimeoutSeconds": 10,
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 100,
       maxAgeSeconds: 604800

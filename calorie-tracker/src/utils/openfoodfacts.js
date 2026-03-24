@@ -31,11 +31,16 @@ export async function searchFoods(query, signal = null) {
   try {
     const response = await fetch(
       `${API_BASE}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&page_size=20&json=true&fields=product_name,nutriments,serving_size,brands,code`,
-      { signal } // Support AbortController for request cancellation (reduces INP)
+      {
+        signal,
+        headers: {
+          'User-Agent': 'FreeCalorieTrack - Web App - Version 1.5.0'
+        }
+      }
     );
 
     if (!response.ok) {
-      throw new Error('Search failed');
+      throw new Error(`Search failed with status ${response.status}`);
     }
 
     const data = await validateAndParseResponse(response);
@@ -80,7 +85,7 @@ export async function searchFoods(query, signal = null) {
     }).filter(food => food.calories > 0);
   } catch (error) {
     console.error('Error searching foods:', error);
-    return [];
+    throw error; // Re-throw so FoodSearch can handle it
   }
 }
 
@@ -88,7 +93,12 @@ export async function getFoodByBarcode(barcode, signal = null) {
   try {
     const response = await fetch(
       `${API_BASE}/api/v0/product/${barcode}.json`,
-      { signal } // Support AbortController for request cancellation
+      {
+        signal,
+        headers: {
+          'User-Agent': 'FreeCalorieTrack - Web App - Version 1.5.0'
+        }
+      }
     );
 
     if (!response.ok) {
