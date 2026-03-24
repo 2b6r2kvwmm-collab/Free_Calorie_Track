@@ -1,0 +1,21 @@
+# Blog Astro Project Rules
+
+## CRITICAL: Blog Post Creation
+
+**BEFORE creating ANY blog post, you MUST:**
+
+1. **Read `/blog-astro/BLOG_POST_CHECKLIST.md`** - Contains critical SEO limits
+2. **Verify character counts:**
+   - Title: ≤60 characters
+   - Description: 150-160 characters (max 160)
+3. **Choose category:** "Guides", "Gear Reviews", or "Calculators"
+
+**This is non-negotiable. Titles/descriptions that exceed limits harm SEO and get truncated in search results.**
+
+## Quick Reference
+
+- Title max: 60 chars
+- Description target: 150-160 chars
+- Category: Required field in frontmatter
+
+See `BLOG_POST_CHECKLIST.md` for validation steps and examples.

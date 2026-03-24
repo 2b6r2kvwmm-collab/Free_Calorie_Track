@@ -4,6 +4,18 @@
 
 ---
 
+## ⚠️ Creating Blog Posts?
+
+**READ THIS FIRST:** [`BLOG_POST_CHECKLIST.md`](./BLOG_POST_CHECKLIST.md)
+
+Critical SEO limits:
+- **Title: Max 60 characters**
+- **Description: 150-160 characters**
+
+Verify character counts BEFORE creating posts. See checklist for validation steps.
+
+---
+
 ## Purpose
 
 This blog provides nutrition, fitness, and gear review content for Free Calorie Track. It uses Astro to generate static HTML pages with proper meta tags and Open Graph data for optimal SEO performance.
