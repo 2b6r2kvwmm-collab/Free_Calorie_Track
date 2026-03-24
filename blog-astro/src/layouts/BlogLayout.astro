@@ -53,6 +53,12 @@ const canonicalURL = new URL(pathname, Astro.site);
     }
   </script>
 
+  <!-- Vercel Analytics -->
+  <script>
+    import { inject } from '@vercel/analytics';
+    inject();
+  </script>
+
 </head>
 <body class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
   <!-- Skip to main content link for keyboard navigation -->

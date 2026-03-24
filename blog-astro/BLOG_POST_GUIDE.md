@@ -667,6 +667,119 @@ All automatic via frontmatter:
 
 ---
 
+## Blog Post Filtering & Categories
+
+### How Categories Work
+
+Blog posts are automatically categorized for the filter UI on `/blog` based on **slug patterns**. The categorization logic is in `/src/pages/blog/index.astro`.
+
+**Three main categories:**
+
+1. **Guides** (Default)
+   - Educational content, how-to articles, nutrition guides
+   - Examples: what-are-calories, high-protein-low-calorie-foods, how-to-use-a-food-scale
+
+2. **Gear Reviews**
+   - Product reviews and equipment recommendations
+   - Examples: best-adjustable-dumbbells, breville-barista-express-review, zelus-weighted-vest-review
+
+3. **Calculators**
+   - Interactive tools, calculation guides, and measurement articles
+   - Examples: tdee-calculator, macro-calculator-guide, bmi-vs-ffmi
+
+### Categorization Rules
+
+Posts are categorized based on **slug keyword matching**:
+
+```javascript
+// Gear Reviews: slug contains any of these
+if (slug.includes('dumbbells') ||
+    slug.includes('blender') ||
+    slug.includes('review')) {
+  category = 'Gear Reviews';
+}
+
+// Calculators: slug contains any of these
+else if (slug.includes('calculator') ||
+         slug.includes('tdee') ||
+         slug.includes('bmi') ||
+         slug.includes('ffmi')) {
+  category = 'Calculators';
+}
+
+// Everything else defaults to Guides
+else {
+  category = 'Guides';
+}
+```
+
+### Adding New Posts
+
+**When creating a new post, choose a slug that matches your intended category:**
+
+**For Gear Reviews:**
+- Include 'review' in the slug: `product-name-review.md`
+- Or use specific gear keywords: `best-dumbbells-*.md`, `*-blender-*.md`
+- Examples: `breville-barista-express-review.md`, `zelus-weighted-vest-review.md`
+
+**For Calculators:**
+- Include 'calculator' in the slug: `*-calculator-*.md`
+- Or use measurement keywords: `tdee`, `bmi`, `ffmi`
+- Examples: `macro-calculator-guide.md`, `bmi-vs-ffmi.mdx`
+
+**For Guides:**
+- Use any other slug - these default to Guides
+- Examples: `what-are-calories.md`, `how-to-use-a-food-scale.md`
+
+### Updating Categorization Logic
+
+**Location:** `/src/pages/blog/index.astro` (lines 10-40)
+
+If you add a new type of content that doesn't fit the existing patterns:
+
+1. **Add the keyword pattern** to the categorization logic
+2. **Assign an emoji** for visual distinction
+3. **Update this documentation**
+
+**Example - Adding a new pattern:**
+
+```javascript
+// In /src/pages/blog/index.astro
+
+if (slug.includes('dumbbells') || slug.includes('blender') || slug.includes('review')) {
+  category = 'Gear Reviews';
+  if (slug.includes('vest')) {
+    emoji = '🎒';  // Custom emoji for vest reviews
+  }
+}
+```
+
+### Testing Filters
+
+After adding a new post:
+
+1. **Run dev server:** `npm run dev`
+2. **Visit:** `http://localhost:4321/blog`
+3. **Click each filter button** (All, Guides, Gear Reviews, Calculators)
+4. **Verify your post** appears in the correct category
+
+### Common Issues
+
+**Post not showing in expected category:**
+- Check the slug contains the correct keyword
+- Look at the categorization logic in `/src/pages/blog/index.astro`
+- If needed, rename the file or update the logic
+
+**Post showing in multiple categories:**
+- Not possible - each post has exactly one category
+- First matching pattern wins (check order in if/else chain)
+
+**Filter button not working:**
+- Check the `data-category` attribute on post cards matches button values
+- JavaScript reads these attributes to show/hide posts
+
+---
+
 ## Troubleshooting
 
 ### Images not showing
