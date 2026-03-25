@@ -500,104 +500,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
               </button>
             </div>
           </div>
-
-          {/* Pregnancy/Breastfeeding - Only shown for female */}
-          {formData.sex === 'female' && (
-            <div className="p-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border-2 border-purple-200 dark:border-purple-800">
-              <label className="block text-lg font-semibold mb-3">Pregnancy & Breastfeeding</label>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                Adjusts your calorie and protein goals based on evidence-based guidelines.
-              </p>
-
-              {/* Status Selection */}
-              <select
-                value={formData.reproductiveStatus}
-                onChange={(e) => {
-                  updateField('reproductiveStatus', e.target.value);
-                  // Clear dates when status changes
-                  if (e.target.value === 'none') {
-                    updateField('dueDate', '');
-                    updateField('manualTrimester', '');
-                  }
-                }}
-                className="input-field mb-4"
-              >
-                <option value="none">Not applicable</option>
-                <option value="pregnant">Pregnant</option>
-                <option value="breastfeeding-exclusive">Breastfeeding (exclusive)</option>
-                <option value="breastfeeding-partial">Breastfeeding (partial)</option>
-              </select>
-
-              {/* Pregnancy Options */}
-              {formData.reproductiveStatus === 'pregnant' && (
-                <div className="space-y-4 pl-3 border-l-2 border-purple-300 dark:border-purple-700">
-                  <div>
-                    <label className="block text-sm font-semibold mb-2">
-                      Due Date (optional - enables automatic trimester calculation)
-                    </label>
-                    <input
-                      type="date"
-                      value={formData.dueDate}
-                      onChange={(e) => updateField('dueDate', e.target.value)}
-                      className="input-field"
-                      max={new Date(Date.now() + 280 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
-                    />
-                    {formData.dueDate && (() => {
-                      const trimester = getCurrentTrimester(formData.dueDate);
-                      const weeks = getWeeksPregnant(formData.dueDate);
-
-                      // Show warning if past due date (postpartum status)
-                      if (trimester === 'postpartum') {
-                        const dueDate = new Date(formData.dueDate);
-                        const today = new Date();
-                        const daysOverdue = Math.floor((today - dueDate) / (1000 * 60 * 60 * 24));
-
-                        return (
-                          <div className="mt-2 p-3 bg-orange-100 dark:bg-orange-900/20 rounded border border-orange-300 dark:border-orange-700">
-                            <p className="text-sm font-semibold text-orange-800 dark:text-orange-300">
-                              ⚠️ Past due date ({daysOverdue > 0 ? `${daysOverdue} days ago` : 'today'})
-                            </p>
-                            <p className="text-xs text-orange-700 dark:text-orange-400 mt-1">
-                              Once you've delivered, update to "Breastfeeding" if applicable, or "Not applicable" if formula feeding.
-                            </p>
-                          </div>
-                        );
-                      }
-
-                      return (
-                        <p className="text-sm text-purple-600 dark:text-purple-400 mt-2">
-                          📅 {weeks} weeks pregnant ({trimester === 'first-trimester' ? '1st' : trimester === 'second-trimester' ? '2nd' : '3rd'} trimester)
-                        </p>
-                      );
-                    })()}
-                  </div>
-
-                  {/* Manual Trimester - only show if no due date */}
-                  {!formData.dueDate && (
-                    <div>
-                      <label className="block text-sm font-semibold mb-2">Or select trimester manually</label>
-                      <select
-                        value={formData.manualTrimester}
-                        onChange={(e) => updateField('manualTrimester', e.target.value)}
-                        className="input-field"
-                      >
-                        <option value="">Select trimester...</option>
-                        <option value="first-trimester">1st Trimester (weeks 1-12)</option>
-                        <option value="second-trimester">2nd Trimester (weeks 13-26)</option>
-                        <option value="third-trimester">3rd Trimester (weeks 27-40)</option>
-                      </select>
-                    </div>
-                  )}
-                </div>
-              )}
-
-
-              {/* Medical Disclaimer */}
-              <div className="mt-4 p-3 bg-white dark:bg-gray-800 rounded text-xs text-gray-600 dark:text-gray-400">
-                ⚕️ These are general guidelines. Individual needs vary. Consult your healthcare provider for personalized nutrition recommendations.
-              </div>
-            </div>
-          )}
           </div>
 
           {/* SECTION: Physical Measurements */}
@@ -642,6 +544,108 @@ export default function Settings({ onUpdateProfile, onClose }) {
             />
           </div>
           </div>
+
+          {/* SECTION: Pregnancy & Breastfeeding - Only shown for female */}
+          {formData.sex === 'female' && (
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 border-b-2 border-gray-200 dark:border-gray-700 pb-2">
+                Pregnancy & Breastfeeding
+              </h3>
+
+              <div className="p-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg border-2 border-purple-200 dark:border-purple-800">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  Adjusts your calorie and protein goals based on evidence-based guidelines.
+                </p>
+
+                {/* Status Selection */}
+                <select
+                  value={formData.reproductiveStatus}
+                  onChange={(e) => {
+                    updateField('reproductiveStatus', e.target.value);
+                    // Clear dates when status changes
+                    if (e.target.value === 'none') {
+                      updateField('dueDate', '');
+                      updateField('manualTrimester', '');
+                    }
+                  }}
+                  className="input-field mb-4"
+                >
+                  <option value="none">Not applicable</option>
+                  <option value="pregnant">Pregnant</option>
+                  <option value="breastfeeding-exclusive">Breastfeeding (exclusive)</option>
+                  <option value="breastfeeding-partial">Breastfeeding (partial)</option>
+                </select>
+
+                {/* Pregnancy Options */}
+                {formData.reproductiveStatus === 'pregnant' && (
+                  <div className="space-y-4 pl-3 border-l-2 border-purple-300 dark:border-purple-700">
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">
+                        Due Date (optional - enables automatic trimester calculation)
+                      </label>
+                      <input
+                        type="date"
+                        value={formData.dueDate}
+                        onChange={(e) => updateField('dueDate', e.target.value)}
+                        className="input-field"
+                        max={new Date(Date.now() + 280 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                      />
+                      {formData.dueDate && (() => {
+                        const trimester = getCurrentTrimester(formData.dueDate);
+                        const weeks = getWeeksPregnant(formData.dueDate);
+
+                        // Show warning if past due date (postpartum status)
+                        if (trimester === 'postpartum') {
+                          const dueDate = new Date(formData.dueDate);
+                          const today = new Date();
+                          const daysOverdue = Math.floor((today - dueDate) / (1000 * 60 * 60 * 24));
+
+                          return (
+                            <div className="mt-2 p-3 bg-orange-100 dark:bg-orange-900/20 rounded border border-orange-300 dark:border-orange-700">
+                              <p className="text-sm font-semibold text-orange-800 dark:text-orange-300">
+                                ⚠️ Past due date ({daysOverdue > 0 ? `${daysOverdue} days ago` : 'today'})
+                              </p>
+                              <p className="text-xs text-orange-700 dark:text-orange-400 mt-1">
+                                Once you've delivered, update to "Breastfeeding" if applicable, or "Not applicable" if formula feeding.
+                              </p>
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <p className="text-sm text-purple-600 dark:text-purple-400 mt-2">
+                            📅 {weeks} weeks pregnant ({trimester === 'first-trimester' ? '1st' : trimester === 'second-trimester' ? '2nd' : '3rd'} trimester)
+                          </p>
+                        );
+                      })()}
+                    </div>
+
+                    {/* Manual Trimester - only show if no due date */}
+                    {!formData.dueDate && (
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">Or select trimester manually</label>
+                        <select
+                          value={formData.manualTrimester}
+                          onChange={(e) => updateField('manualTrimester', e.target.value)}
+                          className="input-field"
+                        >
+                          <option value="">Select trimester...</option>
+                          <option value="first-trimester">1st Trimester (weeks 1-12)</option>
+                          <option value="second-trimester">2nd Trimester (weeks 13-26)</option>
+                          <option value="third-trimester">3rd Trimester (weeks 27-40)</option>
+                        </select>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Medical Disclaimer */}
+                <div className="mt-4 p-3 bg-white dark:bg-gray-800 rounded text-xs text-gray-600 dark:text-gray-400">
+                  ⚕️ These are general guidelines. Individual needs vary. Consult your healthcare provider for personalized nutrition recommendations.
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* SECTION: Activity & Goals */}
           <div className="space-y-6">
