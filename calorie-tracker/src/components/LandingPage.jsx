@@ -362,7 +362,7 @@ export default function LandingPage({ onGetStarted }) {
           <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
             {/* Left: Text */}
             <div className="flex-1 text-center md:text-left max-w-xl">
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">Best Free Calorie Counter & Tracker</h1>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The Best Free Calorie Counter & Macro Tracker</h1>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 Count calories, track macros and protein with <span className="font-bold text-emerald-600 dark:text-emerald-400">no subscription fees, ads, or accounts.</span>
               </p>
