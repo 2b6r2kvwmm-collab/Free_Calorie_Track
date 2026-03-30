@@ -339,8 +339,19 @@
   </head>
   <body>
     <div id="root">
-      <!-- Static H1 for crawlers that don't execute JavaScript. React will replace this entire div on mount. -->
-      <h1 style="position: absolute; left: -9999px;">The #1 Free Calorie Counter and Tracker</h1>
+      <!-- Static content for crawlers that don't execute JavaScript. React will replace this entire div on mount. -->
+      <div style="max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; text-align: center;">
+        <h1 style="font-size: 2.5rem; font-weight: 700; color: #10b981; margin-bottom: 1rem;">
+          Free Calorie Track
+        </h1>
+        <p style="font-size: 1.125rem; color: #374151; margin-bottom: 2rem;">
+          The #1 Free Calorie Counter and Tracker - No Subscription Required
+        </p>
+        <p style="color: #6b7280;">
+          Track calories, macros, and exercise with our free calorie counter. Features barcode scanning,
+          macro tracking, exercise logging, and more. No ads, no paywalls, no subscription fees.
+        </p>
+      </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>
 

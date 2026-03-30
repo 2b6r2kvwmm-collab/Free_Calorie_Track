@@ -18,6 +18,12 @@ export default defineConfig({
     }),
     react(),
     mdx(),
-    sitemap()
+    sitemap({
+      customPages: [
+        'https://freecalorietrack.com/trends',
+        'https://freecalorietrack.com/history',
+        'https://freecalorietrack.com/settings'
+      ]
+    })
   ]
 });
