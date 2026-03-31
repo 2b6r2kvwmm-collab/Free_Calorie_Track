@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { searchFoods } from '../utils/openfoodfacts';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
-import { useDebounce } from '../hooks/useDebounce';
 
 export default function FoodSearch({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -13,9 +12,6 @@ export default function FoodSearch({ onAddFood, onClose }) {
   const [error, setError] = useState(null);
   const scrollRef = useRef(null);
   const abortControllerRef = useRef(null);
-
-  // Debounce query to reduce INP during typing
-  const debouncedQuery = useDebounce(query, 300);
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -32,9 +28,19 @@ export default function FoodSearch({ onAddFood, onClose }) {
     }
   }, [results, searched]);
 
-  // Auto-search when debounced query changes (improves UX and reduces INP)
+  // Cleanup: abort search on unmount
   useEffect(() => {
-    if (!debouncedQuery.trim()) {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+
+    if (!query.trim()) {
       setResults([]);
       setSearched(false);
       setError(null);
@@ -46,40 +52,24 @@ export default function FoodSearch({ onAddFood, onClose }) {
       abortControllerRef.current.abort();
     }
 
-    const performSearch = async () => {
-      abortControllerRef.current = new AbortController();
-      setLoading(true);
-      setSearched(true);
+    abortControllerRef.current = new AbortController();
+    setLoading(true);
+    setSearched(true);
+    setError(null);
+
+    try {
+      const foods = await searchFoods(query.trim(), abortControllerRef.current.signal);
+      setResults(foods);
       setError(null);
-
-      try {
-        const foods = await searchFoods(debouncedQuery, abortControllerRef.current.signal);
-        setResults(foods);
-        setError(null);
-      } catch (error) {
-        if (error.name !== 'AbortError') {
-          console.error('Search failed:', error);
-          setResults([]);
-          setError('The food database is temporarily unavailable. Please try again later or use Quick Add instead.');
-        }
-      } finally {
-        setLoading(false);
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        console.error('Search failed:', error);
+        setResults([]);
+        setError('The food database is temporarily unavailable. Please try again later or use Common Foods, Barcode Scanner, or Quick Add instead.');
       }
-    };
-
-    performSearch();
-
-    // Cleanup: abort on unmount
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, [debouncedQuery]);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    // Search now handled by useEffect with debounced query
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleAddFood = (food) => {
