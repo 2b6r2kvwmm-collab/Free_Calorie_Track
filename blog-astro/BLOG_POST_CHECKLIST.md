@@ -37,6 +37,54 @@ Choose ONE:
 - `"Gear Reviews"` - Product reviews
 - `"Calculators"` - Tools, calculations
 
+## After Publishing Checklist
+
+Once your blog post is created, **you MUST update these files:**
+
+### 1. Add to Sitemap (CRITICAL for SEO)
+
+**File:** `/calorie-tracker/public/sitemap.xml`
+
+Add entry before the closing `</urlset>` tag:
+
+```xml
+<url>
+  <loc>https://freecalorietrack.com/blog/your-post-slug</loc>
+  <priority>0.8</priority>  <!-- Use 0.85 for Gear Reviews -->
+  <changefreq>monthly</changefreq>
+</url>
+```
+
+**Priority values:**
+- `0.85` - Gear Reviews (affiliate revenue potential)
+- `0.8` - Guides and Calculators
+
+**⚠️ If you skip this step, your post will NOT appear in search engines!**
+
+### 2. Verify Schema Markup (Automatic)
+
+The following are automatically added by `BlogLayout.astro`:
+- ✅ Article schema (headline, author, dates, publisher)
+- ✅ Open Graph tags (og:title, og:description, og:image, og:site_name)
+- ✅ Twitter Cards
+- ✅ Canonical URLs
+
+**No action needed** - just verify by viewing page source after build.
+
+### 3. Test Build
+
+```bash
+npm run build
+npm run preview
+```
+
+Visit `http://localhost:4321/blog/your-post-slug` and verify:
+- Meta tags show correct title/description (View Source)
+- Image appears in header
+- Dark mode works
+- All links work
+- Schema appears in page source (search for `application/ld+json`)
+
 ## Common Mistakes to Avoid
 
 ❌ "The Complete Guide to Rucking and Weighted Vest Training" (59 chars - barely fits)

@@ -167,12 +167,26 @@ This script runs before the page renders to prevent flashing.
    cp image.webp public/images/blog/
    ```
 
-5. **Test locally:**
-   ```bash
-   npm run dev
+5. **Add to sitemap (CRITICAL):**
+
+   Edit `/calorie-tracker/public/sitemap.xml` and add your post:
+   ```xml
+   <url>
+     <loc>https://freecalorietrack.com/blog/new-article-slug</loc>
+     <priority>0.8</priority>  <!-- Use 0.85 for Gear Reviews -->
+     <changefreq>monthly</changefreq>
+   </url>
    ```
 
-6. **Build and deploy:**
+   **⚠️ Without this, your post won't appear in search engines!**
+
+6. **Test locally:**
+   ```bash
+   npm run dev
+   # Visit http://localhost:4321/blog/new-article-slug
+   ```
+
+7. **Build and deploy:**
    ```bash
    cd ..
    ./build-all.sh
@@ -228,13 +242,17 @@ See `/shared/README.md` and `/.ai-context.md` for details.
 ## SEO Features
 
 - ✅ Static HTML with meta tags pre-rendered
-- ✅ Open Graph tags for social sharing
-- ✅ Twitter Card support
-- ✅ Canonical URLs
+- ✅ **Article schema** (JSON-LD structured data for rich snippets)
+- ✅ **ItemList schema** on blog index (shows all articles in search)
+- ✅ Open Graph tags for social sharing (title, description, image, site_name)
+- ✅ Twitter Card support (summary_large_image)
+- ✅ Canonical URLs (no duplicate content)
+- ✅ article:published_time meta tags (freshness signals)
 - ✅ Semantic HTML (proper headings, article structure)
 - ✅ Fast page loads (static HTML, no JS hydration)
 - ✅ Mobile-responsive
 - ✅ Dark mode support
+- ✅ Comprehensive sitemap with priority values
 
 ---
 
