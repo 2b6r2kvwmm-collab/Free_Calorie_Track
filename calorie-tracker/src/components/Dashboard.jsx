@@ -967,7 +967,7 @@ export default function Dashboard({ onRefresh }) {
           <div className="card text-center">
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
             <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-              +{caloriesEaten}
+              {caloriesEaten === 0 ? '0' : `+${caloriesEaten}`}
             </div>
           </div>
 
@@ -981,7 +981,7 @@ export default function Dashboard({ onRefresh }) {
           <div className="card text-center">
             <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
             <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-              -{exerciseBurned}
+              {exerciseBurned === 0 ? '0' : `-${exerciseBurned}`}
             </div>
           </div>
         </div>

@@ -189,20 +189,11 @@ export default function FoodSearch({ onAddFood, onClose }) {
           </div>
 
           {/* Rate limit status */}
-          <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            {rateLimitRemaining === 0 ? (
-              <div className="flex items-center gap-2 text-orange-600 dark:text-orange-400 font-semibold">
-                <span>⏳ Rate limit reached. Please wait {countdown}s</span>
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                <span>Searches remaining: {rateLimitRemaining}/{RATE_LIMIT}</span>
-                {rateLimitRemaining <= 3 && rateLimitRemaining > 0 && (
-                  <span className="text-orange-600 dark:text-orange-400">(limit resets in 60s)</span>
-                )}
-              </div>
-            )}
-          </div>
+          {rateLimitRemaining === 0 && (
+            <div className="mt-2 text-sm text-orange-600 dark:text-orange-400 font-semibold">
+              <span>⏳ Rate limit reached. Please wait {countdown}s</span>
+            </div>
+          )}
         </form>
 
         {loading && (
