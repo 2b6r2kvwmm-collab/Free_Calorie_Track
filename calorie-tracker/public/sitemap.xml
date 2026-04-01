@@ -113,4 +113,19 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/calorie-app-privacy</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/rucking-guide-weighted-vest-training</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://freecalorietrack.com/blog/zelus-weighted-vest-review</loc>
+    <priority>0.85</priority>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

@@ -23,7 +23,7 @@ const postsWithMeta = blogEntries.map(entry => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog - Guides, Calculators & Gear Reviews - Free Calorie Track</title>
   <meta name="description" content="Free guides on calorie tracking, macros, TDEE, and honest reviews of fitness gear including blenders and adjustable dumbbells.">
-  <link rel="canonical" href="https://freecalorietrack.com/blog/">
+  <link rel="canonical" href="https://freecalorietrack.com/blog">
 
   <!-- Favicon - FCT logo -->
   <link rel="icon" href="/favicon.ico?v=6">
@@ -33,7 +33,9 @@ const postsWithMeta = blogEntries.map(entry => {
   <meta property="og:type" content="website">
   <meta property="og:title" content="Blog - Free Calorie Track">
   <meta property="og:description" content="Free guides on calorie tracking, macros, TDEE, and honest reviews of fitness gear.">
-  <meta property="og:url" content="https://freecalorietrack.com/blog/">
+  <meta property="og:url" content="https://freecalorietrack.com/blog">
+  <meta property="og:image" content="https://freecalorietrack.com/screenshot.png">
+  <meta property="og:site_name" content="Free Calorie Track">
 
   <!-- Fonts - match main app -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +48,26 @@ const postsWithMeta = blogEntries.map(entry => {
       document.documentElement.classList.add('dark');
     }
   </script>
+
+  <!-- ItemList Schema for Blog Posts -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": postsWithMeta.map((post, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Article",
+        "headline": post.data.title,
+        "description": post.data.description,
+        "url": `https://freecalorietrack.com/blog/${post.slug}`,
+        "datePublished": post.data.pubDate.toISOString(),
+        ...(post.data.image && {
+          "image": `https://freecalorietrack.com${post.data.image}`
+        })
+      }
+    }))
+  })} />
 
 </head>
 <body class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
