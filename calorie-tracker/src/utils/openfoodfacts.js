@@ -29,8 +29,9 @@ async function validateAndParseResponse(response) {
 
 export async function searchFoods(query, signal = null) {
   try {
+    // Use API v2 (v1 is currently unavailable)
     const response = await fetch(
-      `${API_BASE}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&page_size=20&json=true&fields=product_name,nutriments,serving_size,brands,code`,
+      `${API_BASE}/api/v2/search?query=${encodeURIComponent(query)}&page_size=20&fields=product_name,nutriments,serving_size,brands,code`,
       {
         signal,
         headers: {
@@ -40,10 +41,24 @@ export async function searchFoods(query, signal = null) {
     );
 
     if (!response.ok) {
+      console.error(`Open Food Facts API returned status ${response.status}`);
+      console.error('Response headers:', Object.fromEntries(response.headers.entries()));
+
+      if (response.status === 403) {
+        throw new Error(`Rate limit reached (403). You've searched too many times.`);
+      }
+      if (response.status === 503) {
+        throw new Error(`Open Food Facts API is temporarily unavailable (503). Server is down.`);
+      }
       throw new Error(`Search failed with status ${response.status}`);
     }
 
     const data = await validateAndParseResponse(response);
+
+    if (!data || !Array.isArray(data.products)) {
+      console.error('Invalid API response structure:', data);
+      throw new Error('Invalid API response');
+    }
 
     return data.products.map(product => {
       const nutriments = product.nutriments || {};

@@ -129,17 +129,21 @@ export default function FoodSearch({ onAddFood, onClose }) {
         console.error('Error name:', error.name);
         setResults([]);
 
-        // Check if it's a network/CORS error or 503 (likely API issue or IP ban)
-        // When IP banned, CORS preflight fails and throws network errors like "Failed to fetch"
+        // Check error type and show appropriate message
+        const is403 = error.message && error.message.includes('403');
+        const is503 = error.message && error.message.includes('503');
         const isNetworkError = error.message && (
-          error.message.includes('503') ||
           error.message.includes('Failed to fetch') ||
           error.message.includes('NetworkError') ||
           error.message.includes('Load failed') ||
           error.name === 'TypeError'
         );
 
-        if (isNetworkError) {
+        if (is403) {
+          setError('Food database rate limit reached. Your searches may be temporarily restricted. Please wait a few minutes and try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+        } else if (is503) {
+          setError('Food database is currently down (503). Please use Common Foods (1,400+ items), Barcode Scanner, or Quick Add. We apologize for the inconvenience.');
+        } else if (isNetworkError) {
           setError('Food database is currently unavailable. We\'re working on resolving this issue. In the meantime, please use Common Foods (1,400+ items), Barcode Scanner, or Quick Add. We apologize for the inconvenience.');
         } else {
           setError('Search failed. We\'re working on resolving this issue. In the meantime, please use Common Foods (1,400+ items), Barcode Scanner, or Quick Add instead.');
