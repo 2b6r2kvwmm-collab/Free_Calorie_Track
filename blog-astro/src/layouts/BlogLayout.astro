@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { footerContent } from '../../../shared/footer-content.js';
+import { schemaData } from './schemaData';
 
 interface Props {
   title: string;
@@ -13,6 +14,10 @@ const { title, description, pubDate, image } = Astro.props;
 // Ensure canonical URL never has trailing slash for consistency
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 const canonicalURL = new URL(pathname, Astro.site);
+
+// Extract slug from pathname for schema lookup
+const slug = pathname.split('/').filter(Boolean).pop() || '';
+const postSchemaData = schemaData[slug];
 ---
 
 <!DOCTYPE html>
@@ -90,6 +95,89 @@ const canonicalURL = new URL(pathname, Astro.site);
         "@type": "WebPage",
         "@id": canonicalURL.toString()
       }
+    })} />
+  )}
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://freecalorietrack.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://freecalorietrack.com/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title,
+        "item": canonicalURL.toString()
+      }
+    ]
+  })} />
+
+  <!-- Review Schema (for gear reviews) -->
+  {postSchemaData && postSchemaData.type === 'Review' && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Review",
+      "itemReviewed": {
+        "@type": "Product",
+        "name": postSchemaData.itemReviewed.name,
+        "description": postSchemaData.itemReviewed.description
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": postSchemaData.reviewRating.ratingValue,
+        "bestRating": postSchemaData.reviewRating.bestRating
+      },
+      "author": {
+        "@type": postSchemaData.author.type,
+        "name": postSchemaData.author.name
+      },
+      "reviewBody": postSchemaData.reviewBody,
+      ...(pubDate && { "datePublished": pubDate.toISOString() })
+    })} />
+  )}
+
+  <!-- HowTo Schema (for guides) -->
+  {postSchemaData && postSchemaData.type === 'HowTo' && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": postSchemaData.name,
+      "description": postSchemaData.description,
+      ...(image && { "image": new URL(image, Astro.site).toString() }),
+      "step": postSchemaData.step.map((step, index) => ({
+        "@type": "HowToStep",
+        "position": index + 1,
+        "name": step.name,
+        "text": step.text
+      }))
+    })} />
+  )}
+
+  <!-- FAQ Schema (for FAQ pages) -->
+  {postSchemaData && postSchemaData.type === 'FAQPage' && (
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": postSchemaData.mainEntity.map((item) => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
     })} />
   )}
 

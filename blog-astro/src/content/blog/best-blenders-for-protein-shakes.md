@@ -11,7 +11,7 @@ image: "/images/blog/nutribullet-pro-900.webp"
   <strong>Affiliate Disclosure:</strong> This post contains affiliate links. If you purchase through these links, Free Calorie Track may earn a small commission at no extra cost to you. I only recommend products I genuinely use and love.
 </div>
 
-![NutriBullet Pro 900 blender](/images/blog/nutribullet-pro-900.webp)
+<img src="/images/blog/nutribullet-pro-900.webp" alt="NutriBullet Pro 900 blender" width="1600" height="893" />
 
 <p class="text-xs text-gray-500 dark:text-gray-500 italic mb-8 text-center">
   Product images were staged using AI for visual presentation purposes.

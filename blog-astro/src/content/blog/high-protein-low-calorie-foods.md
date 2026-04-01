@@ -7,7 +7,7 @@ category: "Guides"
 image: "/images/blog/high-protein-foods.webp"
 ---
 
-![High protein low calorie foods](/images/blog/high-protein-foods.webp)
+<img src="/images/blog/high-protein-foods.webp" alt="High protein low calorie foods" width="1600" height="893" />
 
 <div class="text-center my-8 p-6 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 rounded-xl border-2 border-emerald-500">
   <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3">📊 Track your protein intake automatically</h3>

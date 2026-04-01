@@ -194,6 +194,110 @@ This script runs before the page renders to prevent flashing.
 
 ---
 
+## Adding Schema Data for New Posts
+
+Schema markup helps search engines understand your content and can enable rich snippets in search results. Schema data is defined in `/src/layouts/schemaData.ts` and automatically rendered in BlogLayout.astro.
+
+### When to Add Schema
+
+**Gear Reviews** → Add Review schema
+**How-To Guides** → Add HowTo schema
+**FAQ Pages** → Add FAQ schema
+**All Posts** → Breadcrumb schema is automatic (no action needed)
+
+### Adding Review Schema (Gear Reviews)
+
+1. Open `/src/layouts/schemaData.ts`
+2. Add a new entry with your post's slug:
+
+```typescript
+'your-product-review-slug': {
+  type: 'Review',
+  itemReviewed: {
+    name: 'Product Name',
+    description: 'Brief product description highlighting key features.'
+  },
+  reviewRating: {
+    ratingValue: 5,  // Your rating (1-5)
+    bestRating: 5
+  },
+  author: {
+    type: 'Organization',
+    name: 'Free Calorie Track'
+  },
+  reviewBody: 'Your overall assessment summary from the article.'
+},
+```
+
+### Adding HowTo Schema (Guides)
+
+1. Open `/src/layouts/schemaData.ts`
+2. Add a new entry with step-by-step instructions:
+
+```typescript
+'your-guide-slug': {
+  type: 'HowTo',
+  name: 'Title of the How-To Guide',
+  description: 'Brief description of what users will learn.',
+  step: [
+    {
+      name: 'Step 1 title',
+      text: 'Detailed instructions for step 1.'
+    },
+    {
+      name: 'Step 2 title',
+      text: 'Detailed instructions for step 2.'
+    }
+    // Add more steps as needed
+  ]
+},
+```
+
+### Adding FAQ Schema
+
+1. Open `/src/layouts/schemaData.ts`
+2. Add a new entry with Q&A pairs:
+
+```typescript
+'your-faq-post-slug': {
+  type: 'FAQPage',
+  mainEntity: [
+    {
+      question: 'Your question here?',
+      answer: 'Complete answer with all relevant details.'
+    },
+    {
+      question: 'Another question?',
+      answer: 'Complete answer.'
+    }
+    // Add more Q&A pairs as needed
+  ]
+},
+```
+
+### Testing Schema
+
+After adding schema data:
+
+1. **Build locally:**
+   ```bash
+   npm run build
+   ```
+
+2. **Check generated HTML:**
+   ```bash
+   grep -A 20 '"@type":"Review"' dist/blog/your-slug/index.html
+   ```
+
+3. **Validate with Google Rich Results Test:**
+   - Deploy to staging/production
+   - Test at: https://search.google.com/test/rich-results
+   - Fix any validation errors
+
+**Note:** Schema is only rendered for posts with entries in `schemaData.ts`. Posts without schema data will still render with Article schema and Breadcrumb schema.
+
+---
+
 ## Deployment
 
 The blog is deployed alongside the main app using the root `/build-all.sh` script:
@@ -244,6 +348,10 @@ See `/shared/README.md` and `/.ai-context.md` for details.
 - ✅ Static HTML with meta tags pre-rendered
 - ✅ **Article schema** (JSON-LD structured data for rich snippets)
 - ✅ **ItemList schema** on blog index (shows all articles in search)
+- ✅ **Breadcrumb schema** on all posts (navigation hierarchy)
+- ✅ **Review schema** on gear reviews (product ratings, rich snippets)
+- ✅ **HowTo schema** on guides (step-by-step instructions)
+- ✅ **FAQ schema** on FAQ pages (questions and answers)
 - ✅ Open Graph tags for social sharing (title, description, image, site_name)
 - ✅ Twitter Card support (summary_large_image)
 - ✅ Canonical URLs (no duplicate content)

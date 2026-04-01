@@ -7,7 +7,7 @@ category: "Guides"
 image: "/images/blog/fct-features.webp"
 ---
 
-![Free calorie tracker app](/images/blog/fct-features.webp)
+<img src="/images/blog/fct-features.webp" alt="Free calorie tracker app" width="1600" height="893" />
 
 <div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
   <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 Why Free Calorie Track?</h3>

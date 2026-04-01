@@ -7,7 +7,7 @@ category: "Gear Reviews"
 image: "/images/blog/breville-barista-express.webp"
 ---
 
-![Breville Barista Express espresso machine](/images/blog/breville-barista-express.webp)
+<img src="/images/blog/breville-barista-express.webp" alt="Breville Barista Express espresso machine" width="1600" height="893" />
 
 <p class="text-xs text-gray-500 dark:text-gray-500 italic mb-8 text-center">
   Product images were staged using AI for visual presentation purposes.

@@ -11,7 +11,7 @@ image: "/images/blog/core-fitness-dumbbells.webp"
   <strong>Affiliate Disclosure:</strong> This post contains affiliate links. If you purchase through these links, Free Calorie Track may earn a small commission at no extra cost to you. I only recommend products I genuinely use and love.
 </div>
 
-![Core Fitness adjustable dumbbells](/images/blog/core-fitness-dumbbells.webp)
+<img src="/images/blog/core-fitness-dumbbells.webp" alt="Core Fitness adjustable dumbbells" width="1600" height="893" />
 
 <p class="text-xs text-gray-500 dark:text-gray-500 italic mb-8 text-center">
   Product images were staged using AI for visual presentation purposes.
@@ -63,7 +63,7 @@ These start at 5 lbs, which is great for most exercises—but for some movements
 
 ### 3. Max Weight is 50 lbs
 
-These top out at 50 lbs per dumbbell, which is more than enough for beginners and most intermediate lifters. But if you're progressing quickly on heavy compound movements like dumbbell bench press or rows, you'll eventually outgrow them. For advanced lifters who need heavier weights, check out my review of the [best adjustable dumbbells for advanced lifters](/blog/best-adjustable-dumbbells-advanced) (which go up to 80 lbs).
+These top out at 50 lbs per dumbbell, which is more than enough for beginners and most intermediate lifters. But if you're progressing quickly on heavy compound movements like dumbbell bench press or rows, you'll eventually outgrow them. For advanced lifters who need heavier weights, check out my review of the [Nuobell 580 adjustable dumbbells](/blog/best-adjustable-dumbbells-advanced) (which go up to 80 lbs).
 
 ## Who Should Buy These?
 
@@ -104,8 +104,8 @@ Consistency is key to building strength. Free Calorie Track has a built-in exerc
 <div class="grid md:grid-cols-2 gap-4">
   <a href="/blog/best-adjustable-dumbbells-advanced" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">🏋️</div>
-    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Best Adjustable Dumbbells for Advanced Lifters</h4>
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Need more than 50 lbs? Check out these heavy-duty adjustables</p>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Nuobell 580 Review: Best Heavy Adjustable Dumbbells</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Need more than 50 lbs? Check out the Nuobell 580 (up to 80 lbs)</p>
   </a>
   <a href="/blog/macro-calculator-guide" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">🧮</div>

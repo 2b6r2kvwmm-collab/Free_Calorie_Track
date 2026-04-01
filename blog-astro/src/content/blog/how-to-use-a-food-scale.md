@@ -7,7 +7,7 @@ category: "Guides"
 image: "/images/blog/food-scale-guide.webp"
 ---
 
-![How to use a food scale](/images/blog/food-scale-guide.webp)
+<img src="/images/blog/food-scale-guide.webp" alt="How to use a food scale" width="1600" height="893" />
 
 <div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
   <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
