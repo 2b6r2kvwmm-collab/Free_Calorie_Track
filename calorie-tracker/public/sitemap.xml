@@ -16,6 +16,11 @@
 
   <!-- SEO Landing Pages -->
   <url>
+    <loc>https://freecalorietrack.com/calorie-counter</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
     <loc>https://freecalorietrack.com/protein-tracker</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
@@ -55,30 +60,30 @@
     <changefreq>monthly</changefreq>
   </url>
 
-  <!-- Blog Articles - Gear Reviews -->
+  <!-- Blog Articles - Gear Reviews (higher priority due to affiliate revenue) -->
   <url>
     <loc>https://freecalorietrack.com/blog/best-blenders-for-protein-shakes</loc>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://freecalorietrack.com/blog/best-adjustable-dumbbells-beginners</loc>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://freecalorietrack.com/blog/best-adjustable-dumbbells-advanced</loc>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://freecalorietrack.com/blog/breville-barista-express-review</loc>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
     <loc>https://freecalorietrack.com/blog/how-to-use-a-food-scale</loc>
-    <priority>0.7</priority>
+    <priority>0.85</priority>
     <changefreq>monthly</changefreq>
   </url>
 
