@@ -104,7 +104,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
     // Check rate limit before searching
     const canSearch = updateRateLimit();
     if (!canSearch) {
-      setError(`Rate limit reached (10 searches/min). Please wait ${countdown} seconds.`);
+      setError(`Hold on! The food database (not us!) limits searches to 10 per minute to keep their servers happy. Please wait ${countdown} seconds, then search again.`);
       return;
     }
 
@@ -191,7 +191,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
           {/* Rate limit status */}
           {rateLimitRemaining === 0 && (
             <div className="mt-2 text-sm text-orange-600 dark:text-orange-400 font-semibold">
-              <span>⏳ Rate limit reached. Please wait {countdown}s</span>
+              <span>🍕 Food database is on a snack break! Back in {countdown}s</span>
             </div>
           )}
         </form>
