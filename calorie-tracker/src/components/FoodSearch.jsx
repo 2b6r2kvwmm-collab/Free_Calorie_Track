@@ -3,6 +3,10 @@ import { searchFoods } from '../utils/openfoodfacts';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
+// Rate limit tracking (10 searches per minute per Open Food Facts API)
+const RATE_LIMIT = 10;
+const RATE_WINDOW = 60000; // 60 seconds
+
 export default function FoodSearch({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
   const [query, setQuery] = useState('');
@@ -10,8 +14,12 @@ export default function FoodSearch({ onAddFood, onClose }) {
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [error, setError] = useState(null);
+  const [rateLimitRemaining, setRateLimitRemaining] = useState(RATE_LIMIT);
+  const [rateLimitResetTime, setRateLimitResetTime] = useState(null);
+  const [countdown, setCountdown] = useState(0);
   const scrollRef = useRef(null);
   const abortControllerRef = useRef(null);
+  const searchTimestampsRef = useRef([]);
 
   // Lock body scroll when modal opens
   useEffect(() => {
@@ -37,6 +45,52 @@ export default function FoodSearch({ onAddFood, onClose }) {
     };
   }, []);
 
+  // Countdown timer for rate limit reset
+  useEffect(() => {
+    if (!rateLimitResetTime) return;
+
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const timeLeft = Math.max(0, Math.ceil((rateLimitResetTime - now) / 1000));
+      setCountdown(timeLeft);
+
+      if (timeLeft === 0) {
+        // Reset rate limit
+        searchTimestampsRef.current = [];
+        setRateLimitRemaining(RATE_LIMIT);
+        setRateLimitResetTime(null);
+        setCountdown(0);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [rateLimitResetTime]);
+
+  // Update rate limit status
+  const updateRateLimit = () => {
+    const now = Date.now();
+
+    // Remove timestamps older than 1 minute
+    searchTimestampsRef.current = searchTimestampsRef.current.filter(
+      timestamp => now - timestamp < RATE_WINDOW
+    );
+
+    // Add current timestamp
+    searchTimestampsRef.current.push(now);
+
+    // Calculate remaining searches
+    const remaining = RATE_LIMIT - searchTimestampsRef.current.length;
+    setRateLimitRemaining(remaining);
+
+    // If at limit, set reset time
+    if (remaining === 0) {
+      const oldestTimestamp = searchTimestampsRef.current[0];
+      setRateLimitResetTime(oldestTimestamp + RATE_WINDOW);
+    }
+
+    return remaining > 0;
+  };
+
   const handleSearch = async (e) => {
     e.preventDefault();
 
@@ -44,6 +98,13 @@ export default function FoodSearch({ onAddFood, onClose }) {
       setResults([]);
       setSearched(false);
       setError(null);
+      return;
+    }
+
+    // Check rate limit before searching
+    const canSearch = updateRateLimit();
+    if (!canSearch) {
+      setError(`Rate limit reached (10 searches/min). Please wait ${countdown} seconds.`);
       return;
     }
 
@@ -65,7 +126,15 @@ export default function FoodSearch({ onAddFood, onClose }) {
       if (error.name !== 'AbortError') {
         console.error('Search failed:', error);
         setResults([]);
-        setError('The food database is temporarily unavailable. Please try again later or use Common Foods, Barcode Scanner, or Quick Add instead.');
+
+        // Check if it's a 503 or network error (likely API issue)
+        const is503 = error.message && (error.message.includes('503') || error.message.includes('Load failed'));
+
+        if (is503) {
+          setError('Food database is currently unavailable. We\'re working on resolving this issue. In the meantime, please use Common Foods (1,400+ items), Barcode Scanner, or Quick Add. We apologize for the inconvenience.');
+        } else {
+          setError('Search failed. Please try Common Foods, Barcode Scanner, or Quick Add instead.');
+        }
       }
     } finally {
       setLoading(false);
@@ -114,9 +183,25 @@ export default function FoodSearch({ onAddFood, onClose }) {
               autoCapitalize="none"
               spellCheck="false"
             />
-            <button type="submit" className="btn-primary" disabled={loading}>
+            <button type="submit" className="btn-primary" disabled={loading || rateLimitRemaining === 0}>
               {loading ? 'Searching...' : 'Search'}
             </button>
+          </div>
+
+          {/* Rate limit status */}
+          <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            {rateLimitRemaining === 0 ? (
+              <div className="flex items-center gap-2 text-orange-600 dark:text-orange-400 font-semibold">
+                <span>⏳ Rate limit reached. Please wait {countdown}s</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <span>Searches remaining: {rateLimitRemaining}/{RATE_LIMIT}</span>
+                {rateLimitRemaining <= 3 && rateLimitRemaining > 0 && (
+                  <span className="text-orange-600 dark:text-orange-400">(limit resets in 60s)</span>
+                )}
+              </div>
+            )}
           </div>
         </form>
 
