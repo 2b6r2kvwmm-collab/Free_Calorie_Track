@@ -25,7 +25,7 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="last-updated">Last updated: February 25, 2026<br>Last reviewed: February 25, 2026</p>
+  <p class="last-updated">Last updated: April 2, 2026<br>Last reviewed: April 2, 2026</p>
 
   <p><strong>Free Calorie Track</strong> is designed to respect your privacy. The app does not require an account, does not sell personal data, and stores your nutrition data locally on your device.</p>
 
@@ -36,7 +36,13 @@
 
   <p><strong>Your nutrition data remains in your browser's local storage indefinitely until you manually delete it or clear your browser data. The app does not automatically delete old entries.</strong></p>
 
-  <p>When you search for foods or scan barcodes, the app queries the <a href="https://world.openfoodfacts.org/" target="_blank">Open Food Facts</a> database (a public, open-source nutrition database). These requests may include the barcode number or search terms you enter. Open Food Facts may log IP addresses and search queries according to their own <a href="https://world.openfoodfacts.org/privacy" target="_blank">privacy policy</a>.</p>
+  <h3>Third-Party Food Database APIs</h3>
+  <p>When you search for foods or scan barcodes, the app queries the following external nutrition databases:</p>
+  <ul>
+    <li><strong><a href="https://fdc.nal.usda.gov/" target="_blank">USDA FoodData Central</a></strong> – A public database operated by the U.S. Department of Agriculture containing nutrition data for branded foods. USDA data is in the public domain (CC0 1.0 Universal). When you search for branded foods or restaurant items, your search queries and IP address may be logged according to the <a href="https://www.usda.gov/privacy-policy" target="_blank">USDA Privacy Policy</a>. The USDA API is rate-limited to 1,000 requests per hour per IP address.</li>
+    <li><strong><a href="https://world.openfoodfacts.org/" target="_blank">Open Food Facts</a></strong> – An open-source nutrition database operated by a non-profit organization. When you scan barcodes, your barcode numbers and IP address may be logged according to their <a href="https://world.openfoodfacts.org/privacy" target="_blank">privacy policy</a>.</li>
+  </ul>
+  <p><strong>Free Calorie Track does not share any personal information with these services.</strong> Only your search queries, barcode numbers, and IP address (automatically sent with all web requests) are transmitted. No user accounts, food logs, or other personal data leaves your device.</p>
 
   <h2>2. Analytics</h2>
   <p>Free Calorie Track uses <a href="https://vercel.com/docs/analytics/privacy-policy" target="_blank">Vercel Analytics</a> to understand general usage patterns, such as page views and feature usage. This data is aggregated and does not identify individual users.</p>
@@ -79,7 +85,7 @@
   <h2>8. California and U.S. State Privacy Rights</h2>
   <p>If you are a California resident, you have specific rights under the California Consumer Privacy Act (CCPA), including the right to know what personal information is collected, request deletion, and opt-out of "sales" of personal information.</p>
 
-  <p><strong>We do not sell personal information.</strong> The app stores data locally on your device and does not share it with third parties except as described in this policy (Open Food Facts API queries and Vercel Analytics).</p>
+  <p><strong>We do not sell personal information.</strong> The app stores data locally on your device and does not share it with third parties except as described in this policy (USDA FoodData Central API queries, Open Food Facts API queries, and Vercel Analytics).</p>
 
   <p>For more information or to exercise your rights, contact us at <a href="mailto:FreeCalorieTrack@gmail.com">FreeCalorieTrack@gmail.com</a>.</p>
 
@@ -135,6 +141,7 @@
   <p>For more information about how third-party services handle your data, please review their privacy policies:</p>
   <ul>
     <li><a href="https://vercel.com/legal/privacy-policy" target="_blank">Vercel Privacy Policy</a></li>
+    <li><a href="https://www.usda.gov/privacy-policy" target="_blank">USDA Privacy Policy</a> (FoodData Central API)</li>
     <li><a href="https://world.openfoodfacts.org/privacy" target="_blank">Open Food Facts Privacy Policy</a></li>
     <li><a href="https://www.buymeacoffee.com/privacy-policy" target="_blank">Buy Me a Coffee Privacy Policy</a></li>
     <li><a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ" target="_blank">Amazon Associates Privacy Notice</a></li>
