@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import { getFoodByBarcode } from '../utils/usda';
+import { getFoodByBarcode } from '../utils/foodApi';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
 

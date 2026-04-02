@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { searchFoods } from '../utils/usda';
+import { searchFoods } from '../utils/foodApi';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
-// Rate limit tracking (1000 searches per hour per USDA API)
+// Rate limit tracking (1000 searches per hour for USDA API)
+// Note: Uses dual-API approach (USDA primary, Open Food Facts fallback)
 const RATE_LIMIT = 1000;
 const RATE_WINDOW = 3600000; // 60 minutes
 
@@ -104,7 +105,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
     // Check rate limit before searching
     const canSearch = updateRateLimit();
     if (!canSearch) {
-      setError(`Hold on! The USDA API limits searches to 1000 per hour. Please wait ${countdown} seconds, then search again.`);
+      setError(`Hold on! You've made 1000 searches this hour. The app will automatically use Open Food Facts as a backup, but please wait ${Math.floor(countdown / 60)}m ${countdown % 60}s for USDA to reset for best results.`);
       return;
     }
 
@@ -134,6 +135,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
         // Check error type and show appropriate message
         const isApiKeyError = error.message && error.message.includes('API key');
         const isRateLimit = error.message && (error.message.includes('429') || error.message.includes('Rate limit'));
+        const isBothApiFailed = error.message && error.message.includes('Both APIs failed');
         const isNetworkError = (error.message && (
           error.message.includes('Failed to fetch') ||
           error.message.includes('NetworkError') ||
@@ -141,11 +143,13 @@ export default function FoodSearch({ onAddFood, onClose }) {
         )) || error.name === 'TypeError';
 
         if (isApiKeyError) {
-          setError('USDA API key limit reached. Please get a free API key at https://fdc.nal.usda.gov/api-key-signup and add it to your .env file as VITE_USDA_API_KEY, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+          setError('USDA API key limit reached. The app will fall back to Open Food Facts, but for best results get a free API key at https://fdc.nal.usda.gov/api-key-signup and add it to your .env file as VITE_USDA_API_KEY.');
         } else if (isRateLimit) {
-          setError('USDA API rate limit reached (1000 requests/hour). Please wait an hour and try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+          setError('USDA API rate limit reached (1000 requests/hour). The app will fall back to Open Food Facts for now. Or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+        } else if (isBothApiFailed) {
+          setError('Both food databases (USDA and Open Food Facts) are currently experiencing issues. This is unusual and usually temporary. Please try again in a few minutes, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
         } else if (isNetworkError) {
-          setError('USDA food database is currently unavailable. This could be due to network issues or the service being temporarily down. Please try again in a few minutes, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+          setError('Food databases are currently unavailable. This could be due to network issues. Please check your connection and try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
         } else {
           setError('Search failed. Please try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add instead.');
         }
