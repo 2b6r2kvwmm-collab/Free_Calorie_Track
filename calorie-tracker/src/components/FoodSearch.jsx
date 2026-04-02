@@ -125,19 +125,22 @@ export default function FoodSearch({ onAddFood, onClose }) {
     } catch (error) {
       if (error.name !== 'AbortError') {
         console.error('Search failed:', error);
-        console.error('Error message:', error.message);
         console.error('Error name:', error.name);
+        console.error('Error message:', error.message);
+        console.error('Error toString:', error.toString());
+        console.error('Full error object:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
         setResults([]);
 
         // Check error type and show appropriate message
         const is403 = error.message && error.message.includes('403');
         const is503 = error.message && error.message.includes('503');
-        const isNetworkError = error.message && (
+        const isNetworkError = (error.message && (
           error.message.includes('Failed to fetch') ||
           error.message.includes('NetworkError') ||
           error.message.includes('Load failed') ||
-          error.name === 'TypeError'
-        );
+          error.message.includes('HTML instead of JSON') ||
+          error.message.includes('service may be unavailable')
+        )) || error.name === 'TypeError';
 
         if (is403) {
           setError('Food database rate limit reached. Your searches may be temporarily restricted. Please wait a few minutes and try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');

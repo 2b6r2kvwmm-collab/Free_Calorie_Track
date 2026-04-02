@@ -24,7 +24,18 @@ async function validateAndParseResponse(response) {
     throw new Error('Response size exceeds limit');
   }
 
-  return JSON.parse(text);
+  // Check if response is HTML instead of JSON
+  if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+    throw new Error('API returned HTML instead of JSON - service may be unavailable');
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    console.error('JSON parse error:', error);
+    console.error('Response text (first 200 chars):', text.substring(0, 200));
+    throw new Error(`Failed to parse API response: ${error.message}`);
+  }
 }
 
 export async function searchFoods(query, signal = null) {
