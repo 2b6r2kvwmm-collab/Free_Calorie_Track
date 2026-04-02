@@ -55,23 +55,10 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/blog/],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/world\.openfoodfacts\.org\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'openfoodfacts-cache',
-              networkTimeoutSeconds: 10,
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 7 // 1 week
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
-          }
-        ]
+        // Removed Open Food Facts API caching - search results are dynamic
+        // and shouldn't be cached. Service worker was interfering with
+        // error responses (503) and causing confusing CORS/network errors.
+        runtimeCaching: []
       }
     })
   ]
