@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Real Open Food Facts API</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        button { padding: 10px 20px; font-size: 16px; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>Test Open Food Facts API (Real Browser Fetch)</h1>
+    <button id="testBtn">Test API Call</button>
+    <pre id="output"></pre>
+
+    <script>
+        const output = document.getElementById('output');
+
+        async function testAPI() {
+            output.textContent = 'Testing API from browser...\n\n';
+
+            try {
+                const url = 'https://world.openfoodfacts.org/api/v2/search?query=cheese&page_size=5&fields=product_name,nutriments,serving_size,brands,code';
+
+                output.textContent += 'URL: ' + url + '\n\n';
+
+                // No custom headers - they trigger CORS preflight which fails when API returns 503
+                const response = await fetch(url);
+
+                output.textContent += 'Response status: ' + response.status + '\n';
+                output.textContent += 'Response ok: ' + response.ok + '\n';
+                output.textContent += 'Response type: ' + response.type + '\n';
+                output.textContent += 'Response headers:\n';
+
+                for (const [key, value] of response.headers.entries()) {
+                    output.textContent += '  ' + key + ': ' + value + '\n';
+                }
+
+                const text = await response.text();
+                output.textContent += '\nResponse length: ' + text.length + '\n';
+                output.textContent += 'First 500 chars:\n' + text.substring(0, 500) + '\n';
+
+                const data = JSON.parse(text);
+                output.textContent += '\n✓ Parsed as JSON successfully\n';
+                output.textContent += 'Products found: ' + (data.products ? data.products.length : 0) + '\n';
+                output.textContent += 'Total count: ' + data.count + '\n';
+
+                if (data.products && data.products.length > 0) {
+                    output.textContent += '\nFirst product:\n';
+                    output.textContent += '  Brand: ' + (data.products[0].brands || 'N/A') + '\n';
+                    output.textContent += '  Name: ' + (data.products[0].product_name || 'N/A') + '\n';
+                    output.textContent += '  Code: ' + (data.products[0].code || 'N/A') + '\n';
+
+                    if (data.products[0].nutriments) {
+                        const n = data.products[0].nutriments;
+                        output.textContent += '\nNutriments:\n';
+                        output.textContent += '  energy-kcal_serving: ' + (n['energy-kcal_serving'] || 'N/A') + '\n';
+                        output.textContent += '  energy-kcal_100g: ' + (n['energy-kcal_100g'] || 'N/A') + '\n';
+                        output.textContent += '  proteins_serving: ' + (n.proteins_serving || 'N/A') + '\n';
+                        output.textContent += '  proteins_100g: ' + (n.proteins_100g || 'N/A') + '\n';
+                    }
+                }
+
+            } catch (error) {
+                output.textContent += '\n\n❌ ERROR:\n';
+                output.textContent += 'Error name: ' + error.name + '\n';
+                output.textContent += 'Error message: ' + error.message + '\n';
+                output.textContent += 'Error stack:\n' + error.stack + '\n';
+            }
+        }
+
+        document.getElementById('testBtn').addEventListener('click', testAPI);
+    </script>
+</body>
+</html>

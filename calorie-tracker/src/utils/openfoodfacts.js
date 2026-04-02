@@ -41,16 +41,11 @@ async function validateAndParseResponse(response) {
 export async function searchFoods(query, signal = null) {
   try {
     // Use API v2 (v1 is currently unavailable)
-    const response = await fetch(
-      `${API_BASE}/api/v2/search?query=${encodeURIComponent(query)}&page_size=20&fields=product_name,nutriments,serving_size,brands,code`,
-      {
-        signal,
-        headers: {
-          // Browsers ignore 'User-Agent' (forbidden header), use X-User-Agent instead
-          'X-User-Agent': 'FreeCalorieTrack/1.5.0 (https://freecalorietrack.com)'
-        }
-      }
-    );
+    const url = `${API_BASE}/api/v2/search?query=${encodeURIComponent(query)}&page_size=20&fields=product_name,nutriments,serving_size,brands,code`;
+    console.log('Searching Open Food Facts API:', query);
+    console.log('Full URL:', url);
+
+    const response = await fetch(url, { signal });
 
     if (!response.ok) {
       console.error(`Open Food Facts API returned status ${response.status}`);
@@ -79,6 +74,9 @@ export async function searchFoods(query, signal = null) {
       console.error('Invalid API response structure:', data);
       throw new Error('Invalid API response');
     }
+
+    console.log(`Found ${data.products.length} products for query "${query}"`);
+    console.log('First product:', data.products[0]?.product_name, data.products[0]?.brands);
 
     return data.products.map(product => {
       const nutriments = product.nutriments || {};
@@ -128,13 +126,7 @@ export async function getFoodByBarcode(barcode, signal = null) {
   try {
     const response = await fetch(
       `${API_BASE}/api/v0/product/${barcode}.json`,
-      {
-        signal,
-        headers: {
-          // Browsers ignore 'User-Agent' (forbidden header), use X-User-Agent instead
-          'X-User-Agent': 'FreeCalorieTrack/1.5.0 (https://freecalorietrack.com)'
-        }
-      }
+      { signal }
     );
 
     if (!response.ok) {
