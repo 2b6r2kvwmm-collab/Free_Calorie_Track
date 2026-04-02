@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { searchFoods } from '../utils/openfoodfacts';
+import { searchFoods } from '../utils/usda';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
 
-// Rate limit tracking (10 searches per minute per Open Food Facts API)
-const RATE_LIMIT = 10;
-const RATE_WINDOW = 60000; // 60 seconds
+// Rate limit tracking (1000 searches per hour per USDA API)
+const RATE_LIMIT = 1000;
+const RATE_WINDOW = 3600000; // 60 minutes
 
 export default function FoodSearch({ onAddFood, onClose }) {
   const modalRef = useModalAccessibility(true, onClose);
@@ -104,7 +104,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
     // Check rate limit before searching
     const canSearch = updateRateLimit();
     if (!canSearch) {
-      setError(`Hold on! The food database (not us!) limits searches to 10 per minute to keep their servers happy. Please wait ${countdown} seconds, then search again.`);
+      setError(`Hold on! The USDA API limits searches to 1000 per hour. Please wait ${countdown} seconds, then search again.`);
       return;
     }
 
@@ -132,22 +132,20 @@ export default function FoodSearch({ onAddFood, onClose }) {
         setResults([]);
 
         // Check error type and show appropriate message
-        const is403 = error.message && error.message.includes('403');
-        const is503 = error.message && error.message.includes('503');
+        const isApiKeyError = error.message && error.message.includes('API key');
+        const isRateLimit = error.message && (error.message.includes('429') || error.message.includes('Rate limit'));
         const isNetworkError = (error.message && (
           error.message.includes('Failed to fetch') ||
           error.message.includes('NetworkError') ||
-          error.message.includes('Load failed') ||
-          error.message.includes('HTML instead of JSON') ||
-          error.message.includes('service may be unavailable')
+          error.message.includes('Load failed')
         )) || error.name === 'TypeError';
 
-        if (is403) {
-          setError('Food database rate limit reached. Your searches may be temporarily restricted. Please wait a few minutes and try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
-        } else if (is503) {
-          setError('Food database is experiencing high load or maintenance (503). This is usually temporary - please try again in a few minutes. Or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+        if (isApiKeyError) {
+          setError('USDA API key limit reached. Please get a free API key at https://fdc.nal.usda.gov/api-key-signup and add it to your .env file as VITE_USDA_API_KEY, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+        } else if (isRateLimit) {
+          setError('USDA API rate limit reached (1000 requests/hour). Please wait an hour and try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
         } else if (isNetworkError) {
-          setError('Food database is currently unavailable. This could be due to network issues or the service being temporarily down. Please try again in a few minutes, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
+          setError('USDA food database is currently unavailable. This could be due to network issues or the service being temporarily down. Please try again in a few minutes, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
         } else {
           setError('Search failed. Please try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add instead.');
         }
@@ -207,7 +205,12 @@ export default function FoodSearch({ onAddFood, onClose }) {
           {/* Rate limit status */}
           {rateLimitRemaining === 0 && (
             <div className="mt-2 text-sm text-orange-600 dark:text-orange-400 font-semibold">
-              <span>🍕 Food database is on a snack break! Back in {countdown}s</span>
+              <span>🍕 Rate limit reached! Back in {Math.floor(countdown / 60)}m {countdown % 60}s</span>
+            </div>
+          )}
+          {rateLimitRemaining > 0 && rateLimitRemaining <= 10 && (
+            <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <span>{rateLimitRemaining} searches remaining this hour</span>
             </div>
           )}
         </form>
