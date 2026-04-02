@@ -40,8 +40,9 @@ async function validateAndParseResponse(response) {
 
 export async function searchFoods(query, signal = null) {
   try {
-    // Use API v2 (v1 is currently unavailable)
-    const url = `${API_BASE}/api/v2/search?query=${encodeURIComponent(query)}&page_size=20&fields=product_name,nutriments,serving_size,brands,code`;
+    // Use v1 search API - v2 does not support full text search
+    // Documentation: "only v1 search API supports full text search"
+    const url = `${API_BASE}/cgi/search.pl?search_terms=${encodeURIComponent(query)}&page_size=20&json=1`;
 
     const response = await fetch(url, { signal });
 
