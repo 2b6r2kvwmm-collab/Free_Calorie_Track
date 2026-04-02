@@ -145,11 +145,11 @@ export default function FoodSearch({ onAddFood, onClose }) {
         if (is403) {
           setError('Food database rate limit reached. Your searches may be temporarily restricted. Please wait a few minutes and try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
         } else if (is503) {
-          setError('Food database is currently down (503). Please use Common Foods (1,400+ items), Barcode Scanner, or Quick Add. We apologize for the inconvenience.');
+          setError('Food database is experiencing high load or maintenance (503). This is usually temporary - please try again in a few minutes. Or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
         } else if (isNetworkError) {
-          setError('Food database is currently unavailable. We\'re working on resolving this issue. In the meantime, please use Common Foods (1,400+ items), Barcode Scanner, or Quick Add. We apologize for the inconvenience.');
+          setError('Food database is currently unavailable. This could be due to network issues or the service being temporarily down. Please try again in a few minutes, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add.');
         } else {
-          setError('Search failed. We\'re working on resolving this issue. In the meantime, please use Common Foods (1,400+ items), Barcode Scanner, or Quick Add instead.');
+          setError('Search failed. Please try again, or use Common Foods (1,400+ items), Barcode Scanner, or Quick Add instead.');
         }
       }
     } finally {

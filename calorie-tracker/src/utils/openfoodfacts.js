@@ -46,7 +46,8 @@ export async function searchFoods(query, signal = null) {
       {
         signal,
         headers: {
-          'User-Agent': 'FreeCalorieTrack - Web App - Version 1.5.0'
+          // Browsers ignore 'User-Agent' (forbidden header), use X-User-Agent instead
+          'X-User-Agent': 'FreeCalorieTrack/1.5.0 (https://freecalorietrack.com)'
         }
       }
     );
@@ -55,11 +56,19 @@ export async function searchFoods(query, signal = null) {
       console.error(`Open Food Facts API returned status ${response.status}`);
       console.error('Response headers:', Object.fromEntries(response.headers.entries()));
 
+      // Try to read response body for more details
+      try {
+        const errorText = await response.text();
+        console.error('Error response body (first 500 chars):', errorText.substring(0, 500));
+      } catch (e) {
+        console.error('Could not read error response body:', e);
+      }
+
       if (response.status === 403) {
         throw new Error(`Rate limit reached (403). You've searched too many times.`);
       }
       if (response.status === 503) {
-        throw new Error(`Open Food Facts API is temporarily unavailable (503). Server is down.`);
+        throw new Error(`Open Food Facts API is temporarily unavailable (503). The service is experiencing high load or maintenance. Please try again in a few minutes.`);
       }
       throw new Error(`Search failed with status ${response.status}`);
     }
@@ -122,7 +131,8 @@ export async function getFoodByBarcode(barcode, signal = null) {
       {
         signal,
         headers: {
-          'User-Agent': 'FreeCalorieTrack - Web App - Version 1.5.0'
+          // Browsers ignore 'User-Agent' (forbidden header), use X-User-Agent instead
+          'X-User-Agent': 'FreeCalorieTrack/1.5.0 (https://freecalorietrack.com)'
         }
       }
     );
