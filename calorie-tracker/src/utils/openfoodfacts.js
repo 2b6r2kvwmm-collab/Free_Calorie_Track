@@ -42,8 +42,6 @@ export async function searchFoods(query, signal = null) {
   try {
     // Use API v2 (v1 is currently unavailable)
     const url = `${API_BASE}/api/v2/search?query=${encodeURIComponent(query)}&page_size=20&fields=product_name,nutriments,serving_size,brands,code`;
-    console.log('Searching Open Food Facts API:', query);
-    console.log('Full URL:', url);
 
     const response = await fetch(url, { signal });
 
@@ -74,9 +72,6 @@ export async function searchFoods(query, signal = null) {
       console.error('Invalid API response structure:', data);
       throw new Error('Invalid API response');
     }
-
-    console.log(`Found ${data.products.length} products for query "${query}"`);
-    console.log('First product:', data.products[0]?.product_name, data.products[0]?.brands);
 
     return data.products.map(product => {
       const nutriments = product.nutriments || {};
