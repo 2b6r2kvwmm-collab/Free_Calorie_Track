@@ -7,6 +7,10 @@ export default defineConfig({
   server: {
     host: true, // Listen on all addresses including LAN
     port: 5173,
+    allowedHosts: [
+      '.ngrok-free.dev', // Allow all ngrok free tier domains
+      '.ngrok.io',       // Allow all ngrok paid tier domains (if upgraded)
+    ],
   },
   build: {
     rollupOptions: {
