@@ -461,6 +461,7 @@ export default function LandingPage({ onGetStarted }) {
               { icon: '🏋️', title: '250+ Exercises', desc: 'Cardio, strength, sports, HIIT. MET-based calorie calculations.' },
               { icon: '📈', title: 'Trends & Insights', desc: 'Weekly and monthly averages. Weight progress charts. All free.' },
               { icon: '📶', title: 'Works Offline', desc: 'Install on any device. No internet needed.' },
+              { icon: '🥗', title: 'Nutrition Tracking', desc: 'Optionally track fiber, sodium, sugar, and saturated fat alongside your macros.' },
             ].map((f) => (
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
                 <div className="text-2xl mb-2">{f.icon}</div>
