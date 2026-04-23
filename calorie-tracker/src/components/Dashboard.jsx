@@ -18,6 +18,7 @@ import {
   saveCustomCalorieGoal,
   getLocalDateString,
   getWaterTrackerEnabled,
+  getNutritionTrackingEnabled,
   getDashboardFocus,
   getMilestonesShown,
   markMilestoneShown,
@@ -25,6 +26,8 @@ import {
   getBackupReminderState,
   markBackupReminderShown,
   hasExported,
+  getSeenUpdateModal,
+  markUpdateModalSeen,
 } from '../utils/storage';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import {
@@ -48,6 +51,7 @@ import Achievements from './Achievements';
 import WaterTracker from './WaterTracker';
 import MilestoneModal from './MilestoneModal';
 import BackupReminderModal from './BackupReminderModal';
+import UpdateModal from './UpdateModal';
 
 export default function Dashboard({ onRefresh }) {
   const location = useLocation();
@@ -66,10 +70,12 @@ export default function Dashboard({ onRefresh }) {
   const [editFormData, setEditFormData] = useState({});
   const [showMilestone, setShowMilestone] = useState(null);
   const [showBackupReminder, setShowBackupReminder] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showGoalMismatchWarning, setShowGoalMismatchWarning] = useState(false);
   const [goalRefreshKey, setGoalRefreshKey] = useState(0); // Force re-render when goal changes
   // Memoize storage reads to prevent synchronous localStorage access on every render
   const waterTrackerEnabled = useMemo(() => getWaterTrackerEnabled(), []);
+  const nutritionTrackingEnabled = useMemo(() => getNutritionTrackingEnabled(), []);
   const dashboardFocus = useMemo(() => getDashboardFocus(), []);
 
   // State locking for async operations
@@ -112,14 +118,18 @@ export default function Dashboard({ onRefresh }) {
   const restingBurned = tdee; // Full day's resting calories (end-of-day calculation)
 
   // Memoize calorie/macro totals - only recalculate when entries change
-  const { caloriesEaten, exerciseBurned, totalProtein, totalCarbs, totalFat } = useMemo(() => {
+  const { caloriesEaten, exerciseBurned, totalProtein, totalCarbs, totalFat, totalFiber, totalSodium, totalSugar, totalSaturatedFat } = useMemo(() => {
     const caloriesEaten = entries.food.reduce((sum, entry) => sum + entry.calories, 0);
     const exerciseBurned = entries.exercise.reduce((sum, entry) => sum + entry.caloriesBurned, 0);
     const totalProtein = entries.food.reduce((sum, entry) => sum + (entry.protein || 0), 0);
     const totalCarbs = entries.food.reduce((sum, entry) => sum + (entry.carbs || 0), 0);
     const totalFat = entries.food.reduce((sum, entry) => sum + (entry.fat || 0), 0);
+    const totalFiber = entries.food.reduce((sum, entry) => sum + (entry.fiber || 0), 0);
+    const totalSodium = entries.food.reduce((sum, entry) => sum + (entry.sodium || 0), 0);
+    const totalSugar = entries.food.reduce((sum, entry) => sum + (entry.sugar || 0), 0);
+    const totalSaturatedFat = entries.food.reduce((sum, entry) => sum + (entry.saturatedFat || 0), 0);
 
-    return { caloriesEaten, exerciseBurned, totalProtein, totalCarbs, totalFat };
+    return { caloriesEaten, exerciseBurned, totalProtein, totalCarbs, totalFat, totalFiber, totalSodium, totalSugar, totalSaturatedFat };
   }, [entries.food, entries.exercise]);
 
   const totalBurned = restingBurned + exerciseBurned;
@@ -261,6 +271,12 @@ export default function Dashboard({ onRefresh }) {
         markBackupReminderShown('day10');
         return;
       }
+    }
+
+    // Update modal: show once to existing users upgrading to 1.6.0
+    if (getProfile() && getSeenUpdateModal() !== '1.6.0') {
+      markUpdateModalSeen('1.6.0');
+      setShowUpdateModal(true);
     }
   }, []); // Only run once on mount
 
@@ -432,11 +448,19 @@ export default function Dashboard({ onRefresh }) {
       protein: food.protein || 0,
       carbs: food.carbs || 0,
       fat: food.fat || 0,
+      fiber: food.fiber || 0,
+      sodium: food.sodium || 0,
+      sugar: food.sugar || 0,
+      saturatedFat: food.saturatedFat || 0,
       // Store base values for quantity-based editing
       baseCalories: food.calories,
       baseProtein: food.protein || 0,
       baseCarbs: food.carbs || 0,
       baseFat: food.fat || 0,
+      baseFiber: food.fiber || 0,
+      baseSodium: food.sodium || 0,
+      baseSugar: food.sugar || 0,
+      baseSaturatedFat: food.saturatedFat || 0,
       quantity: 1, // Default multiplier
       timestamp: Date.now(),
       date: getLocalDateString(),
@@ -576,6 +600,10 @@ export default function Dashboard({ onRefresh }) {
       baseProtein: entry.baseProtein || entry.protein || 0,
       baseCarbs: entry.baseCarbs || entry.carbs || 0,
       baseFat: entry.baseFat || entry.fat || 0,
+      baseFiber: entry.baseFiber || entry.fiber || 0,
+      baseSodium: entry.baseSodium || entry.sodium || 0,
+      baseSugar: entry.baseSugar || entry.sugar || 0,
+      baseSaturatedFat: entry.baseSaturatedFat || entry.saturatedFat || 0,
     });
   };
 
@@ -590,11 +618,19 @@ export default function Dashboard({ onRefresh }) {
       protein: Math.round(editFormData.baseProtein * quantity * 10) / 10,
       carbs: Math.round(editFormData.baseCarbs * quantity * 10) / 10,
       fat: Math.round(editFormData.baseFat * quantity * 10) / 10,
+      fiber: Math.round(editFormData.baseFiber * quantity * 10) / 10,
+      sodium: Math.round(editFormData.baseSodium * quantity),
+      sugar: Math.round(editFormData.baseSugar * quantity * 10) / 10,
+      saturatedFat: Math.round(editFormData.baseSaturatedFat * quantity * 10) / 10,
       // Preserve base values
       baseCalories: editFormData.baseCalories,
       baseProtein: editFormData.baseProtein,
       baseCarbs: editFormData.baseCarbs,
       baseFat: editFormData.baseFat,
+      baseFiber: editFormData.baseFiber,
+      baseSodium: editFormData.baseSodium,
+      baseSugar: editFormData.baseSugar,
+      baseSaturatedFat: editFormData.baseSaturatedFat,
     });
     setEditingFood(null);
     setEditFormData({});
@@ -1007,6 +1043,12 @@ export default function Dashboard({ onRefresh }) {
           isCustomGoals={usingCustomGoals}
           fitnessGoal={profile.fitnessGoal}
           exerciseBurned={exerciseBurned}
+          showAdditional={nutritionTrackingEnabled}
+          fiber={Math.round(totalFiber * 10) / 10}
+          sodium={Math.round(totalSodium)}
+          sugar={Math.round(totalSugar * 10) / 10}
+          saturatedFat={Math.round(totalSaturatedFat * 10) / 10}
+          calorieGoal={dailyGoal}
         />
       )}
 
@@ -1142,7 +1184,15 @@ export default function Dashboard({ onRefresh }) {
                               </div>
                               {(entry.protein || entry.carbs || entry.fat) && (
                                 <div className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                                  P: {Math.round(entry.protein || 0)}g - C: {Math.round(entry.carbs || 0)}g - F: {Math.round(entry.fat || 0)}g
+                                  P: {Math.round(entry.protein || 0)}g · C: {Math.round(entry.carbs || 0)}g · F: {Math.round(entry.fat || 0)}g
+                                </div>
+                              )}
+                              {nutritionTrackingEnabled && (entry.fiber > 0 || entry.sodium > 0 || entry.sugar > 0 || entry.saturatedFat > 0) && (
+                                <div className="text-xs mt-0.5 flex flex-wrap gap-x-2 gap-y-0.5">
+                                  {entry.fiber > 0 && <span className="text-emerald-600 dark:text-emerald-400">Fiber {Math.round(entry.fiber * 10) / 10}g</span>}
+                                  {entry.sodium > 0 && <span className="text-sky-600 dark:text-sky-400">Na {Math.round(entry.sodium)}mg</span>}
+                                  {entry.sugar > 0 && <span className="text-amber-600 dark:text-amber-400">Sugar {Math.round(entry.sugar * 10) / 10}g</span>}
+                                  {entry.saturatedFat > 0 && <span className="text-rose-600 dark:text-rose-400">SatFat {Math.round(entry.saturatedFat * 10) / 10}g</span>}
                                 </div>
                               )}
                               <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
@@ -1364,6 +1414,12 @@ export default function Dashboard({ onRefresh }) {
       {showBackupReminder && (
         <BackupReminderModal
           onClose={() => setShowBackupReminder(false)}
+        />
+      )}
+
+      {showUpdateModal && (
+        <UpdateModal
+          onClose={() => setShowUpdateModal(false)}
         />
       )}
 

@@ -14,6 +14,7 @@ const STORAGE_KEYS = {
   CUSTOM_FOODS: 'customFoods',
   CUSTOM_MACROS: 'customMacros',
   CUSTOM_CALORIE_GOAL: 'customCalorieGoal',
+  CUSTOM_NUTRITION: 'customNutrition',
   WATER_LOG: 'waterLog',
   WATER_UNIT: 'waterUnit',
   WORKOUT_TEMPLATES: 'workoutTemplates',
@@ -211,6 +212,29 @@ export function saveCustomCalorieGoal(goal) {
 
 export function clearCustomCalorieGoal() {
   setData(STORAGE_KEYS.CUSTOM_CALORIE_GOAL, null);
+}
+
+// Custom Nutrition Targets - { fiber, sodium, sugar, saturatedFat } in grams/mg, or null if using auto-calculated
+export function getCustomNutrition() {
+  return getData(STORAGE_KEYS.CUSTOM_NUTRITION);
+}
+
+export function saveCustomNutrition(nutrition) {
+  setData(STORAGE_KEYS.CUSTOM_NUTRITION, nutrition);
+}
+
+export function clearCustomNutrition() {
+  setData(STORAGE_KEYS.CUSTOM_NUTRITION, null);
+}
+
+// Nutrition Tracking Enabled - boolean for showing additional nutrition on dashboard
+export function getNutritionTrackingEnabled() {
+  const enabled = getData('nutritionTrackingEnabled');
+  return enabled !== null ? enabled : false; // Default to false (opt-in)
+}
+
+export function saveNutritionTrackingEnabled(enabled) {
+  setData('nutritionTrackingEnabled', enabled);
 }
 
 // Weight Log - array of { date, weight }
@@ -550,6 +574,15 @@ export function getShareModalShown() {
 
 export function markShareModalShown() {
   setData(STORAGE_KEYS.SHARE_MODAL_SHOWN, true);
+}
+
+// Update modal tracking
+export function getSeenUpdateModal() {
+  return getData('seenUpdateModal');
+}
+
+export function markUpdateModalSeen(version) {
+  setData('seenUpdateModal', version);
 }
 
 // Calculate user stats for milestone celebrations and settings
