@@ -85,6 +85,8 @@ Free Calorie Track is a web-based calorie counting and macro tracking app design
 
 **Visual progress bars** show you how much of each macro you've consumed vs. your daily goal. Learn more about [tracking your macros](/macro-tracker) with real-time progress.
 
+The Macro card also includes a **goal overview** with your target macro split visualized as a donut chart, so you can see at a glance whether your protein, carbs, and fat are aligned with your goals.
+
 **Why macros matter:**
 - Calories determine weight change (gain/loss/maintenance)
 - Protein helps preserve muscle during fat loss
@@ -97,7 +99,27 @@ Free Calorie Track is a web-based calorie counting and macro tracking app design
 - App tracks progress throughout the day
 - Adjust goals anytime as your needs change
 
-### 4. Daily Calorie and Macro Calculator
+### 4. Additional Nutrition Tracking
+
+**What it tracks (optional):**
+- **Fiber** - Digestive health and satiety (goal: 25–35g/day)
+- **Sodium** - Heart health and blood pressure monitoring
+- **Sugar** - Total sugar awareness for metabolic health
+- **Saturated Fat** - Cardiovascular health tracking
+
+**How to enable:** Settings → Nutrition → turn on Additional Nutrition Tracking.
+
+Once enabled, fiber, sodium, sugar, and saturated fat appear in your food log entries alongside calories and macros. A second page in the Macro card shows your progress toward daily targets.
+
+**Who it's for:**
+- Anyone managing heart health or blood pressure (sodium)
+- People on GLP-1 medications who eat smaller volumes and need to maximize nutrient density
+- Those tracking digestive health (fiber)
+- Anyone wanting a more complete nutritional picture beyond just calories and macros
+
+Targets are calculated automatically based on your calorie goal, or you can set custom values in Settings.
+
+### 5. Daily Calorie and Macro Calculator
 
 **What it does:** Calculate your Total Daily Energy Expenditure (TDEE) and personalized macro targets.
 
@@ -419,7 +441,8 @@ We use USDA nutrition data for whole foods, which is highly accurate. For packag
 Free Calorie Track gives you everything you need to take control of your nutrition—without costing you a penny.
 
 - Barcode scanner
-- Macro tracking
+- Macro tracking (protein, carbs, fat)
+- Additional nutrition tracking (fiber, sodium, sugar, saturated fat)
 - Thousands of foods
 - Custom meals and recipes
 - Weight tracking
