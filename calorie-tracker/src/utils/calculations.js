@@ -436,3 +436,35 @@ export function calculatePace(distance, duration, unit = 'miles') {
   const hours = duration / 60;
   return distanceInMiles / hours;
 }
+
+// Calculate automatic nutrition targets based on calorie goal
+// Returns { fiber (g), sodium (mg), sugar (g), saturatedFat (g) }
+export function calculateNutritionTargets(calorieGoal) {
+  // Use 2000 kcal as the floor reference so low-goal users still get sensible targets
+  const ref = Math.max(calorieGoal || 2000, 2000);
+
+  // Fiber: FDA DV = 28g/day (14g per 1000 kcal). IOM: 25g women, 38g men.
+  // Floor at 28g regardless of calorie goal — fiber needs don't drop with calories.
+  const fiber = Math.max(28, Math.round((ref / 1000) * 14));
+
+  // Sodium: ≤2300mg/day — 2020-2025 Dietary Guidelines for Americans, FDA DV.
+  // Independent of calorie intake.
+  const sodium = 2300;
+
+  // Sugar: FDA DV = 50g total sugars/day for a 2000 kcal diet.
+  // AHA recommends <25g (women) / <36g (men) ADDED sugars.
+  // Fixed at 50g total as the standard measurable daily limit.
+  const sugar = 50;
+
+  // Saturated Fat: FDA DV = 20g/2000 kcal (10% of calories).
+  // AHA recommends <7% for heart health (~16g at 2000 kcal).
+  // Using FDA DV proportional to intake, floor at 20g.
+  const saturatedFat = Math.max(20, Math.round((ref / 1000) * 10));
+
+  return {
+    fiber,
+    sodium,
+    sugar,
+    saturatedFat
+  };
+}
