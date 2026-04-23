@@ -166,6 +166,10 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
         protein: food.protein || 0,
         carbs: food.carbs || 0,
         fat: food.fat || 0,
+        fiber: food.fiber || 0,
+        sodium: food.sodium || 0,
+        sugar: food.sugar || 0,
+        saturatedFat: food.saturatedFat || 0,
         servingSize: food.servingSize,
         barcode: food.barcode,
       });
@@ -199,6 +203,10 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
         protein: food.protein || 0,
         carbs: food.carbs || 0,
         fat: food.fat || 0,
+        fiber: food.fiber || 0,
+        sodium: food.sodium || 0,
+        sugar: food.sugar || 0,
+        saturatedFat: food.saturatedFat || 0,
         servingSize: food.servingSize,
         barcode: food.barcode,
       });

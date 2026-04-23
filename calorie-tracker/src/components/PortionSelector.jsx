@@ -102,19 +102,31 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
       protein: totals.protein + (item.topping.protein * item.multiplier),
       carbs: totals.carbs + (item.topping.carbs * item.multiplier),
       fat: totals.fat + (item.topping.fat * item.multiplier),
+      fiber: totals.fiber + ((item.topping.fiber || 0) * item.multiplier),
+      sodium: totals.sodium + ((item.topping.sodium || 0) * item.multiplier),
+      sugar: totals.sugar + ((item.topping.sugar || 0) * item.multiplier),
+      saturatedFat: totals.saturatedFat + ((item.topping.saturatedFat || 0) * item.multiplier),
     }),
-    { calories: 0, protein: 0, carbs: 0, fat: 0 }
+    { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0, sodium: 0, sugar: 0, saturatedFat: 0 }
   );
 
   const baseCalories = currentFood.calories * multiplier;
   const baseProtein = (currentFood.protein || 0) * multiplier;
   const baseCarbs = (currentFood.carbs || 0) * multiplier;
   const baseFat = (currentFood.fat || 0) * multiplier;
+  const baseFiber = (currentFood.fiber || 0) * multiplier;
+  const baseSodium = (currentFood.sodium || 0) * multiplier;
+  const baseSugar = (currentFood.sugar || 0) * multiplier;
+  const baseSaturatedFat = (currentFood.saturatedFat || 0) * multiplier;
 
   const adjustedCalories = Math.round(baseCalories + toppingsTotal.calories);
   const adjustedProtein = Math.round((baseProtein + toppingsTotal.protein) * 10) / 10;
   const adjustedCarbs = Math.round((baseCarbs + toppingsTotal.carbs) * 10) / 10;
   const adjustedFat = Math.round((baseFat + toppingsTotal.fat) * 10) / 10;
+  const adjustedFiber = Math.round((baseFiber + toppingsTotal.fiber) * 10) / 10;
+  const adjustedSodium = Math.round(baseSodium + toppingsTotal.sodium);
+  const adjustedSugar = Math.round((baseSugar + toppingsTotal.sugar) * 10) / 10;
+  const adjustedSaturatedFat = Math.round((baseSaturatedFat + toppingsTotal.saturatedFat) * 10) / 10;
 
   const handleConfirm = () => {
     // For build-your-own (except pizza), allow confirmation even with multiplier 0 if toppings selected
@@ -166,6 +178,10 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
       protein: adjustedProtein,
       carbs: adjustedCarbs,
       fat: adjustedFat,
+      fiber: adjustedFiber,
+      sodium: adjustedSodium,
+      sugar: adjustedSugar,
+      saturatedFat: adjustedSaturatedFat,
       servingSize: servingSizeDisplay,
     });
   };

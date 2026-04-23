@@ -1,7 +1,7 @@
 import { useState, useRef, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getWaterTrackerEnabled, saveWaterTrackerEnabled, getWaterGoal, saveWaterGoal, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats, ozToMl, mlToOz } from '../utils/storage';
-import { calculateBMR, calculateTDEE, getBaselineTDEE, getReproductiveStatusCalorieAdjustment, getCurrentTrimester, getWeeksPregnant } from '../utils/calculations';
+import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getCustomNutrition, saveCustomNutrition, clearCustomNutrition, getNutritionTrackingEnabled, saveNutritionTrackingEnabled, getWaterTrackerEnabled, saveWaterTrackerEnabled, getWaterGoal, saveWaterGoal, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats, ozToMl, mlToOz } from '../utils/storage';
+import { calculateBMR, calculateTDEE, getBaselineTDEE, getReproductiveStatusCalorieAdjustment, getCurrentTrimester, getWeeksPregnant, calculateNutritionTargets } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
 import { handleExport } from '../utils/backupExport';
@@ -35,9 +35,32 @@ export default function Settings({ onUpdateProfile, onClose }) {
     };
   };
 
+  // Calculate default custom nutrition targets if not already set
+  const getDefaultCustomNutrition = () => {
+    const existing = getCustomNutrition();
+    if (existing) return existing;
+
+    // Calculate based on current TDEE (total calorie goal)
+    const bmr = calculateBMR(currentProfile);
+    const tdee = calculateTDEE(bmr, currentProfile.activityLevel);
+    const reproAdj = getReproductiveStatusCalorieAdjustment(currentProfile);
+    const totalCalories = tdee + reproAdj;
+    const calculatedNutrition = calculateNutritionTargets(totalCalories);
+
+    return {
+      fiber: calculatedNutrition.fiber,
+      sodium: calculatedNutrition.sodium,
+      sugar: calculatedNutrition.sugar,
+      saturatedFat: calculatedNutrition.saturatedFat
+    };
+  };
+
   const [customMacros, setCustomMacros] = useState(getDefaultCustomMacros());
+  const [customNutrition, setCustomNutrition] = useState(getDefaultCustomNutrition());
   const [waterTrackerEnabled, setWaterTrackerEnabled] = useState(getWaterTrackerEnabled());
   const [mealTypeEnabled, setMealTypeEnabled] = useState(getMealTypeEnabled());
+  const [nutritionTrackingEnabled, setNutritionTrackingEnabled] = useState(getNutritionTrackingEnabled());
+  const [useCustomNutrition, setUseCustomNutrition] = useState(!!getCustomNutrition());
   const [dashboardFocus, setDashboardFocus] = useState(getDashboardFocus());
 
   // Water goal state (stored in mL, displayed in user's preferred unit)
@@ -121,6 +144,13 @@ export default function Settings({ onUpdateProfile, onClose }) {
       const tdeeForGoal = calculateTDEE(bmrForGoal, formData.activityLevel);
       const macroTargets = calculateMacroTargets(weight, tdeeForGoal, formData.fitnessGoal);
       saveDailyGoal(macroTargets.calorieAdjustment);
+    }
+
+    // Save or clear custom nutrition targets
+    if (useCustomNutrition) {
+      saveCustomNutrition(customNutrition);
+    } else {
+      clearCustomNutrition();
     }
 
     saveProfile(profile);
@@ -365,6 +395,136 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                 Prompt to assign each food to Breakfast, Lunch, Dinner, or Snacks when logging.
               </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="nutritionTrackingEnabled"
+              checked={nutritionTrackingEnabled}
+              onChange={(e) => {
+                setNutritionTrackingEnabled(e.target.checked);
+                saveNutritionTrackingEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div className="flex-1">
+              <label htmlFor="nutritionTrackingEnabled" className="text-lg font-semibold cursor-pointer">
+                Show Additional Nutrition
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Track fiber, sodium, sugar, and saturated fat on your dashboard.
+              </p>
+
+              {/* Custom Nutrition Targets - only shown when nutrition tracking is enabled */}
+              {nutritionTrackingEnabled && (
+                <div className="mt-4 pl-2 border-l-2 border-emerald-300 dark:border-emerald-700">
+                  <div className="flex items-center gap-3 mb-3">
+                    <input
+                      type="checkbox"
+                      id="useCustomNutrition"
+                      checked={useCustomNutrition}
+                      onChange={(e) => {
+                        setUseCustomNutrition(e.target.checked);
+                        // Recalculate defaults when unchecking
+                        if (!e.target.checked) {
+                          const bmr = calculateBMR(currentProfile);
+                          const tdee = calculateTDEE(bmr, currentProfile.activityLevel);
+                          const reproAdj = getReproductiveStatusCalorieAdjustment(currentProfile);
+                          const totalCalories = tdee + reproAdj;
+                          const defaults = calculateNutritionTargets(totalCalories);
+                          setCustomNutrition(defaults);
+                        }
+                      }}
+                      className="w-4 h-4 text-emerald-500 rounded"
+                    />
+                    <label htmlFor="useCustomNutrition" className="text-sm font-semibold cursor-pointer">
+                      Customize targets (Advanced)
+                    </label>
+                  </div>
+
+                  {useCustomNutrition && (
+                    <div className="space-y-3 p-3 bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                        Fiber is a goal (minimum), others are limits (maximum).
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-emerald-700 dark:text-emerald-400">
+                            Fiber (g) - goal
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={customNutrition.fiber}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, fiber: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-orange-700 dark:text-orange-400">
+                            Sodium (mg) - limit
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="100"
+                            value={customNutrition.sodium}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, sodium: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-pink-700 dark:text-pink-400">
+                            Sugar (g) - limit
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={customNutrition.sugar}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, sugar: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-red-700 dark:text-red-400">
+                            Saturated Fat (g) - limit
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={customNutrition.saturatedFat}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, saturatedFat: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {!useCustomNutrition && (() => {
+                    const bmr = calculateBMR(bmrProfile);
+                    const tdeeCalc = calculateTDEE(bmr, formData.activityLevel);
+                    const reproAdj = getReproductiveStatusCalorieAdjustment({ sex: formData.sex, reproductiveStatus: formData.reproductiveStatus });
+                    const totalCalories = tdeeCalc + reproAdj;
+                    const autoTargets = calculateNutritionTargets(totalCalories);
+
+                    return (
+                      <p className="text-xs text-gray-600 dark:text-gray-400 italic">
+                        Auto: {autoTargets.fiber}g fiber, {autoTargets.sodium}mg sodium, {autoTargets.sugar}g sugar, {autoTargets.saturatedFat}g saturated fat
+                      </p>
+                    );
+                  })()}
+                </div>
+              )}
             </div>
           </div>
 

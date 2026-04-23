@@ -101,6 +101,17 @@ export async function searchFoods(query, signal = null) {
       const fat = getNutrient('fat_serving', 'fat_100g') ||
                  getNutrient('fat', 'fat');
 
+      const fiber = getNutrient('fiber_serving', 'fiber_100g') ||
+                   getNutrient('fiber', 'fiber');
+      // OFF sodium is stored in grams; multiply by 1000 for mg
+      const sodiumG = getNutrient('sodium_serving', 'sodium_100g') ||
+                     getNutrient('sodium', 'sodium');
+      const sodium = Math.round(sodiumG * 1000);
+      const sugar = getNutrient('sugars_serving', 'sugars_100g') ||
+                   getNutrient('sugars', 'sugars');
+      const saturatedFat = getNutrient('saturated-fat_serving', 'saturated-fat_100g') ||
+                          getNutrient('saturated-fat', 'saturated-fat');
+
       return {
         name: product.product_name || 'Unknown Product',
         brand: product.brands || '',
@@ -108,6 +119,10 @@ export async function searchFoods(query, signal = null) {
         protein: Math.round(protein * 10) / 10,
         carbs: Math.round(carbs * 10) / 10,
         fat: Math.round(fat * 10) / 10,
+        fiber: Math.round(fiber * 10) / 10,
+        sodium,
+        sugar: Math.round(sugar * 10) / 10,
+        saturatedFat: Math.round(saturatedFat * 10) / 10,
         servingSize: product.serving_size || '100g',
         barcode: product.code,
       };
@@ -162,6 +177,17 @@ export async function getFoodByBarcode(barcode, signal = null) {
     const fat = getNutrient('fat_serving', 'fat_100g') ||
                getNutrient('fat', 'fat');
 
+    const fiber = getNutrient('fiber_serving', 'fiber_100g') ||
+                 getNutrient('fiber', 'fiber');
+    // OFF sodium is stored in grams; multiply by 1000 for mg
+    const sodiumG = getNutrient('sodium_serving', 'sodium_100g') ||
+                   getNutrient('sodium', 'sodium');
+    const sodium = Math.round(sodiumG * 1000);
+    const sugar = getNutrient('sugars_serving', 'sugars_100g') ||
+                 getNutrient('sugars', 'sugars');
+    const saturatedFat = getNutrient('saturated-fat_serving', 'saturated-fat_100g') ||
+                        getNutrient('saturated-fat', 'saturated-fat');
+
     return {
       name: product.product_name || 'Unknown Product',
       brand: product.brands || '',
@@ -169,6 +195,10 @@ export async function getFoodByBarcode(barcode, signal = null) {
       protein: Math.round(protein * 10) / 10,
       carbs: Math.round(carbs * 10) / 10,
       fat: Math.round(fat * 10) / 10,
+      fiber: Math.round(fiber * 10) / 10,
+      sodium,
+      sugar: Math.round(sugar * 10) / 10,
+      saturatedFat: Math.round(saturatedFat * 10) / 10,
       servingSize: product.serving_size || '100g',
       barcode: product.code,
     };

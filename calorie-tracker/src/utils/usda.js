@@ -63,15 +63,18 @@ export async function searchFoods(query, signal = null) {
       };
 
       // USDA Nutrient IDs:
-      // 1008 = Energy (kcal)
-      // 1003 = Protein
-      // 1005 = Carbohydrate
-      // 1004 = Total lipid (fat)
+      // 1008 = Energy (kcal), 1003 = Protein, 1005 = Carbohydrate, 1004 = Total lipid (fat)
+      // 1079 = Fiber, 1093 = Sodium (mg), 2000 = Total Sugars, 1063 = Sugars fallback
+      // 1258 = Saturated fat
 
       const calories = Math.round(getNutrient(1008));
       const protein = Math.round(getNutrient(1003) * 10) / 10;
       const carbs = Math.round(getNutrient(1005) * 10) / 10;
       const fat = Math.round(getNutrient(1004) * 10) / 10;
+      const fiber = Math.round(getNutrient(1079) * 10) / 10;
+      const sodium = Math.round(getNutrient(1093));
+      const sugar = Math.round((getNutrient(2000) || getNutrient(1063)) * 10) / 10;
+      const saturatedFat = Math.round(getNutrient(1258) * 10) / 10;
 
       // Build serving size string
       let servingSize = '';
@@ -94,6 +97,10 @@ export async function searchFoods(query, signal = null) {
         protein,
         carbs,
         fat,
+        fiber,
+        sodium,
+        sugar,
+        saturatedFat,
         servingSize,
         barcode: food.gtinUpc || '',
         source: 'usda',
@@ -160,6 +167,10 @@ export async function getFoodByBarcode(barcode, signal = null) {
     const protein = Math.round(getNutrient(1003) * 10) / 10;
     const carbs = Math.round(getNutrient(1005) * 10) / 10;
     const fat = Math.round(getNutrient(1004) * 10) / 10;
+    const fiber = Math.round(getNutrient(1079) * 10) / 10;
+    const sodium = Math.round(getNutrient(1093));
+    const sugar = Math.round((getNutrient(2000) || getNutrient(1063)) * 10) / 10;
+    const saturatedFat = Math.round(getNutrient(1258) * 10) / 10;
 
     let servingSize = '';
     if (food.servingSize && food.servingSizeUnit) {
@@ -181,6 +192,10 @@ export async function getFoodByBarcode(barcode, signal = null) {
       protein,
       carbs,
       fat,
+      fiber,
+      sodium,
+      sugar,
+      saturatedFat,
       servingSize,
       barcode: food.gtinUpc || '',
       source: 'usda',
