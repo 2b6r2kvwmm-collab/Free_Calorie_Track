@@ -195,6 +195,32 @@ export const schemaData: Record<string, SchemaData> = {
   },
 
   // FAQ pages
+  'protein-tracking-on-glp-1': {
+    type: 'FAQPage',
+    mainEntity: [
+      {
+        question: 'How much protein should I eat on Ozempic or Wegovy?',
+        answer: 'Most evidence-based guidance for people eating in a significant calorie deficit falls between 1.4 and 2.0 grams of protein per kilogram of body weight per day. For a 170 lb (77 kg) person, that\'s roughly 110 to 155 grams per day. If you\'re doing resistance training, aim for the higher end. Your doctor or a registered dietitian can give you a target tailored to your specific health situation.'
+      },
+      {
+        question: 'Is muscle loss really a significant risk on GLP-1 medications?',
+        answer: 'Yes — it\'s a recognized clinical concern that prescribers routinely discuss with patients. When calories are cut significantly and protein intake is too low, muscle makes up a meaningful portion of the weight lost. GLP-1 medications create particularly large calorie deficits, and the appetite suppression that makes protein-dense foods hard to eat compounds the problem.'
+      },
+      {
+        question: 'What should I eat on Ozempic when I\'m not hungry?',
+        answer: 'Focus on high-protein, low-volume foods: Greek yogurt, cottage cheese, protein shakes, egg whites, deli turkey, shrimp, and white fish. These give you 15–22 grams of protein per 100 calories without needing a big appetite. On rough nausea days, liquid protein — shakes and smoothies with protein powder — is usually easier to tolerate than solid food.'
+      },
+      {
+        question: 'Do I need to track sugar and saturated fat on a GLP-1?',
+        answer: 'Not necessarily. Protein and total calories are the two most important numbers to watch. Fiber is worth tracking if you\'re dealing with GI side effects. Sodium is worth monitoring if your doctor has flagged blood pressure or heart health. Sugar and saturated fat are optional unless your prescriber has specifically asked you to watch them.'
+      },
+      {
+        question: 'What happens if I consistently under-eat protein on a GLP-1?',
+        answer: 'Short term: more fatigue, slower recovery, and increased hunger between doses. Long term: significant muscle loss, a lower resting metabolism, and a much higher chance of regaining fat — rather than muscle — if you ever reduce or stop the medication. The scale might look good while your body composition quietly moves in the wrong direction.'
+      }
+    ]
+  },
+
   'what-is-protein': {
     type: 'FAQPage',
     mainEntity: [
