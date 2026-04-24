@@ -772,101 +772,6 @@ export default function Dashboard({ onRefresh }) {
         </div>
       )}
 
-      {/* Featured Macro Goals - Only when Macros First is selected */}
-      {dashboardFocus === 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
-        <div className="card bg-emerald-50 dark:bg-emerald-900/20">
-          <div className="text-center">
-            <div className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-4">
-              MACRO GOALS
-            </div>
-
-            {/* Macro Progress Bars */}
-            <div className="space-y-4">
-              {/* Protein */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-violet-600 dark:text-violet-400">Protein</span>
-                  <span className="text-sm">
-                    <span className="font-bold text-2xl">{Math.round(totalProtein)}</span>
-                    <span className="text-gray-600 dark:text-gray-400"> / {adjustedProteinGoal}g</span>
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
-                  <div
-                    className="bg-violet-500 h-6 rounded-full transition-all flex items-center justify-end pr-3"
-                    style={{
-                      width: `${Math.min((totalProtein / adjustedProteinGoal) * 100, 100)}%`,
-                      minWidth: totalProtein > 0 ? '40px' : '0'
-                    }}
-                  >
-                    {totalProtein > 0 && (
-                      <span className="text-white text-xs font-bold">
-                        {Math.round((totalProtein / adjustedProteinGoal) * 100)}%
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Carbs */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-orange-600 dark:text-orange-400">Carbs</span>
-                  <span className="text-sm">
-                    <span className="font-bold text-2xl">{Math.round(totalCarbs)}</span>
-                    <span className="text-gray-600 dark:text-gray-400"> / {carbsGoal}g</span>
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
-                  <div
-                    className="bg-orange-500 h-6 rounded-full transition-all flex items-center justify-end pr-3"
-                    style={{
-                      width: `${Math.min((totalCarbs / carbsGoal) * 100, 100)}%`,
-                      minWidth: totalCarbs > 0 ? '40px' : '0'
-                    }}
-                  >
-                    {totalCarbs > 0 && (
-                      <span className="text-white text-xs font-bold">
-                        {Math.round((totalCarbs / carbsGoal) * 100)}%
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Fat */}
-              <div>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-teal-600 dark:text-teal-400">Fat</span>
-                  <span className="text-sm">
-                    <span className="font-bold text-2xl">{Math.round(totalFat)}</span>
-                    <span className="text-gray-600 dark:text-gray-400"> / {fatGoal}g</span>
-                  </span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-6">
-                  <div
-                    className="bg-teal-500 h-6 rounded-full transition-all flex items-center justify-end pr-3"
-                    style={{
-                      width: `${Math.min((totalFat / fatGoal) * 100, 100)}%`,
-                      minWidth: totalFat > 0 ? '40px' : '0'
-                    }}
-                  >
-                    {totalFat > 0 && (
-                      <span className="text-white text-xs font-bold">
-                        {Math.round((totalFat / fatGoal) * 100)}%
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-xs text-gray-500 dark:text-gray-500 text-center italic mt-4">
-              Macro targets {exerciseBurned > 0 ? 'adjusted for exercise' : 'for today'}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Calories to Goal Display */}
       <div className="card">
@@ -1030,8 +935,8 @@ export default function Dashboard({ onRefresh }) {
         )}
       </div>
 
-      {/* Macros Breakdown with Goals - Only show when NOT in macros-first mode */}
-      {dashboardFocus !== 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
+      {/* Macros Breakdown with Goals */}
+      {(profile.fitnessGoal || usingCustomGoals) && (
         <MacroTracker
           profile={profile}
           currentProtein={totalProtein}
