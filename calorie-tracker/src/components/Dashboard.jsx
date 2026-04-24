@@ -773,6 +773,28 @@ export default function Dashboard({ onRefresh }) {
       )}
 
 
+      {/* Macros first — shown at top when macro focus is selected */}
+      {dashboardFocus === 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
+        <MacroTracker
+          profile={profile}
+          currentProtein={totalProtein}
+          currentCarbs={totalCarbs}
+          currentFat={totalFat}
+          proteinGoal={proteinGoal}
+          carbsGoal={carbsGoal}
+          fatGoal={fatGoal}
+          isCustomGoals={usingCustomGoals}
+          fitnessGoal={profile.fitnessGoal}
+          exerciseBurned={exerciseBurned}
+          showAdditional={nutritionTrackingEnabled}
+          fiber={Math.round(totalFiber * 10) / 10}
+          sodium={Math.round(totalSodium)}
+          sugar={Math.round(totalSugar * 10) / 10}
+          saturatedFat={Math.round(totalSaturatedFat * 10) / 10}
+          calorieGoal={dailyGoal}
+        />
+      )}
+
       {/* Calories to Goal Display */}
       <div className="card">
         <div className="text-center">
@@ -935,8 +957,8 @@ export default function Dashboard({ onRefresh }) {
         )}
       </div>
 
-      {/* Macros Breakdown with Goals */}
-      {(profile.fitnessGoal || usingCustomGoals) && (
+      {/* Macros Breakdown with Goals — shown in normal position when not in macro focus */}
+      {dashboardFocus !== 'macros' && (profile.fitnessGoal || usingCustomGoals) && (
         <MacroTracker
           profile={profile}
           currentProtein={totalProtein}
