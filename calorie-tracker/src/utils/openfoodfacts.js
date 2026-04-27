@@ -103,10 +103,12 @@ export async function searchFoods(query, signal = null) {
 
       const fiber = getNutrient('fiber_serving', 'fiber_100g') ||
                    getNutrient('fiber', 'fiber');
-      // OFF sodium is stored in grams; multiply by 1000 for mg
-      const sodiumG = getNutrient('sodium_serving', 'sodium_100g') ||
-                     getNutrient('sodium', 'sodium');
-      const sodium = Math.round(sodiumG * 1000);
+      // OFF stores sodium in grams, but some database entries incorrectly use mg.
+      // If the raw value exceeds 5 (i.e. >5g = >5000mg, unrealistic for a serving),
+      // treat it as already in mg rather than multiplying again.
+      const sodiumRaw = getNutrient('sodium_serving', 'sodium_100g') ||
+                       getNutrient('sodium', 'sodium');
+      const sodium = Math.round(sodiumRaw > 5 ? sodiumRaw : sodiumRaw * 1000);
       const sugar = getNutrient('sugars_serving', 'sugars_100g') ||
                    getNutrient('sugars', 'sugars');
       const saturatedFat = getNutrient('saturated-fat_serving', 'saturated-fat_100g') ||

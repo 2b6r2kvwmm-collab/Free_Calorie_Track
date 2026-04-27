@@ -1417,6 +1417,19 @@ export const commonFoods = [
 
 // Toppings for sandwiches and burgers
 export const sandwichToppings = [
+  // Bread & Buns
+  { name: 'White Bread (2 slices)', calories: 160, protein: 5, carbs: 30, fat: 2, category: 'bread' },
+  { name: 'Whole Wheat Bread (2 slices)', calories: 160, protein: 7, carbs: 28, fat: 3, category: 'bread' },
+  { name: 'Sourdough (2 slices)', calories: 180, protein: 7, carbs: 36, fat: 1, category: 'bread' },
+  { name: 'Rye Bread (2 slices)', calories: 160, protein: 6, carbs: 30, fat: 2, category: 'bread' },
+  { name: 'Brioche Bun', calories: 230, protein: 7, carbs: 36, fat: 7, category: 'bread' },
+  { name: 'Burger Bun', calories: 140, protein: 5, carbs: 26, fat: 2, category: 'bread' },
+  { name: 'Whole Wheat Bun', calories: 130, protein: 6, carbs: 24, fat: 2, category: 'bread' },
+  { name: 'Ciabatta Roll', calories: 200, protein: 6, carbs: 40, fat: 1, category: 'bread' },
+  { name: 'Hoagie Roll', calories: 210, protein: 7, carbs: 40, fat: 2, category: 'bread' },
+  { name: 'Wrap / Flour Tortilla (10")', calories: 200, protein: 5, carbs: 35, fat: 5, category: 'bread' },
+  { name: 'Lettuce Wrap (no bread)', calories: 5, protein: 0.5, carbs: 1, fat: 0, category: 'bread' },
+
   // Proteins
   { name: 'Bacon (2 strips)', calories: 90, protein: 6, carbs: 0, fat: 7, category: 'protein' },
   { name: 'Fried Egg (1 egg)', calories: 90, protein: 6, carbs: 0.5, fat: 7, category: 'protein' },

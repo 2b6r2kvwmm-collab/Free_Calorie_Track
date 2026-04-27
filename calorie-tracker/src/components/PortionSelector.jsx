@@ -364,6 +364,7 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
                 // Define category labels for all types
                 const categoryLabels = {
                   // Common categories
+                  bread: 'Bread & Buns',
                   protein: 'Protein',
                   cheese: 'Cheese',
                   vegetable: 'Vegetables',
