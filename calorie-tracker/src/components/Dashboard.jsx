@@ -926,25 +926,27 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Calorie Breakdown */}
       <div className="space-y-3">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="card text-center">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Eaten</div>
-            <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-              {caloriesEaten === 0 ? '0' : `+${caloriesEaten}`}
+        <div className="card">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex-1 text-center">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Eaten</div>
+              <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                {caloriesEaten === 0 ? '0' : `+${caloriesEaten}`}
+              </div>
             </div>
-          </div>
-
-          <div className="card text-center">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Resting</div>
-            <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">
-              -{restingBurned}
+            <div className="text-gray-300 dark:text-gray-600 text-sm">|</div>
+            <div className="flex-1 text-center">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Resting</div>
+              <div className="text-lg font-bold text-orange-600 dark:text-orange-400">
+                -{restingBurned}
+              </div>
             </div>
-          </div>
-
-          <div className="card text-center">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-1">Exercise</div>
-            <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">
-              {exerciseBurned === 0 ? '0' : `-${exerciseBurned}`}
+            <div className="text-gray-300 dark:text-gray-600 text-sm">|</div>
+            <div className="flex-1 text-center">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Exercise</div>
+              <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                {exerciseBurned === 0 ? '0' : `-${exerciseBurned}`}
+              </div>
             </div>
           </div>
         </div>
