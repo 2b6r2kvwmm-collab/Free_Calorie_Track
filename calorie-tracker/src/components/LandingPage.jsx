@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  UtensilsCrossed, Dumbbell, Salad, ScanBarcode,
+  Activity, TrendingUp, WifiOff, ShieldCheck
+} from 'lucide-react';
 
 const FAQ_SECTIONS = [
   {
@@ -79,6 +83,10 @@ const FAQ_SECTIONS = [
       {
         q: 'Can I copy yesterday\'s meals?',
         a: 'Yes. There\'s a one-tap "Copy Yesterday\'s Meals" option in the food logging menu. It copies every food entry from the previous day into today\'s log. Useful for people who eat similar meals day to day and don\'t want to re-enter everything from scratch.',
+      },
+      {
+        q: 'Can I track fiber, sodium, sugar, and saturated fat?',
+        a: 'Yes — optionally. Enable additional nutrition tracking in Settings and these nutrients appear on your dashboard alongside your macros. They\'re logged automatically from any food entry that includes the data. Useful for anyone managing GI health, heart health, or eating smaller portions who wants a more complete nutritional picture.',
       },
       {
         q: 'Can I edit or delete food entries after logging them?',
@@ -249,6 +257,7 @@ const HOMESCREEN_STEPS = [
 const COMPARISON_ROWS = [
   { feature: 'Barcode scanning', fct: '✅', other: '💰 Requires subscription' },
   { feature: 'Macro tracking', fct: '✅', other: '⚠️ Free tier limited' },
+  { feature: 'Nutrition tracking (fiber, sodium)', fct: '✅', other: '⚠️ Limited or not available' },
   { feature: 'Trends & insights', fct: '✅', other: '⚠️ Free tier limited' },
   { feature: 'Ad-free', fct: '✅', other: '💰 Requires subscription' },
   { feature: 'Account required', fct: '❌ No', other: '✓ Yes' },
@@ -362,7 +371,7 @@ export default function LandingPage({ onGetStarted }) {
           <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
             {/* Left: Text */}
             <div className="flex-1 text-center md:text-left max-w-xl">
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The Best Free Calorie Counter & Macro Tracker</h1>
+              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The best free calorie counter & macro tracker</h1>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                 Count calories, track macros and protein with <span className="font-bold text-emerald-600 dark:text-emerald-400">no subscription fees, ads, or accounts.</span>
               </p>
@@ -371,7 +380,7 @@ export default function LandingPage({ onGetStarted }) {
                 className="bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
                 aria-label="Start tracking calories and macros now"
               >
-                Start Tracking Now
+                Get started now
               </button>
             </div>
 
@@ -423,25 +432,28 @@ export default function LandingPage({ onGetStarted }) {
         </div>
       </div>
 
-      {/* How It Works */}
+      {/* Value Props */}
       <div className="max-w-2xl mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">How it works</h2>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {[
-            { step: '1', title: 'Set up your profile', desc: 'Enter your age, height, weight, and activity level. The free calorie app calculates your TDEE and macro targets (protein, carbs, fat) automatically.*', note: true },
-            { step: '2', title: 'Log your food and exercise', desc: 'Scan barcodes, pick from thousands of common foods, search branded products, build custom recipes, and track workouts from 250+ exercises.' },
-            { step: '3', title: 'See your calories and macros', desc: 'Real-time progress bars for calories, protein, carbs, and fat. Track your Net calories (food eaten minus body burn minus exercise) for true energy balance.' },
+            {
+              title: 'No cost. No catch.',
+              desc: 'Every feature is free — barcode scanning, macro tracking, trends, nutrition tracking. No premium tier, no trial that expires, no ads. Free Calorie Track is funded by optional donations.',
+            },
+            {
+              title: 'No account. No cloud.',
+              desc: 'Your data lives on your device, not on a server. There\'s nothing to sign up for, no email required, and nothing to hand over.',
+            },
+            {
+              title: 'Works everywhere, even offline.',
+              desc: 'Install it to your home screen from any browser — iPhone, Android, desktop. Runs like a native app and works without internet.',
+            },
           ].map((item) => (
-            <div key={item.step} className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
-                {item.step}
-              </div>
-              <div className="pt-1">
-                <h3 className="font-bold text-gray-800 dark:text-gray-100">{item.title}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{item.desc}</p>
-                {item.note && (
-                  <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 italic">*Estimates only. Consult a healthcare provider for medical advice.</p>
-                )}
+            <div key={item.title} className="flex items-start gap-4">
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-emerald-500 mt-2.5" />
+              <div>
+                <h3 className="font-bold text-gray-800 dark:text-gray-100 text-lg">{item.title}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">{item.desc}</p>
               </div>
             </div>
           ))}
@@ -451,20 +463,21 @@ export default function LandingPage({ onGetStarted }) {
       {/* Features Grid */}
       <div className="bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
         <div className="max-w-2xl mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Calorie & Macro Tracker Features</h2>
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Best free calorie app for tracking calories, protein, carbs, and fat with no paywalls.</p>
+          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free calorie & macro tracker features</h2>
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Every feature included. No paywalls.</p>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: '🍽️', title: 'Calorie Tracking', desc: 'Track calories, macros, and protein in one app. Real-time progress bars and goals.' },
-              { icon: '📷', title: 'Barcode Scanning', desc: 'Scan any product instantly. 220,000+ items in the database.' },
-              { icon: '🥩', title: 'Protein Tracker', desc: 'Track daily protein with dedicated progress bar. Hit high-protein goals easily.' },
-              { icon: '🏋️', title: '250+ Exercises', desc: 'Cardio, strength, sports, HIIT. MET-based calorie calculations.' },
-              { icon: '📈', title: 'Trends & Insights', desc: 'Weekly and monthly averages. Weight progress charts. All free.' },
-              { icon: '📶', title: 'Works Offline', desc: 'Install on any device. No internet needed.' },
-              { icon: '🥗', title: 'Nutrition Tracking', desc: 'Optionally track fiber, sodium, sugar, and saturated fat alongside your macros.' },
+              { icon: UtensilsCrossed, title: 'Calorie tracking', desc: 'Log meals with real-time totals and a daily progress bar.' },
+              { icon: Dumbbell, title: 'Macro & protein tracking', desc: 'Track protein, carbs, and fat alongside calories. Auto-calculated goals or set your own.' },
+              { icon: Salad, title: 'Nutrition tracking', desc: 'Optionally track fiber, sodium, sugar, and saturated fat for a fuller picture.' },
+              { icon: ScanBarcode, title: 'Barcode scanning', desc: 'Scan any product instantly. 220,000+ items in the database.' },
+              { icon: Activity, title: 'Exercise logging', desc: '250+ exercises across cardio, strength, and sports. MET-based calorie calculations.' },
+              { icon: TrendingUp, title: 'Trends & insights', desc: 'Weekly averages, weight charts, and 7-day rolling averages.' },
+              { icon: WifiOff, title: 'Works offline', desc: 'Install on any device. No internet needed after setup.' },
+              { icon: ShieldCheck, title: 'Private by design', desc: 'Your data stays on your device. No server, no breach risk, no third-party access.' },
             ].map((f) => (
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
-                <div className="text-2xl mb-2">{f.icon}</div>
+                <f.icon size={24} className="text-emerald-600 dark:text-emerald-400 mb-3" />
                 <h3 className="font-bold text-sm text-gray-800 dark:text-gray-100">{f.title}</h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{f.desc}</p>
               </div>
@@ -511,7 +524,7 @@ export default function LandingPage({ onGetStarted }) {
             className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50"
             aria-label="Start using the best free calorie app now"
           >
-            Start Tracking Now
+            Get started now
           </button>
           <p className="text-emerald-100 text-sm mt-3">No app store download required—opens instantly in your browser</p>
         </div>
