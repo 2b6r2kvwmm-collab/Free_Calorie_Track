@@ -414,10 +414,10 @@ Free Calorie Track makes it easy to log weighed foods:
 ## Related Articles
 
 <div class="grid md:grid-cols-2 gap-4">
-  <a href="/blog/how-to-count-calories" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+  <a href="/calorie-counter" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">📊</div>
-    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">How to Count Calories</h4>
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Complete beginner's guide to calorie counting</p>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Free Calorie Counter</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Track calories and macros free — no account needed</p>
   </a>
   <a href="/blog/high-protein-low-calorie-foods" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">🍗</div>
