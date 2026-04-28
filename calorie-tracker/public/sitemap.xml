@@ -98,11 +98,7 @@
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
-  <url>
-    <loc>https://freecalorietrack.com/blog/how-to-count-calories</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
+
   <url>
     <loc>https://freecalorietrack.com/blog/bmi-vs-ffmi</loc>
     <priority>0.8</priority>
