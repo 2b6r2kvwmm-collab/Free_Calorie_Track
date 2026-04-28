@@ -748,13 +748,6 @@ export default function Dashboard({ onRefresh }) {
 
   return (
     <div className="space-y-6">
-      {/* Today's Date */}
-      <div className="text-center">
-        <div className="text-xl font-semibold text-gray-700 dark:text-gray-300">
-          {todayFormatted}
-        </div>
-      </div>
-
       {/* Motivational Nudge */}
       {motivationalNudge && (
         <div className={`p-4 rounded-lg border-2 ${
@@ -824,35 +817,59 @@ export default function Dashboard({ onRefresh }) {
           </div>
 
           {showNetInfo && (
-            <>
-              {/* Net Calories and Net Goal on same line */}
-              <div className="flex items-center justify-center gap-4 mb-4 text-sm flex-wrap">
-                <div className="text-gray-600 dark:text-gray-400">
-                  Net Calories Today: {netCalories >= 0 ? '+' : ''}{netCalories} cal
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mt-1 space-y-4">
+              {/* Calorie breakdown */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex-1 text-center">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Eaten</div>
+                  <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                    {caloriesEaten === 0 ? '0' : `+${caloriesEaten}`}
+                  </div>
                 </div>
-                <span className="text-gray-400 dark:text-gray-600">•</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-600 dark:text-gray-400">Net Goal: {dailyGoal} cal</span>
-                  {(usingCustomGoals || (profile.fitnessGoal !== 'maintenance')) && (
-                    <button
-                      onClick={() => {
-                        const adjustment = usingCustomGoals ? dailyGoal - tdee : dailyGoal;
-                        setGoalInput(adjustment.toString());
-                        setShowGoalEdit(true);
-                      }}
-                      className="text-emerald-600 dark:text-emerald-400 hover:underline"
-                    >
-                      Edit
-                    </button>
-                  )}
+                <div className="text-gray-300 dark:text-gray-600 text-sm">|</div>
+                <div className="flex-1 text-center">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Resting</div>
+                  <div className="text-lg font-bold text-orange-600 dark:text-orange-400">
+                    -{restingBurned}
+                  </div>
+                </div>
+                <div className="text-gray-300 dark:text-gray-600 text-sm">|</div>
+                <div className="flex-1 text-center">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Exercise</div>
+                  <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
+                    {exerciseBurned === 0 ? '0' : `-${exerciseBurned}`}
+                  </div>
                 </div>
               </div>
 
-              {/* Subtle daily notice */}
-              <div className="text-xs text-gray-500 dark:text-gray-500 text-center italic mb-4">
+              {/* Net Goal */}
+              <div className="flex items-center justify-center gap-2 text-sm">
+                <span className="text-gray-600 dark:text-gray-400">Net Goal: {dailyGoal} cal</span>
+                {(usingCustomGoals || (profile.fitnessGoal !== 'maintenance')) && (
+                  <button
+                    onClick={() => {
+                      const adjustment = usingCustomGoals ? dailyGoal - tdee : dailyGoal;
+                      setGoalInput(adjustment.toString());
+                      setShowGoalEdit(true);
+                    }}
+                    className="text-emerald-600 dark:text-emerald-400 hover:underline"
+                  >
+                    Edit
+                  </button>
+                )}
+              </div>
+
+              {/* Disclaimer + new user tip */}
+              <div className="text-xs text-gray-500 dark:text-gray-500 text-center italic">
                 Goals and totals reflect end-of-day targets
               </div>
-            </>
+              {daysTracked < 5 && (
+                <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
+                  <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
+                  net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
+                </div>
+              )}
+            </div>
           )}
 
           {/* Previous 3 Days */}
@@ -933,40 +950,6 @@ export default function Dashboard({ onRefresh }) {
         </div>
       )}
 
-      {/* Calorie Breakdown */}
-      <div className="space-y-3">
-        <div className="card">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex-1 text-center">
-              <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Eaten</div>
-              <div className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                {caloriesEaten === 0 ? '0' : `+${caloriesEaten}`}
-              </div>
-            </div>
-            <div className="text-gray-300 dark:text-gray-600 text-sm">|</div>
-            <div className="flex-1 text-center">
-              <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Resting</div>
-              <div className="text-lg font-bold text-orange-600 dark:text-orange-400">
-                -{restingBurned}
-              </div>
-            </div>
-            <div className="text-gray-300 dark:text-gray-600 text-sm">|</div>
-            <div className="flex-1 text-center">
-              <div className="text-xs text-gray-500 dark:text-gray-400 mb-0.5">Exercise</div>
-              <div className="text-lg font-bold text-purple-600 dark:text-purple-400">
-                {exerciseBurned === 0 ? '0' : `-${exerciseBurned}`}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {daysTracked < 5 && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg text-sm text-gray-700 dark:text-gray-300">
-            <span className="font-semibold">💡 How net works:</span> Resting calories ({tdee} cal/day) are based on your lifestyle activity level.
-            net = Food Eaten - (Resting + Exercise). Log your workouts separately to track full daily burn.
-          </div>
-        )}
-      </div>
 
       {/* Macros Breakdown with Goals — shown in normal position when not in macro focus */}
       {dashboardFocus !== 'macros' && (profile.fitnessGoal || usingCustomGoals) && (

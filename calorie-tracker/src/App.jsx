@@ -120,6 +120,7 @@ function App() {
   };
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';
+  const todayFormatted = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
   // App routes
   if (!landingPageShown && !profile) {
@@ -161,13 +162,16 @@ function App() {
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <button
-                onClick={() => setShowUserManager(true)}
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-                style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
-              >
-                {currentUserName}
-              </button>
+              <div className="flex flex-col items-end">
+                <span className="text-xs text-gray-400 dark:text-gray-500">{todayFormatted}</span>
+                <button
+                  onClick={() => setShowUserManager(true)}
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                  style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 500 }}
+                >
+                  {currentUserName}
+                </button>
+              </div>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="text-3xl"
@@ -194,6 +198,18 @@ function App() {
             />
             <Route
               path="/log-exercise"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/ai-logging-setup"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/ai-log"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/ai-food-logged"
               element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
             />
             <Route
