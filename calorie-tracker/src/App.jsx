@@ -156,7 +156,7 @@ function App() {
                   style={{ fontFamily: "'Inter', system-ui, sans-serif", fontWeight: 700, letterSpacing: '-0.02em' }}>
                 Free Calorie Track
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400 uppercase"
+              <p className="text-xs text-gray-500 dark:text-gray-400"
                  style={{ fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '0.03em', fontSize: '10px' }}>
                 The ultimate calorie & macro tracker
               </p>
