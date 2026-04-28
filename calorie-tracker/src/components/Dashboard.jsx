@@ -61,6 +61,7 @@ export default function Dashboard({ onRefresh }) {
   const [showFoodInput, setShowFoodInput] = useState(false);
   const [showExerciseLog, setShowExerciseLog] = useState(false);
   const [showGoalEdit, setShowGoalEdit] = useState(false);
+  const [showNetInfo, setShowNetInfo] = useState(false);
   const goalModalRef = useModalAccessibility(showGoalEdit, () => setShowGoalEdit(false));
   const [goalInput, setGoalInput] = useState('');
   const [showAchievements, setShowAchievements] = useState(false);
@@ -273,8 +274,8 @@ export default function Dashboard({ onRefresh }) {
       }
     }
 
-    // Update modal: show once to existing users upgrading to 1.6.0
-    if (getProfile() && getSeenUpdateModal() !== '1.6.0') {
+    // Update modal: disabled until next release
+    if (false && getProfile() && getSeenUpdateModal() !== '1.6.0') {
       markUpdateModalSeen('1.6.0');
       setShowUpdateModal(true);
     }
@@ -811,40 +812,48 @@ export default function Dashboard({ onRefresh }) {
             )}
           </div>
 
-          {/* Status indicator for accessibility */}
-          <div className={`text-sm font-semibold ${statusColor} mb-4`}>
+          {/* Status indicator + more info toggle */}
+          <div className={`flex items-center justify-center gap-3 text-sm font-semibold ${statusColor} mb-4`}>
             {statusText}
+            <button
+              onClick={() => setShowNetInfo(v => !v)}
+              className="text-xs font-normal text-gray-400 dark:text-gray-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              {showNetInfo ? 'less ▲' : 'more ▼'}
+            </button>
           </div>
 
-          {/* Net Calories and Net Goal on same line */}
-          <div className="flex items-center justify-center gap-4 mb-4 text-sm flex-wrap">
-            <div className="text-gray-600 dark:text-gray-400">
-              Net Calories Today: {netCalories >= 0 ? '+' : ''}{netCalories} cal
-            </div>
-            <span className="text-gray-400 dark:text-gray-600">•</span>
-            <div className="flex items-center gap-2">
-              <span className="text-gray-600 dark:text-gray-400">Net Goal: {dailyGoal} cal</span>
-              {/* Hide edit button for maintenance goal when not using custom macros */}
-              {(usingCustomGoals || (profile.fitnessGoal !== 'maintenance')) && (
-                <button
-                  onClick={() => {
-                    // Convert to adjustment if using custom goals
-                    const adjustment = usingCustomGoals ? dailyGoal - tdee : dailyGoal;
-                    setGoalInput(adjustment.toString());
-                    setShowGoalEdit(true);
-                  }}
-                  className="text-emerald-600 dark:text-emerald-400 hover:underline"
-                >
-                  Edit
-                </button>
-              )}
-            </div>
-          </div>
+          {showNetInfo && (
+            <>
+              {/* Net Calories and Net Goal on same line */}
+              <div className="flex items-center justify-center gap-4 mb-4 text-sm flex-wrap">
+                <div className="text-gray-600 dark:text-gray-400">
+                  Net Calories Today: {netCalories >= 0 ? '+' : ''}{netCalories} cal
+                </div>
+                <span className="text-gray-400 dark:text-gray-600">•</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-600 dark:text-gray-400">Net Goal: {dailyGoal} cal</span>
+                  {(usingCustomGoals || (profile.fitnessGoal !== 'maintenance')) && (
+                    <button
+                      onClick={() => {
+                        const adjustment = usingCustomGoals ? dailyGoal - tdee : dailyGoal;
+                        setGoalInput(adjustment.toString());
+                        setShowGoalEdit(true);
+                      }}
+                      className="text-emerald-600 dark:text-emerald-400 hover:underline"
+                    >
+                      Edit
+                    </button>
+                  )}
+                </div>
+              </div>
 
-          {/* Subtle daily notice */}
-          <div className="text-xs text-gray-500 dark:text-gray-500 text-center italic">
-            Goals and totals reflect end-of-day targets
-          </div>
+              {/* Subtle daily notice */}
+              <div className="text-xs text-gray-500 dark:text-gray-500 text-center italic mb-4">
+                Goals and totals reflect end-of-day targets
+              </div>
+            </>
+          )}
 
           {/* Previous 3 Days */}
           <div className="border-t border-gray-300 dark:border-gray-600 pt-4 mt-4">
