@@ -8,17 +8,15 @@ import {
   getLocalDateString, COACH_MIN_DAYS,
 } from '../utils/storage';
 import { calculateMacroTargets } from '../utils/macros';
-import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
+import { getAdjustedTDEE } from '../utils/calculations';
 
 function buildProfilePayload() {
   const profile = getProfile();
   if (!profile) return null;
 
-  const bmr = calculateBMR(profile);
-  const tdee = getBaselineTDEE(bmr, profile.activityLevel);
-  const customCalorie = getCustomCalorieGoal();
+  const tdee = getAdjustedTDEE(profile);
+  const calorieGoal = getCustomCalorieGoal() || Math.round(tdee);
   const customMacros = getCustomMacros();
-  const calorieGoal = customCalorie || Math.round(tdee);
   const macros = customMacros || calculateMacroTargets(profile, calorieGoal);
 
   return {

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { exercises, calculateExerciseCalories, calculateWeightedVestMET, getRunningMET, getCyclingMET, calculatePace } from '../utils/calculations';
 import { getProfile, addExerciseEntry } from '../utils/storage';
 import WorkoutTemplates from './WorkoutTemplates';
+import ExerciseCalorieInfo from './ExerciseCalorieInfo';
 import { trackWorkout } from '../utils/gamification';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
@@ -686,7 +687,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                 {cardioTrackingMode === 'paceDistance' && pace && distance && (
                   <div className="mt-4 text-center">
                     <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Estimated calories burned
+                      Estimated calories burned<ExerciseCalorieInfo />
                     </div>
                     <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
                       {(() => {
@@ -738,7 +739,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                   (!requiresDistance && duration)) && (
                   <div className="mt-4 text-center">
                     <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Estimated calories burned
+                      Estimated calories burned<ExerciseCalorieInfo />
                     </div>
                     <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
                       {(() => {
@@ -860,7 +861,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                 {sets && reps && (
                   <div className="mt-4 text-center">
                     <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Estimated calories burned
+                      Estimated calories burned<ExerciseCalorieInfo />
                     </div>
                     <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
                       {calculateExerciseCalories(
