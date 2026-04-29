@@ -378,12 +378,13 @@ export const exercises = [
   {"name":"Hula Hooping","met":4,"category":"Recreational"},
 ];
 
-// Calculate net calories burned from exercise (above resting metabolic rate).
-// Uses (MET - 1) to exclude BMR, which is already accounted for in restingBurned
-// via the daily TDEE calculation — using gross MET would double-count it.
+// Calculate adjusted net calories burned from exercise.
+// (MET - 1) removes BMR already counted in restingBurned (avoids double-counting).
+// 0.72 factor accounts for the ~28% average metabolic compensation effect
+// (Pontzer et al. 2016 — body partially offsets exercise expenditure via NEAT reduction).
 // weight in kg, duration in minutes
 export function calculateExerciseCalories(weight, met, duration) {
-  return Math.round(((met - 1) * weight * duration) / 60);
+  return Math.round(((met - 1) * weight * duration) / 60 * 0.72);
 }
 
 // Calculate resting calories burned throughout the day (based on time of day)

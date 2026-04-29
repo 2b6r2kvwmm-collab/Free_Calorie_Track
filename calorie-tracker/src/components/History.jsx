@@ -3,6 +3,7 @@ import { getFoodLog, getExerciseLog, getProfile, deleteFoodEntry, deleteExercise
 import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
 import FoodInput from './FoodInput';
 import ExerciseLog from './ExerciseLog';
+import ExerciseCalorieInfo from './ExerciseCalorieInfo';
 
 export default function History({ onRefresh }) {
   const [expandedDate, setExpandedDate] = useState(null);
@@ -331,10 +332,10 @@ export default function History({ onRefresh }) {
                                   <>
                                     {entry.sets} sets × {entry.reps} reps
                                     {entry.weight > 0 && ` @ ${entry.weight}${profile.unit === 'metric' ? 'kg' : 'lbs'}`}
-                                    {' • '}{entry.caloriesBurned} cal burned
+                                    {' • '}{entry.caloriesBurned} cal burned<ExerciseCalorieInfo />
                                   </>
                                 ) : (
-                                  <>{entry.duration} min • {entry.caloriesBurned} cal burned</>
+                                  <>{entry.duration} min • {entry.caloriesBurned} cal burned<ExerciseCalorieInfo /></>
                                 )}
                               </div>
                             </div>

@@ -52,6 +52,7 @@ import WaterTracker from './WaterTracker';
 import MilestoneModal from './MilestoneModal';
 import BackupReminderModal from './BackupReminderModal';
 import UpdateModal from './UpdateModal';
+import ExerciseCalorieInfo from './ExerciseCalorieInfo';
 
 export default function Dashboard({ onRefresh }) {
   const location = useLocation();
@@ -1259,10 +1260,10 @@ export default function Dashboard({ onRefresh }) {
                           <>
                             {entry.sets} sets × {entry.reps} reps
                             {entry.weight > 0 && ` @ ${entry.weight}${profile.unit === 'metric' ? 'kg' : 'lbs'}`}
-                            {' • '}{entry.caloriesBurned} cal burned
+                            {' • '}{entry.caloriesBurned} cal burned<ExerciseCalorieInfo />
                           </>
                         ) : (
-                          <>{entry.duration} min • {entry.caloriesBurned} cal burned</>
+                          <>{entry.duration} min • {entry.caloriesBurned} cal burned<ExerciseCalorieInfo /></>
                         )}
                       </div>
                       <div className="text-xs text-gray-400 dark:text-gray-600 mt-1">
