@@ -378,10 +378,12 @@ export const exercises = [
   {"name":"Hula Hooping","met":4,"category":"Recreational"},
 ];
 
-// Calculate calories burned from exercise
+// Calculate net calories burned from exercise (above resting metabolic rate).
+// Uses (MET - 1) to exclude BMR, which is already accounted for in restingBurned
+// via the daily TDEE calculation — using gross MET would double-count it.
 // weight in kg, duration in minutes
 export function calculateExerciseCalories(weight, met, duration) {
-  return Math.round((met * weight * duration) / 60);
+  return Math.round(((met - 1) * weight * duration) / 60);
 }
 
 // Calculate resting calories burned throughout the day (based on time of day)
