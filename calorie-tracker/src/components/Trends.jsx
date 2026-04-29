@@ -27,6 +27,7 @@ import {
 } from 'recharts';
 import WeeklySummary from './WeeklySummary';
 import WeightTracker from './WeightTracker';
+import CoachCard from './CoachCard';
 
 export default function Trends() {
   const [period, setPeriod] = useState('week'); // week or month
@@ -235,6 +236,9 @@ export default function Trends() {
 
   return (
     <div className="space-y-6">
+      {/* Nutrition Coach */}
+      <CoachCard />
+
       {/* Weekly/Monthly Summary */}
       <WeeklySummary />
 

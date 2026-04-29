@@ -410,6 +410,52 @@ export function saveMealTypeEnabled(enabled) {
   setData('mealTypeEnabled', enabled);
 }
 
+// Nutrition Coach
+export const COACH_MIN_DAYS = 3;
+
+export function getCoachTermsAccepted() {
+  return getData('coachTermsAccepted') === true;
+}
+
+export function setCoachTermsAccepted() {
+  setData('coachTermsAccepted', true);
+}
+
+export function getCoachResult() {
+  return getData('coachResult') || null;
+}
+
+export function saveCoachResult(sections) {
+  setData('coachResult', { sections, date: getLocalDateString() });
+}
+
+export function getLastCoachDate() {
+  return getData('coachResult')?.date || null;
+}
+
+export function getDaysLoggedLastWeek() {
+  const log = getFoodLog();
+  const cutoff = getLocalDateString(new Date(Date.now() - 6 * 24 * 60 * 60 * 1000));
+  const dates = new Set(log.filter(e => e.date >= cutoff).map(e => e.date));
+  return dates.size;
+}
+
+export function getWeeklyLogsForCoach() {
+  const log = getFoodLog();
+  const cutoff = getLocalDateString(new Date(Date.now() - 6 * 24 * 60 * 60 * 1000));
+  const recent = log.filter(e => e.date >= cutoff);
+  const byDate = {};
+  recent.forEach(e => {
+    if (!byDate[e.date]) byDate[e.date] = { date: e.date, calories: 0, protein: 0, carbs: 0, fat: 0, foods: [] };
+    byDate[e.date].calories += Math.round(e.calories || 0);
+    byDate[e.date].protein += Math.round(e.protein || 0);
+    byDate[e.date].carbs += Math.round(e.carbs || 0);
+    byDate[e.date].fat += Math.round(e.fat || 0);
+    byDate[e.date].foods.push(e.name);
+  });
+  return Object.values(byDate).sort((a, b) => a.date.localeCompare(b.date));
+}
+
 // AI Logging — daily limit and first-time terms acceptance
 export const AI_DAILY_LIMIT = 10;
 
