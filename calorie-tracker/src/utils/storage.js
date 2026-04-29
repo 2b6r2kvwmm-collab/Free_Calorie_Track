@@ -441,18 +441,24 @@ export function getDaysLoggedLastWeek() {
 }
 
 export function getWeeklyLogsForCoach() {
-  const log = getFoodLog();
   const cutoff = getLocalDateString(new Date(Date.now() - 6 * 24 * 60 * 60 * 1000));
-  const recent = log.filter(e => e.date >= cutoff);
   const byDate = {};
-  recent.forEach(e => {
-    if (!byDate[e.date]) byDate[e.date] = { date: e.date, calories: 0, protein: 0, carbs: 0, fat: 0, foods: [] };
+
+  getFoodLog().filter(e => e.date >= cutoff).forEach(e => {
+    if (!byDate[e.date]) byDate[e.date] = { date: e.date, calories: 0, protein: 0, carbs: 0, fat: 0, caloriesBurned: 0, foods: [], exercises: [] };
     byDate[e.date].calories += Math.round(e.calories || 0);
     byDate[e.date].protein += Math.round(e.protein || 0);
     byDate[e.date].carbs += Math.round(e.carbs || 0);
     byDate[e.date].fat += Math.round(e.fat || 0);
     byDate[e.date].foods.push(e.name);
   });
+
+  getExerciseLog().filter(e => e.date >= cutoff).forEach(e => {
+    if (!byDate[e.date]) byDate[e.date] = { date: e.date, calories: 0, protein: 0, carbs: 0, fat: 0, caloriesBurned: 0, foods: [], exercises: [] };
+    byDate[e.date].caloriesBurned += Math.round(e.caloriesBurned || 0);
+    byDate[e.date].exercises.push(e.name);
+  });
+
   return Object.values(byDate).sort((a, b) => a.date.localeCompare(b.date));
 }
 

@@ -212,6 +212,10 @@ export default function CoachCard() {
                 </button>
               </div>
 
+              <p className="text-xs text-gray-400 dark:text-gray-500 leading-relaxed">
+                AI-generated estimates — may not be accurate. Not a substitute for professional nutrition advice.
+              </p>
+
               <ResultSection
                 icon="✅"
                 title="What's working"

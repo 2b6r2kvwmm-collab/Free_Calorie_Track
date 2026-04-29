@@ -15,6 +15,7 @@ Rules:
 - "needsAttention" may be an empty array [] if the user is genuinely on track — do NOT manufacture problems or nitpick if someone is doing well
 - "whatsWorking" must always have at least one real, specific entry — find something to celebrate
 - "thisTry" must be concrete and specific — never generic advice like "eat more protein" without context
+- If exercise burns are logged, factor them in: a day with 400 kcal burned is not over-budget if net intake is on target
 - If fewer than 7 days are logged, base insights only on what's available and note this in trajectory
 - Tone: like a knowledgeable, encouraging friend — honest but never preachy or corporate
 - Return ONLY the JSON object — no explanation, no markdown, no extra text`;
@@ -48,7 +49,12 @@ User profile:
 - Age: ${profile.age || 'not specified'}, Weight: ${profile.weight || 'not specified'} ${profile.units === 'metric' ? 'kg' : 'lbs'}
 
 Food logs for the last 7 days (${logs.length} day${logs.length !== 1 ? 's' : ''} logged):
-${logs.map(day => `${day.date}: ${day.calories} kcal | ${day.protein}g protein | ${day.carbs}g carbs | ${day.fat}g fat | Foods: ${day.foods.slice(0, 8).join(', ')}${day.foods.length > 8 ? ` +${day.foods.length - 8} more` : ''}`).join('\n')}`.trim();
+${logs.map(day => {
+    const exercisePart = day.caloriesBurned > 0
+      ? ` | Exercise burned: ${day.caloriesBurned} kcal (${day.exercises.slice(0, 4).join(', ')}${day.exercises.length > 4 ? ` +${day.exercises.length - 4} more` : ''})`
+      : '';
+    return `${day.date}: ${day.calories} kcal eaten | ${day.protein}g protein | ${day.carbs}g carbs | ${day.fat}g fat${exercisePart} | Foods: ${day.foods.slice(0, 8).join(', ')}${day.foods.length > 8 ? ` +${day.foods.length - 8} more` : ''}`;
+  }).join('\n')}`.trim();
 
   return {
     contents: [{ parts: [{ text: `${COACH_PROMPT}\n\n${userContext}` }] }],
