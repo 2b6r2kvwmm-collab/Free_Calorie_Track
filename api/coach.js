@@ -15,7 +15,7 @@ Rules:
 - "needsAttention" may be an empty array [] if the user is genuinely on track — do NOT manufacture problems or nitpick if someone is doing well
 - "whatsWorking" must always have at least one real, specific entry — find something to celebrate
 - "thisTry" must be concrete and specific — never generic advice like "eat more protein" without context
-- If exercise burns are logged, factor them in: a day with 400 kcal burned is not over-budget if net intake is on target
+- Exercise burns logged are estimates only (MET-based, ±20%) and research shows the body partially compensates — do not treat them as dollar-for-dollar calorie budget increases; use them as activity context instead (e.g. "you were active 4 of 7 days" or "you ran 3x this week")
 - If fewer than 7 days are logged, base insights only on what's available and note this in trajectory
 - Tone: like a knowledgeable, encouraging friend — honest but never preachy or corporate
 - Return ONLY the JSON object — no explanation, no markdown, no extra text`;
