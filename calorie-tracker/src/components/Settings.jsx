@@ -1274,7 +1274,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
             if (navigator.share) {
               navigator.share({
                 title: 'Free Calorie Track',
-                text: 'Check out this completely free calorie and macro tracker - no paywalls, no ads, just simple tracking!',
+                text: 'Check out Free Calorie Track — free calorie and macro tracking with optional AI food logging and weekly coaching. No paywalls, no ads, no account needed.',
                 url: 'https://freecalorietrack.com'
               }).catch(() => {
                 // User cancelled share, do nothing

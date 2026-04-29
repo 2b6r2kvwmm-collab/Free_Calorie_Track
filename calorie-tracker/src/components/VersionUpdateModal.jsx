@@ -6,29 +6,18 @@ export default function VersionUpdateModal() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    // Only show for version 1.6.0
-    if (APP_VERSION !== '1.6.0') return;
-
-    // Check if user has already seen this version's modal
+    if (APP_VERSION !== '1.7.0') return;
     const seenKey = `seenVersionModal_${APP_VERSION}`;
-    const hasSeenModal = getData(seenKey);
-    if (hasSeenModal) return;
-
-    // Check if user is an existing user (has profile or food log data)
+    if (getData(seenKey)) return;
     const profile = getProfile();
     const foodLog = getFoodLog();
-    const isExistingUser = profile || (foodLog && foodLog.length > 0);
-
-    // Only show to existing users who haven't seen this version's modal
-    if (isExistingUser) {
+    if (profile || (foodLog && foodLog.length > 0)) {
       setShowModal(true);
     }
   }, []);
 
   const handleClose = () => {
-    // Mark this version's modal as seen
-    const seenKey = `seenVersionModal_${APP_VERSION}`;
-    setData(seenKey, true);
+    setData(`seenVersionModal_${APP_VERSION}`, true);
     setShowModal(false);
   };
 
@@ -36,38 +25,65 @@ export default function VersionUpdateModal() {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true">
-      <div className="card max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">New Feature: Pregnancy & Breastfeeding Support</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md shadow-2xl overflow-y-auto max-h-[90vh]">
 
-        <div className="space-y-4 mb-6">
-          <p className="text-gray-700 dark:text-gray-300">
-            Added nutrition support for expecting and new mothers!
-          </p>
-
-          <p className="text-gray-700 dark:text-gray-300">
-            Head to Settings to enable trimester-based calorie and protein adjustments using evidence-based guidelines.
-          </p>
-
-          <p className="text-gray-700 dark:text-gray-300">
-            Want to request a feature or share feedback?{' '}
-            <a
-              href="https://tally.so/r/VLQOJv"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline"
-            >
-              Tap here
-            </a>
-            {' '}— we read every message!
-          </p>
+        <div className="px-6 pt-6 pb-4 border-b border-gray-100 dark:border-gray-700">
+          <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide mb-1">Version 1.7.0</p>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">What's new</h2>
         </div>
 
-        <button
-          onClick={handleClose}
-          className="btn-primary w-full"
-        >
-          Got it
-        </button>
+        <div className="px-6 py-5 space-y-5">
+
+          <div className="flex gap-3 items-start">
+            <span className="text-2xl mt-0.5">🤖</span>
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <p className="text-sm font-bold text-gray-900 dark:text-gray-100">AI Food Logging</p>
+                <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">Beta</span>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                Describe your meal, snap a photo of your plate, or photograph a recipe — AI fills in the calories and macros automatically. Free, optional, and up to 10 logs per day. Manual logging works exactly the same as always.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-3 items-start">
+            <span className="text-2xl mt-0.5">📊</span>
+            <div>
+              <div className="flex items-center gap-2 mb-0.5">
+                <p className="text-sm font-bold text-gray-900 dark:text-gray-100">Nutrition Coach</p>
+                <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">Beta</span>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                Log at least 3 days and unlock a weekly AI coaching insight in the Trends tab — what you're nailing, where there's room to improve, and specific things to try. Based on your actual numbers, once per day, free.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-3 items-start">
+            <span className="text-2xl mt-0.5">💪</span>
+            <div>
+              <p className="text-sm font-bold text-gray-900 dark:text-gray-100 mb-0.5">More accurate exercise calories</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                Exercise burn estimates now account for the body's tendency to partially offset exercise expenditure elsewhere — a well-documented effect that causes most trackers to overstate burn. Numbers are lower but more realistic, especially if you exercise to lose weight. Tap the <span className="font-semibold">ⓘ</span> next to any exercise entry to learn more.
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl px-4 py-3">
+            <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+              <strong className="text-gray-700 dark:text-gray-300">AI features are entirely optional.</strong> Nothing is stored by us — you can see exactly what gets sent to Google before using any AI feature. The app is still completely free.
+            </p>
+          </div>
+
+          <button onClick={handleClose} className="btn-primary w-full">
+            Got it
+          </button>
+
+          <button onClick={handleClose} className="w-full text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 py-1">
+            Maybe later
+          </button>
+        </div>
       </div>
     </div>
   );

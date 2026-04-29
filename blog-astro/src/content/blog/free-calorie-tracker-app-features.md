@@ -1,6 +1,6 @@
 ---
 title: "Free Calorie Tracker App: 100% Free, No Paywall, No Ads"
-description: "Free Calorie Track is a completely free calorie counter with barcode scanner, macro tracking, and thousands of foods. No premium tier, no subscriptions, no ads."
+description: "Free Calorie Track is a completely free calorie counter with barcode scanner, macro tracking, AI food logging, weekly nutrition coaching, and thousands of foods. No premium tier, no subscriptions, no ads."
 pubDate: 2026-03-02
 author: "FCT Staff"
 category: "Guides"
@@ -15,7 +15,8 @@ image: "/images/blog/fct-features.webp"
     <li><strong>100% free</strong> - No premium tier, no subscriptions, no paywall</li>
     <li><strong>No ads</strong> - Clean interface with no distracting advertisements</li>
     <li><strong>No account required</strong> - Start tracking immediately, all data stored locally</li>
-    <li><strong>Full feature access</strong> - Barcode scanner, macro tracking, meal planning—everything unlocked</li>
+    <li><strong>Full feature access</strong> - Barcode scanner, macro tracking, AI food logging, weekly coaching—everything unlocked</li>
+    <li><strong>Optional AI features</strong> - Free AI food logging and weekly nutrition coaching, transparent about what's shared</li>
   </ul>
 </div>
 
@@ -198,7 +199,42 @@ Targets are calculated automatically based on your calorie goal, or you can set 
 - Your go-to protein shake
 - Regular snacks (yogurt, fruit, nuts)
 
-### 9. Water Tracking (Optional)
+### 9. AI Food Logging (Beta)
+
+Logging a meal just got faster. Tap "Log with AI," describe what you ate or snap a photo — of your plate, a restaurant dish, or even a recipe on a card or screen — and AI fills in the estimated calories and macros automatically. You review everything before it saves.
+
+**How it works:**
+- Describe your meal in text ("grilled salmon with roasted broccoli, about 6oz") or take a photo
+- Google's Gemini AI analyzes it and returns estimated calories, protein, carbs, and fat
+- Review and adjust the numbers before confirming
+- Up to 10 AI-powered logs per day, completely free
+
+**A few things worth knowing:**
+- AI estimates are good but not perfect — adding context like portion size, cooking method, or brand improves accuracy
+- Photos and descriptions are sent to Google for analysis under their privacy policy; nothing is stored by us
+- You can see exactly what gets shared before you opt in
+- Manual logging works exactly the same as always — AI is an option, not a requirement
+
+### 10. Nutrition Coach (Beta)
+
+Log at least 3 days in a week and a Nutrition Coach card appears in the Trends tab. Tap it once a day to generate a personalized analysis of your week — what you're doing well, where there's room to improve, and specific, concrete things to try.
+
+**What it analyzes:**
+- Your calorie and macro totals across the week
+- How closely you hit your targets each day
+- What foods you logged and your activity level
+- Your goal (fat loss, muscle gain, maintenance)
+
+**How it works:**
+- Powered by Google's Gemini AI, run once per day
+- Results are saved on your device — no account needed
+- Completely optional; the rest of the app works identically without it
+
+Coaching insights are estimates based on your logged data, not medical advice.
+
+---
+
+### 11. Water Tracking (Optional)
 
 **Stay hydrated:**
 - Set daily water goal

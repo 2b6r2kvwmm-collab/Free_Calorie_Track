@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Dumbbell, Salad, ScanBarcode,
-  Activity, TrendingUp, WifiOff, ShieldCheck, Sparkles
+  Activity, TrendingUp, WifiOff, ShieldCheck, Sparkles, Brain
 } from 'lucide-react';
 
 const FAQ_SECTIONS = [
@@ -60,6 +60,14 @@ const FAQ_SECTIONS = [
   {
     title: 'Tracking & Logging',
     items: [
+      {
+        q: 'How does AI food logging work?',
+        a: 'Tap "Log with AI" on the food entry screen and either describe your meal in text or take a photo — of your plate, a restaurant dish, or even a recipe on a card or screen. Google\'s Gemini AI analyzes it and fills in estimated calories, protein, carbs, and fat. You can review and adjust everything before saving. You get 10 AI-powered logs per day, free. Your photos and descriptions are sent to Google for analysis but never stored by us — you can see exactly what gets shared before you opt in. Manual logging works exactly the same as always.',
+      },
+      {
+        q: 'What is the Nutrition Coach?',
+        a: 'Once you\'ve logged at least 3 days in the past week, a Nutrition Coach card appears in the Trends tab. Tap it to generate a personalized weekly insight — what\'s going well, what might need attention, and specific, concrete things to try. It\'s powered by Google\'s Gemini AI, runs once per day, and is based entirely on your actual logged data. These are AI estimates, not medical advice, and the feature is completely optional.',
+      },
       {
         q: 'How do I log food?',
         a: 'There are several ways, designed to fit how you actually eat. Scan a barcode with your camera for branded products. Pick from thousands of common foods like eggs, chicken breast, or oatmeal — no internet needed. Search a database of branded foods. Add from your favorites or recent foods for quick re-logging. Create custom foods or recipes. Or copy all of yesterday\'s meals in one tap.',
@@ -255,6 +263,7 @@ const HOMESCREEN_STEPS = [
 ];
 
 const COMPARISON_ROWS = [
+  { feature: 'AI food logging & coaching', fct: '✅ Free', other: '❌ Not available' },
   { feature: 'Barcode scanning', fct: '✅', other: '💰 Requires subscription' },
   { feature: 'Macro tracking', fct: '✅', other: '⚠️ Free tier limited' },
   { feature: 'Nutrition tracking (fiber, sodium)', fct: '✅', other: '⚠️ Limited or not available' },
@@ -438,7 +447,7 @@ export default function LandingPage({ onGetStarted }) {
           {[
             {
               title: 'No cost. No catch.',
-              desc: 'Every feature is free — barcode scanning, macro tracking, trends, nutrition tracking. No premium tier, no trial that expires, no ads. Free Calorie Track is funded by optional donations.',
+              desc: 'Every feature is free — barcode scanning, macro tracking, AI food logging, weekly coaching, trends. No premium tier, no trial that expires, no ads. Free Calorie Track is funded by optional donations.',
             },
             {
               title: 'No account. No cloud.',
@@ -472,7 +481,8 @@ export default function LandingPage({ onGetStarted }) {
               { icon: ScanBarcode, title: 'Barcode scanning', desc: 'Scan any product instantly. 220,000+ items in the database.' },
               { icon: Activity, title: 'Exercise logging', desc: '250+ exercises across cardio, strength, and sports. MET-based calorie calculations.' },
               { icon: TrendingUp, title: 'Trends & insights', desc: 'Weekly averages, weight charts, and 7-day rolling averages.' },
-              { icon: Sparkles, title: 'AI food logging (Beta)', desc: 'Describe a meal or snap a photo — AI estimates the nutrition instantly. Free and optional.' },
+              { icon: Sparkles, title: 'AI food logging (Beta)', desc: 'Describe a meal, snap a photo of your plate, or photograph a recipe — AI estimates the nutrition instantly. Free, optional, 10 logs/day.' },
+              { icon: Brain, title: 'Nutrition Coach (Beta)', desc: 'Log 3+ days and get a weekly AI analysis of what\'s working, what to adjust, and specific things to try. Free and optional.' },
               { icon: WifiOff, title: 'Works offline', desc: 'Install on any device. No internet needed after setup.' },
               { icon: ShieldCheck, title: 'Private by design', desc: 'Your data stays on your device. It never passes through our servers.' },
             ].map((f) => (
