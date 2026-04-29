@@ -177,6 +177,9 @@ export default function CoachCard() {
                       <div key={i} className={`h-1.5 flex-1 rounded-full ${i < daysLogged ? 'bg-emerald-500' : 'bg-gray-200 dark:bg-gray-600'}`} />
                     ))}
                   </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    💡 Remember meals from earlier this week? You can log past days in the <strong>History</strong> tab.
+                  </p>
                 </div>
               ) : (
                 <button
