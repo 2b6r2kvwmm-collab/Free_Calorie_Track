@@ -7,6 +7,8 @@ export default function VersionUpdateModal() {
 
   useEffect(() => {
     if (APP_VERSION !== '1.7.0') return;
+    const isPWA = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+    if (!isPWA) return;
     const seenKey = `seenVersionModal_${APP_VERSION}`;
     if (getData(seenKey)) return;
     const profile = getProfile();
@@ -78,10 +80,6 @@ export default function VersionUpdateModal() {
 
           <button onClick={handleClose} className="btn-primary w-full">
             Got it
-          </button>
-
-          <button onClick={handleClose} className="w-full text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 py-1">
-            Maybe later
           </button>
         </div>
       </div>

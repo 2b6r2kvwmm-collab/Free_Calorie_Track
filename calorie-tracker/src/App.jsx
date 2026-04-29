@@ -60,7 +60,11 @@ function App() {
   const [showUserManager, setShowUserManager] = useState(false);
   const [currentUserId, setCurrentUserId] = useState(getCurrentUserId());
   const [landingPageShown, setLandingPageShown] = useState(fromLandingPage ? true : getLandingPageShown());
-  const [installPromptShown, setInstallPromptShown] = useState(fromLandingPage ? true : getInstallPromptShown());
+  const [installPromptShown, setInstallPromptShown] = useState(() => {
+    if (fromLandingPage) return true;
+    if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true) return true;
+    return getInstallPromptShown();
+  });
   const [showShareModal, setShowShareModal] = useState(false);
 
   useEffect(() => {
