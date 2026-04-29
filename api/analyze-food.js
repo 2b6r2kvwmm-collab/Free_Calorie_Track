@@ -125,8 +125,11 @@ export default async function handler(req, res) {
   const origin = req.headers.origin || '';
   const originAllowed = ALLOWED_ORIGINS.includes(origin);
 
+  const isProduction = process.env.VERCEL_ENV === 'production';
+  const effectivelyAllowed = originAllowed || (!isProduction && origin.endsWith('.vercel.app'));
+
   if (req.method === 'OPTIONS') {
-    if (originAllowed) {
+    if (effectivelyAllowed) {
       res.setHeader('Access-Control-Allow-Origin', origin);
       res.setHeader('Access-Control-Allow-Methods', 'POST');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -135,7 +138,7 @@ export default async function handler(req, res) {
     return res.status(204).end();
   }
 
-  if (!originAllowed) {
+  if (!effectivelyAllowed) {
     return res.status(403).json({ error: 'Forbidden' });
   }
 
