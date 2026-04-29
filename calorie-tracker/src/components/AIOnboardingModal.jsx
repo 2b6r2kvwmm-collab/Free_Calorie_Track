@@ -52,12 +52,12 @@ export default function AIOnboardingModal({ onAccept, onClose }) {
                   Google Privacy Policy
                 </a>
                 <a
-                  href="https://ai.google.dev/gemini-api/terms"
+                  href="https://policies.google.com/terms"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-emerald-600 dark:text-emerald-400 underline"
                 >
-                  Gemini Terms
+                  Google Terms of Service
                 </a>
               </div>
             </div>

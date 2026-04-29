@@ -60,7 +60,7 @@ function PrivacyModal({ onAccept, onClose }) {
           </p>
           <div className="flex gap-4">
             <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-600 dark:text-emerald-400 underline">Google Privacy Policy</a>
-            <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-600 dark:text-emerald-400 underline">Gemini Terms</a>
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-600 dark:text-emerald-400 underline">Google Terms of Service</a>
           </div>
           <button
             onClick={onAccept}

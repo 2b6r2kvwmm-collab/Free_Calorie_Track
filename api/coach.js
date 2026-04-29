@@ -83,7 +83,10 @@ async function callGeminiModel(model, body) {
   if (!text) throw new Error('No response from Gemini. Please try again.');
 
   try {
-    const parsed = JSON.parse(text);
+    let jsonText = text.trim();
+    const codeBlock = jsonText.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if (codeBlock) jsonText = codeBlock[1].trim();
+    const parsed = JSON.parse(jsonText);
     if (!parsed.whatsWorking || !parsed.thisTry || !parsed.trajectory) throw new Error('invalid');
     return {
       whatsWorking: Array.isArray(parsed.whatsWorking) ? parsed.whatsWorking.slice(0, 4).map(s => String(s)) : [],

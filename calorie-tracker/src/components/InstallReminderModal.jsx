@@ -96,8 +96,8 @@ export default function InstallReminderModal({ onClose }) {
         </div>
 
         <div className="px-5 py-4 space-y-4">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Install Free Calorie Track for quick access — works offline and feels like a native app.
+          <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 leading-relaxed">
+            Takes 15 seconds and turns this into a fully-functional app you can open any time — even when you're offline.
           </p>
 
           {deferredPrompt ? (
