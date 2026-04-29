@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  UtensilsCrossed, Dumbbell, Salad, ScanBarcode,
-  Activity, TrendingUp, WifiOff, ShieldCheck
+  Dumbbell, Salad, ScanBarcode,
+  Activity, TrendingUp, WifiOff, ShieldCheck, Sparkles
 } from 'lucide-react';
 
 const FAQ_SECTIONS = [
@@ -467,14 +467,14 @@ export default function LandingPage({ onGetStarted }) {
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Every feature included. No paywalls.</p>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { icon: UtensilsCrossed, title: 'Calorie tracking', desc: 'Log meals with real-time totals and a daily progress bar.' },
-              { icon: Dumbbell, title: 'Macro & protein tracking', desc: 'Track protein, carbs, and fat alongside calories. Auto-calculated goals or set your own.' },
+              { icon: Dumbbell, title: 'Calorie & macro tracking', desc: 'Log meals with real-time totals. Track protein, carbs, and fat with auto-calculated goals or set your own.' },
               { icon: Salad, title: 'Nutrition tracking', desc: 'Optionally track fiber, sodium, sugar, and saturated fat for a fuller picture.' },
               { icon: ScanBarcode, title: 'Barcode scanning', desc: 'Scan any product instantly. 220,000+ items in the database.' },
               { icon: Activity, title: 'Exercise logging', desc: '250+ exercises across cardio, strength, and sports. MET-based calorie calculations.' },
               { icon: TrendingUp, title: 'Trends & insights', desc: 'Weekly averages, weight charts, and 7-day rolling averages.' },
+              { icon: Sparkles, title: 'AI food logging (Beta)', desc: 'Describe a meal or snap a photo — AI estimates the nutrition instantly. Free and optional.' },
               { icon: WifiOff, title: 'Works offline', desc: 'Install on any device. No internet needed after setup.' },
-              { icon: ShieldCheck, title: 'Private by design', desc: 'Your data stays on your device. No server, no breach risk, no third-party access.' },
+              { icon: ShieldCheck, title: 'Private by design', desc: 'Your data stays on your device. It never passes through our servers.' },
             ].map((f) => (
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
                 <f.icon size={24} className="text-emerald-600 dark:text-emerald-400 mb-3" />

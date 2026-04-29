@@ -1,10 +1,11 @@
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
 import InstallPrompt from './components/InstallPrompt';
+import InstallReminderModal from './components/InstallReminderModal';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
 import UpdateNotification from './components/UpdateNotification';
@@ -93,9 +94,9 @@ function App() {
 
   const handleProfileComplete = (newProfile) => {
     saveProfile(newProfile);
-    // Add initial weight to weight tracker
     addWeightEntry(newProfile.weight);
     setProfile(newProfile);
+    if (!isAppInstalled() && !installReminderPermanentlyDismissed()) setTimeout(() => setShowInstallReminder(true), 800);
   };
 
   const handleUpdateProfile = (updatedProfile) => {
@@ -118,6 +119,17 @@ function App() {
     markShareModalShown();
     setShowShareModal(false);
   };
+
+  const isAppInstalled = () =>
+    window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+  const [showInstallReminder, setShowInstallReminder] = useState(false);
+
+  useEffect(() => {
+    if (!profile || isAppInstalled() || installReminderPermanentlyDismissed()) return;
+    const timer = setTimeout(() => setShowInstallReminder(true), 1500);
+    return () => clearTimeout(timer);
+  }, [profile]);
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';
   const todayFormatted = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
@@ -312,6 +324,11 @@ function App() {
         <Suspense fallback={null}>
           <ShareModal onClose={handleShareModalClose} daysTracked={userDaysTracked} />
         </Suspense>
+      )}
+
+      {/* Install reminder — shown each session if not installed as PWA */}
+      {showInstallReminder && (
+        <InstallReminderModal onClose={() => { incrementInstallReminderDismissals(); setShowInstallReminder(false); }} />
       )}
 
       {/* Version Update Modal - shown once for existing users on version updates */}

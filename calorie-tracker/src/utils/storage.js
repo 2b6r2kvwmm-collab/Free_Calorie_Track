@@ -410,6 +410,32 @@ export function saveMealTypeEnabled(enabled) {
   setData('mealTypeEnabled', enabled);
 }
 
+// AI Logging — daily limit and first-time terms acceptance
+export const AI_DAILY_LIMIT = 10;
+
+export function getAITermsAccepted() {
+  return getData('aiTermsAccepted') === true;
+}
+
+export function setAITermsAccepted() {
+  setData('aiTermsAccepted', true);
+}
+
+export function getAILogsToday() {
+  const today = getLocalDateString();
+  const saved = getData('aiDailyLogs');
+  if (!saved || saved.date !== today) return 0;
+  return saved.count || 0;
+}
+
+export function incrementAILogsToday() {
+  const today = getLocalDateString();
+  const current = getAILogsToday();
+  const next = current + 1;
+  setData('aiDailyLogs', { date: today, count: next });
+  return next;
+}
+
 // Dashboard Focus - 'calories' or 'macros' to prioritize display order
 export function getDashboardFocus() {
   const focus = getData('dashboardFocus');
@@ -541,6 +567,24 @@ export function getLandingPageShown() {
 
 export function markLandingPageShown() {
   setData('landingPageShown', true);
+}
+
+// Install reminder dismissal count
+const INSTALL_REMINDER_KEY = 'installReminderDismissals';
+const INSTALL_REMINDER_MAX = 10;
+
+export function getInstallReminderDismissals() {
+  return Number(localStorage.getItem(INSTALL_REMINDER_KEY) || 0);
+}
+
+export function incrementInstallReminderDismissals() {
+  const next = getInstallReminderDismissals() + 1;
+  localStorage.setItem(INSTALL_REMINDER_KEY, next);
+  return next;
+}
+
+export function installReminderPermanentlyDismissed() {
+  return getInstallReminderDismissals() >= INSTALL_REMINDER_MAX;
 }
 
 // Install prompt - shown after landing page

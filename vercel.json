@@ -1,7 +1,7 @@
 {
   "buildCommand": "chmod +x build-all.sh && ./build-all.sh",
   "outputDirectory": "calorie-tracker/dist",
-  "installCommand": "echo 'Dependencies installed via build script'",
+  "installCommand": "npm install",
   "rewrites": [
     { "source": "/protein-tracker", "destination": "/protein-tracker/index.html" },
     { "source": "/macro-tracker", "destination": "/macro-tracker/index.html" },

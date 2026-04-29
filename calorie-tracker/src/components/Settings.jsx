@@ -62,7 +62,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const [nutritionTrackingEnabled, setNutritionTrackingEnabled] = useState(getNutritionTrackingEnabled());
   const [useCustomNutrition, setUseCustomNutrition] = useState(!!getCustomNutrition());
   const [dashboardFocus, setDashboardFocus] = useState(getDashboardFocus());
-
   // Water goal state (stored in mL, displayed in user's preferred unit)
   const waterGoalMl = useMemo(() => getWaterGoal(), []);
   const defaultWaterGoalMl = currentProfile.unit === 'imperial' ? ozToMl(64) : 2000;
