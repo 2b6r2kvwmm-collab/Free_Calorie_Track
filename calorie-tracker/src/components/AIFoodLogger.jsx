@@ -73,15 +73,10 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
     return () => clearTimeout(timer);
   }, [retryCountdown]);
 
-  // Attach stream to video element when stream is ready, and scroll modal to show capture button
+  // Attach stream to video element when stream is ready
   useEffect(() => {
     if (cameraStream && videoRef.current) {
       videoRef.current.srcObject = cameraStream;
-    }
-    if (cameraStream && modalScrollRef.current) {
-      setTimeout(() => {
-        modalScrollRef.current.scrollTop = modalScrollRef.current.scrollHeight;
-      }, 150);
     }
   }, [cameraStream]);
 
@@ -280,7 +275,17 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
                   {cameraStream && !imagePreview && (
                     <div className="space-y-2">
                       <div className="relative rounded-xl overflow-hidden bg-black">
-                        <video ref={videoRef} autoPlay playsInline className="w-full rounded-xl" />
+                        <video
+                          ref={videoRef}
+                          autoPlay
+                          playsInline
+                          className="w-full rounded-xl"
+                          onCanPlay={() => {
+                            if (modalScrollRef.current) {
+                              modalScrollRef.current.scrollTop = modalScrollRef.current.scrollHeight;
+                            }
+                          }}
+                        />
                       </div>
                       <div className="flex gap-2">
                         <button
