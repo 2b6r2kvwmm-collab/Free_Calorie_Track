@@ -1,5 +1,5 @@
 ---
-title: "OXO Obsidian Carbon Steel Pan Review: Best Option If You're Avoiding Chemical Coatings"
+title: "OXO Obsidian Carbon Steel Pan: An Honest Review"
 description: "An honest review of the OXO Obsidian 10\" Carbon Steel Frying Pan for anyone trying to ditch nonstick coatings without giving up a functional pan."
 pubDate: 2026-04-30
 author: "FCT Staff"
