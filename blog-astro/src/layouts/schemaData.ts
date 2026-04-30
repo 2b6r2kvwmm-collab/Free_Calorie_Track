@@ -126,7 +126,7 @@ export const schemaData: Record<string, SchemaData> = {
       type: 'Organization',
       name: 'Free Calorie Track'
     },
-    reviewBody: 'The OXO Obsidian is the best entry point into chemical-free cookware. Lightweight compared to cast iron but thick enough to distribute heat evenly, it excels at searing and handles delicate things like pancakes better than expected. The factory seasoning gives you a real head start. Eggs require technique and patience, and scrambled eggs will cake on — that\'s the honest tradeoff. Maintenance is simple: skip the soap, scrub with a Scrub Daddy and cold water, dry completely, and rub with a little high-heat oil. For anyone trying to get chemical coatings out of their kitchen, this is a great pan to start with.'
+    reviewBody: 'After noticing flakes of coating coming off my old nonstick pan, I switched to the OXO Obsidian Carbon Steel. Lightweight compared to cast iron but thick enough to distribute heat evenly, it excels at searing and handles delicate things like pancakes better than expected. The factory seasoning gives you a real head start. Eggs require technique and patience, and scrambled eggs will cake on — that\'s the honest tradeoff. Maintenance is simple: skip the soap, scrub with a Scrub Daddy and cold water, dry completely, and rub with a little high-heat oil. For anyone trying to get chemical coatings out of their kitchen, this is a great pan to start with.'
   },
 
   'zelus-weighted-vest-review': {

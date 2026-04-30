@@ -1,6 +1,6 @@
 ---
-title: "OXO Obsidian Carbon Steel Pan: An Honest Review"
-description: "An honest review of the OXO Obsidian 10\" Carbon Steel Frying Pan for anyone trying to ditch nonstick coatings without giving up a functional pan."
+title: "The Pan I Switched to After My Nonstick Started Flaking"
+description: "My honest review of the OXO Obsidian Carbon Steel Pan — the best option for anyone trying to ditch chemical coatings without giving up a functional pan."
 pubDate: 2026-04-30
 author: "FCT Staff"
 category: "Gear Reviews"
@@ -40,7 +40,7 @@ What drew me to this particular pan is how well-designed it is for a first-time 
 
 ## What it's great at
 
-Searing is where this pan shines. It gets ripping hot, holds that heat, and gives you a crust that a nonstick pan simply can't match. Steaks, chicken thighs, salmon — anything that benefits from real contact with a very hot surface.
+Searing is where this pan shines. It gets ripping hot, holds that heat, and gives you a crust that a nonstick pan simply can't match. Steaks, chicken thighs, salmon — anything that benefits from real contact with a very hot surface. (Conveniently, those are also some of the best [high-protein, low-calorie foods](/blog/high-protein-low-calorie-foods) you can cook.)
 
 It also handles more delicate things better than you'd expect. Pancakes come out beautifully. And the more you use it, the better the surface gets, which is the opposite of every nonstick pan you've ever owned.
 
