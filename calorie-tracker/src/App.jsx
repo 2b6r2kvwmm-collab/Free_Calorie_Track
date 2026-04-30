@@ -229,6 +229,10 @@ function App() {
               element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
             />
             <Route
+              path="/coach"
+              element={<Trends key={refreshKey} />}
+            />
+            <Route
               path="/trends"
               element={<Trends key={refreshKey} />}
             />

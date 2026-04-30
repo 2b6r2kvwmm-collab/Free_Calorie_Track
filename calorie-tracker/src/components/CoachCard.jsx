@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sparkles, X, RefreshCw } from 'lucide-react';
 import {
   getProfile, getCustomCalorieGoal, getCustomMacros,
@@ -90,6 +91,7 @@ function ResultSection({ icon, title, items, color }) {
 }
 
 export default function CoachCard() {
+  const navigate = useNavigate();
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -102,6 +104,7 @@ export default function CoachCard() {
   const ranToday = lastDate === today;
 
   const runCoach = async () => {
+    navigate('/coach', { replace: true });
     setLoading(true);
     setError('');
     try {
