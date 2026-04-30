@@ -4,6 +4,7 @@ import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
 import FoodInput from './FoodInput';
 import ExerciseLog from './ExerciseLog';
 import ExerciseCalorieInfo from './ExerciseCalorieInfo';
+import FirstUseTip from './FirstUseTip';
 
 export default function History({ onRefresh }) {
   const [expandedDate, setExpandedDate] = useState(null);
@@ -138,6 +139,9 @@ export default function History({ onRefresh }) {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold text-center mb-6">History</h2>
+      <FirstUseTip id="history-edit">
+        ✏️ You can add or edit meals and exercise from any past day. Forgot to log lunch or a workout yesterday? Just tap the date.
+      </FirstUseTip>
 
       {/* Add to Any Date */}
       <div className="card">

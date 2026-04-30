@@ -715,3 +715,11 @@ export function calculateUserStats() {
     savedVsCompetitors,
   };
 }
+
+// First-use tips — one-time dismissible hints per screen/feature
+export function getTipSeen(tipId) {
+  return getData(`tip_${tipId}`) === true;
+}
+export function markTipSeen(tipId) {
+  setData(`tip_${tipId}`, true);
+}

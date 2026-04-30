@@ -53,6 +53,7 @@ import MilestoneModal from './MilestoneModal';
 import BackupReminderModal from './BackupReminderModal';
 import UpdateModal from './UpdateModal';
 import ExerciseCalorieInfo from './ExerciseCalorieInfo';
+import FirstUseTip from './FirstUseTip';
 
 export default function Dashboard({ onRefresh }) {
   const location = useLocation();
@@ -1010,6 +1011,9 @@ export default function Dashboard({ onRefresh }) {
       {entries.food.length > 0 && (
         <div className="card">
           <h3 className="text-xl font-bold mb-4">Food Log</h3>
+          <FirstUseTip id="dashboard-shortcuts">
+            ⚡ Eat similar meals often? Tap + → "Copy Yesterday's Meals" to log everything in one tap — or build Recipes to save any go-to meal and log it instantly.
+          </FirstUseTip>
           <div className="space-y-4">
             {mealCategories.map((mealType) => {
               const mealFoods = groupedFoods[mealType];

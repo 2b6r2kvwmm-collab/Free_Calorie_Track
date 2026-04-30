@@ -5,7 +5,10 @@ import {
   getProfile,
   getCustomMacros,
   getCustomCalorieGoal,
+  getWeightLog,
+  getTipSeen,
 } from '../utils/storage';
+import FirstUseTip from './FirstUseTip';
 import {
   calculateBMR,
   getBaselineTDEE,
@@ -98,20 +101,6 @@ export default function Trends() {
       fat: Math.round(fat),
     };
   }), [dates, foodLog, exerciseLog, baselineTDEE, period]);
-
-  // Calculate 7-day rolling average - memoize to prevent recalculation
-  const dataWithAverage = useMemo(() => chartData.map((day, index) => {
-    if (index < 6) {
-      return { ...day, average: null };
-    }
-
-    const last7Days = chartData.slice(index - 6, index + 1);
-    const average = Math.round(
-      last7Days.reduce((sum, d) => sum + d.net, 0) / 7
-    );
-
-    return { ...day, average };
-  }), [chartData]);
 
   // Calculate macro targets - memoize
   const customMacros = useMemo(() => getCustomMacros(), []);
@@ -345,110 +334,6 @@ export default function Trends() {
         </div>
       )}
 
-      {/* Daily Macro Trends Chart */}
-      {(macroTargets || usingCustomGoals) && (
-        <div className="card">
-          <h2 className="text-2xl font-bold mb-4">Daily Macro Trends</h2>
-
-          {/* Period toggle */}
-          <div className="flex gap-2 mb-4">
-            <button
-              onClick={() => setPeriod('week')}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                period === 'week'
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
-              }`}
-            >
-              7 Days
-            </button>
-            <button
-              onClick={() => setPeriod('month')}
-              className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
-                period === 'month'
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
-              }`}
-            >
-              30 Days
-            </button>
-          </div>
-
-          {/* Macro Line Chart */}
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="displayDate" />
-              <YAxis label={{ value: 'Grams', angle: -90, position: 'insideLeft' }} />
-              <Tooltip />
-              <Legend />
-
-              {/* Target lines */}
-              {macroTargets && (
-                <>
-                  <Line
-                    type="monotone"
-                    dataKey={() => macroTargets.protein}
-                    stroke="#ef4444"
-                    strokeDasharray="5 5"
-                    strokeWidth={2}
-                    dot={false}
-                    name="Protein Target"
-                    legendType="line"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey={() => macroTargets.carbs}
-                    stroke="#3b82f6"
-                    strokeDasharray="5 5"
-                    strokeWidth={2}
-                    dot={false}
-                    name="Carbs Target"
-                    legendType="line"
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey={() => macroTargets.fat}
-                    stroke="#f59e0b"
-                    strokeDasharray="5 5"
-                    strokeWidth={2}
-                    dot={false}
-                    name="Fat Target"
-                    legendType="line"
-                  />
-                </>
-              )}
-
-              {/* Actual macro lines */}
-              <Line
-                type="monotone"
-                dataKey="protein"
-                stroke="#dc2626"
-                strokeWidth={3}
-                name="Protein"
-              />
-              <Line
-                type="monotone"
-                dataKey="carbs"
-                stroke="#2563eb"
-                strokeWidth={3}
-                name="Carbs"
-              />
-              <Line
-                type="monotone"
-                dataKey="fat"
-                stroke="#d97706"
-                strokeWidth={3}
-                name="Fat"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
-            Solid lines show your actual intake. Dashed lines show your daily targets.
-          </p>
-        </div>
-      )}
 
       {/* Protein Goal Achievement Tracker */}
       {proteinAchievement && macroTargets && (
@@ -545,6 +430,10 @@ export default function Trends() {
       <div className="card">
         <h2 className="text-2xl font-bold mb-4">Trends</h2>
 
+        <FirstUseTip id="trends-weight">
+          ⚖️ Want to track your progress? You can log your weight right here.
+        </FirstUseTip>
+
         {/* Period Toggle */}
         <div className="flex gap-3 mb-6">
           <button
@@ -569,43 +458,9 @@ export default function Trends() {
           </button>
         </div>
 
-        {/* Net Calories Chart */}
-        <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-4">Net Calories</h3>
-          {/* Reserve space to prevent CLS */}
-          <div className="min-h-[300px]">
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={dataWithAverage}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="displayDate" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="net"
-                  stroke="#10b981"
-                  strokeWidth={2}
-                  name="Net Calories"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="average"
-                  stroke="#f59e0b"
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  name="7-Day Average"
-                  connectNulls
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
         {/* Calories In vs Out */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold mb-4">Calories In vs Out</h3>
-          {/* Reserve space to prevent CLS */}
           <div className="min-h-[300px]">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
@@ -620,6 +475,37 @@ export default function Trends() {
             </ResponsiveContainer>
           </div>
         </div>
+
+        {/* Daily Macro Trends */}
+        {(macroTargets || usingCustomGoals) && (
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Daily Macros</h3>
+            <div className="min-h-[300px]">
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="displayDate" />
+                  <YAxis label={{ value: 'Grams', angle: -90, position: 'insideLeft' }} />
+                  <Tooltip />
+                  <Legend />
+                  {macroTargets && (
+                    <>
+                      <Line type="monotone" dataKey={() => macroTargets.protein} stroke="#ef4444" strokeDasharray="5 5" strokeWidth={2} dot={false} name="Protein Target" legendType="line" />
+                      <Line type="monotone" dataKey={() => macroTargets.carbs} stroke="#3b82f6" strokeDasharray="5 5" strokeWidth={2} dot={false} name="Carbs Target" legendType="line" />
+                      <Line type="monotone" dataKey={() => macroTargets.fat} stroke="#f59e0b" strokeDasharray="5 5" strokeWidth={2} dot={false} name="Fat Target" legendType="line" />
+                    </>
+                  )}
+                  <Line type="monotone" dataKey="protein" stroke="#dc2626" strokeWidth={3} name="Protein" />
+                  <Line type="monotone" dataKey="carbs" stroke="#2563eb" strokeWidth={3} name="Carbs" />
+                  <Line type="monotone" dataKey="fat" stroke="#d97706" strokeWidth={3} name="Fat" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">
+              Solid lines show your actual intake. Dashed lines show your daily targets.
+            </p>
+          </div>
+        )}
       </div>
 
     </div>
