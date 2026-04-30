@@ -2,8 +2,34 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Dumbbell, Salad, ScanBarcode,
-  Activity, TrendingUp, WifiOff, ShieldCheck, Sparkles, Brain
+  Activity, TrendingUp, WifiOff, ShieldCheck, Sparkles, Brain,
+  Check, X, Lock, AlertTriangle, History, Database
 } from 'lucide-react';
+
+const Included = ({ label }) => (
+  <span className="flex items-center gap-1.5">
+    <Check size={15} className="text-emerald-500 flex-shrink-0" />
+    {label && <span className="font-semibold text-gray-800 dark:text-gray-100">{label}</span>}
+  </span>
+);
+const NotIncluded = ({ label }) => (
+  <span className="flex items-center gap-1.5">
+    <X size={15} className="text-red-400 flex-shrink-0" />
+    {label && <span className="text-gray-600 dark:text-gray-400">{label}</span>}
+  </span>
+);
+const RequiresSubscription = () => (
+  <span className="flex items-center gap-1.5">
+    <Lock size={15} className="text-gray-400 flex-shrink-0" />
+    <span className="text-gray-500 dark:text-gray-400">Requires subscription</span>
+  </span>
+);
+const Limited = ({ label }) => (
+  <span className="flex items-center gap-1.5">
+    <AlertTriangle size={15} className="text-amber-500 flex-shrink-0" />
+    <span className="text-gray-500 dark:text-gray-400">{label || 'Limited'}</span>
+  </span>
+);
 
 const FAQ_SECTIONS = [
   {
@@ -263,14 +289,14 @@ const HOMESCREEN_STEPS = [
 ];
 
 const COMPARISON_ROWS = [
-  { feature: 'AI food logging & coaching', fct: '✅ Free', other: '❌ Not available' },
-  { feature: 'Barcode scanning', fct: '✅', other: '💰 Requires subscription' },
-  { feature: 'Macro tracking', fct: '✅', other: '⚠️ Free tier limited' },
-  { feature: 'Nutrition tracking (fiber, sodium)', fct: '✅', other: '⚠️ Limited or not available' },
-  { feature: 'Trends & insights', fct: '✅', other: '⚠️ Free tier limited' },
-  { feature: 'Ad-free', fct: '✅', other: '💰 Requires subscription' },
-  { feature: 'Account required', fct: '❌ No', other: '✓ Yes' },
-  { feature: 'Data storage', fct: 'Stored locally', other: 'Cloud-based' },
+  { feature: 'AI food logging & coaching', fct: <Included label="Free" />, other: <RequiresSubscription /> },
+  { feature: 'Barcode scanning', fct: <Included />, other: <RequiresSubscription /> },
+  { feature: 'Macro tracking', fct: <Included />, other: <Limited label="Free tier limited" /> },
+  { feature: 'Nutrition tracking (fiber, sodium)', fct: <Included />, other: <Limited label="Limited or not available" /> },
+  { feature: 'Trends & insights', fct: <Included />, other: <Limited label="Free tier limited" /> },
+  { feature: 'Ad-free', fct: <Included />, other: <RequiresSubscription /> },
+  { feature: 'Account required', fct: <NotIncluded label="No account needed" />, other: <Included label="Yes, required" /> },
+  { feature: 'Data storage', fct: <Included label="Stored locally" />, other: <span className="text-gray-500 dark:text-gray-400">Cloud-based</span> },
 ];
 
 function FAQAccordion({ sections }) {
@@ -472,8 +498,8 @@ export default function LandingPage({ onGetStarted }) {
       {/* Features Grid */}
       <div className="bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
         <div className="max-w-2xl mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free calorie & macro tracker features</h2>
-          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Every feature included. No paywalls.</p>
+          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Calorie Track's key features</h2>
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Everything you want. No paywalls.</p>
           <div className="grid grid-cols-2 gap-4">
             {[
               { icon: Dumbbell, title: 'Calorie & macro tracking', desc: 'Log meals with real-time totals. Track protein, carbs, and fat with auto-calculated goals or set your own.' },
@@ -484,7 +510,8 @@ export default function LandingPage({ onGetStarted }) {
               { icon: Sparkles, title: 'AI food logging (Beta)', desc: 'Describe a meal, snap a photo of your plate, or photograph a recipe — AI estimates the nutrition instantly. Free, optional, 10 logs/day.' },
               { icon: Brain, title: 'Nutrition Coach (Beta)', desc: 'Log 3+ days and get a weekly AI analysis of what\'s working, what to adjust, and specific things to try. Free and optional.' },
               { icon: WifiOff, title: 'Works offline', desc: 'Install on any device. No internet needed after setup.' },
-              { icon: ShieldCheck, title: 'Private by design', desc: 'Your data stays on your device. It never passes through our servers.' },
+              { icon: ShieldCheck, title: 'Private by design', desc: 'No account, no subscription, no setup. Your data stays on your device and never passes through our servers.' },
+              { icon: History, title: 'Editable history', desc: 'Forgot to log yesterday? No problem. Add or edit meals and exercise from any past day in the History tab.' },
             ].map((f) => (
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
                 <f.icon size={24} className="text-emerald-600 dark:text-emerald-400 mb-3" />
@@ -513,8 +540,8 @@ export default function LandingPage({ onGetStarted }) {
               {COMPARISON_ROWS.map((row, i) => (
                 <tr key={i} className={`${i % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-gray-100 dark:bg-gray-700'} border-t border-gray-200 dark:border-gray-700`}>
                   <td className="px-4 py-3 font-semibold text-gray-800 dark:text-gray-100">{row.feature}</td>
-                  <td className="px-4 py-3 text-emerald-600 dark:text-emerald-400 font-semibold">{row.fct}</td>
-                  <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{row.other}</td>
+                  <td className="px-4 py-3">{row.fct}</td>
+                  <td className="px-4 py-3">{row.other}</td>
                 </tr>
               ))}
             </tbody>
