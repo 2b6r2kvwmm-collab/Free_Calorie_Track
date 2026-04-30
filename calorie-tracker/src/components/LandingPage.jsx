@@ -296,7 +296,7 @@ const COMPARISON_ROWS = [
   { feature: 'Nutrition tracking (fiber, sodium)', fct: <Included label="Free" />, other: <Limited label="Limited or not available" /> },
   { feature: 'Trends & insights', fct: <Included label="Free" />, other: <Limited label="Free tier limited" /> },
   { feature: 'Ad-free', fct: <Included label="Free" />, other: <RequiresSubscription /> },
-  { feature: 'Account required', fct: <NotIncluded label="No account needed" />, other: <Included label="Yes, required" /> },
+  { feature: 'No account required', fct: <Included label="No sign-up needed" />, other: <NotIncluded label="Account required" /> },
   { feature: 'Data storage', fct: <Included label="Stored locally" />, other: <span className="text-gray-500 dark:text-gray-400">Cloud-based</span> },
 ];
 
