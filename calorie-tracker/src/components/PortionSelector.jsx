@@ -258,8 +258,8 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
           </div>
         )}
 
-        {/* Raw/Cooked Toggle */}
-        {hasRawCookedPair(food) && (
+        {/* Raw/Cooked Toggle — only shown in exact weight mode */}
+        {hasRawCookedPair(food) && inputMode === 'weight' && (
           <div className="mb-6">
             <label className="block text-sm font-semibold mb-1">Weight measured as:</label>
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Calories differ — raw meat loses water when cooked, so the same weight has more calories cooked.</p>
