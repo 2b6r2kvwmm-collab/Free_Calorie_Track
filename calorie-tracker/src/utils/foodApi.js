@@ -16,42 +16,32 @@ export async function searchFoods(query, signal = null) {
 
   // Try USDA first
   try {
-    console.log('🇺🇸 Trying USDA API first...');
     const usdaResults = await usda.searchFoods(query, signal);
 
     if (usdaResults && usdaResults.length > 0) {
-      console.log(`✅ USDA returned ${usdaResults.length} results`);
       return usdaResults;
     }
-
-    console.log('⚠️ USDA returned no results, trying Open Food Facts...');
   } catch (error) {
     if (error.name === 'AbortError') {
       throw error; // Don't catch abort errors, let them propagate
     }
 
-    console.log('❌ USDA API failed:', error.message);
     usdaError = error;
   }
 
   // Fall back to Open Food Facts
   try {
-    console.log('🌍 Trying Open Food Facts as fallback...');
     const offResults = await openfoodfacts.searchFoods(query, signal);
 
     if (offResults && offResults.length > 0) {
-      console.log(`✅ Open Food Facts returned ${offResults.length} results`);
       return offResults;
     }
 
-    console.log('⚠️ Open Food Facts also returned no results');
     return [];
   } catch (error) {
     if (error.name === 'AbortError') {
       throw error;
     }
-
-    console.log('❌ Open Food Facts also failed:', error.message);
 
     // If both failed, throw a combined error
     if (usdaError) {
@@ -71,41 +61,31 @@ export async function searchFoods(query, signal = null) {
 export async function getFoodByBarcode(barcode, signal = null) {
   // Try USDA first
   try {
-    console.log('🇺🇸 Looking up barcode in USDA database...');
     const usdaResult = await usda.getFoodByBarcode(barcode, signal);
 
     if (usdaResult) {
-      console.log('✅ Found in USDA database');
       return usdaResult;
     }
-
-    console.log('⚠️ Not found in USDA, trying Open Food Facts...');
   } catch (error) {
     if (error.name === 'AbortError') {
       throw error;
     }
-
-    console.log('❌ USDA barcode lookup failed:', error.message);
   }
 
   // Fall back to Open Food Facts
   try {
-    console.log('🌍 Looking up barcode in Open Food Facts...');
     const offResult = await openfoodfacts.getFoodByBarcode(barcode, signal);
 
     if (offResult) {
-      console.log('✅ Found in Open Food Facts database');
       return offResult;
     }
 
-    console.log('⚠️ Barcode not found in either database');
     return null;
   } catch (error) {
     if (error.name === 'AbortError') {
       throw error;
     }
 
-    console.log('❌ Open Food Facts barcode lookup also failed:', error.message);
     return null;
   }
 }

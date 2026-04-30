@@ -13,33 +13,24 @@ export default function UpdateNotification() {
     updateServiceWorker,
   } = useRegisterSW({
     onRegistered(r) {
-      console.log('SW Registered: ' + r);
-
       // Prevent duplicate registrations from setting up multiple timers
       if (updateCheckRef.current || !r) return;
       updateCheckRef.current = true;
 
       // Check immediately after 1 second
-      setTimeout(() => {
-        console.log('Initial update check...');
-        r.update();
-      }, 1000);
+      setTimeout(() => { r.update(); }, 1000);
 
       // Only set up interval if one doesn't already exist
       if (!intervalIdRef.current) {
-        // Check every 30 minutes for better update detection
         intervalIdRef.current = setInterval(() => {
-          console.log('Periodic update check...');
           r.update();
         }, 30 * 60 * 1000); // Check every 30 minutes
       }
     },
     onRegisterError(error) {
-      console.log('SW registration error', error);
+      console.error('SW registration error', error);
     },
-    onNeedRefresh() {
-      console.log('SW needs refresh - update available!');
-    },
+    onNeedRefresh() {},
   });
 
   // Cleanup interval on unmount
@@ -55,7 +46,6 @@ export default function UpdateNotification() {
   useEffect(() => {
     // Only show banner once per session, even if needRefresh toggles multiple times
     if (needRefresh && !hasShownBannerRef.current) {
-      console.log('Showing update banner');
       setShowUpdate(true);
       hasShownBannerRef.current = true;
     }
@@ -75,7 +65,6 @@ export default function UpdateNotification() {
   };
 
   const handleDismiss = () => {
-    console.log('User dismissed update banner');
     setShowUpdate(false);
     setNeedRefresh(false);
     // Keep hasShownBannerRef.current = true to prevent re-showing

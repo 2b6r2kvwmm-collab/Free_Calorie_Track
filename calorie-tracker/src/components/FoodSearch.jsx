@@ -125,11 +125,7 @@ export default function FoodSearch({ onAddFood, onClose }) {
       setError(null);
     } catch (error) {
       if (error.name !== 'AbortError') {
-        console.error('Search failed:', error);
-        console.error('Error name:', error.name);
-        console.error('Error message:', error.message);
-        console.error('Error toString:', error.toString());
-        console.error('Full error object:', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+        console.error('Search failed:', error.message);
         setResults([]);
 
         // Check error type and show appropriate message
