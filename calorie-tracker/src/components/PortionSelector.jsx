@@ -17,6 +17,8 @@ import { lockScroll, unlockScroll } from '../utils/scrollLock';
 export default function PortionSelector({ food, onConfirm, onCancel }) {
   const modalRef = useModalAccessibility(true, onCancel);
   const [servings, setServings] = useState('1');
+  const [inputMode, setInputMode] = useState('servings'); // 'servings' | 'weight'
+  const [exactWeight, setExactWeight] = useState('');
   // selectedToppings: array of { topping, multiplier }
   const [selectedToppings, setSelectedToppings] = useState([]);
 
@@ -92,8 +94,17 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     toppingType = 'stirfry';
   }
 
+  // Parse grams per serving from servingSize string (e.g. "100g", "1 cup (240g)")
+  const parseGramsPerServing = (servingSizeStr) => {
+    const match = servingSizeStr.match(/\(?\s*(\d+\.?\d*)\s*g\s*\)?/i);
+    return match ? parseFloat(match[1]) : null;
+  };
+  const gramsPerServing = parseGramsPerServing(currentFood.servingSize);
+
   // Calculate base multiplier
-  const multiplier = parseFloat(servings) || 0;
+  const multiplier = inputMode === 'weight' && gramsPerServing
+    ? (parseFloat(exactWeight) || 0) / gramsPerServing
+    : parseFloat(servings) || 0;
 
   // Calculate totals including toppings with their multipliers
   const toppingsTotal = selectedToppings.reduce(
@@ -165,6 +176,8 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
     } else if (isPizza && Number.isInteger(multiplier)) {
       // For pizza, show as "2 slices" instead of "2x 1 slice base"
       servingSizeDisplay = multiplier === 1 ? '1 slice' : `${multiplier} slices`;
+    } else if (inputMode === 'weight' && gramsPerServing) {
+      servingSizeDisplay = `${parseFloat(exactWeight) || 0}g`;
     } else if (multiplier === 1) {
       servingSizeDisplay = food.servingSize;
     } else {
@@ -248,31 +261,28 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
         {/* Raw/Cooked Toggle */}
         {hasRawCookedPair(food) && (
           <div className="mb-6">
-            <label className="block text-sm font-semibold mb-2">Preparation</label>
+            <label className="block text-sm font-semibold mb-1">Weight measured as:</label>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Calories differ — raw meat loses water when cooked, so the same weight has more calories cooked.</p>
             <div className="flex gap-2">
               <button
-                onClick={() => {
-                  if (!isRaw) toggleRawCooked();
-                }}
+                onClick={() => { if (!isRaw) toggleRawCooked(); }}
                 className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
                   isRaw
                     ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
                 }`}
               >
-                🥗 Raw
+                Raw (uncooked)
               </button>
               <button
-                onClick={() => {
-                  if (isRaw) toggleRawCooked();
-                }}
+                onClick={() => { if (isRaw) toggleRawCooked(); }}
                 className={`flex-1 py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
                   !isRaw
                     ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
                 }`}
               >
-                🔥 Cooked
+                Cooked
               </button>
             </div>
           </div>
@@ -281,37 +291,84 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
         {/* Servings Input - show for non-build-your-own items AND pizza build-your-own */}
         {(!isBuildYourOwn || isPizza) && (
           <>
-            <div className="mb-4">
-              <label className="block text-lg font-semibold mb-3">
-                {isPizza ? 'Number of Slices' : 'Number of Servings'}
-              </label>
-              <input
-                type="number"
-                min={isPizza ? "1" : "0.1"}
-                step={isPizza ? "1" : "0.1"}
-                value={servings}
-                onChange={(e) => setServings(e.target.value)}
-                className="input-field text-center text-2xl"
-                autoFocus={!hasToppings}
-              />
-            </div>
-
-            {/* Quick Options */}
-            <div className="grid grid-cols-6 gap-2 mb-6">
-              {(isPizza ? [1, 2, 3, 4, 5, 6] : quickOptions).map((option) => (
+            {/* Input mode toggle — only show for foods with a parseable gram weight */}
+            {gramsPerServing && !isPizza && (
+              <div className="flex gap-1 mb-4 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
                 <button
-                  key={option}
-                  onClick={() => setServings(option.toString())}
-                  className={`py-2 px-3 rounded-lg font-semibold border-2 transition-colors ${
-                    parseFloat(servings) === option
-                      ? 'bg-emerald-600 text-white border-emerald-500'
-                      : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                  onClick={() => setInputMode('servings')}
+                  className={`flex-1 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+                    inputMode === 'servings'
+                      ? 'bg-white dark:bg-gray-600 shadow'
+                      : 'text-gray-500 dark:text-gray-400'
                   }`}
                 >
-                  {isPizza ? `${option}` : `${option}x`}
+                  Servings
                 </button>
-              ))}
-            </div>
+                <button
+                  onClick={() => setInputMode('weight')}
+                  className={`flex-1 py-1.5 rounded-md text-sm font-semibold transition-colors ${
+                    inputMode === 'weight'
+                      ? 'bg-white dark:bg-gray-600 shadow'
+                      : 'text-gray-500 dark:text-gray-400'
+                  }`}
+                >
+                  Exact weight (g)
+                </button>
+              </div>
+            )}
+
+            {inputMode === 'weight' && gramsPerServing && !isPizza ? (
+              <div className="mb-6">
+                <label className="block text-lg font-semibold mb-3">Weight (grams)</label>
+                <input
+                  type="number"
+                  min="1"
+                  step="1"
+                  value={exactWeight}
+                  onChange={(e) => setExactWeight(e.target.value)}
+                  className="input-field text-center text-2xl"
+                  placeholder="e.g. 150"
+                  autoFocus={!hasToppings}
+                />
+                <div className="text-xs text-gray-500 mt-1 text-center">
+                  1 serving = {gramsPerServing}g
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="mb-4">
+                  <label className="block text-lg font-semibold mb-3">
+                    {isPizza ? 'Number of Slices' : 'Number of Servings'}
+                  </label>
+                  <input
+                    type="number"
+                    min={isPizza ? "1" : "0.1"}
+                    step={isPizza ? "1" : "0.1"}
+                    value={servings}
+                    onChange={(e) => setServings(e.target.value)}
+                    className="input-field text-center text-2xl"
+                    autoFocus={!hasToppings}
+                  />
+                </div>
+
+                {/* Quick Options */}
+                <div className="grid grid-cols-6 gap-2 mb-6">
+                  {(isPizza ? [1, 2, 3, 4, 5, 6] : quickOptions).map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => setServings(option.toString())}
+                      className={`py-2 px-3 rounded-lg font-semibold border-2 transition-colors ${
+                        parseFloat(servings) === option
+                          ? 'bg-emerald-600 text-white border-emerald-500'
+                          : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                      }`}
+                    >
+                      {isPizza ? `${option}` : `${option}x`}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
           </>
         )}
 
@@ -329,6 +386,8 @@ export default function PortionSelector({ food, onConfirm, onCancel }) {
               <div className="text-xs text-gray-500 mt-2">
                 {isPizza && Number.isInteger(multiplier)
                   ? (multiplier === 1 ? '1 slice' : `${multiplier} slices`)
+                  : inputMode === 'weight' && gramsPerServing
+                  ? `${parseFloat(exactWeight) || 0}g`
                   : `${multiplier}x ${currentFood.servingSize}`
                 }
               </div>
