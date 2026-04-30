@@ -4,20 +4,24 @@ const COACH_PROMPT = `You are a supportive nutrition coach analyzing a user's fo
 
 Return ONLY a valid JSON object in this exact format:
 {
-  "whatsWorking": ["specific win referencing actual numbers", "another specific win"],
-  "needsAttention": ["specific gap with actual numbers"],
-  "thisTry": ["concrete actionable recommendation", "another concrete recommendation", "a third recommendation"],
-  "trajectory": "One honest sentence on where they are headed given their current pattern."
+  "whatsWorking": ["insight-first observation supported by a number", "another win"],
+  "needsAttention": ["observation-first insight with supporting number"],
+  "thisTry": ["concrete actionable tip", "another concrete tip", "a third tip"],
+  "trajectory": "One honest, plain-language sentence on where they are headed."
 }
 
 Rules:
-- Reference actual numbers from their logs (e.g. "you averaged 142g protein vs your 150g goal")
-- "needsAttention" may be an empty array [] if the user is genuinely on track — do NOT manufacture problems or nitpick if someone is doing well
+- Lead each bullet with the *insight or implication*, then support it with a number — not the other way around. Bad: "Your average protein was 142g vs your 150g goal." Good: "Protein is nearly on point — you're averaging 142g, just 8g short of your 150g target."
+- Keep each bullet to 1–2 sentences max. No lists within bullets.
+- Use plain language: "calories" not "kcal", say "your goal" not "your 2062 kcal target"
+- Don't open a bullet with "Your average..." — lead with an observation or what it means for the user
+- Avoid naming multiple raw numbers in the same sentence — pick the one that best makes the point
+- "needsAttention" may be an empty array [] if the user is genuinely on track — do NOT manufacture problems
 - "whatsWorking" must always have at least one real, specific entry — find something to celebrate
 - "thisTry" must be concrete and specific — never generic advice like "eat more protein" without context
-- Exercise burns logged are estimates only (MET-based, ±20%) and research shows the body partially compensates — do not treat them as dollar-for-dollar calorie budget increases; use them as activity context instead (e.g. "you were active 4 of 7 days" or "you ran 3x this week")
+- Exercise burns are estimates only (±20%) and the body partially compensates — use them as activity context (e.g. "you were active 4 of 7 days") not as exact calorie offsets
 - If fewer than 7 days are logged, base insights only on what's available and note this in trajectory
-- Tone: like a knowledgeable, encouraging friend — honest but never preachy or corporate
+- Tone: like a knowledgeable, encouraging friend — honest but never preachy or clinical
 - Return ONLY the JSON object — no explanation, no markdown, no extra text`;
 
 const ALLOWED_ORIGINS = [
@@ -37,11 +41,21 @@ export const config = {
   },
 };
 
+function friendlyDayLabel(dateStr) {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const diffDays = Math.round((today - date) / 86400000);
+  if (diffDays === 0) return 'Today';
+  if (diffDays === 1) return 'Yesterday';
+  return date.toLocaleDateString('en-US', { weekday: 'long' });
+}
+
 function buildCoachRequest(profile, logs) {
   const userContext = `
 User profile:
 - Goal: ${profile.goal || 'not specified'}
-- Daily calorie target: ${profile.calorieGoal || 'not specified'} kcal
+- Daily calorie target: ${profile.calorieGoal || 'not specified'} calories
 - Protein target: ${profile.proteinTarget || 'not specified'}g
 - Carb target: ${profile.carbTarget || 'not specified'}g
 - Fat target: ${profile.fatTarget || 'not specified'}g
@@ -51,9 +65,9 @@ User profile:
 Food logs for the last 7 days (${logs.length} day${logs.length !== 1 ? 's' : ''} logged):
 ${logs.map(day => {
     const exercisePart = day.caloriesBurned > 0
-      ? ` | Exercise burned: ${day.caloriesBurned} kcal (${day.exercises.slice(0, 4).join(', ')}${day.exercises.length > 4 ? ` +${day.exercises.length - 4} more` : ''})`
+      ? ` | Exercise: ${day.caloriesBurned} cal burned (${day.exercises.slice(0, 4).join(', ')}${day.exercises.length > 4 ? ` +${day.exercises.length - 4} more` : ''})`
       : '';
-    return `${day.date}: ${day.calories} kcal eaten | ${day.protein}g protein | ${day.carbs}g carbs | ${day.fat}g fat${exercisePart} | Foods: ${day.foods.slice(0, 8).join(', ')}${day.foods.length > 8 ? ` +${day.foods.length - 8} more` : ''}`;
+    return `${friendlyDayLabel(day.date)}: ${day.calories} cal eaten | ${day.protein}g protein | ${day.carbs}g carbs | ${day.fat}g fat${exercisePart} | Foods: ${day.foods.slice(0, 8).join(', ')}${day.foods.length > 8 ? ` +${day.foods.length - 8} more` : ''}`;
   }).join('\n')}`.trim();
 
   return {

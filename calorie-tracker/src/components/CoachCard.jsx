@@ -148,14 +148,32 @@ export default function CoachCard() {
 
         {/* Header */}
         <div className="px-5 pt-5 pb-4 border-b border-gray-100 dark:border-gray-700">
-          <div className="flex items-center gap-2 mb-1">
-            <Sparkles size={16} className="text-purple-500" />
-            <span className="font-bold text-gray-900 dark:text-gray-100">Nutrition Coach</span>
-            <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">Beta</span>
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <Sparkles size={16} className="text-purple-500" />
+                <span className="font-bold text-gray-900 dark:text-gray-100">Nutrition Coach</span>
+                <span className="text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">Beta</span>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                AI-generated insights based on your logs — estimates only, not medical advice.
+              </p>
+            </div>
+            {result && (
+              <button
+                onClick={handleAnalyze}
+                disabled={loading || ranToday}
+                className="flex-shrink-0 flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-semibold px-3 py-2 rounded-xl transition-colors"
+              >
+                {loading ? (
+                  <RefreshCw size={13} className="animate-spin" />
+                ) : (
+                  <RefreshCw size={13} />
+                )}
+                {ranToday ? 'Updated today' : 'Refresh'}
+              </button>
+            )}
           </div>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            AI-generated insights based on your logs — estimates only, not medical advice.
-          </p>
         </div>
 
         <div className="px-5 py-4 space-y-4">
@@ -203,7 +221,7 @@ export default function CoachCard() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <p className="text-xs text-gray-400 dark:text-gray-500">
-                  Based on your last 7 days · {result.date === today ? 'Updated today' : `Updated ${result.date}`}
+                  {result.date === today ? 'Updated today' : `Last updated ${new Date(result.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}`}
                 </p>
                 <button
                   onClick={() => setShowPrivacy(true)}
@@ -212,10 +230,6 @@ export default function CoachCard() {
                   What gets sent?
                 </button>
               </div>
-
-              <p className="text-xs text-gray-400 dark:text-gray-500 leading-relaxed">
-                AI-generated estimates — may not be accurate. Not a substitute for professional nutrition advice.
-              </p>
 
               <ResultSection
                 icon="✅"
@@ -244,20 +258,7 @@ export default function CoachCard() {
               )}
 
               {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-
-              <button
-                onClick={handleAnalyze}
-                disabled={loading || ranToday}
-                className="w-full border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-40 font-medium py-2.5 rounded-xl transition-colors text-sm flex items-center justify-center gap-2"
-              >
-                {loading ? (
-                  <><RefreshCw size={14} className="animate-spin" /> Analyzing…</>
-                ) : ranToday ? (
-                  'Updated today · Available tomorrow'
-                ) : (
-                  <><RefreshCw size={14} /> Refresh analysis</>
-                )}
-              </button>
+              {ranToday && <p className="text-xs text-center text-gray-400 dark:text-gray-500">Refresh available tomorrow</p>}
             </div>
           )}
 
