@@ -18,10 +18,10 @@ const NotIncluded = ({ label }) => (
     {label && <span className="text-gray-600 dark:text-gray-400">{label}</span>}
   </span>
 );
-const RequiresSubscription = () => (
+const RequiresSubscription = ({ label }) => (
   <span className="flex items-center gap-1.5">
     <Lock size={15} className="text-gray-400 flex-shrink-0" />
-    <span className="text-gray-500 dark:text-gray-400">Requires subscription</span>
+    <span className="text-gray-500 dark:text-gray-400">{label || 'Requires subscription'}</span>
   </span>
 );
 const Limited = ({ label }) => (
@@ -289,12 +289,13 @@ const HOMESCREEN_STEPS = [
 ];
 
 const COMPARISON_ROWS = [
-  { feature: 'AI food logging & coaching', fct: <Included label="Free" />, other: <RequiresSubscription /> },
-  { feature: 'Barcode scanning', fct: <Included />, other: <RequiresSubscription /> },
-  { feature: 'Macro tracking', fct: <Included />, other: <Limited label="Free tier limited" /> },
-  { feature: 'Nutrition tracking (fiber, sodium)', fct: <Included />, other: <Limited label="Limited or not available" /> },
-  { feature: 'Trends & insights', fct: <Included />, other: <Limited label="Free tier limited" /> },
-  { feature: 'Ad-free', fct: <Included />, other: <RequiresSubscription /> },
+  { feature: 'Photo & text food logging', fct: <Included label="Free" />, other: <RequiresSubscription label="Subscription or not available" /> },
+  { feature: 'Personalized nutrition coaching', fct: <Included label="Free" />, other: <RequiresSubscription label="Subscription or not available" /> },
+  { feature: 'Barcode scanning', fct: <Included label="Free" />, other: <RequiresSubscription /> },
+  { feature: 'Macro tracking', fct: <Included label="Free" />, other: <Limited label="Free tier limited" /> },
+  { feature: 'Nutrition tracking (fiber, sodium)', fct: <Included label="Free" />, other: <Limited label="Limited or not available" /> },
+  { feature: 'Trends & insights', fct: <Included label="Free" />, other: <Limited label="Free tier limited" /> },
+  { feature: 'Ad-free', fct: <Included label="Free" />, other: <RequiresSubscription /> },
   { feature: 'Account required', fct: <NotIncluded label="No account needed" />, other: <Included label="Yes, required" /> },
   { feature: 'Data storage', fct: <Included label="Stored locally" />, other: <span className="text-gray-500 dark:text-gray-400">Cloud-based</span> },
 ];
