@@ -112,6 +112,23 @@ export const schemaData: Record<string, SchemaData> = {
     reviewBody: 'After 6+ years of daily use, the Breville Barista Express is the greatest product I own. It has saved us thousands on coffee while delivering café-quality espresso at home. The built-in grinder is convenient, the machine is reliable and consistent, and the espresso quality rivals high-end coffee shops. The only maintenance needed has been descaling and replacing the water filter. If you drink espresso regularly and want to stop spending $5+ per drink, this machine pays for itself in months and will last for years.'
   },
 
+  'oxo-obsidian-carbon-steel-pan-review': {
+    type: 'Review',
+    itemReviewed: {
+      name: 'OXO Obsidian 10" Carbon Steel Frying Pan',
+      description: 'Lightweight carbon steel frying pan with factory seasoning, rubber handle grip, and no chemical coating. Gets better with use.'
+    },
+    reviewRating: {
+      ratingValue: 5,
+      bestRating: 5
+    },
+    author: {
+      type: 'Organization',
+      name: 'Free Calorie Track'
+    },
+    reviewBody: 'The OXO Obsidian is the best entry point into chemical-free cookware. Lightweight compared to cast iron but thick enough to distribute heat evenly, it excels at searing and handles delicate things like pancakes better than expected. The factory seasoning gives you a real head start. Eggs require technique and patience, and scrambled eggs will cake on — that\'s the honest tradeoff. Maintenance is simple: skip the soap, scrub with a Scrub Daddy and cold water, dry completely, and rub with a little high-heat oil. For anyone trying to get chemical coatings out of their kitchen, this is a great pan to start with.'
+  },
+
   'zelus-weighted-vest-review': {
     type: 'Review',
     itemReviewed: {

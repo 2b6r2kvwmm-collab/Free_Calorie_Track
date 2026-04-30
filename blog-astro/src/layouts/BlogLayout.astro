@@ -132,7 +132,13 @@ const postSchemaData = schemaData[slug];
       "itemReviewed": {
         "@type": "Product",
         "name": postSchemaData.itemReviewed.name,
-        "description": postSchemaData.itemReviewed.description
+        "description": postSchemaData.itemReviewed.description,
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": postSchemaData.reviewRating.ratingValue,
+          "bestRating": postSchemaData.reviewRating.bestRating,
+          "reviewCount": 1
+        }
       },
       "reviewRating": {
         "@type": "Rating",
