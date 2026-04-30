@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
-import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon } from 'lucide-react';
+import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon, Sun, Moon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
 import InstallPrompt from './components/InstallPrompt';
 import InstallReminderModal from './components/InstallReminderModal';
@@ -190,10 +190,10 @@ function App() {
               </div>
               <button
                 onClick={() => setDarkMode(!darkMode)}
-                className="text-3xl"
+                className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 aria-label="Toggle dark mode"
               >
-                {darkMode ? '☀️' : '🌙'}
+                {darkMode ? <Sun size={20} /> : <Moon size={20} />}
               </button>
             </div>
           </div>
