@@ -287,6 +287,43 @@
           max-width: 300px;
         }
       }
+      .gear-card {
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        padding: 16px;
+        text-align: left;
+      }
+      .dark .gear-card {
+        background: #111827;
+        border-color: #374151;
+      }
+      .gear-card-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 4px;
+      }
+      .dark .gear-card-title {
+        color: #f3f4f6;
+      }
+      .gear-card-desc {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 12px;
+        line-height: 1.4;
+      }
+      .dark .gear-card-desc {
+        color: #9ca3af;
+      }
+      .gear-card-review {
+        font-size: 11px;
+        color: #9ca3af;
+        text-decoration: none;
+      }
+      .gear-card-review:hover {
+        text-decoration: underline;
+      }
       .disclaimer {
         font-size: 11px;
         color: #999;
@@ -358,15 +395,6 @@
 
     <div class="app-footer">
 
-      <!-- Medical Disclaimer - Top Priority -->
-      <div class="medical-disclaimer">
-        <h3>⚠️ Medical Disclaimer</h3>
-        <p>
-          This app provides estimates for informational purposes only and is not intended for medical diagnosis, treatment, or professional health advice. TDEE and calorie estimates are approximations and may not be accurate for all individuals. Always consult a qualified healthcare provider before making changes to your diet, exercise, or health routine. Free Calorie Track is provided "as is" without warranties and is not liable for any damages, data loss, or inaccuracies.
-        </p>
-      </div>
-
-      <hr class="footer-divider">
 
       <div style="margin-bottom: 25px;">
         <h3 class="footer-heading">
@@ -383,31 +411,38 @@
       <hr class="footer-divider">
 
       <div style="margin-top: 35px; margin-bottom: 20px;">
-        <p class="gear-header" style="color: #999; margin-bottom: 8px;">
-          <strong>My favorite health and fitness gear</strong>
+        <p class="gear-header" style="color: #999; margin-bottom: 4px;">
+          <strong>Gear I actually use</strong>
         </p>
-        <p style="font-size: 12px; color: #888; margin-bottom: 12px;">
+        <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
           As an Amazon Associate I earn from qualifying purchases.
         </p>
-        <div class="gear-grid">
-          <a href="https://amzn.to/4qNU4Ko" target="_blank" rel="noopener noreferrer" class="footer-link">
-            ⚖️ Favorite Digital Food Scale
-          </a>
-          <a href="https://amzn.to/4bquRRF" target="_blank" rel="noopener noreferrer" class="footer-link">
-            🫙 Favorite Meal Prep Containers
-          </a>
-          <a href="https://amzn.to/45ORPhU" target="_blank" rel="noopener noreferrer" class="footer-link">
-            💧 Favorite Insulated Water Bottle
-          </a>
-          <a href="https://amzn.to/4txlhTV" target="_blank" rel="noopener noreferrer" class="footer-link">
-            🏋️ Favorite Small Dumbbells
-          </a>
-          <a href="https://amzn.to/4qU7fJY" target="_blank" rel="noopener noreferrer" class="footer-link">
-            💪 Favorite Adjustable Dumbbells
-          </a>
-          <a href="https://amzn.to/3P38ZCB" target="_blank" rel="noopener noreferrer" class="footer-link">
-            🥤 Favorite Smoothie & Protein Blender
-          </a>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 700px; margin: 0 auto;">
+
+          <div class="gear-card">
+            <div style="font-size: 22px; margin-bottom: 8px;">⚖️</div>
+            <div class="gear-card-title">Crownful Digital Food Scale</div>
+            <div class="gear-card-desc">The #1 thing that improved my tracking accuracy</div>
+            <a href="https://amzn.to/4bjHj5e" target="_blank" rel="noopener noreferrer" style="display: block; background: #10b981; color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 6px; margin-bottom: 8px;">Buy on Amazon →</a>
+            <a href="/blog/how-to-use-a-food-scale" class="gear-card-review">Read my review</a>
+          </div>
+
+          <div class="gear-card">
+            <div style="font-size: 22px; margin-bottom: 8px;">🥤</div>
+            <div class="gear-card-title">NutriBullet Pro 900</div>
+            <div class="gear-card-desc">I own two of these · Best for daily protein shakes, easy to clean</div>
+            <a href="https://amzn.to/4r0CClz" target="_blank" rel="noopener noreferrer" style="display: block; background: #10b981; color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 6px; margin-bottom: 8px;">Buy on Amazon →</a>
+            <a href="/blog/best-blenders-for-protein-shakes" class="gear-card-review">Read my review</a>
+          </div>
+
+          <div class="gear-card">
+            <div style="font-size: 22px; margin-bottom: 8px;">🏋️</div>
+            <div class="gear-card-title">Core Fitness Adjustable Dumbbells</div>
+            <div class="gear-card-desc">5–50 lbs · What I use at home instead of a full rack</div>
+            <a href="https://amzn.to/3MtBjNW" target="_blank" rel="noopener noreferrer" style="display: block; background: #10b981; color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 6px; margin-bottom: 8px;">Buy on Amazon →</a>
+            <a href="/blog/best-adjustable-dumbbells-beginners" class="gear-card-review">Read my review</a>
+          </div>
+
         </div>
       </div>
 

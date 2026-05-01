@@ -6,6 +6,7 @@ import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
 export default function ProfileSetup({ onComplete }) {
   const [step, setStep] = useState(1); // 1: basic info, 2: fitness goal
   const [useCustomGoals, setUseCustomGoals] = useState(false);
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
   const [customMacros, setCustomMacros] = useState({ protein: 150, carbs: 200, fat: 65 });
   const [formData, setFormData] = useState({
     age: '',
@@ -344,17 +345,29 @@ export default function ProfileSetup({ onComplete }) {
             </>
           )}
 
-          <button type="submit" className="btn-primary w-full mt-8">
+          {step === 2 && (
+            <div className="flex items-start gap-3 pt-2">
+              <input
+                type="checkbox"
+                id="disclaimerAccepted"
+                checked={disclaimerAccepted}
+                onChange={(e) => setDisclaimerAccepted(e.target.checked)}
+                className="w-5 h-5 mt-0.5 text-emerald-500 rounded flex-shrink-0"
+              />
+              <label htmlFor="disclaimerAccepted" className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed cursor-pointer">
+                I understand that Free Calorie Track provides estimates for informational purposes only and is not a substitute for professional medical advice. I will consult a qualified healthcare provider before making significant changes to my diet or exercise routine.
+              </label>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="btn-primary w-full mt-6"
+            disabled={step === 2 && !disclaimerAccepted}
+          >
             {step === 1 ? 'Continue' : 'Complete Setup'}
           </button>
         </form>
-
-        {/* Medical Disclaimer */}
-        <div className="mt-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
-          <p className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-            <strong className="font-semibold">Disclaimer:</strong> This app provides estimates for informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Consult a doctor or registered dietitian before starting any diet or exercise program, especially if you have any pre-existing health conditions.
-          </p>
-        </div>
       </div>
     </div>
   );

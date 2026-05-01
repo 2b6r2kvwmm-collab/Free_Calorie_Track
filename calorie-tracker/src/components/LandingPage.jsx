@@ -400,6 +400,7 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <>
       {/* SEO meta tags managed in static index.html to ensure crawlers see them without requiring JavaScript execution */}
+
       <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
 
       {/* Header */}
@@ -573,13 +574,6 @@ export default function LandingPage({ onGetStarted }) {
       {/* Landing Page Footer */}
       <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Medical Disclaimer - Prominent */}
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-6">
-            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
-              <strong className="text-yellow-800 dark:text-yellow-400">Medical Disclaimer:</strong> Free Calorie Track is for informational purposes only and is not intended for medical diagnosis, treatment, or professional health advice. TDEE and calorie estimates are approximations based on standard formulas and may not be accurate for all individuals. Always consult a qualified healthcare provider before making changes to your diet, exercise, or health routine. Free Calorie Track is provided "as is" without warranties of any kind and is not liable for any damages, data loss, or inaccuracies.
-            </p>
-          </div>
-
           {/* Links */}
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 mb-4">
             <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
