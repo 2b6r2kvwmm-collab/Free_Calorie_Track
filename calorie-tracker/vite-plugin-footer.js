@@ -14,15 +14,12 @@ export default function footerInjectionPlugin() {
       // Generate footer HTML from shared content
       const footerHTML = generateFooterHTML(footerContent);
 
-      // Replace the existing footer section
-      // Look for the app-footer div and replace it with the generated footer
-      const footerRegex = /<div class="app-footer">[\s\S]*?<\/div>\s*<\/body>/;
-
-      if (footerRegex.test(html)) {
-        return html.replace(footerRegex, `<div class="app-footer">\n${footerHTML}\n    </div>\n  </body>`);
+      const marker = '<div class="app-footer"><!-- FOOTER_INJECT --></div>';
+      if (html.includes(marker)) {
+        return html.replace(marker, `<div class="app-footer">\n${footerHTML}\n    </div>`);
       }
 
-      // If no footer found, append before closing body tag
+      // Fallback: append before closing body tag
       return html.replace('</body>', `<div class="app-footer">\n${footerHTML}\n    </div>\n  </body>`);
     },
   };
