@@ -2,86 +2,180 @@
 import LandingPageLayout from '../layouts/LandingPageLayout.astro';
 
 const title = "Best Free Macro Tracker App - Track Macros";
-const description = "Free macro tracker for protein, carbs, and fat. Real-time progress bars, automatic or custom goals. No paywalls, no ads. Works offline.";
+const description = "Free macro tracker for protein, carbs, and fat. Real-time progress bars, automatic or custom goals, AI food logging. No paywalls, no ads. Works offline.";
 const keywords = "macro tracker, free macro tracker, best free macro tracker, macro tracking app, macro app, track macros, protein carbs fat tracker, macronutrient tracker";
 ---
 
 <LandingPageLayout title={title} description={description} keywords={keywords}>
 
-  <!-- Hero -->
-  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        <!-- Left: Text -->
-        <div class="flex-1 text-center md:text-left max-w-xl">
-          <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The Best Free Macro Tracker</h1>
-          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-            Track protein, carbs, and fat with <span class="font-bold text-emerald-600 dark:text-emerald-400">real-time progress bars</span>. Set automatic or custom macro goals. No paywalls, no ads, no account required.
-          </p>
-          <a
-            href="/?from=landing-page"
-            class="inline-block bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
-          >
-            Start Tracking Macros Now
-          </a>
+  <!-- Hero copy -->
+  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div class="max-w-6xl mx-auto px-4 pt-6 md:pt-8 pb-10 text-center">
+      <div class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+        100% free · No account required
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The Best <span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Macro Tracker</span></h1>
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto">
+        Track protein, carbs, and fat with real-time progress bars, automatic or custom goals, and AI food logging. <span class="font-semibold text-gray-800 dark:text-gray-200">No paywalls, no ads, no account required.</span>
+      </p>
+      <a
+        href="/?from=landing-page"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+      >
+        Start Tracking Macros Now →
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero image -->
+  <div class="bg-gray-800 dark:bg-gray-950">
+    <div class="max-w-6xl mx-auto px-4">
+      <picture>
+        <source srcset="/hero-screenshot.webp" type="image/webp" media="(min-width: 768px)" />
+        <source srcset="/hero-mobile.webp" type="image/webp" media="(max-width: 767px)" />
+        <img
+          src="/hero-screenshot.webp"
+          alt="Free Calorie Track macro tracker showing protein, carbs, and fat progress bars"
+          width="5000"
+          height="3000"
+          class="w-full h-auto"
+          loading="eager"
+          style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
+        />
+      </picture>
+    </div>
+  </div>
+
+  <!-- Value Props -->
+  <div class="bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Track all 3 macros — free.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Real-time protein, carb, and fat progress bars. Automatic or custom macro goals. Barcode scanning and AI logging — all included. No premium tier, no trial that expires.</p>
         </div>
-
-        <!-- Right: App Screenshot -->
-        <div class="flex-1 w-full max-w-sm md:max-w-3xl">
-          <picture>
-            <!-- Desktop: Multi-phone composite -->
-            <source
-              srcset="/hero-screenshot.webp"
-              type="image/webp"
-              media="(min-width: 768px)"
-            />
-
-            <!-- Mobile: Single phone -->
-            <source
-              srcset="/hero-mobile.webp"
-              type="image/webp"
-              media="(max-width: 767px)"
-            />
-
-            <!-- Fallback -->
-            <img
-              src="/hero-screenshot.webp"
-              alt="Free Calorie Track macro tracker showing protein, carbs, and fat progress bars"
-              width="5000"
-              height="3000"
-              class="w-full h-auto rounded-xl shadow-2xl"
-              loading="eager"
-              style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
-            />
-          </picture>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">No account. No cloud.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Your data lives on your device, not on a server. There's nothing to sign up for, no email required, and nothing to hand over.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Works everywhere, even offline.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Install to your home screen from any browser — iPhone, Android, desktop. Runs like a native app and works without internet.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
+  <!-- Features Grid -->
+  <div class="bg-white dark:bg-gray-900">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-2xl font-bold text-center mb-2"><span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Macro Tracker</span><span class="text-gray-800 dark:text-gray-100"> key features</span></h2>
+      <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Everything you want. No paywalls.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+
+        <!-- Macro progress bars -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Macro progress bars</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Real-time protein, carb, and fat bars that update as you log. See your daily balance at a glance.</p>
+        </div>
+
+        <!-- Automatic macro goals -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Automatic macro goals</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Set your fitness goal and get research-based macro targets calculated. Or set your own custom ratios.</p>
+        </div>
+
+        <!-- Barcode scanning -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Barcode scanning</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Scan any product instantly. 220,000+ items in the database. Free, no daily limit.</p>
+        </div>
+
+        <!-- 6 macro presets -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">6 macro presets</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">One-tap splits for High Protein, Keto, Athletic, Low Carb, Zone, and Balanced.</p>
+        </div>
+
+        <!-- Trends & insights -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Trends & insights</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Weekly and monthly macro averages. Daily line charts. See consistency over time.</p>
+        </div>
+
+        <!-- AI food logging -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">AI food logging (Beta)</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Describe a meal or snap a photo — AI estimates all 3 macros instantly. 10 free logs/day.</p>
+        </div>
+
+        <!-- Nutrition Coach -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Nutrition Coach (Beta)</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Log 3+ days and get a weekly AI analysis of your macro balance and what to adjust. Free and optional.</p>
+        </div>
+
+        <!-- Works offline -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Works offline</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Install on any device. All your food data stored locally. No internet needed after setup.</p>
+        </div>
+
+        <!-- Private by design -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Private by design</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">No account, no subscription. Your data stays on your device and never passes through our servers.</p>
+        </div>
+
+        <!-- Editable history -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Editable history</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Forgot to log yesterday? Add or edit meals from any past day in the History tab.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Guide transition band -->
+  <div class="bg-gray-50 dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700 py-10">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-3">The Guide</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">How to Track Macros</h2>
+      <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">What macros are, how to set your targets, which splits work for different goals, and how to stay consistent.</p>
+    </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-4 py-12">
 
     <!-- What Are Macros Section -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
       <h2 class="text-3xl font-bold mb-6 text-center">What Are Macros?</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">
+      <p class="text-gray-600 dark:text-gray-400 mb-6 text-center">
         Macronutrients (macros) are the three main nutrients your body needs in large amounts: <strong>protein</strong>, <strong>carbohydrates</strong>, and <strong>fat</strong>. Tracking macros gives you more control than just counting calories alone.
       </p>
       <div class="grid md:grid-cols-3 gap-6">
         <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 border-2 border-red-200 dark:border-red-800">
-          <div class="text-4xl mb-3">🥩</div>
           <h3 class="font-bold text-lg mb-2 text-red-700 dark:text-red-400">Protein</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm">Builds and repairs muscle. Essential for recovery and maintaining lean mass during weight loss.</p>
           <p class="text-xs text-gray-500 dark:text-gray-500 mt-2 font-semibold">4 calories per gram</p>
         </div>
         <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border-2 border-blue-200 dark:border-blue-800">
-          <div class="text-4xl mb-3">🍞</div>
           <h3 class="font-bold text-lg mb-2 text-blue-700 dark:text-blue-400">Carbohydrates</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm">Primary energy source. Fuels workouts and supports athletic performance.</p>
           <p class="text-xs text-gray-500 dark:text-gray-500 mt-2 font-semibold">4 calories per gram</p>
         </div>
         <div class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-6 border-2 border-amber-200 dark:border-amber-800">
-          <div class="text-4xl mb-3">🥑</div>
           <h3 class="font-bold text-lg mb-2 text-amber-700 dark:text-amber-400">Fat</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm">Supports hormone production, nutrient absorption, and sustained energy.</p>
           <p class="text-xs text-gray-500 dark:text-gray-500 mt-2 font-semibold">9 calories per gram</p>
@@ -89,109 +183,10 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
       </div>
     </div>
 
-    <!-- Why Track Macros Section -->
-    <div class="mb-12">
-      <h2 class="text-3xl font-bold mb-8 text-center">Why Track Macros Instead of Just Calories?</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">🎯</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Better Body Composition</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">200 calories from chicken breast affects your body differently than 200 calories from candy. Macro tracking ensures you're eating the right balance for muscle gain or fat loss.</p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">⚡</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Optimize Performance</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Athletes and lifters need adequate protein for recovery and carbs for energy. Tracking macros helps you fuel workouts properly.</p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">💪</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Preserve Muscle During Weight Loss</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">High-protein macro targets help you maintain muscle mass while losing fat, leading to a leaner, more defined physique.</p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">🔬</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Fine-Tune Your Diet</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Macro tracking reveals patterns in your diet. Maybe your protein is low, or your carbs are too high—you can't fix what you don't measure.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Features Section -->
-    <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 mb-12">
-      <h2 class="text-3xl font-bold mb-8 text-center">Free Macro Tracker Features</h2>
-      <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
-          <div>
-            <h3 class="font-bold mb-1">Real-Time Macro Progress Bars</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">See protein, carbs, and fat update instantly as you log food. Visual bars show exactly how much of each macro you have left for the day.</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
-          <div>
-            <h3 class="font-bold mb-1">Automatic Macro Goals</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Set your fitness goal (muscle gain, fat loss, maintenance) and get research-based macro targets calculated automatically.</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
-          <div>
-            <h3 class="font-bold mb-1">Custom Macro Targets</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Override the defaults and set your own custom protein, carb, and fat goals. Includes 6 one-tap macro presets (High Protein, Keto, Zone, etc.).</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
-          <div>
-            <h3 class="font-bold mb-1">Barcode Scanning</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Scan product barcodes to instantly log macros. 220,000+ products in the database. Completely free, no daily limits.</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
-          <div>
-            <h3 class="font-bold mb-1">Weekly & Monthly Macro Averages</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">See your average protein, carbs, and fat intake over the last 7 or 30 days. Track consistency over time.</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
-          <div>
-            <h3 class="font-bold mb-1">Daily Macro Line Chart</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Visualize your macro intake over time with interactive charts. See trends and identify patterns in your nutrition.</p>
-          </div>
-        </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
-          <div>
-            <h3 class="font-bold mb-1">Additional Nutrition Tracking</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Optionally track fiber, sodium, sugar, and saturated fat alongside your macros for a more complete picture of your nutrition.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- How It Works -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+    <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 mb-12">
       <h2 class="text-3xl font-bold mb-8 text-center">How the Macro Tracker Works</h2>
-      <div class="space-y-6 max-w-2xl mx-auto">
+      <div class="space-y-6">
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">1</div>
           <div>
@@ -203,7 +198,7 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">2</div>
           <div>
             <h3 class="font-bold text-lg mb-1">Log Your Meals</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Scan barcodes, pick from thousands of common foods, search branded products, or create custom recipes. The macro breakdown (protein, carbs, fat) is tracked automatically for each entry.</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Scan barcodes, pick from thousands of common foods, search branded products, create custom recipes, or describe a meal to AI. The macro breakdown is tracked automatically for each entry.</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
@@ -219,26 +214,26 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
     <!-- Popular Macro Splits -->
     <div class="mb-12">
       <h2 class="text-3xl font-bold mb-8 text-center">Popular Macro Splits</h2>
-      <p class="text-center text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+      <p class="text-center text-gray-600 dark:text-gray-400 mb-8">
         The app includes 6 one-tap macro presets for common diet strategies. Choose the split that matches your goals:
       </p>
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border-2 border-emerald-300 dark:border-emerald-700">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <h3 class="font-bold text-lg mb-2">High Protein</h3>
           <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">40/30/30</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">40% Protein • 30% Carbs • 30% Fat</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">40% Protein · 30% Carbs · 30% Fat</p>
           <p class="text-sm text-gray-600 dark:text-gray-400">Best for: Fat loss, muscle retention</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <h3 class="font-bold text-lg mb-2">Keto</h3>
           <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">30/5/65</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">30% Protein • 5% Carbs • 65% Fat</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">30% Protein · 5% Carbs · 65% Fat</p>
           <p class="text-sm text-gray-600 dark:text-gray-400">Best for: Ketogenic diet, very low carb</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <h3 class="font-bold text-lg mb-2">Athletic</h3>
           <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">30/50/20</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">30% Protein • 50% Carbs • 20% Fat</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">30% Protein · 50% Carbs · 20% Fat</p>
           <p class="text-sm text-gray-600 dark:text-gray-400">Best for: High activity, endurance training</p>
         </div>
       </div>
@@ -250,7 +245,7 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
     <!-- Why Choose This Tracker -->
     <div class="bg-gradient-to-br from-gray-50 to-emerald-50 dark:from-gray-800 dark:to-emerald-900/20 rounded-2xl p-8 mb-12">
       <h2 class="text-3xl font-bold mb-6 text-center">Why Use Our Macro Tracker?</h2>
-      <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-6">
         <div class="flex items-start gap-3">
           <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">✓</span>
           <div>
@@ -278,6 +273,59 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
             <h3 class="font-bold mb-1">Works Offline</h3>
             <p class="text-gray-600 dark:text-gray-400 text-sm">Install on any device and track macros without internet. All your food data stored locally on your device.</p>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weekly averages -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">One Bad Day Doesn't Undo a Good Week</h2>
+      <p class="text-gray-600 dark:text-gray-400 text-center mb-8">The most common reason people quit macro tracking: they blow one macro on one day and feel like they failed. Body composition changes happen over weeks, not days — and weekly averages are what actually determine the outcome.</p>
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 border border-red-200 dark:border-red-800">
+          <p class="font-bold text-red-700 dark:text-red-400 mb-3">The thinking that makes people quit</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">"I went 80g over on carbs at a birthday dinner Saturday. I might as well not bother tracking the rest of the week."</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">One 80g carb surplus = 320 extra calories. If you ran a 400-cal deficit the other six days, you're still at a net 2,080-cal weekly deficit. One dinner didn't undo anything.</p>
+        </div>
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
+          <p class="font-bold text-emerald-700 dark:text-emerald-400 mb-3">The thinking that works</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Check your 7-day weekly averages. If your weekly average protein is within 10% of target and your average calories are on track, you're making progress — regardless of what any individual day looked like.</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Free Calorie Track shows rolling weekly averages for every macro and your calorie total.</p>
+        </div>
+      </div>
+      <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+        <p class="text-sm text-gray-600 dark:text-gray-400 text-center"><strong>Rule of thumb:</strong> If your weekly average protein and calories are close to target, body composition will follow. Perfection on individual days is unnecessary and unsustainable.</p>
+      </div>
+    </div>
+
+    <!-- Macro priority hierarchy -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-4 text-center">When You Can't Hit All Three: Prioritize in This Order</h2>
+      <p class="text-gray-600 dark:text-gray-400 text-center mb-8">Traveling, eating out, unusual day — sometimes hitting all three macros perfectly isn't realistic. When that happens, here's what to protect first and what's most flexible.</p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border-2 border-emerald-300 dark:border-emerald-600">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">1</div>
+            <h3 class="font-bold text-lg">Protein — always</h3>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Never sacrifice. Hit your protein target even if carbs and fat need to shift to accommodate it.</p>
+          <p class="text-xs text-gray-500 dark:text-gray-500">Protein preserves muscle in a deficit, keeps you full, and has the highest thermic effect — your body burns ~25% of protein calories just digesting it.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-8 rounded-full bg-gray-400 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">2</div>
+            <h3 class="font-bold text-lg">Fat — minimum floor</h3>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Don't go below ~0.3g per lb of body weight. Dietary fat is required for hormone production — chronically too low causes real problems.</p>
+          <p class="text-xs text-gray-500 dark:text-gray-500">Going under the minimum impairs absorption of vitamins A, D, E, and K and can cause hormonal disruption over time.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-8 h-8 rounded-full bg-gray-400 text-white flex items-center justify-center font-bold text-sm flex-shrink-0">3</div>
+            <h3 class="font-bold text-lg">Carbs — most flexible</h3>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Adjust carbs up or down freely once protein and fat minimums are covered. Fill remaining calories with carbs to hit your target.</p>
+          <p class="text-xs text-gray-500 dark:text-gray-500">Carb needs are highly individual. Athletes need more; sedentary days need less. Let your calorie target drive carbs, not the other way around.</p>
         </div>
       </div>
     </div>
@@ -315,7 +363,7 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
         "name": "Is this macro tracker really free?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, this macro tracker is completely free with no paywalls, no premium tier, and no subscription required. All features including barcode scanning, custom macro goals, and detailed trends are free forever. There are also no ads."
+          "text": "Yes, this macro tracker is completely free with no paywalls, no premium tier, and no subscription required. All features including barcode scanning, custom macro goals, AI food logging, and detailed trends are free forever. There are also no ads."
         }
       },
       {

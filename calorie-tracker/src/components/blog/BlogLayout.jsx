@@ -17,7 +17,7 @@ export default function BlogLayout({ children }) {
           <Link to="/blog">
             <div className="text-3xl font-bold"
                 style={{ fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '-0.02em' }}>
-              <span className="text-emerald-600 dark:text-emerald-400">Free Calorie Track</span>
+              <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Calorie Track</span>
               <span className="text-gray-600 dark:text-gray-400"> Blog</span>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-1"
@@ -46,10 +46,10 @@ export default function BlogLayout({ children }) {
           </p>
           <Link
             to="/"
-            className="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg"
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 px-8 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all"
             style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
           >
-            Get Started Free
+            Get Started Free →
           </Link>
         </div>
       </footer>

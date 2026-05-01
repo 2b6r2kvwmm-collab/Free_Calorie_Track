@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   Dumbbell, Salad, ScanBarcode,
   Activity, TrendingUp, WifiOff, ShieldCheck, Sparkles, Brain,
-  Check, X, Lock, AlertTriangle, History, Database
+  Check, X, Lock, AlertTriangle, History, Database, ArrowRight
 } from 'lucide-react';
 
 const Included = ({ label }) => (
@@ -400,77 +400,68 @@ export default function LandingPage({ onGetStarted }) {
   return (
     <>
       {/* SEO meta tags managed in static index.html to ensure crawlers see them without requiring JavaScript execution */}
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+      {/* Header */}
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+          <span className="text-lg font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent" style={{ fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '-0.02em' }}>
+            Free Calorie Track
+          </span>
+          <Link to="/blog" className="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+            Blog
+          </Link>
+        </div>
+      </header>
+
       {/* Hero */}
-      <div className="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-            {/* Left: Text */}
-            <div className="flex-1 text-center md:text-left max-w-xl">
-              <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The best free calorie counter & macro tracker</h1>
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                Count calories, track macros and protein with <span className="font-bold text-emerald-600 dark:text-emerald-400">no subscription fees, ads, or accounts.</span>
-              </p>
-              <button
-                onClick={onGetStarted}
-                className="bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
-                aria-label="Start tracking calories and macros now"
-              >
-                Get started now
-              </button>
+      {/* Hero copy */}
+      <div className="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <div className="max-w-6xl mx-auto px-4 pt-6 md:pt-8 pb-10 text-center">
+            <div className="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+              <Check size={14} />
+              100% free · No account required
             </div>
-
-            {/* Right: App Screenshot */}
-            <div className="flex-1 w-full max-w-sm md:max-w-3xl">
-              <picture>
-                {/* Desktop: Multi-phone composite */}
-                <source
-                  srcSet="/hero-screenshot.webp"
-                  type="image/webp"
-                  media="(min-width: 768px)"
-                />
-                <source
-                  srcSet="/hero-screenshot.png"
-                  type="image/png"
-                  media="(min-width: 768px)"
-                />
-
-                {/* Mobile: Single phone */}
-                <source
-                  srcSet="/hero-mobile.webp"
-                  type="image/webp"
-                  media="(max-width: 767px)"
-                />
-                <source
-                  srcSet="/hero-mobile.png"
-                  type="image/png"
-                  media="(max-width: 767px)"
-                />
-
-                {/* Fallback */}
-                <img
-                  src="/hero-screenshot.png"
-                  alt="Free Calorie Track app dashboard showing Net calorie circle in green, macro tracking, and food logging interface"
-                  width="5000"
-                  height="3000"
-                  className="w-full h-auto rounded-xl shadow-2xl"
-                  loading="eager"
-                  style={{
-                    imageRendering: 'high-quality',
-                    transform: 'translateZ(0)',
-                    willChange: 'transform'
-                  }}
-                  decoding="sync"
-                />
-              </picture>
-            </div>
-          </div>
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The best <span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">free calorie counter</span> & macro tracker</h1>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+              Barcode scanning, macro tracking, and AI food logging — <span className="font-semibold text-gray-800 dark:text-gray-200">completely free, no account or subscription required.</span>
+            </p>
+            <button
+              onClick={onGetStarted}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+              aria-label="Start tracking calories and macros now"
+            >
+              Get started now <ArrowRight size={20} />
+            </button>
         </div>
       </div>
 
-      {/* Value Props */}
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        <div className="space-y-8">
+      {/* Hero image */}
+      <div className="bg-gray-800 dark:bg-gray-950">
+        <div className="max-w-6xl mx-auto px-4">
+          <picture>
+            <source srcSet="/hero-screenshot.webp" type="image/webp" media="(min-width: 768px)" />
+            <source srcSet="/hero-screenshot.png" type="image/png" media="(min-width: 768px)" />
+            <source srcSet="/hero-mobile.webp" type="image/webp" media="(max-width: 767px)" />
+            <source srcSet="/hero-mobile.png" type="image/png" media="(max-width: 767px)" />
+            <img
+              src="/hero-screenshot.png"
+              alt="Free Calorie Track app dashboard showing Net calorie circle in green, macro tracking, and food logging interface"
+              width="5000"
+              height="3000"
+              className="w-full h-auto"
+              loading="eager"
+              style={{ imageRendering: 'high-quality', transform: 'translateZ(0)', willChange: 'transform' }}
+              decoding="sync"
+            />
+          </picture>
+        </div>
+      </div>
+
+      {/* Value Props — B: gray-50 */}
+      <div className="bg-gray-50 dark:bg-gray-800">
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
               title: 'No cost. No catch.',
@@ -485,23 +476,21 @@ export default function LandingPage({ onGetStarted }) {
               desc: 'Install it to your home screen from any browser — iPhone, Android, desktop. Runs like a native app and works without internet.',
             },
           ].map((item) => (
-            <div key={item.title} className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-emerald-500 mt-2.5" />
-              <div>
-                <h3 className="font-bold text-gray-800 dark:text-gray-100 text-lg">{item.title}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">{item.desc}</p>
-              </div>
+            <div key={item.title} className="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+              <h3 className="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">{item.title}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
       </div>
+      </div>
 
-      {/* Features Grid */}
-      <div className="bg-white dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700">
-        <div className="max-w-2xl mx-auto px-4 py-12">
-          <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Free Calorie Track's key features</h2>
+      {/* Features Grid — A: white */}
+      <div className="bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto px-4 py-12">
+          <h2 className="text-2xl font-bold text-center mb-2"><span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Calorie Track</span><span className="text-gray-800 dark:text-gray-100"> key features</span></h2>
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Everything you want. No paywalls.</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {[
               { icon: Dumbbell, title: 'Calorie & macro tracking', desc: 'Log meals with real-time totals. Track protein, carbs, and fat with auto-calculated goals or set your own.' },
               { icon: Salad, title: 'Nutrition tracking', desc: 'Optionally track fiber, sodium, sugar, and saturated fat for a fuller picture.' },
@@ -524,10 +513,11 @@ export default function LandingPage({ onGetStarted }) {
         </div>
       </div>
 
-      {/* Comparison Table */}
-      <div className="max-w-2xl mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Best free calorie app comparison</h2>
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Core features for calorie and macro tracking. 100% free to use.</p>
+      {/* Comparison Table — B: gray-50 */}
+      <div className="bg-gray-50 dark:bg-gray-800">
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <h2 className="text-2xl font-bold text-center mb-2"><span className="text-gray-800 dark:text-gray-100">How </span><span className="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Calorie Track</span><span className="text-gray-800 dark:text-gray-100"> compares</span></h2>
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-6">Premium features. 100% free.</p>
         <div className="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700">
           <table className="w-full text-sm">
             <thead>
@@ -552,10 +542,12 @@ export default function LandingPage({ onGetStarted }) {
           <strong>*Disclaimer:</strong> Comparison based on typical free-tier features available from leading subscription-based calorie and macro tracking apps as of March 2026. Feature availability may change over time. No specific apps or trademarks are referenced to avoid trademark concerns.
         </p>
       </div>
+      </div>
 
-      {/* CTA */}
-      <div className="bg-emerald-600 dark:bg-emerald-700 px-4 py-12">
-        <div className="max-w-2xl mx-auto text-center text-white">
+      {/* CTA — A: white */}
+      <div className="bg-white dark:bg-gray-900">
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="bg-emerald-600 dark:bg-emerald-700 rounded-2xl px-8 py-12 text-center text-white">
           <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch. Just a free calorie app.</p>
           <button
             onClick={onGetStarted}
@@ -567,17 +559,20 @@ export default function LandingPage({ onGetStarted }) {
           <p className="text-emerald-100 text-sm mt-3">No app store download required—opens instantly in your browser</p>
         </div>
       </div>
+      </div>
 
-      {/* FAQ */}
-      <div id="install-instructions" className="max-w-2xl mx-auto px-4 py-12">
+      {/* FAQ — B: gray-50 */}
+      <div className="bg-gray-50 dark:bg-gray-800">
+      <div id="install-instructions" className="max-w-6xl mx-auto px-4 py-12">
         <h2 className="text-2xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">Everything you need to know</h2>
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Tap a section to expand.</p>
         <FAQAccordion sections={FAQ_SECTIONS} />
       </div>
+      </div>
 
       {/* Landing Page Footer */}
       <div className="bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Medical Disclaimer - Prominent */}
           <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4 mb-6">
             <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">

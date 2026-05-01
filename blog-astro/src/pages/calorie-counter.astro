@@ -1,273 +1,527 @@
 ---
 import LandingPageLayout from '../layouts/LandingPageLayout.astro';
 
-const title = "Calorie Counter Guide: How to Count Calories to Lose Weight";
-const description = "Learn how to count calories effectively for weight loss. Free calorie counter tool with barcode scanner and 220,000+ foods.";
-const keywords = "calorie counter, how to count calories, count calories, calorie counting, calorie counter app, free calorie counter, daily calorie counter";
+const title = "Free Calorie Counter App - Count Calories for Weight Loss";
+const description = "Free calorie counter with barcode scanning, 220,000+ foods, AI food logging, and automatic goals. Complete guide to counting calories for weight loss. No account required.";
+const keywords = "calorie counter, free calorie counter, how to count calories, calorie counting, calorie counter app, count calories, calorie tracking, calorie deficit";
 ---
 
 <LandingPageLayout title={title} description={description} keywords={keywords}>
 
-  <!-- Hero -->
-  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        <!-- Left: Text -->
-        <div class="flex-1 text-center md:text-left max-w-xl">
-          <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100"><span class="text-emerald-600 dark:text-emerald-400">How to Count Calories:</span> The Complete Guide</h1>
-          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
-            Learn the fundamentals of calorie counting for <span class="font-bold text-emerald-600 dark:text-emerald-400">sustainable weight loss</span>. Master the method, avoid common mistakes, and start tracking with our free tool.
-          </p>
-        </div>
+  <!-- Hero copy -->
+  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div class="max-w-6xl mx-auto px-4 pt-6 md:pt-8 pb-10 text-center">
+      <div class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+        100% free · No account required
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The Best <span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Calorie Counter</span></h1>
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto">
+        Barcode scanning, macro tracking, and AI food logging — <span class="font-semibold text-gray-800 dark:text-gray-200">completely free, no account or subscription required.</span>
+      </p>
+      <a
+        href="/?from=landing-page"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+      >
+        Start Counting Calories Now →
+      </a>
+    </div>
+  </div>
 
-        <!-- Right: Hero Image -->
-        <div class="flex-1 w-full max-w-sm md:max-w-3xl">
-          <img
-            src="/images/blog/how-to-count-calories.webp"
-            alt="Woman using the calorie counter app to log a meal"
-            width="1200"
-            height="800"
-            class="w-full h-auto rounded-xl shadow-2xl"
-            loading="eager"
-            style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
-          />
+  <!-- Hero image -->
+  <div class="bg-gray-800 dark:bg-gray-950">
+    <div class="max-w-6xl mx-auto px-4">
+      <picture>
+        <source srcset="/hero-screenshot.webp" type="image/webp" media="(min-width: 768px)" />
+        <source srcset="/hero-mobile.webp" type="image/webp" media="(max-width: 767px)" />
+        <img
+          src="/hero-screenshot.webp"
+          alt="Free Calorie Track calorie counter showing daily calorie progress and food log"
+          width="5000"
+          height="3000"
+          class="w-full h-auto"
+          loading="eager"
+          style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
+        />
+      </picture>
+    </div>
+  </div>
+
+  <!-- Value Props -->
+  <div class="bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">No cost. No catch.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Every feature is free — barcode scanning, macro tracking, AI food logging, weekly coaching, trends. No premium tier, no trial that expires, no ads. Free Calorie Track is funded by optional donations.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">No account. No cloud.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Your data lives on your device, not on a server. There's nothing to sign up for, no email required, and nothing to hand over.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Works everywhere, even offline.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Install to your home screen from any browser — iPhone, Android, desktop. Runs like a native app and works without internet.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
+  <!-- Features Grid -->
+  <div class="bg-white dark:bg-gray-900">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-2xl font-bold text-center mb-2"><span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Calorie Counter</span><span class="text-gray-800 dark:text-gray-100"> key features</span></h2>
+      <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Everything you want. No paywalls.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
 
-    <!-- What Is Calorie Counting Section -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
-      <h2 class="text-3xl font-bold mb-6 text-center">What Is Calorie Counting?</h2>
-      <p class="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-2xl mx-auto">
-        Calorie counting is the practice of tracking the energy content of the foods you eat. By counting calories, you create awareness of your intake and can adjust your diet to meet weight loss, maintenance, or muscle gain goals.
-      </p>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-6 border-2 border-emerald-200 dark:border-emerald-800">
-          <div class="text-4xl mb-3">📊</div>
-          <h3 class="font-bold text-lg mb-2 text-emerald-700 dark:text-emerald-400">Track Your Intake</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Record everything you eat and drink throughout the day to measure total calorie consumption.</p>
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Calorie & macro tracking</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Log meals with real-time totals. Track protein, carbs, and fat with auto-calculated goals or set your own.</p>
         </div>
-        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border-2 border-blue-200 dark:border-blue-800">
-          <div class="text-4xl mb-3">🎯</div>
-          <h3 class="font-bold text-lg mb-2 text-blue-700 dark:text-blue-400">Compare to Your Goal</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Match your daily calories against your target based on your TDEE and weight loss goal.</p>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-3.19 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"/><path d="m13 12 4-4"/><path d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Nutrition tracking</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Optionally track fiber, sodium, sugar, and saturated fat for a fuller picture of your diet.</p>
         </div>
-        <div class="bg-purple-50 dark:bg-purple-900/20 rounded-xl p-6 border-2 border-purple-200 dark:border-purple-800">
-          <div class="text-4xl mb-3">📉</div>
-          <h3 class="font-bold text-lg mb-2 text-purple-700 dark:text-purple-400">Adjust as Needed</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Monitor your progress and fine-tune your intake based on actual weight loss results.</p>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Barcode scanning</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Scan any product instantly. 220,000+ items in the database. Free, no daily limit.</p>
         </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Exercise logging</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">250+ exercises across cardio, strength, and sports. MET-based calorie burn calculations.</p>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Trends & insights</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Weekly averages, weight charts, and 7-day rolling averages to see the real picture.</p>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">AI food logging (Beta)</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Describe a meal, snap a photo, or photograph a recipe — AI estimates calories instantly. 10 free logs/day.</p>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Nutrition Coach (Beta)</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Log 3+ days and get a weekly AI analysis of what's working, what to adjust, and what to try. Free and optional.</p>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Works offline</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Install on any device. No internet needed after setup. All data stored locally.</p>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Private by design</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">No account, no subscription, no setup. Your data stays on your device and never passes through our servers.</p>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Editable history</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Forgot to log yesterday? No problem. Add or edit meals and exercise from any past day.</p>
+        </div>
+
       </div>
     </div>
+  </div>
 
-    <!-- Why Count Calories Section -->
+  <!-- Guide transition band -->
+  <div class="bg-gray-50 dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700 py-10">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-3">The Guide</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">How to Count Calories</h2>
+      <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">Everything you need to start tracking, stay consistent, and actually see results.</p>
+    </div>
+  </div>
+
+  <!-- Guide content -->
+  <main class="max-w-6xl mx-auto px-4 py-12">
+
+    <!-- Why Count Calories -->
     <div class="mb-12">
-      <h2 class="text-3xl font-bold mb-8 text-center">Why Count Calories for Weight Loss?</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">✓</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Creates Awareness</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Most people underestimate how much they eat. Counting calories reveals the truth about portion sizes and "hidden" calories in cooking oils, dressings, and drinks.</p>
-            </div>
+      <h2 class="text-3xl font-bold mb-6 text-center">Why Count Calories?</h2>
+      <p class="text-gray-600 dark:text-gray-400 text-center mb-8 max-w-2xl mx-auto">Weight management comes down to energy balance. Calorie counting removes the guesswork — instead of wondering why the scale isn't moving, you have data showing exactly what's happening.</p>
+      <div class="grid md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-5 border-2 border-red-200 dark:border-red-800 text-center">
+          <p class="font-bold text-red-700 dark:text-red-400 mb-1">Eat more than you burn</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">= Weight gain</p>
+        </div>
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-5 border-2 border-emerald-200 dark:border-emerald-800 text-center">
+          <p class="font-bold text-emerald-700 dark:text-emerald-400 mb-1">Eat less than you burn</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">= Weight loss</p>
+        </div>
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-5 border-2 border-blue-200 dark:border-blue-800 text-center">
+          <p class="font-bold text-blue-700 dark:text-blue-400 mb-1">Eat the same as you burn</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">= Maintenance</p>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div class="flex items-start gap-4 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <div>
+            <h3 class="font-bold mb-1">Creates awareness</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Most people underestimate their intake by 30–50%. Tracking reveals the truth about portion sizes and hidden calories in oils, dressings, and drinks.</p>
           </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">✓</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Based on Science</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Weight loss requires a calorie deficit. Counting ensures you're actually eating less than you burn, rather than guessing or hoping.</p>
-            </div>
+        <div class="flex items-start gap-4 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <div>
+            <h3 class="font-bold mb-1">Flexible eating</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">No foods are off-limits. Fit anything into your daily calorie budget instead of following rigid diet rules that leave no room for real life.</p>
           </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">✓</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Flexible Eating</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">No foods are off-limits when you count calories. Fit treats into your daily budget instead of following restrictive diet rules.</p>
-            </div>
+        <div class="flex items-start gap-4 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+          <div>
+            <h3 class="font-bold mb-1">Based on science</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Weight loss requires a calorie deficit. Counting ensures you're actually eating less than you burn, not just guessing — and lets you verify it's working.</p>
           </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">✓</span>
-            <div>
-              <h3 class="font-bold text-lg mb-2">Measurable Progress</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Tracking calories lets you see patterns, identify problems, and make data-driven adjustments when weight loss stalls.</p>
-            </div>
+        <div class="flex items-start gap-4 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          <div>
+            <h3 class="font-bold mb-1">Measurable progress</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Tracking lets you see patterns, identify what's stalling you, and make data-driven adjustments instead of guessing what's wrong.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- How to Count Calories Section -->
+    <!-- How to Count: Step by Step -->
     <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 mb-12">
-      <h2 class="text-3xl font-bold mb-8 text-center">How to Count Calories in 5 Steps</h2>
-      <div class="space-y-6 max-w-2xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 text-center">How to Count Calories: Step by Step</h2>
+      <div class="space-y-6">
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">1</div>
           <div>
-            <h3 class="font-bold text-lg mb-1">Calculate Your TDEE</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Your Total Daily Energy Expenditure (TDEE) is how many calories you burn per day. Use a <a href="/blog/how-to-calculate-tdee" class="text-emerald-600 dark:text-emerald-400 underline">TDEE calculator</a> based on your age, sex, height, weight, and activity level.</p>
+            <h3 class="font-bold text-lg mb-1">Calculate your calorie target</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Your TDEE (Total Daily Energy Expenditure) is how many calories you burn per day. Free Calorie Track calculates it automatically from your age, sex, height, weight, and activity level. For weight loss, subtract 300–500 calories. For muscle gain, add 200–300.</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">2</div>
           <div>
-            <h3 class="font-bold text-lg mb-1">Set Your Calorie Goal</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">For weight loss, subtract 300-500 calories from your TDEE. For muscle gain, add 200-300 calories. For maintenance, eat at your TDEE. Learn more about <a href="/blog/calorie-deficit-calculator" class="text-emerald-600 dark:text-emerald-400 underline">calorie deficits</a>.</p>
+            <h3 class="font-bold text-lg mb-1">Track everything for one baseline week</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Don't change your eating habits yet. Just track everything you normally eat for 7 days. This shows you your current average intake, where most of your calories come from, and your eating patterns — information you can't get any other way.</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">3</div>
           <div>
-            <h3 class="font-bold text-lg mb-1">Weigh Your Food</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Use a <a href="/blog/how-to-use-a-food-scale" class="text-emerald-600 dark:text-emerald-400 underline">food scale</a> to measure portions in grams or ounces. Eyeballing portions is notoriously inaccurate—1 tablespoon of peanut butter can easily become 2-3 tablespoons (200+ hidden calories).</p>
+            <h3 class="font-bold text-lg mb-1">Weigh your food in grams</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">A digital food scale is the single most important tool for accurate tracking. Place a bowl on the scale, zero it out, then add your food. Weigh calorie-dense items (nuts, oils, cheese, peanut butter) every time — a "tablespoon" of peanut butter eyeballed can easily be 200+ calories instead of 95.</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">4</div>
           <div>
-            <h3 class="font-bold text-lg mb-1">Log Everything You Eat</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Track all meals, snacks, drinks, cooking oils, condiments, and "just a bite" tastes. Use a calorie counter app with a barcode scanner to make logging fast and accurate.</p>
+            <h3 class="font-bold text-lg mb-1">Log everything — including oils and drinks</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Track all meals, snacks, cooking oils, condiments, and drinks (except water, black coffee, and unsweetened tea). Don't wait until the end of the day — log meals as you eat them so nothing gets forgotten.</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">5</div>
           <div>
-            <h3 class="font-bold text-lg mb-1">Review & Adjust Weekly</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Weigh yourself weekly and track trends. If you're not losing 0.5-1 lb per week, reduce calories by 100-200. If you're losing faster than 2 lbs/week, increase slightly to preserve muscle.</p>
+            <h3 class="font-bold text-lg mb-1">Use AI for meals that are hard to log manually</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Restaurant plates, homemade dishes, and recipes from a cookbook don't have barcodes. Instead, snap a photo of the meal or recipe, or just describe it in a few words ("grilled salmon with rice and veggies, about a fist-sized portion"). Free Calorie Track's AI estimates calories and macros instantly and logs it — no database searching required.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">6</div>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Review weekly and adjust</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Weigh yourself once a week at the same time. If you're not losing 0.5–1 lb per week, reduce calories by 100–200. If you're losing more than 2 lbs/week, increase slightly to preserve muscle. As you lose weight, your TDEE drops — recalculate every 10–15 lbs.</p>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Reading Nutrition Labels -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">How to Read a Nutrition Label</h2>
+      <p class="text-gray-600 dark:text-gray-400 text-center mb-8 max-w-2xl mx-auto">Every packaged food has a Nutrition Facts label. Here's what to actually pay attention to.</p>
+      <div class="space-y-5">
+        <div class="border-l-4 border-emerald-500 pl-4">
+          <h3 class="font-bold text-lg mb-1">Serving size (top of label)</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Everything else on the label is per this amount. A bag of chips might say "150 calories per serving" but contain 2.5 servings — that's 375 calories for the whole bag. Always check how many servings are in the package, not just the per-serving number.</p>
+        </div>
+        <div class="border-l-4 border-emerald-500 pl-4">
+          <h3 class="font-bold text-lg mb-1">Calories (the number you track)</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">The big bold number. If the label says 180 calories per 40g serving and you weighed 65g, your actual intake is: (65 ÷ 40) × 180 = <strong>293 calories</strong>. Tracking apps do this math automatically when you enter the weight.</p>
+        </div>
+        <div class="border-l-4 border-emerald-500 pl-4">
+          <h3 class="font-bold text-lg mb-1">Macronutrients (optional but useful)</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Protein, carbohydrates, and fat. At minimum, track protein — it helps preserve muscle during weight loss and keeps you full. Carbs and fat matter more for specific dietary goals like keto or athletic performance.</p>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-xl p-4">
+          <p class="text-sm text-amber-800 dark:text-amber-300"><strong>Watch out for:</strong> Unrealistically small serving sizes ("who eats exactly 15 chips?"), "low calorie" claims for tiny portions, and multi-serving packages that look like single servings. When using Free Calorie Track's barcode scanner, all this data is pre-filled — just enter your actual weight.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Raw vs Cooked Weight -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">Raw vs. Cooked Weight: A Common Mistake</h2>
+      <p class="text-gray-600 dark:text-gray-400 text-center mb-8 max-w-2xl mx-auto">Food weight changes significantly during cooking. Using the wrong weight is one of the most common tracking errors.</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>
+          <h3 class="font-bold text-lg mb-3 text-emerald-700 dark:text-emerald-400">Meat loses water when cooked</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">100g raw chicken breast ≠ 100g cooked chicken breast. The cooked version is denser and has more calories per gram because the water cooked off.</p>
+          <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Rule: Weigh raw when possible. If you weigh cooked, search for "chicken breast cooked" in the app — not the raw entry.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></svg>
+          <h3 class="font-bold text-lg mb-3 text-emerald-700 dark:text-emerald-400">Pasta and rice absorb water</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">100g dry oats becomes ~250g cooked. 100g dry pasta becomes ~240g cooked. The calories don't change — the water weight does.</p>
+          <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Rule: Log dry/uncooked weight, or search specifically for "cooked" entries which account for water absorption.</p>
+        </div>
+      </div>
+      <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-5 mt-4 border border-emerald-200 dark:border-emerald-700">
+        <p class="text-sm text-emerald-800 dark:text-emerald-300 text-center"><strong>Bottom line:</strong> Pick one method (raw or cooked) and stick with it consistently. Mixing them in the same meal is what leads to large errors.</p>
+      </div>
+    </div>
+
+    <!-- Tracking Homemade Meals -->
+    <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">How to Track Homemade Meals</h2>
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border-2 border-emerald-300 dark:border-emerald-600 shadow-sm mb-6">
+        <div class="flex items-start gap-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+          <div>
+            <h3 class="font-bold text-lg mb-1">Fastest: photograph the recipe with AI <span class="text-emerald-600 dark:text-emerald-400 text-sm font-normal">(one-off meals)</span></h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Snap a photo of the recipe card, screenshot, or open cookbook page. The AI reads the ingredients and amounts, estimates the calories per serving, and logs it directly — no manual entry needed.</p>
+            <ol class="space-y-1.5 text-sm text-gray-600 dark:text-gray-400">
+              <li class="flex items-start gap-2"><span class="font-bold text-emerald-600 flex-shrink-0">1.</span>Open AI logging in Free Calorie Track</li>
+              <li class="flex items-start gap-2"><span class="font-bold text-emerald-600 flex-shrink-0">2.</span>Snap a photo of the recipe</li>
+              <li class="flex items-start gap-2"><span class="font-bold text-emerald-600 flex-shrink-0">3.</span>The AI estimates calories per portion and logs it instantly</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+        <h3 class="font-bold text-lg mb-3">Recipe builder <span class="text-gray-500 dark:text-gray-400 text-sm font-normal">(best for meals you make repeatedly)</span></h3>
+        <ol class="space-y-2 text-sm text-gray-600 dark:text-gray-400 mb-3">
+          <li class="flex items-start gap-2"><span class="font-bold text-emerald-600 flex-shrink-0">1.</span>Weigh every ingredient as you cook</li>
+          <li class="flex items-start gap-2"><span class="font-bold text-emerald-600 flex-shrink-0">2.</span>Build the recipe in Free Calorie Track once</li>
+          <li class="flex items-start gap-2"><span class="font-bold text-emerald-600 flex-shrink-0">3.</span>Weigh the total finished dish, then log your portion as a fraction</li>
+        </ol>
+        <p class="text-xs text-gray-500 dark:text-gray-400">Example: Chicken stir-fry — 200g raw chicken, 150g broccoli, 100g peppers, 15ml olive oil. Save once. Weigh your bowl each time and log the fraction.</p>
+      </div>
+    </div>
+
+    <!-- Easy vs Hard Foods -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">Easy vs. Hard Foods to Track</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-5 border border-emerald-100 dark:border-emerald-800">
+          <h3 class="font-bold text-lg mb-4 text-emerald-700 dark:text-emerald-400">Easy to track accurately</h3>
+          <ul class="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0 mt-0.5">✓</span> Packaged foods with barcodes — scan and done</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0 mt-0.5">✓</span> Whole foods: apple, banana, plain chicken, rice</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0 mt-0.5">✓</span> Chain restaurants — most post nutrition info online</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0 mt-0.5">✓</span> Standard portioned foods: 1 egg, 1 slice of bread</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0 mt-0.5">✓</span> Protein shakes and supplements with labels</li>
+          </ul>
+        </div>
+        <div class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-5 border border-amber-100 dark:border-amber-800">
+          <h3 class="font-bold text-lg mb-4 text-amber-600 dark:text-amber-400">Harder — but still doable</h3>
+          <ul class="space-y-2.5 text-sm text-gray-600 dark:text-gray-400">
+            <li class="flex items-start gap-2"><span class="text-amber-500 font-bold flex-shrink-0 mt-0.5">!</span> Independent restaurant meals — estimate conservatively, add ~20%</li>
+            <li class="flex items-start gap-2"><span class="text-amber-500 font-bold flex-shrink-0 mt-0.5">!</span> Mixed dishes (stews, casseroles) — use recipe builder</li>
+            <li class="flex items-start gap-2"><span class="text-amber-500 font-bold flex-shrink-0 mt-0.5">!</span> Nuts, granola, dried fruit — always weigh, never eyeball</li>
+            <li class="flex items-start gap-2"><span class="text-amber-500 font-bold flex-shrink-0 mt-0.5">!</span> Food cooked by others — ask for ingredients or estimate</li>
+            <li class="flex items-start gap-2"><span class="text-amber-500 font-bold flex-shrink-0 mt-0.5">!</span> Restaurant salads — often 800–1,200 calories with dressing</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 mt-6">
+        <p class="text-sm text-gray-600 dark:text-gray-400 text-center"><strong>When in doubt:</strong> Overestimate by 10–20%. Consistently overestimating slightly is far better than consistently underestimating, which stalls weight loss without explanation.</p>
+      </div>
+    </div>
+
+    <!-- Eating Out -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">How to Track Calories When Eating Out</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <h3 class="font-bold mb-2">Look it up first</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Most chain restaurants publish full nutrition info online or in the app. Search the restaurant name in Free Calorie Track before you order.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+          <h3 class="font-bold mb-2">Build it from components</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Log individual parts: bun (200), patty (300), cheese (100), sauce (50), fries (400) = 1,050 calories. More accurate than finding a generic "burger" entry.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/></svg>
+          <h3 class="font-bold mb-2">Find a comparable entry</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Search for similar dishes from comparable restaurants. A chicken sandwich from one major chain is usually within 10–15% of another.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+          <h3 class="font-bold mb-2">Add a buffer</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Restaurant portions are cooked in more oil than you'd use at home. Add 15–20% to your estimate to account for hidden cooking fats and larger portions.</p>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-emerald-200 dark:border-emerald-700 flex items-start gap-4 mt-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+        <div>
+          <p class="font-bold mb-1">Easier: snap a photo or describe the meal with AI</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">At any restaurant, open the AI logging feature in Free Calorie Track and either snap a photo of your plate or type what you ordered. The AI estimates calories and macros instantly and logs it directly — no searching, no component math. 10 free logs per day.</p>
+        </div>
+      </div>
+      <p class="text-center text-sm text-gray-500 dark:text-gray-400 mt-5">Eating out 1–2 times a week won't derail progress if you're accurate the other 5–6 days. Consistency matters more than perfection.</p>
     </div>
 
     <!-- Mid-Page CTA -->
     <div class="text-center bg-white dark:bg-gray-800 rounded-2xl p-10 mb-12 shadow-lg border-2 border-emerald-200 dark:border-emerald-800">
-      <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">Ready to Start Counting Calories?</h3>
-      <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">Use our free calorie counter with barcode scanning and 220,000+ foods. No subscription required.</p>
+      <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">Ready to start tracking?</h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-2xl mx-auto">Free Calorie Track handles all the math. Barcode scanning, 220,000+ foods, automatic TDEE, and AI logging — completely free.</p>
       <a
         href="/?from=landing-page"
-        class="inline-block bg-emerald-600 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 px-10 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
       >
-        Start Counting Calories Free
+        Open Free Calorie Counter →
       </a>
     </div>
 
-    <!-- Common Mistakes Section -->
+    <!-- Common Mistakes -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
       <h2 class="text-3xl font-bold mb-6 text-center">Common Calorie Counting Mistakes</h2>
-      <div class="space-y-6">
-        <div class="border-l-4 border-red-500 pl-4">
-          <h3 class="font-bold text-lg mb-2">Not Counting Cooking Oils</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">1 tablespoon of olive oil = 120 calories. If you cook with 2-3 tablespoons daily, that's 240-360 untracked calories—enough to wipe out your deficit.</p>
-        </div>
-        <div class="border-l-4 border-red-500 pl-4">
-          <h3 class="font-bold text-lg mb-2">Eyeballing Portions</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">"A handful" of nuts can range from 150-400 calories depending on hand size. Weigh food with a scale for accuracy, especially calorie-dense items like nuts, cheese, and peanut butter.</p>
-        </div>
-        <div class="border-l-4 border-red-500 pl-4">
-          <h3 class="font-bold text-lg mb-2">Forgetting About Drinks</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Lattes, smoothies, alcohol, and juice add up fast. A large latte can be 300+ calories. Track all beverages except water, black coffee, and unsweetened tea.</p>
-        </div>
-        <div class="border-l-4 border-red-500 pl-4">
-          <h3 class="font-bold text-lg mb-2">Weekend Overeating</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Staying strict Monday-Friday but overeating Saturday-Sunday can erase your weekly deficit. Track every day consistently, or plan higher-calorie days into your weekly average.</p>
-        </div>
-        <div class="border-l-4 border-red-500 pl-4">
-          <h3 class="font-bold text-lg mb-2">Not Adjusting as You Lose Weight</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">As you lose weight, your TDEE decreases. Recalculate your calorie goal every 10-15 lbs lost, or when weight loss stalls for 3+ weeks.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tools Section -->
-    <div class="bg-gradient-to-br from-gray-50 to-emerald-50 dark:from-gray-800 dark:to-emerald-900/20 rounded-2xl p-8 mb-12">
-      <h2 class="text-3xl font-bold mb-6 text-center">Essential Tools for Counting Calories</h2>
-      <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+      <div class="space-y-5">
+        <div class="flex items-start gap-3 border-l-4 border-amber-400 pl-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500 flex-shrink-0 mt-0.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
           <div>
-            <h3 class="font-bold mb-1">Free Calorie Counter App</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Use a calorie tracking app with barcode scanning to log food quickly. Free Calorie Track includes 220,000+ foods, barcode scanner, and no subscription fees.</p>
+            <h3 class="font-bold text-lg mb-1">Not weighing calorie-dense foods</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">You think: 1 tablespoon of peanut butter (95 cal). You actually use: 2+ tablespoons (200+ cal). That 100-calorie daily error adds up to 700+ calories a week — enough to stall weight loss completely. Always weigh nuts, oils, cheese, nut butters, and dried fruit.</p>
           </div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+        <div class="flex items-start gap-3 border-l-4 border-amber-400 pl-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500 flex-shrink-0 mt-0.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
           <div>
-            <h3 class="font-bold mb-1">Digital Food Scale</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Weigh portions in grams for accuracy. A basic digital scale costs $10-15 and is the single best investment for successful calorie counting.</p>
+            <h3 class="font-bold text-lg mb-1">Forgetting cooking oils</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">1 tablespoon of olive oil = 120 calories. Cook with 2–3 tablespoons per meal and that's 240–360 untracked calories daily. Measure oils with a spoon or pour them onto the scale. It takes 5 seconds.</p>
           </div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+        <div class="flex items-start gap-3 border-l-4 border-amber-400 pl-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500 flex-shrink-0 mt-0.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
           <div>
-            <h3 class="font-bold mb-1">TDEE Calculator</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Calculate how many calories you burn daily based on your stats and activity level. Included automatically in Free Calorie Track.</p>
+            <h3 class="font-bold text-lg mb-1">Not tracking on weekends</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">The math is brutal: 500 cal deficit Mon–Fri = 2,500 cal deficit. Then 1,000 cal surplus Sat–Sun = 2,000 surplus. Net weekly deficit: only 500 calories — 0.14 lbs lost instead of 0.7 lbs. Track every day, or plan your weekends deliberately.</p>
           </div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+        <div class="flex items-start gap-3 border-l-4 border-amber-400 pl-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500 flex-shrink-0 mt-0.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
           <div>
-            <h3 class="font-bold mb-1">Weekly Weight Tracking</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Weigh yourself once per week at the same time (e.g., Friday morning after using bathroom). Track the trend over 3-4 weeks, not daily fluctuations.</p>
+            <h3 class="font-bold text-lg mb-1">Mixing raw and cooked weights</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Logging 200g raw chicken but searching "chicken breast cooked" (or vice versa) can cause a 30–40% calorie error. Pick one convention and stick to it. Raw is usually easier since you weigh before cooking.</p>
           </div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="text-emerald-600 dark:text-emerald-400 font-bold text-2xl">✓</span>
+        <div class="flex items-start gap-3 border-l-4 border-amber-400 pl-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500 flex-shrink-0 mt-0.5"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
           <div>
-            <h3 class="font-bold mb-1">Additional Nutrition Tracking</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Optionally track fiber, sodium, sugar, and saturated fat. Useful for anyone managing heart health, digestive goals, or eating smaller portions who wants a more complete nutritional picture.</p>
+            <h3 class="font-bold text-lg mb-1">Not adjusting as you lose weight</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">A 200-lb person burns more calories at rest than a 160-lb person. As you lose weight, your TDEE drops. If your weight loss stalls for 3+ weeks without explanation, recalculate your TDEE and reduce your target slightly.</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Tips Section -->
+    <!-- Tips -->
     <div class="mb-12">
-      <h2 class="text-3xl font-bold mb-8 text-center">Pro Tips for Successful Calorie Counting</h2>
-      <div class="space-y-4">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+      <h2 class="text-3xl font-bold mb-8 text-center">Tips for Making It Stick</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <div class="flex items-start gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
             <div>
-              <h3 class="font-bold mb-1">Pre-log Your Day</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Plan and log breakfast, lunch, and dinner in the morning. This lets you see how many calories you have left for snacks and prevents overeating.</p>
+              <h3 class="font-bold mb-1">Pre-log your day in the morning</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Plan and log all three meals first thing. You'll see how many calories remain for snacks, which prevents decision fatigue later. It takes 2–3 minutes and removes the guesswork from the whole day.</p>
             </div>
           </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <div class="flex items-start gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
             <div>
-              <h3 class="font-bold mb-1">Track Before You Eat</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Log meals as you prepare them, not at the end of the day. Trying to remember everything you ate 10 hours ago leads to forgotten snacks and inaccurate counts.</p>
+              <h3 class="font-bold mb-1">Save your most frequent meals</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Most people eat the same 15–20 meals in rotation. Save those as favorites or recipes in the app so logging takes seconds instead of minutes. After one month of tracking, your daily log time drops to under 5 minutes.</p>
             </div>
           </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <div class="flex items-start gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
             <div>
-              <h3 class="font-bold mb-1">Save Favorite Meals</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">If you eat the same breakfast or lunch regularly, save it as a favorite or recipe to log it in seconds instead of re-entering every ingredient.</p>
+              <h3 class="font-bold mb-1">Don't aim for perfection</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Tracking 80–90% accurately is infinitely better than not tracking at all. If you eat out and can't weigh your food, make your best estimate and move on. One imprecise entry won't ruin anything — a week of not tracking will.</p>
             </div>
           </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
           <div class="flex items-start gap-3">
-            <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">💡</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
             <div>
-              <h3 class="font-bold mb-1">Focus on Protein</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Prioritize hitting your <a href="/protein-tracker" class="text-emerald-600 dark:text-emerald-400 underline">protein goal</a> (0.7-1g per lb body weight) while counting calories. High protein preserves muscle during weight loss and increases satiety.</p>
+              <h3 class="font-bold mb-1">Track protein first</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">Prioritize hitting your <a href="/protein-tracker" class="text-emerald-600 dark:text-emerald-400 underline">protein goal</a> (0.7–1g per lb of body weight) while counting calories. High protein preserves muscle during a deficit, increases satiety, and makes staying under your calorie target easier.</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Getting Started Plan -->
+    <div class="bg-gradient-to-br from-gray-50 to-emerald-50 dark:from-gray-800 dark:to-emerald-900/20 rounded-2xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-2 text-center">Get Started: Phase by Phase</h2>
+      <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Follow these three phases in order. Don't skip the baseline week — it's the most important part.</p>
+      <div class="grid md:grid-cols-3 gap-6 mb-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <p class="text-emerald-600 dark:text-emerald-400 font-bold mb-3">Phase 1 — Setup (Days 1–2)</p>
+          <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-disc list-inside marker:text-emerald-500">
+            <li>Open Free Calorie Track and enter your profile</li>
+            <li>Review your auto-calculated calorie and macro targets</li>
+            <li>Get a digital food scale if you don't have one</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+          <p class="text-emerald-600 dark:text-emerald-400 font-bold mb-3">Phase 2 — Baseline Week (Days 3–9)</p>
+          <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-disc list-inside marker:text-emerald-500">
+            <li>Track everything you normally eat — don't change habits yet</li>
+            <li>Weigh calorie-dense foods every time</li>
+            <li>Get comfortable finding foods and scanning barcodes</li>
+          </ul>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          <p class="text-emerald-600 dark:text-emerald-400 font-bold mb-3">Phase 3 — Execute (Day 10+)</p>
+          <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2 list-disc list-inside marker:text-emerald-500">
+            <li>Review your baseline and spot the easy swaps</li>
+            <li>Eat at your calorie target each day</li>
+            <li>Weigh yourself weekly and adjust as the scale moves</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-emerald-200 dark:border-emerald-700 flex items-start gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+        <div>
+          <p class="font-bold mb-1">Want a personalized plan? Use the Nutrition Coach.</p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">After 3+ days of logging, the <strong>Nutrition Coach</strong> in Free Calorie Track analyzes your actual intake and generates a tailored weekly plan — what's working, what to adjust, and specific changes to hit your goal faster. It's free and runs entirely from your logged data.</p>
         </div>
       </div>
     </div>
@@ -275,14 +529,14 @@ const keywords = "calorie counter, how to count calories, count calories, calori
     <!-- Final CTA -->
     <div class="text-center bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-12 text-white shadow-2xl">
       <h2 class="text-3xl font-bold mb-4">Ready to Start Counting Calories?</h2>
-      <p class="text-xl text-emerald-100 mb-8">Use our free calorie counter with barcode scanning, 220,000+ foods, and no subscription fees.</p>
+      <p class="text-xl text-emerald-100 mb-8">Free Calorie Track handles all of this automatically — barcode scanning, TDEE, macro goals, AI logging. No subscription, no account.</p>
       <a
         href="/?from=landing-page"
         class="inline-block bg-white text-emerald-700 font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95"
       >
-        Start Counting Calories Free
+        Launch Free Calorie Counter
       </a>
-      <p class="text-emerald-100 text-sm mt-4">No account required—opens instantly in your browser</p>
+      <p class="text-emerald-100 text-sm mt-4">No account required — opens instantly in your browser</p>
     </div>
 
   </main>
@@ -297,15 +551,23 @@ const keywords = "calorie counter, how to count calories, count calories, calori
         "name": "How do I start counting calories?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Start by calculating your TDEE (Total Daily Energy Expenditure) using a calculator that factors in your age, sex, height, weight, and activity level. Set a calorie goal based on your objective (subtract 300-500 for weight loss). Get a digital food scale to weigh portions accurately. Use a free calorie counter app with barcode scanning to log everything you eat. Review your progress weekly and adjust calories as needed."
+          "text": "Start by calculating your TDEE (Total Daily Energy Expenditure) — Free Calorie Track does this automatically from your age, sex, height, weight, and activity level. Set a goal (subtract 300–500 calories for weight loss). Spend the first week tracking everything you normally eat without changing habits. Use a food scale for accuracy. After your baseline week, adjust your eating to hit your target, then weigh yourself weekly and fine-tune from there."
         }
       },
       {
         "@type": "Question",
-        "name": "What is the best free calorie counter?",
+        "name": "Should I weigh food raw or cooked?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The best free calorie counter has barcode scanning, a large food database, no subscription fees, and works offline. Free Calorie Track includes all these features: barcode scanner for 220,000+ products, thousands of common foods, macro tracking, and no paywalls or ads. It runs as a Progressive Web App so you can use it on any device without app store downloads."
+          "text": "Weigh raw when possible, and log the raw database entry. Meat loses water when cooked, so cooked chicken is denser and higher in calories per gram than raw. Pasta and rice absorb water, so dry pasta has more calories per gram than cooked. If you must weigh cooked food, search specifically for 'cooked' entries in the app. Never mix raw and cooked weights in the same calculation — pick one method and stay consistent."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best free calorie counter app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The best free calorie counter has barcode scanning, a large food database, automatic TDEE calculation, macro tracking, and no subscription fees. Free Calorie Track includes all of these: a barcode scanner for 220,000+ products, thousands of pre-loaded common foods, AI food logging (describe a meal or snap a photo), and no paywalls or ads. It works offline as a Progressive Web App on any device."
         }
       },
       {
@@ -313,23 +575,23 @@ const keywords = "calorie counter, how to count calories, count calories, calori
         "name": "How many calories should I eat to lose weight?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "To lose weight safely, eat 300-500 calories below your TDEE (maintenance calories). This creates a deficit that results in 0.5-1 lb of weight loss per week. Never go below 1,200 calories per day for women or 1,500 calories per day for men without medical supervision. Use a TDEE calculator to find your maintenance calories, then subtract 300-500 to find your weight loss target."
+          "text": "Eat 300–500 calories below your TDEE for sustainable weight loss of 0.5–1 lb per week. Never go below 1,200 calories/day for women or 1,500 calories/day for men without medical supervision. As you lose weight, your TDEE decreases — recalculate every 10–15 lbs or when weight loss stalls for 3+ weeks."
         }
       },
       {
         "@type": "Question",
-        "name": "Do I need to count calories every day?",
+        "name": "Do I have to count calories forever?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "For best results, count calories every day including weekends. Many people are strict Monday-Friday but overeat on weekends, erasing their weekly deficit. Consistency is key. Once you reach your goal weight, you can transition to maintenance by counting calories most days or using your learned portion awareness to maintain without strict tracking."
+          "text": "No. Most people track for 3–6 months, then transition to intuitive eating with the knowledge they've built. After consistent tracking, you'll know what 500 calories of chicken looks like, how calorie-dense nuts and oils are, and what portions keep you satisfied. At that point you can choose to continue tracking (it takes under 5 minutes a day once you have habits) or rely on the awareness you've developed."
         }
       },
       {
         "@type": "Question",
-        "name": "What foods should I count calories for?",
+        "name": "How do I count calories when eating at restaurants?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Count calories for everything: all meals, snacks, drinks (except water, black coffee, unsweetened tea), cooking oils, condiments, salad dressings, sauces, and even 'just a bite' tastes. Hidden calories in oils, dressings, and beverages are the most commonly forgotten items. A tablespoon of olive oil is 120 calories. A latte can be 300+ calories. Track it all for accuracy."
+          "text": "For chain restaurants, look up nutrition info in the app or online before ordering. For independent restaurants, build the meal from components (protein + starch + sauce + oil) or find a comparable chain dish and add 15–20% for hidden cooking fats. Restaurant portions are typically cooked in more oil than home cooking. Eating out 1–2 times per week won't derail progress if you're accurate the rest of the time."
         }
       }
     ]

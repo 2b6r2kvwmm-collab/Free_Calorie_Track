@@ -8,144 +8,160 @@ const keywords = "protein tracker, free protein tracker, daily protein tracker, 
 
 <LandingPageLayout title={title} description={description} keywords={keywords}>
 
-  <!-- Hero -->
-  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 px-4 pt-24 md:pt-16 pb-20 border-b border-gray-200 dark:border-gray-700">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        <!-- Left: Text -->
-        <div class="flex-1 text-center md:text-left max-w-xl">
-          <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The Best Free Protein Tracker</h1>
-          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-            Track your daily protein intake with <span class="font-bold text-emerald-600 dark:text-emerald-400">real-time progress bars</span>, automatic goals, and detailed trends. No paywalls, no ads, no account required.
-          </p>
-          <a
-            href="/?from=landing-page"
-            class="inline-block bg-emerald-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-700 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
-          >
-            Start Tracking Protein Now
-          </a>
+  <!-- Hero copy -->
+  <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div class="max-w-6xl mx-auto px-4 pt-6 md:pt-8 pb-10 text-center">
+      <div class="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-700 text-emerald-700 dark:text-emerald-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+        100% free · No account required
+      </div>
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-gray-100">The Best <span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Protein Tracker</span></h1>
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-3xl mx-auto">
+        Track your daily protein intake with real-time progress bars, automatic goals, and AI food logging. <span class="font-semibold text-gray-800 dark:text-gray-200">No paywalls, no ads, no account required.</span>
+      </p>
+      <a
+        href="/?from=landing-page"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+      >
+        Start Tracking Protein Now →
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero image -->
+  <div class="bg-gray-800 dark:bg-gray-950">
+    <div class="max-w-6xl mx-auto px-4">
+      <picture>
+        <source srcset="/hero-screenshot.webp" type="image/webp" media="(min-width: 768px)" />
+        <source srcset="/hero-mobile.webp" type="image/webp" media="(max-width: 767px)" />
+        <img
+          src="/hero-screenshot.webp"
+          alt="Free Calorie Track protein tracker showing real-time protein progress bars"
+          width="5000"
+          height="3000"
+          class="w-full h-auto"
+          loading="eager"
+          style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
+        />
+      </picture>
+    </div>
+  </div>
+
+  <!-- Value Props -->
+  <div class="bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Hit your daily protein goal.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Automatic protein targets based on your weight and fitness goal. Real-time progress bar, AI food logging, and weekly coaching — all completely free. No premium tier, no trial that expires.</p>
         </div>
-
-        <!-- Right: App Screenshot -->
-        <div class="flex-1 w-full max-w-sm md:max-w-3xl">
-          <picture>
-            <!-- Desktop: Multi-phone composite -->
-            <source
-              srcset="/hero-screenshot.webp"
-              type="image/webp"
-              media="(min-width: 768px)"
-            />
-
-            <!-- Mobile: Single phone -->
-            <source
-              srcset="/hero-mobile.webp"
-              type="image/webp"
-              media="(max-width: 767px)"
-            />
-
-            <!-- Fallback -->
-            <img
-              src="/hero-screenshot.webp"
-              alt="Free Calorie Track protein tracker showing real-time protein progress bars"
-              width="5000"
-              height="3000"
-              class="w-full h-auto rounded-xl shadow-2xl"
-              loading="eager"
-              style="image-rendering: high-quality; transform: translateZ(0); will-change: transform;"
-            />
-          </picture>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">No account. No cloud.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Your data lives on your device, not on a server. There's nothing to sign up for, no email required, and nothing to hand over.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <h3 class="font-bold text-lg mb-2 bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Works everywhere, even offline.</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Install to your home screen from any browser — iPhone, Android, desktop. Runs like a native app and works without internet.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
+  <!-- Features Grid -->
+  <div class="bg-white dark:bg-gray-900">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-2xl font-bold text-center mb-2"><span class="bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent">Free Protein Tracker</span><span class="text-gray-800 dark:text-gray-100">'s key features</span></h2>
+      <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">Everything you want. No paywalls.</p>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
 
-    <!-- Why Track Protein Section -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
-      <h2 class="text-3xl font-bold mb-6 text-center">Why Track Your Protein Intake?</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="space-y-4">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">💪</span>
-            <div>
-              <h3 class="font-bold text-lg mb-1">Build & Maintain Muscle</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Protein is essential for muscle growth and repair. Track intake to ensure you're hitting the 0.7-1.0g per pound of body weight recommended for muscle building.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">🔥</span>
-            <div>
-              <h3 class="font-bold text-lg mb-1">Support Fat Loss Goals</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">High-protein diets help preserve muscle during weight loss and increase satiety, making it easier to maintain a calorie deficit.</p>
-            </div>
-          </div>
+        <!-- Real-time protein bar -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Real-time protein bar</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">See your daily protein intake update instantly as you log. One bar, always accurate.</p>
         </div>
-        <div class="space-y-4">
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">⚡</span>
-            <div>
-              <h3 class="font-bold text-lg mb-1">Improve Recovery</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">Athletes and active individuals need adequate protein for recovery. Track daily intake to ensure you're supporting your training.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="text-2xl">📊</span>
-            <div>
-              <h3 class="font-bold text-lg mb-1">Hit Consistent Goals</h3>
-              <p class="text-gray-600 dark:text-gray-400 text-sm">What gets measured gets managed. Tracking protein helps you stay consistent and make progress toward your fitness goals.</p>
-            </div>
-          </div>
+
+        <!-- Automatic protein goal -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Automatic protein goal</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Enter your weight and goal. Protein target is calculated using research-backed formulas automatically.</p>
         </div>
+
+        <!-- Barcode scanning -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 7v10"/><path d="M12 7v10"/><path d="M17 7v10"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Barcode scanning</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Scan any product instantly. 220,000+ items in the database. Free, no daily limit.</p>
+        </div>
+
+        <!-- Thousands of foods -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M7 21h10"/><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"/><path d="M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-3.19 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1"/><path d="m13 12 4-4"/><path d="M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Thousands of foods</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Chicken, eggs, Greek yogurt, protein powder — all pre-loaded. No internet needed.</p>
+        </div>
+
+        <!-- 7-day consistency -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">7-day consistency</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">See which days you hit your protein goal over the last week. Spot patterns at a glance.</p>
+        </div>
+
+        <!-- AI food logging -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">AI food logging (Beta)</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Describe a meal or snap a photo — AI estimates protein and macros instantly. 10 free logs/day.</p>
+        </div>
+
+        <!-- Nutrition Coach -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Nutrition Coach (Beta)</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Log 3+ days and get a weekly AI analysis of your protein trends and what to adjust. Free and optional.</p>
+        </div>
+
+        <!-- Works offline -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Works offline</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Install on any device. All your food data stored locally. No internet needed after setup.</p>
+        </div>
+
+        <!-- Private by design -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Private by design</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">No account, no subscription. Your data stays on your device and never passes through our servers.</p>
+        </div>
+
+        <!-- Editable history -->
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600 dark:text-emerald-400 mb-3"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+          <h3 class="font-bold text-sm text-gray-800 dark:text-gray-100">Editable history</h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">Forgot to log yesterday? Add or edit meals and protein from any past day in the History tab.</p>
+        </div>
+
       </div>
     </div>
+  </div>
 
-    <!-- Features Section -->
-    <div class="mb-12">
-      <h2 class="text-3xl font-bold mb-8 text-center">Free Protein Tracker Features</h2>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="text-4xl mb-4">📈</div>
-          <h3 class="font-bold text-lg mb-2">Real-Time Progress Bars</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">See your daily protein intake update in real time as you log meals. Visual progress bars make it easy to know if you're on track.</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="text-4xl mb-4">🎯</div>
-          <h3 class="font-bold text-lg mb-2">Automatic Protein Goals</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Set your fitness goal (muscle gain, fat loss, maintenance) and get research-based protein targets calculated automatically.</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="text-4xl mb-4">📷</div>
-          <h3 class="font-bold text-lg mb-2">Barcode Scanning</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Scan any product barcode to instantly log protein content. 220,000+ products in the database. Completely free, no limits.</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="text-4xl mb-4">🥩</div>
-          <h3 class="font-bold text-lg mb-2">Thousands of Foods</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Pick from thousands of common foods with accurate protein data. Chicken breast, eggs, Greek yogurt, protein powder—all pre-loaded.</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="text-4xl mb-4">📊</div>
-          <h3 class="font-bold text-lg mb-2">7-Day Achievement Tracker</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">See which days you hit your protein goal over the last week. Visual calendar shows your consistency at a glance.</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="text-4xl mb-4">📶</div>
-          <h3 class="font-bold text-lg mb-2">Works Offline</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Install on any device and track protein without internet. All your food data and history stored locally on your device.</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
-          <div class="text-4xl mb-4">🥗</div>
-          <h3 class="font-bold text-lg mb-2">Beyond Protein: Full Nutrition Tracking</h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Optionally track fiber, sodium, sugar, and saturated fat alongside protein — useful for anyone eating smaller volumes who needs to maximize nutrient density.</p>
-        </div>
-      </div>
+  <!-- Guide transition band -->
+  <div class="bg-gray-50 dark:bg-gray-800 border-y border-gray-200 dark:border-gray-700 py-10">
+    <div class="max-w-6xl mx-auto px-4 text-center">
+      <p class="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-3">The Guide</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">How to Track Protein</h2>
+      <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">How the tracker works, how much you actually need, and why most people fall short without realizing it.</p>
     </div>
+  </div>
+
+  <main class="max-w-6xl mx-auto px-4 py-12">
 
     <!-- How It Works -->
     <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-8 mb-12">
       <h2 class="text-3xl font-bold mb-8 text-center">How the Protein Tracker Works</h2>
-      <div class="space-y-6 max-w-2xl mx-auto">
+      <div class="space-y-6">
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">1</div>
           <div>
@@ -157,7 +173,7 @@ const keywords = "protein tracker, free protein tracker, daily protein tracker, 
           <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-lg">2</div>
           <div>
             <h3 class="font-bold text-lg mb-1">Log Your Meals</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">Scan barcodes, pick from common foods, search branded products, or create custom recipes. The protein content is tracked automatically for each entry.</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">Scan barcodes, pick from common foods, search branded products, create custom recipes, or describe a meal to AI. Protein is tracked automatically for each entry.</p>
           </div>
         </div>
         <div class="flex items-start gap-4">
@@ -170,10 +186,10 @@ const keywords = "protein tracker, free protein tracker, daily protein tracker, 
       </div>
     </div>
 
-    <!-- Why Free Calorie Track -->
+    <!-- Why Use Our Protein Tracker -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
       <h2 class="text-3xl font-bold mb-6 text-center">Why Use Our Protein Tracker?</h2>
-      <div class="space-y-4 max-w-2xl mx-auto">
+      <div class="space-y-4">
         <div class="flex items-start gap-3">
           <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">✓</span>
           <div>
@@ -200,6 +216,97 @@ const keywords = "protein tracker, free protein tracker, daily protein tracker, 
           <div>
             <h3 class="font-bold mb-1">Private & Secure</h3>
             <p class="text-gray-600 dark:text-gray-400 text-sm">Your data stays on your device. No cloud sync, no server storage, no third parties accessing your nutrition data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Protein Distribution -->
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold mb-4 text-center">Spread Protein Across the Day, Not Just at Dinner</h2>
+      <p class="text-gray-600 dark:text-gray-400 text-center mb-8">Most people eat 15g at breakfast, 20g at lunch, and 80g+ at dinner. The problem: muscle protein synthesis tops out at roughly 35–40g per meal. Getting there 3–4 times a day is significantly more effective than one large evening hit — even at the same daily total.</p>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 border-2 border-red-200 dark:border-red-800">
+          <p class="font-bold text-red-700 dark:text-red-400 mb-3">Less effective</p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Breakfast</span><span class="font-semibold">12g</span></div>
+            <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Lunch</span><span class="font-semibold">18g</span></div>
+            <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Dinner</span><span class="font-semibold">90g</span></div>
+            <div class="flex justify-between border-t border-red-200 dark:border-red-700 pt-2 mt-2 font-bold text-gray-800 dark:text-gray-200"><span>Total</span><span>120g</span></div>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-3">Hits the daily target, but most of the dinner protein can't be used efficiently.</p>
+        </div>
+        <div class="bg-emerald-50 dark:bg-emerald-900/20 rounded-xl p-6 border-2 border-emerald-300 dark:border-emerald-600">
+          <p class="font-bold text-emerald-700 dark:text-emerald-400 mb-3">More effective</p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Breakfast</span><span class="font-semibold">35g</span></div>
+            <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Lunch</span><span class="font-semibold">40g</span></div>
+            <div class="flex justify-between text-gray-600 dark:text-gray-400"><span>Dinner</span><span class="font-semibold">40g</span></div>
+            <div class="flex justify-between border-t border-emerald-200 dark:border-emerald-700 pt-2 mt-2 font-bold text-gray-800 dark:text-gray-200"><span>Total</span><span>115g</span></div>
+          </div>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-3">Each meal triggers a full muscle protein synthesis response — same total, better use.</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 shadow-sm">
+          <p class="font-bold mb-3 text-gray-800 dark:text-gray-100">What the tracker shows you</p>
+          <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0">✓</span>Per-meal protein as you log</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0">✓</span>Daily goal progress in real time</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0">✓</span>7-day weekly protein averages</li>
+            <li class="flex items-start gap-2"><span class="text-emerald-500 font-bold flex-shrink-0">✓</span>Trends that reveal where you consistently fall short</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Why protein is hard to eyeball -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-12">
+      <h2 class="text-3xl font-bold mb-6 text-center">Why Protein Is Harder to Eyeball Than Calories</h2>
+      <p class="text-gray-600 dark:text-gray-400 text-center mb-8">Calorie-dense foods tend to look different — a bag of chips vs. a salad is obvious. Protein is invisible. Two portions that look identical can have wildly different protein content, which is exactly why tracking it specifically matters.</p>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
+          <h3 class="font-bold mb-4 text-gray-800 dark:text-gray-100">Same serving size, very different protein</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 pb-2">
+              <span class="text-gray-600 dark:text-gray-400">Greek yogurt (1 cup)</span>
+              <span class="font-bold text-emerald-600 dark:text-emerald-400">17g</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 pb-2">
+              <span class="text-gray-600 dark:text-gray-400">Regular yogurt (1 cup)</span>
+              <span class="font-bold text-amber-600 dark:text-amber-400">8g</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 pb-2">
+              <span class="text-gray-600 dark:text-gray-400">Chicken breast (100g)</span>
+              <span class="font-bold text-emerald-600 dark:text-emerald-400">31g</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 pb-2">
+              <span class="text-gray-600 dark:text-gray-400">Chicken thigh (100g)</span>
+              <span class="font-bold text-amber-600 dark:text-amber-400">19g</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-gray-200 dark:border-gray-600 pb-2">
+              <span class="text-gray-600 dark:text-gray-400">Cottage cheese (1 cup)</span>
+              <span class="font-bold text-emerald-600 dark:text-emerald-400">25g</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600 dark:text-gray-400">Ricotta (1 cup)</span>
+              <span class="font-bold text-amber-600 dark:text-amber-400">14g</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
+          <h3 class="font-bold mb-4 text-gray-800 dark:text-gray-100">Common protein underestimates</h3>
+          <div class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
+            <div>
+              <p class="font-semibold text-gray-800 dark:text-gray-200 mb-1">"I had protein at every meal"</p>
+              <p>A small piece of chicken, two eggs, some cheese — that's probably 60–80g total. Most active people need 120–180g. You'd never know without tracking.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Protein bars vary wildly</p>
+              <p>Some bars have 20–25g protein. Others marketed as "protein bars" have 8g. Scanning the barcode takes one second and tells you exactly what you're getting.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-800 dark:text-gray-200 mb-1">Restaurant portions aren't standard</p>
+              <p>A "grilled chicken entrée" could be 120–400g of meat depending on the restaurant. The AI photo feature gives a far better estimate than guessing.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -238,7 +345,7 @@ const keywords = "protein tracker, free protein tracker, daily protein tracker, 
         "name": "Is this protein tracker really free?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, this protein tracker is completely free with no paywalls, no premium tier, and no subscription. All features including barcode scanning, automatic protein goals, and detailed trends are free forever. There are also no ads."
+          "text": "Yes, this protein tracker is completely free with no paywalls, no premium tier, and no subscription. All features including barcode scanning, automatic protein goals, AI food logging, and detailed trends are free forever. There are also no ads."
         }
       },
       {

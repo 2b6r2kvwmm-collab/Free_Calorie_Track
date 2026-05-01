@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import footerInjectionPlugin from './vite-plugin-footer.js'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 export default defineConfig({
   server: {
@@ -25,6 +26,7 @@ export default defineConfig({
     }
   },
   plugins: [
+    basicSsl(),
     react(),
     footerInjectionPlugin(),
     VitePWA({
