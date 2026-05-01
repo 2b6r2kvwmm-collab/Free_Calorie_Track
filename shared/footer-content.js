@@ -88,8 +88,6 @@ export const footerContent = {
  *    { emoji: "🎽", text: "Product Name", url: "https://amzn.to/..." }
  *
  * 2. Update medical disclaimer:
- *    Edit medicalDisclaimer.text
- *
  * 3. Change support button:
  *    Edit supportSection.buttonText or buttonUrl
  *
