@@ -266,19 +266,23 @@ const postSchemaData = schemaData[slug];
       <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
         <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 text-center">{footerContent.gearLinks.heading}</h3>
         <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-4 italic">{footerContent.gearLinks.disclaimer}</p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {footerContent.gearLinks.items.map((item) => (
-            <div class="p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
-              <div class="text-2xl mb-2">{item.emoji}</div>
+            <div class="p-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
               <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">{item.name}</div>
-              <div class="text-xs text-gray-500 dark:text-gray-400 mb-3 leading-relaxed">{item.desc}</div>
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block text-center bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-1.5 px-3 rounded transition-colors mb-2"
-              >Buy on Amazon →</a>
-              <a href={item.reviewUrl} class="text-xs text-gray-400 hover:underline">Read my review</a>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-2 leading-relaxed">{item.desc}</div>
+              <div class="flex gap-1.5">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex-1 text-center bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-xs font-semibold py-1.5 px-2 rounded transition-all"
+                >Check it out →</a>
+                <a
+                  href={item.reviewUrl}
+                  class="flex-1 text-center bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-300 text-xs font-medium py-1.5 px-2 rounded hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors"
+                >Read review</a>
+              </div>
             </div>
           ))}
         </div>

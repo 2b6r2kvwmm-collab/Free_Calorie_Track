@@ -48,14 +48,15 @@ function generateFooterHTML(content) {
         <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
           ${content.gearLinks.disclaimer}
         </p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 700px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 700px; margin: 0 auto;">
           ${content.gearLinks.items.map(item => `
           <div class="gear-card">
-            <div style="font-size: 22px; margin-bottom: 8px;">${item.emoji}</div>
             <div class="gear-card-title">${item.name}</div>
             <div class="gear-card-desc">${item.desc}</div>
-            <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="display: block; background: #10b981; color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 6px; margin-bottom: 8px;">Buy on Amazon →</a>
-            <a href="${item.reviewUrl}" class="gear-card-review">Read my review</a>
+            <div style="display: flex; gap: 6px;">
+              <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: linear-gradient(to right, #10b981, #14b8a6); color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; padding: 5px 8px; border-radius: 5px;">Check it out →</a>
+              <a href="${item.reviewUrl}" style="flex: 1; text-align: center; background: #374151; color: #9ca3af; text-decoration: none; font-size: 11px; font-weight: 500; padding: 5px 8px; border-radius: 5px;">Read review</a>
+            </div>
           </div>`).join('')}
         </div>
       </div>
