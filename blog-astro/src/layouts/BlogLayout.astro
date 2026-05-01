@@ -248,12 +248,6 @@ const postSchemaData = schemaData[slug];
   <footer class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-12 px-4 mt-auto border-t border-gray-300 dark:border-gray-700">
     <div class="max-w-4xl mx-auto space-y-8">
 
-      <!-- Medical Disclaimer -->
-      <div class="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 rounded">
-        <h3 class="font-bold text-gray-900 dark:text-gray-100 mb-2">{footerContent.medicalDisclaimer.title}</h3>
-        <p class="text-sm text-gray-700 dark:text-gray-300">{footerContent.medicalDisclaimer.text}</p>
-      </div>
-
       <!-- Support Section -->
       <div class="text-center border-t border-gray-300 dark:border-gray-600 pt-6">
         <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{footerContent.supportSection.heading}</h3>
@@ -272,17 +266,20 @@ const postSchemaData = schemaData[slug];
       <div class="border-t border-gray-300 dark:border-gray-600 pt-6">
         <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-3 text-center">{footerContent.gearLinks.heading}</h3>
         <p class="text-xs text-gray-500 dark:text-gray-400 text-center mb-4 italic">{footerContent.gearLinks.disclaimer}</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {footerContent.gearLinks.items.map((link) => (
-            <a
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-2 p-3 bg-white dark:bg-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors border border-gray-200 dark:border-gray-600"
-            >
-              <span class="text-2xl">{link.emoji}</span>
-              <span class="text-sm font-medium text-gray-800 dark:text-gray-200">{link.text}</span>
-            </a>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {footerContent.gearLinks.items.map((item) => (
+            <div class="p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+              <div class="text-2xl mb-2">{item.emoji}</div>
+              <div class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">{item.name}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 mb-3 leading-relaxed">{item.desc}</div>
+              <a
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block text-center bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-1.5 px-3 rounded transition-colors mb-2"
+              >Buy on Amazon →</a>
+              <a href={item.reviewUrl} class="text-xs text-gray-400 hover:underline">Read my review</a>
+            </div>
           ))}
         </div>
       </div>

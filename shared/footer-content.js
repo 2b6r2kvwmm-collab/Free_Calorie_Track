@@ -15,14 +15,6 @@
 
 export const footerContent = {
   /**
-   * Medical Disclaimer - Top priority, required by law
-   */
-  medicalDisclaimer: {
-    title: "⚠️ Medical Disclaimer",
-    text: "This app provides estimates for informational purposes only and is not intended for medical diagnosis, treatment, or professional health advice. TDEE and calorie estimates are approximations and may not be accurate for all individuals. Always consult a qualified healthcare provider before making changes to your diet, exercise, or health routine. Free Calorie Track is provided \"as is\" without warranties and is not liable for any damages, data loss, or inaccuracies."
-  },
-
-  /**
    * Support Section - Donation button and message
    */
   supportSection: {
@@ -36,38 +28,29 @@ export const footerContent = {
    * Affiliate Gear Links - Products we recommend
    */
   gearLinks: {
-    heading: "My favorite health and fitness gear",
+    heading: "Gear I actually use",
     disclaimer: "As an Amazon Associate I earn from qualifying purchases.",
     items: [
       {
         emoji: "⚖️",
-        text: "Favorite Digital Food Scale",
-        url: "https://amzn.to/4qNU4Ko"
-      },
-      {
-        emoji: "🫙",
-        text: "Favorite Meal Prep Containers",
-        url: "https://amzn.to/4bquRRF"
-      },
-      {
-        emoji: "💧",
-        text: "Favorite Insulated Water Bottle",
-        url: "https://amzn.to/45ORPhU"
-      },
-      {
-        emoji: "🏋️",
-        text: "Favorite Small Dumbbells",
-        url: "https://amzn.to/4txlhTV"
-      },
-      {
-        emoji: "💪",
-        text: "Favorite Adjustable Dumbbells",
-        url: "https://amzn.to/4qU7fJY"
+        name: "Crownful Digital Food Scale",
+        desc: "The #1 thing that improved my tracking accuracy",
+        url: "https://amzn.to/4bjHj5e",
+        reviewUrl: "/blog/how-to-use-a-food-scale"
       },
       {
         emoji: "🥤",
-        text: "Favorite Smoothie & Protein Blender",
-        url: "https://amzn.to/3P38ZCB"
+        name: "NutriBullet Pro 900",
+        desc: "I own two of these · Best for daily protein shakes, easy to clean",
+        url: "https://amzn.to/4r0CClz",
+        reviewUrl: "/blog/best-blenders-for-protein-shakes"
+      },
+      {
+        emoji: "🏋️",
+        name: "Core Fitness Adjustable Dumbbells",
+        desc: "5–50 lbs · What I use at home instead of a full rack",
+        url: "https://amzn.to/3MtBjNW",
+        reviewUrl: "/blog/best-adjustable-dumbbells-beginners"
       }
     ]
   },

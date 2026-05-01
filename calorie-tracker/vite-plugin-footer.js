@@ -30,16 +30,6 @@ export default function footerInjectionPlugin() {
 
 function generateFooterHTML(content) {
   return `
-      <!-- Medical Disclaimer - Top Priority -->
-      <div class="medical-disclaimer">
-        <h3>${content.medicalDisclaimer.title}</h3>
-        <p>
-          ${content.medicalDisclaimer.text}
-        </p>
-      </div>
-
-      <hr class="footer-divider">
-
       <div style="margin-bottom: 25px;">
         <h3 class="footer-heading">
           ${content.supportSection.heading}
@@ -55,17 +45,21 @@ function generateFooterHTML(content) {
       <hr class="footer-divider">
 
       <div style="margin-top: 35px; margin-bottom: 20px;">
-        <p class="gear-header" style="color: #999; margin-bottom: 8px;">
+        <p class="gear-header" style="color: #999; margin-bottom: 4px;">
           <strong>${content.gearLinks.heading}</strong>
         </p>
-        <p style="font-size: 12px; color: #888; margin-bottom: 12px;">
+        <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
           ${content.gearLinks.disclaimer}
         </p>
-        <div class="gear-grid">
-          ${content.gearLinks.items.map(link => `
-          <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="footer-link">
-            ${link.emoji} ${link.text}
-          </a>`).join('')}
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 700px; margin: 0 auto;">
+          ${content.gearLinks.items.map(item => `
+          <div class="gear-card">
+            <div style="font-size: 22px; margin-bottom: 8px;">${item.emoji}</div>
+            <div class="gear-card-title">${item.name}</div>
+            <div class="gear-card-desc">${item.desc}</div>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="display: block; background: #10b981; color: #fff; text-decoration: none; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 6px; margin-bottom: 8px;">Buy on Amazon →</a>
+            <a href="${item.reviewUrl}" class="gear-card-review">Read my review</a>
+          </div>`).join('')}
         </div>
       </div>
 
