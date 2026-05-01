@@ -83,7 +83,7 @@ async function callGeminiModel(model, body) {
         ? `Gemini is busy — retrying in ${seconds} seconds.`
         : 'Gemini is busy right now. Please wait a moment and try again.');
       busyErr.retryAfter = seconds;
-      busyErr.isBusy = !!seconds;
+      busyErr.isBusy = true;
       throw busyErr;
     }
     throw new Error(msg);
@@ -110,12 +110,15 @@ async function callGeminiModel(model, body) {
 
 async function callGemini(body) {
   let lastErr;
-  for (let i = 0; i < GEMINI_MODELS.length; i++) {
-    try {
-      return await callGeminiModel(GEMINI_MODELS[i], body);
-    } catch (err) {
-      lastErr = err;
-      if ((!err.isBusy && !err.modelNotFound) || i === GEMINI_MODELS.length - 1) throw err;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    if (attempt > 0) await new Promise(r => setTimeout(r, 3000));
+    for (let i = 0; i < GEMINI_MODELS.length; i++) {
+      try {
+        return await callGeminiModel(GEMINI_MODELS[i], body);
+      } catch (err) {
+        lastErr = err;
+        if (!err.isBusy && !err.modelNotFound) throw err;
+      }
     }
   }
   throw lastErr;
