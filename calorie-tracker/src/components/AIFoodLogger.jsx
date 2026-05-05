@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import { analyzeTextMeal, analyzeImageMeal, imageFileToBase64 } from '../utils/gemini';
 import { getLocalDateString, getAILogsToday, incrementAILogsToday, AI_DAILY_LIMIT } from '../utils/storage';
 
+const SESSION_KEY = 'ailog_saved';
+const FAIL_THRESHOLD = 3;
+
 const hasSpeechRecognition = typeof window !== 'undefined' &&
   ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window);
 
@@ -30,8 +33,41 @@ function useSpeechRecognition(onResult) {
   return { listening, start, stop };
 }
 
+async function compressImageToBase64(file, maxDim = 800, quality = 0.72) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(null); };
+    img.src = url;
+  });
+}
+
+function saveSession(data) {
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(data)); } catch {}
+}
+
+function clearSession() {
+  try { sessionStorage.removeItem(SESSION_KEY); } catch {}
+}
+
+function loadSession() {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
 export default function AIFoodLogger({ onLog, onClose, onLogged }) {
-  const [mode, setMode] = useState('photo'); // 'text' | 'photo'
+  const [mode, setMode] = useState('photo');
   const [description, setDescription] = useState('');
   const [photoNote, setPhotoNote] = useState('');
   const [imagePreview, setImagePreview] = useState(null);
@@ -40,7 +76,7 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
   const [cameraError, setCameraError] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [retryCountdown, setRetryCountdown] = useState(0);
+  const [failCount, setFailCount] = useState(0);
   const [results, setResults] = useState(null);
   const [editedResults, setEditedResults] = useState(null);
   const [selectedIndices, setSelectedIndices] = useState(new Set());
@@ -52,28 +88,31 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
     text => setDescription(prev => prev ? `${prev} ${text}` : text)
   );
 
-  // Stop camera stream on unmount
+  // Restore saved session on mount
+  useEffect(() => {
+    const saved = loadSession();
+    if (!saved) return;
+    setMode(saved.mode || 'photo');
+    if (saved.description) setDescription(saved.description);
+    if (saved.photoNote) setPhotoNote(saved.photoNote);
+    if (saved.photoBase64) {
+      setImagePreview(saved.photoBase64);
+      // Convert base64 data URL back to a File object
+      fetch(saved.photoBase64)
+        .then(r => r.blob())
+        .then(blob => setImageFile(new File([blob], 'restored-photo.jpg', { type: 'image/jpeg' })))
+        .catch(() => {});
+    }
+  }, []);
+
+  // Stop camera on unmount
   useEffect(() => {
     return () => {
       if (cameraStream) cameraStream.getTracks().forEach(t => t.stop());
     };
   }, [cameraStream]);
 
-  // Countdown timer
-  useEffect(() => {
-    if (retryCountdown <= 0) return;
-    if (retryCountdown === 1) {
-      const timer = setTimeout(() => {
-        setRetryCountdown(0);
-        setError('Ready to retry — tap "Estimate nutrition" below.');
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-    const timer = setTimeout(() => setRetryCountdown(p => p - 1), 1000);
-    return () => clearTimeout(timer);
-  }, [retryCountdown]);
-
-  // Attach stream to video element when stream is ready
+  // Attach stream to video
   useEffect(() => {
     if (cameraStream && videoRef.current) {
       videoRef.current.srcObject = cameraStream;
@@ -145,15 +184,33 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
         items = await analyzeImageMeal(base64, mimeType, photoNote.trim() || null);
       }
       incrementAILogsToday();
+      clearSession();
+      setFailCount(0);
       setResults(items);
       setEditedResults(items.map(item => ({ ...item })));
       setSelectedIndices(new Set(items.map((_, i) => i)));
     } catch (err) {
+      const newFailCount = failCount + 1;
+      setFailCount(newFailCount);
       setError(err.message || 'Something went wrong. Please try again.');
-      if (err.retryAfter) setRetryCountdown(err.retryAfter);
+
+      // Auto-save photo/description to session on any failure
+      const sessionData = { mode, description, photoNote };
+      if (mode === 'photo' && imageFile) {
+        compressImageToBase64(imageFile).then(base64 => {
+          if (base64) saveSession({ ...sessionData, photoBase64: base64 });
+        });
+      } else {
+        saveSession(sessionData);
+      }
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleTryLater = () => {
+    // Session is already saved — just close
+    onClose();
   };
 
   const updateField = (idx, field, value) => {
@@ -171,6 +228,7 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
   };
 
   const handleLogSelected = () => {
+    clearSession();
     const date = getLocalDateString();
     editedResults.forEach((item, idx) => {
       if (!selectedIndices.has(idx)) return;
@@ -195,6 +253,7 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
     onClose();
   };
 
+  const isBusy = failCount >= FAIL_THRESHOLD;
   const modalScrollRef = useRef(null);
 
   return (
@@ -267,11 +326,9 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
                     Clear, well-lit photos give better estimates.
                   </p>
 
-                  {/* Hidden inputs */}
                   <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageSelect} className="hidden" />
                   <canvas ref={canvasRef} className="hidden" />
 
-                  {/* Live camera preview */}
                   {cameraStream && !imagePreview && (
                     <div className="space-y-2">
                       <div className="relative rounded-xl overflow-hidden bg-black">
@@ -288,59 +345,38 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
                         />
                       </div>
                       <div className="flex gap-2">
-                        <button
-                          onClick={capturePhoto}
-                          className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl transition-colors"
-                        >
+                        <button onClick={capturePhoto} className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl transition-colors">
                           📸 Capture
                         </button>
-                        <button
-                          onClick={stopCamera}
-                          className="px-4 py-2.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm font-medium"
-                        >
+                        <button onClick={stopCamera} className="px-4 py-2.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-sm font-medium">
                           Cancel
                         </button>
                       </div>
                     </div>
                   )}
 
-                  {/* Image preview */}
                   {imagePreview && (
                     <div className="relative">
                       <img src={imagePreview} alt="Meal preview" className="w-full rounded-xl object-cover max-h-48" />
-                      <button
-                        onClick={clearPhoto}
-                        className="absolute top-2 right-2 bg-black/50 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
-                      >✕</button>
+                      <button onClick={clearPhoto} className="absolute top-2 right-2 bg-black/50 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">✕</button>
                     </div>
                   )}
 
-                  {/* Upload buttons — shown when no image and camera not active */}
                   {!imagePreview && !cameraStream && (
                     <div className="grid grid-cols-2 gap-2">
-                      <button
-                        onClick={startCamera}
-                        className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl py-6 text-center hover:border-emerald-400 dark:hover:border-emerald-500 transition-colors"
-                      >
+                      <button onClick={startCamera} className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl py-6 text-center hover:border-emerald-400 dark:hover:border-emerald-500 transition-colors">
                         <div className="text-2xl mb-1">📷</div>
                         <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Use camera</p>
                       </button>
-                      <button
-                        onClick={() => fileInputRef.current?.click()}
-                        className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl py-6 text-center hover:border-emerald-400 dark:hover:border-emerald-500 transition-colors"
-                      >
+                      <button onClick={() => fileInputRef.current?.click()} className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl py-6 text-center hover:border-emerald-400 dark:hover:border-emerald-500 transition-colors">
                         <div className="text-2xl mb-1">🖼️</div>
                         <p className="text-xs font-medium text-gray-700 dark:text-gray-300">Choose file</p>
                       </button>
                     </div>
                   )}
 
-                  {/* Camera permission error */}
-                  {cameraError && (
-                    <p className="text-xs text-red-600 dark:text-red-400">{cameraError}</p>
-                  )}
+                  {cameraError && <p className="text-xs text-red-600 dark:text-red-400">{cameraError}</p>}
 
-                  {/* Optional note — shown once image is selected */}
                   {imagePreview && (
                     <textarea
                       value={photoNote}
@@ -353,22 +389,40 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
                 </div>
               )}
 
-              {error && (
-                <div className={`rounded-xl px-4 py-3 ${retryCountdown === 0 && error.startsWith('Ready') ? 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800' : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'}`}>
-                  {retryCountdown > 0 ? (
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-red-700 dark:text-red-400">Gemini is busy — ready to retry in</p>
-                      <span className="text-sm font-bold text-red-700 dark:text-red-400 tabular-nums ml-2">{retryCountdown}s</span>
-                    </div>
-                  ) : (
-                    <p className={`text-sm ${error.startsWith('Ready') ? 'text-emerald-700 dark:text-emerald-400' : 'text-red-700 dark:text-red-400'}`}>{error}</p>
-                  )}
+              {/* Busy banner — shown after FAIL_THRESHOLD consecutive failures */}
+              {isBusy && (
+                <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl px-4 py-4">
+                  <p className="text-sm font-semibold text-amber-800 dark:text-amber-300 mb-1">Gemini is really busy right now</p>
+                  <p className="text-sm text-amber-700 dark:text-amber-400 mb-3">
+                    We've saved your {mode === 'photo' ? 'photo' : 'description'} — close this and try again in a few minutes, or log this meal a different way.
+                  </p>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleTryLater}
+                      className="flex-1 text-sm font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 py-2 rounded-lg hover:bg-amber-200 dark:hover:bg-amber-900/60 transition-colors"
+                    >
+                      Try again later
+                    </button>
+                    <button
+                      onClick={onClose}
+                      className="flex-1 text-sm font-semibold bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                    >
+                      Log manually
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Error message */}
+              {error && !isBusy && (
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl px-4 py-3">
+                  <p className="text-sm text-red-700 dark:text-red-400">{error}</p>
                 </div>
               )}
 
               <button
                 onClick={handleAnalyze}
-                disabled={loading || retryCountdown > 0 || (mode === 'text' && !description.trim()) || (mode === 'photo' && !imageFile)}
+                disabled={loading || (mode === 'text' && !description.trim()) || (mode === 'photo' && !imageFile)}
                 className="w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors"
               >
                 {loading ? 'Analyzing with Gemini AI…' : 'Estimate nutrition'}
