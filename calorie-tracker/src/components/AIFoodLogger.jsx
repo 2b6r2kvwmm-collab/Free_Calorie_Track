@@ -404,7 +404,7 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
                       Try again later
                     </button>
                     <button
-                      onClick={onClose}
+                      onClick={() => { clearSession(); onClose(); }}
                       className="flex-1 text-sm font-semibold bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
                     >
                       Log manually

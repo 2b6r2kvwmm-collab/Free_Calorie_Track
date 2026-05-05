@@ -79,9 +79,7 @@ async function callGeminiModel(model, body) {
     if (res.status === 429 || res.status === 503) {
       const retryMatch = msg.match(/retry in (\d+(?:\.\d+)?)s/i);
       const seconds = retryMatch ? Math.ceil(parseFloat(retryMatch[1])) : null;
-      const busyErr = new Error(seconds
-        ? `Gemini is busy — retrying in ${seconds} seconds.`
-        : 'Gemini is busy right now. Please wait a moment and try again.');
+      const busyErr = new Error('Gemini is busy right now — tap to try again.');
       busyErr.retryAfter = seconds;
       busyErr.isBusy = true;
       throw busyErr;
