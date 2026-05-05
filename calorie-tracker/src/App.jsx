@@ -1,4 +1,5 @@
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
+import { track } from '@vercel/analytics';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
@@ -76,6 +77,13 @@ function App() {
     saveDarkMode(darkMode);
   }, [darkMode]);
 
+  useEffect(() => {
+    if (isAppInstalled() && !localStorage.getItem('pwa-install-tracked')) {
+      localStorage.setItem('pwa-install-tracked', 'true');
+      track('pwa_installed');
+    }
+  }, []);
+
   // Check if we should show the share modal (after 5 days of tracking)
   const [userDaysTracked, setUserDaysTracked] = useState(0);
 
@@ -148,7 +156,7 @@ function App() {
     );
   }
 
-  if (!installPromptShown && !profile) {
+  if (!installPromptShown && !isAppInstalled()) {
     return (
       <InstallPrompt onContinue={() => {
         markInstallPromptShown();

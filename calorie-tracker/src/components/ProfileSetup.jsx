@@ -77,7 +77,7 @@ export default function ProfileSetup({ onComplete }) {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="card max-w-2xl w-full">
         <h1 className="text-3xl font-bold mb-2 text-center">
-          {step === 1 ? 'Welcome to Calorie Tracker' : 'Choose Your Fitness Goal'}
+          {step === 1 ? 'Welcome to Free Calorie Track' : 'Choose Your Fitness Goal'}
         </h1>
         <p className="text-gray-600 dark:text-gray-400 mb-8 text-center text-lg">
           {step === 1
