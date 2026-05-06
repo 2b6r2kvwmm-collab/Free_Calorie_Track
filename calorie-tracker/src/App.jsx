@@ -10,7 +10,6 @@ import InstallReminderModal from './components/InstallReminderModal';
 import ProfileSetup from './components/ProfileSetup';
 import Dashboard from './components/Dashboard';
 import UpdateNotification from './components/UpdateNotification';
-import VersionUpdateModal from './components/VersionUpdateModal';
 
 // Code split heavy components to reduce INP - load only when needed
 const Trends = lazy(() => import('./components/Trends'));
@@ -147,7 +146,7 @@ function App() {
   const todayFormatted = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
 
   // App routes
-  if (!landingPageShown && !profile) {
+  if (!landingPageShown && !profile && !isAppInstalled()) {
     return (
       <LandingPage onGetStarted={() => {
         markLandingPageShown();
@@ -346,9 +345,6 @@ function App() {
       {showInstallReminder && (
         <InstallReminderModal onClose={() => { incrementInstallReminderDismissals(); setShowInstallReminder(false); }} />
       )}
-
-      {/* Version Update Modal - shown once for existing users on version updates */}
-      <VersionUpdateModal />
 
       {/* Update Notification */}
       <UpdateNotification />
