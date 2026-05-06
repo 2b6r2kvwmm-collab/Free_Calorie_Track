@@ -13,9 +13,11 @@ image: "/images/blog/breville-barista-express.webp"
   Product images were staged using AI for visual presentation purposes.
 </p>
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 space-y-2 text-gray-800 dark:text-gray-200">
+<p class="text-xs text-gray-400 dark:text-gray-500 italic mb-6">Contains affiliate links — we earn a small commission if you buy through them, at no extra cost to you. We only recommend products we genuinely use.</p>
+
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
     <li><strong>Greatest product I own</strong> - 6+ years of daily use, multiple drinks per day</li>
     <li><strong>Saved thousands</strong> - Never buy coffee shop lattes anymore</li>
     <li><strong>Pulls excellent shots</strong> - Consistent espresso once dialed in</li>
@@ -27,7 +29,7 @@ image: "/images/blog/breville-barista-express.webp"
 
 If you're like me, **coffee is a big part of your day.** I drink 2-3 espresso drinks with whole milk every day. Until I started using Free Calorie Track, I never realized how many calories that was—or what the macro profile looked like.
 
-**Turns out: 360 calories, 18g protein, 30g carbs, and 15g fat** (for my typical whole milk lattes).
+**Turns out: 360 calories, 18g protein, 30g carbs, and 15g fat** — that's for all 3 lattes combined, not per drink.
 
 I love whole milk lattes and didn't want to give them up, but tracking made me realize I could reduce the calories significantly by using less milk. Now I switch between cappuccinos and cortados a lot of the time, which cuts the calories in half while keeping the coffee I love.
 
@@ -238,7 +240,7 @@ It's not a lot of work—minimal maintenance for the quality coffee you get.
 **If you drink espresso drinks regularly, this machine is a no-brainer investment.** It pays for itself in months and will last for years (possibly decades with proper care).
 
 <div class="text-center my-8">
-  <a href="https://amzn.to/4biCUzt" target="_blank" rel="noopener noreferrer nofollow" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="https://amzn.to/4biCUzt" target="_blank" rel="noopener noreferrer nofollow" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Check Current Price
   </a>
   <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Affiliate link - supports Free Calorie Track at no cost to you</p>
@@ -257,7 +259,7 @@ Use Free Calorie Track to log your daily coffee drinks and see how they fit into
 - ✅ 100% free
 
 <div class="text-center my-8">
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Get Started
   </a>
 </div>

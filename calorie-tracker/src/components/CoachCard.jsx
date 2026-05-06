@@ -102,6 +102,11 @@ export default function CoachCard() {
   const today = getLocalDateString();
   const lastDate = getLastCoachDate();
   const ranToday = lastDate === today;
+  const daysSinceCoach = lastDate
+    ? Math.floor((new Date(today + 'T00:00:00') - new Date(lastDate + 'T00:00:00')) / 86400000)
+    : 0;
+  const isExpired = daysSinceCoach >= 7;
+  const effectiveResult = isExpired ? null : result;
 
   const runCoach = async () => {
     navigate('/coach', { replace: true });
@@ -120,7 +125,14 @@ export default function CoachCard() {
       saveCoachResult(data);
       setResult(getCoachResult());
     } catch (err) {
-      setError(err.message || 'Something went wrong. Please try again.');
+      const msg = err.message || '';
+      if (/load failed|failed to fetch|network/i.test(msg)) {
+        setError('Connection error — check your internet and try again.');
+      } else if (/at least one day/i.test(msg)) {
+        setError('No recent logs found. Log some meals from the past 7 days, then refresh.');
+      } else {
+        setError(msg || 'Something went wrong. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -159,10 +171,11 @@ export default function CoachCard() {
                 AI-generated insights based on your logs — estimates only, not medical advice.
               </p>
             </div>
-            {result && (
+            {effectiveResult && (
               <button
                 onClick={handleAnalyze}
-                disabled={loading || ranToday}
+                disabled={loading || ranToday || !hasEnough}
+                title={!hasEnough ? `Log ${COACH_MIN_DAYS} days in the last 7 to refresh` : undefined}
                 className="flex-shrink-0 flex items-center gap-1.5 bg-purple-600 hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-semibold px-3 py-2 rounded-xl transition-colors"
               >
                 {loading ? (
@@ -178,8 +191,16 @@ export default function CoachCard() {
 
         <div className="px-5 py-4 space-y-4">
 
+          {/* Error banner — always shown at top so it's immediately visible */}
+          {error && (
+            <div className="flex items-start gap-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl px-4 py-3">
+              <span className="text-red-500 flex-shrink-0 mt-0.5">⚠️</span>
+              <p className="text-sm text-red-700 dark:text-red-400 leading-snug">{error}</p>
+            </div>
+          )}
+
           {/* No result yet — show description + CTA */}
-          {!result && (
+          {!effectiveResult && (
             <>
               <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                 Get a personalized read on your week — what you're nailing, where you might improve, and specific things to try. Based on your last 7 days of logs.
@@ -188,7 +209,7 @@ export default function CoachCard() {
               {!hasEnough ? (
                 <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl px-4 py-3">
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Log at least <strong>{COACH_MIN_DAYS} days</strong> this week to unlock coaching.
+                    Log at least <strong>{COACH_MIN_DAYS} days</strong> in the last 7 days to unlock coaching.
                     You've logged <strong>{daysLogged} of {COACH_MIN_DAYS} days</strong> needed.
                   </p>
                   <div className="mt-2 flex gap-1">
@@ -217,11 +238,11 @@ export default function CoachCard() {
           )}
 
           {/* Has result */}
-          {result && (
+          {effectiveResult && (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <p className="text-xs text-gray-400 dark:text-gray-500">
-                  {result.date === today ? 'Updated today' : `Last updated ${new Date(result.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}`}
+                  {effectiveResult.date === today ? 'Updated today' : `Last updated ${new Date(effectiveResult.date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}`}
                 </p>
                 <button
                   onClick={() => setShowPrivacy(true)}
@@ -234,36 +255,34 @@ export default function CoachCard() {
               <ResultSection
                 icon="✅"
                 title="What's working"
-                items={result.sections?.whatsWorking}
+                items={effectiveResult.sections?.whatsWorking}
                 color="text-emerald-600 dark:text-emerald-400"
               />
               <ResultSection
                 icon="⚠️"
                 title="Needs attention"
-                items={result.sections?.needsAttention}
+                items={effectiveResult.sections?.needsAttention}
                 color="text-amber-600 dark:text-amber-400"
               />
               <ResultSection
                 icon="💡"
                 title="This week, try"
-                items={result.sections?.thisTry}
+                items={effectiveResult.sections?.thisTry}
                 color="text-blue-600 dark:text-blue-400"
               />
 
-              {result.sections?.trajectory && (
+              {effectiveResult.sections?.trajectory && (
                 <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl px-4 py-3">
                   <p className="text-xs font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-1">📈 Trajectory</p>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{result.sections.trajectory}</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{effectiveResult.sections.trajectory}</p>
                 </div>
               )}
 
-              {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
-              {ranToday && <p className="text-xs text-center text-gray-400 dark:text-gray-500">Refresh available tomorrow</p>}
+              {!hasEnough && (
+                <p className="text-xs text-center text-gray-400 dark:text-gray-500">Log {COACH_MIN_DAYS} days in the last 7 to refresh</p>
+              )}
+              {hasEnough && ranToday && <p className="text-xs text-center text-gray-400 dark:text-gray-500">Refresh available tomorrow</p>}
             </div>
-          )}
-
-          {error && !result && (
-            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
           )}
 
         </div>

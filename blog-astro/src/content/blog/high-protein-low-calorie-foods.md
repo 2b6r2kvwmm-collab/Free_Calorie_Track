@@ -14,14 +14,14 @@ image: "/images/blog/high-protein-foods.webp"
   <p class="text-gray-700 dark:text-gray-300 mb-4 max-w-xl mx-auto">
     Free calorie tracker with protein tracking, macro targets, and 220,000+ foods including all the high-protein options listed below. No signup required.
   </p>
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Try Free Calorie Track →
   </a>
 </div>
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 space-y-2 text-gray-800 dark:text-gray-200">
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
     <li>High protein foods help you feel full longer and preserve muscle during fat loss</li>
     <li>Best options: chicken breast, greek yogurt, egg whites, cottage cheese, white fish</li>
     <li>Aim for 0.7-1g protein per lb body weight for muscle preservation</li>
@@ -290,7 +290,7 @@ Free Calorie Track makes it easy to [track your daily protein intake](/protein-t
 - ✅ 100% free, no paywall
 
 <div class="text-center my-8">
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Start Tracking Protein Free
   </a>
 </div>

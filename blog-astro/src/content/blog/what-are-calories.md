@@ -9,9 +9,9 @@ image: "/images/blog/calories-guide.webp"
 
 <img src="/images/blog/calories-guide.webp" alt="What are calories guide" width="1600" height="873" />
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-8 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 list-disc ml-6 space-y-2 text-gray-800 dark:text-gray-200">
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
     <li>A calorie is a unit of energy your body uses to function</li>
     <li>Eat more calories than you burn → gain weight. Eat less → lose weight.</li>
     <li>Calorie tracking works because it creates awareness and accountability</li>
@@ -67,9 +67,7 @@ This isn't opinion—it's physics. Your body can't create energy out of nothing.
 
 **Maintenance:** If your goal is to maintain your current weight, eat at your [TDEE (Total Daily Energy Expenditure)](/blog/how-to-calculate-tdee). This is your maintenance calories—the amount your body burns each day. Track for a few weeks to dial it in, then you can stop tracking if you want. Weighing yourself weekly helps confirm you're staying stable.
 
-<div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 my-6 text-sm text-gray-700 dark:text-gray-300">
-  <strong>Important:</strong> These are general guidelines for healthy adults. Consult a healthcare provider or registered dietitian before starting a muscle-building program, especially if you have kidney disease, metabolic conditions, or other health concerns.
-</div>
+<p class="text-sm text-gray-400 dark:text-gray-500 mt-2 mb-6">These are general guidelines for healthy adults — consult a healthcare provider or registered dietitian before starting a muscle-building program, especially if you have kidney disease, metabolic conditions, or other health concerns.</p>
 
 **Gaining Lean Muscle:** To build muscle, you need to eat in a slight calorie surplus (200-500 above TDEE) combined with strength training. But here's the key: eat too much and you'll gain mostly fat. A common approach is a small surplus with high [protein intake](/blog/what-are-macros) (1-1.2g per pound of body weight), aiming to gain 0.5-1 lb per week. Faster weight gain may indicate you're gaining more fat alongside muscle.
 
@@ -131,7 +129,7 @@ Free Calorie Track makes calorie tracking simple:
 - ✅ Completely free forever—no premium paywall
 
 <div class="text-center my-8">
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Start Tracking Free
   </a>
 </div>

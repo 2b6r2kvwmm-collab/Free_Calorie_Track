@@ -85,6 +85,44 @@ Visit `http://localhost:4321/blog/your-post-slug` and verify:
 - All links work
 - Schema appears in page source (search for `application/ld+json`)
 
+## Required Content Elements
+
+Every post must include these elements before publishing:
+
+### "At a Glance" Block
+- [ ] Present immediately after the hero image
+- [ ] Uses the standard format (subtle border-bottom, "At a glance" label, plain list)
+- [ ] 3–5 bullet points, each a standalone scannable takeaway
+
+```html
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
+    <li>Key takeaway</li>
+  </ul>
+</div>
+```
+
+### Medical / Health Disclaimer
+- [ ] Present if the post contains calculators, dietary advice, or exercise guidance
+- [ ] Uses the subtle single-line `<p>` format (not a yellow box)
+- [ ] Placed adjacent to the relevant content
+
+```html
+<p class="text-sm text-gray-400 dark:text-gray-500 mt-2 mb-6">One-sentence disclaimer — consult a healthcare provider before making significant changes.</p>
+```
+
+### Affiliate Disclosure
+- [ ] Present if any affiliate links appear in the post
+- [ ] Uses the subtle italic `<p>` format (not a yellow box)
+- [ ] Placed right after the hero image (and AI caption if present), before the "At a glance" block
+
+```html
+<p class="text-xs text-gray-400 dark:text-gray-500 italic mb-6">Contains affiliate links — we earn a small commission if you buy through them, at no extra cost to you. We only recommend products we genuinely use.</p>
+```
+
+---
+
 ## Common Mistakes to Avoid
 
 ❌ "The Complete Guide to Rucking and Weighted Vest Training" (59 chars - barely fits)

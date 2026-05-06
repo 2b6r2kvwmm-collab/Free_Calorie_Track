@@ -7,9 +7,7 @@ category: "Gear Reviews"
 image: "/images/blog/nutribullet-pro-900.webp"
 ---
 
-<div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6 text-sm text-gray-700 dark:text-gray-300">
-  <strong>Affiliate Disclosure:</strong> This post contains affiliate links. If you purchase through these links, Free Calorie Track may earn a small commission at no extra cost to you. I only recommend products I genuinely use and love.
-</div>
+<p class="text-xs text-gray-400 dark:text-gray-500 italic mb-6">Contains affiliate links — we earn a small commission if you buy through them, at no extra cost to you. We only recommend products we genuinely use.</p>
 
 <img src="/images/blog/nutribullet-pro-900.webp" alt="NutriBullet Pro 900 blender" width="1600" height="893" />
 
@@ -17,9 +15,9 @@ image: "/images/blog/nutribullet-pro-900.webp"
   Product images were staged using AI for visual presentation purposes.
 </p>
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-8 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 space-y-2 text-gray-800 dark:text-gray-200">
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
     <li>I've owned two NutriBullet Pro 900s for 2+ years, use them daily for protein shakes</li>
     <li><strong>Best features:</strong> Easy to clean, drink straight from the container, perfect for smoothies and protein shakes</li>
     <li><strong>Minor drawbacks:</strong> Gasket pops out on one unit, small hole in base can cause smell if liquid spills into it</li>
@@ -101,7 +99,7 @@ If you're making protein shakes regularly (3-7 times per week) and you want some
 It's not the most powerful blender on the market, but for my needs—and probably yours if you're reading a calorie tracking blog—it's perfect. The easy cleanup alone makes it worth it. I've had mine for over two years, use them daily, and they're still going strong.
 
 <div class="text-center my-8">
-  <a href="https://amzn.to/4r0CClz" target="_blank" rel="noopener noreferrer" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="https://amzn.to/4r0CClz" target="_blank" rel="noopener noreferrer" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Check Price on Amazon
   </a>
 </div>
@@ -118,7 +116,7 @@ Free Calorie Track has a Recipe Builder where you can save your go-to shake reci
 - ✅ Track protein intake toward your daily goals
 
 <div class="text-center my-8">
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Start Tracking Free
   </a>
 </div>

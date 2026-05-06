@@ -7,9 +7,7 @@ category: "Gear Reviews"
 image: "/images/blog/oxo-obsidian-carbon-steel-pan.webp"
 ---
 
-<div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6 text-sm text-gray-700 dark:text-gray-300">
-  <strong>Affiliate Disclosure:</strong> This post contains affiliate links. If you purchase through these links, Free Calorie Track may earn a small commission at no extra cost to you. I only recommend products I genuinely use and love.
-</div>
+<p class="text-xs text-gray-400 dark:text-gray-500 italic mb-6">Contains affiliate links — we earn a small commission if you buy through them, at no extra cost to you. We only recommend products we genuinely use.</p>
 
 <img src="/images/blog/oxo-obsidian-carbon-steel-pan.webp" alt="OXO Obsidian 10-inch carbon steel frying pan" width="1600" height="893" />
 
@@ -17,9 +15,9 @@ image: "/images/blog/oxo-obsidian-carbon-steel-pan.webp"
   Product images were staged using AI for visual presentation purposes.
 </p>
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-8 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 space-y-2 text-gray-800 dark:text-gray-200">
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
     <li>Great for anyone who wants to stop cooking on chemical coatings</li>
     <li><strong>Best for:</strong> Searing, pancakes, anything high-heat. Gets better with age.</li>
     <li><strong>Weak point:</strong> Eggs. It's fine, not magical. Scrambled eggs stick.</li>

@@ -47,7 +47,39 @@ Free Calorie Track uses a fundamentally different approach: **all your data stay
 - **Barcode scans**: When you scan a product barcode, the barcode number is sent to Open Food Facts API to retrieve product details. Again, these requests aren't tied to your identity.
 - **Blog content**: When you read articles in the app, standard web requests are made to load that content.
 
+**Data that leaves your device only if you use optional features:**
+- **AI Food Logging**: Food photos or text descriptions are sent to Google Gemini to estimate nutrition. No personal profile data travels with these requests.
+- **Nutrition Coach**: Your 7-day food logs, macro targets, and profile (goal, activity level, age, weight) are sent to Google Gemini to generate your weekly analysis. The app shows you exactly what will be sent before you confirm.
+
 These external requests are necessary for the app to work, but they don't include any personal information, account identifiers, or tracking cookies. There's no way for these services to know who you are or build a profile about you.
+
+### Optional Features: AI Food Logging and Coach
+
+Two features involve data handling that's worth explaining clearly, since they're optional and work differently from the rest of the app.
+
+**Log with AI (optional)**
+
+When you use the AI food logging feature, you're describing a meal in text or taking a photo of your food. That description or image is sent to our server, which forwards it to Google's Gemini API to estimate the nutrition content. The server returns the result and doesn't store either the image or the description. No personal information—no profile data, no name, no account—travels with the request.
+
+A few things to know:
+- **Photos are compressed before sending.** Images are resized to 800px and reduced to roughly 70% quality before leaving your device, which reduces file size and the detail in the image.
+- **Google Gemini processes the content.** Google's standard API terms and privacy policy govern how they handle requests. Like other Google APIs, individual requests aren't used to train their models by default, but you can review Google's current terms if you want the specifics.
+- **Nothing is stored on our end.** Our server acts as a relay only—no database, no logs of food descriptions or photos.
+- **Using the feature is entirely optional.** The rest of the app works without it, and manual food logging never sends data anywhere.
+
+**Coach (optional, opt-in)**
+
+The Nutrition Coach generates a personalized weekly analysis — what you're doing well, where to improve, and specific suggestions. Because this requires understanding context that a simple formula can't capture, it uses Google Gemini. When you tap "Analyze my week," the following is sent to Gemini via our server:
+
+- Your food logs from the last 7 days (calorie totals and food names)
+- Your calorie and macro targets
+- Your profile data: goal, activity level, age, and weight
+
+The app shows you exactly what will be sent before you confirm — you'll see a disclosure screen the first time you use it, and can review it anytime from the Coach card. Nothing is stored on our server. The coaching result is returned and saved only on your device. The Coach won't run unless you actively choose to use it.
+
+**Trends (local)**
+
+The Trends tab — charts, macro averages, protein goal tracking, weight history — works entirely on your device. No data is sent anywhere for these features. Everything is calculated from your local logs the same way a spreadsheet would.
 
 ### No Cloud, No Accounts
 
@@ -112,6 +144,14 @@ Yes, but your data won't automatically sync because there's no cloud storage. Yo
 **Q: How can the app be free without selling data?**
 
 Free Calorie Track is supported through voluntary donations and affiliate commissions on gear and supplements I personally use and recommend. This lets me keep the app completely free while respecting your privacy.
+
+**Q: Does the AI food logging feature share my photos with anyone?**
+
+Yes, when you use it. Photos and text descriptions you submit are sent to Google Gemini to estimate nutrition. The image is compressed before sending (800px max, ~70% quality), and neither the photo nor the description is stored on our server after the request completes. No profile data travels with the request—Gemini receives only the food image or text, nothing that identifies you. The feature is optional; the rest of the app works without it.
+
+**Q: Does the Coach feature send my data anywhere?**
+
+Yes, when you use it. The Nutrition Coach sends your last 7 days of food logs, your macro targets, and your profile (goal, activity level, age, weight) to Google Gemini to generate your weekly analysis. The app shows you a disclosure screen with the exact list before you confirm. Nothing is stored on our server — only the result is saved, on your device. The feature is opt-in and only runs when you explicitly trigger it. The Trends charts and macro averages are separate and work entirely on-device.
 
 **Q: Do you use any analytics or tracking?**
 

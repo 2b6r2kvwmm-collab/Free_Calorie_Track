@@ -14,14 +14,14 @@ image: "/images/blog/macros-guide.webp"
   <p class="text-gray-700 dark:text-gray-300 mb-4 max-w-xl mx-auto">
     Use our free macro tracker with real-time progress bars for protein, carbs, and fat. Automatic macro targets based on your goals. No signup, no ads.
   </p>
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Try Free Calorie Track →
   </a>
 </div>
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-8 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 list-disc ml-6 space-y-2 text-gray-800 dark:text-gray-200">
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
     <li>Macros (macronutrients) are protein, carbohydrates, and fat—the three nutrients that provide calories</li>
     <li>Each macro has specific roles in your body (muscle building, energy, hormones)</li>
     <li>Tracking macros ensures you eat the right balance for your goals, not just hitting a calorie number</li>
@@ -111,9 +111,7 @@ If you're lifting weights, doing HIIT, or playing sports, you need carbs. Low-ca
 
 ## How Much of Each Macro Do You Need?
 
-<div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 my-6 text-sm text-gray-700 dark:text-gray-300">
-  <strong>Important:</strong> These are general guidelines. Individual needs vary based on age, activity level, health conditions, and goals. Always consult with a healthcare provider or registered dietitian before making significant changes to your diet or macronutrient intake.
-</div>
+<p class="text-sm text-gray-400 dark:text-gray-500 mt-2 mb-6">These are general guidelines — individual needs vary based on age, activity level, and health conditions, so consult a healthcare provider or registered dietitian before making significant changes to your diet.</p>
 
 General guidelines for active individuals:
 
@@ -149,7 +147,7 @@ Free Calorie Track makes [macro tracking](/macro-tracker) simple:
 - ✅ 100% free forever
 
 <div class="text-center my-8">
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Start Tracking Macros Free
   </a>
 </div>

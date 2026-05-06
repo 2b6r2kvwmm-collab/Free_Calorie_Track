@@ -25,7 +25,7 @@
 </head>
 <body>
   <h1>Privacy Policy</h1>
-  <p class="last-updated">Last updated: April 2, 2026<br>Last reviewed: April 2, 2026</p>
+  <p class="last-updated">Last updated: May 6, 2026<br>Last reviewed: May 6, 2026</p>
 
   <p><strong>Free Calorie Track</strong> is designed to respect your privacy. The app does not require an account, does not sell personal data, and stores your nutrition data locally on your device.</p>
 
@@ -44,13 +44,38 @@
   </ul>
   <p><strong>Free Calorie Track does not share any personal information with these services.</strong> Only your search queries, barcode numbers, and IP address (automatically sent with all web requests) are transmitted. No user accounts, food logs, or other personal data leaves your device.</p>
 
+  <h3>AI Food Logging (Optional Feature)</h3>
+  <p>When you use the AI food logging feature, the food description you type or the photo you take is sent to <strong>Google Gemini</strong> via our server (hosted on Vercel) to estimate nutrition content. This is an optional feature that you must actively choose to use each time.</p>
+  <p>What is sent to Google Gemini:</p>
+  <ul>
+    <li>The text description of your meal, or</li>
+    <li>A compressed image of your food (resized to 800px maximum dimension, approximately 70% quality)</li>
+  </ul>
+  <p>What is <strong>not</strong> sent: your profile, food logs, account information, or any other personal data. Our server acts as a relay only — it does not log or store the image or description after the request completes. The nutrition result is returned to your device and stored locally.</p>
+  <p>Google's handling of API requests is governed by the <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Google Terms of Service</a>.</p>
+
+  <h3>Nutrition Coach (Optional Feature)</h3>
+  <p>When you use the Nutrition Coach feature and tap "Analyze my week," the following data is sent to <strong>Google Gemini</strong> via our server to generate a personalized weekly analysis:</p>
+  <ul>
+    <li>Your food logs from the last 7 days (calorie totals and food names)</li>
+    <li>Your calorie and macro targets (protein, carbs, fat)</li>
+    <li>Your profile data: fitness goal, activity level, age, and weight</li>
+  </ul>
+  <p>The app presents a disclosure screen listing exactly what will be sent before you confirm. This feature is opt-in and requires your explicit confirmation each time you use it for the first time, with an option to review the disclosure at any time thereafter.</p>
+  <p>Our server does not store this data after the request completes. The coaching result is returned to your device and saved only in your local storage. Google's handling of this data is governed by the <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</p>
+
   <h2>2. Analytics</h2>
   <p>Free Calorie Track uses <a href="https://vercel.com/docs/analytics/privacy-policy" target="_blank">Vercel Analytics</a> to understand general usage patterns, such as page views and feature usage. This data is aggregated and does not identify individual users.</p>
 
   <p>Vercel Analytics does not use advertising cookies and does not track users across websites.</p>
 
   <h2>3. Camera Access</h2>
-  <p>The barcode scanner feature requires access to your device's camera. Camera access is only used when you explicitly activate the scanner and is not used for any other purpose. <strong>No camera images or video are stored, transmitted, or analyzed</strong> beyond scanning barcodes in real-time on your device.</p>
+  <p>Two features may access your device's camera:</p>
+  <ul>
+    <li><strong>Barcode scanner:</strong> Camera access is used only when you activate the scanner. Barcodes are read in real-time on your device. No images or video are stored or transmitted beyond the barcode number sent to Open Food Facts (described above).</li>
+    <li><strong>AI Food Logging:</strong> If you choose to photograph your meal using the AI logging feature, the resulting image is compressed and sent to Google Gemini as described in Section 1. Camera access for this feature is only used when you explicitly choose to take a photo, and only that photo is transmitted.</li>
+  </ul>
+  <p>Camera access is never used passively or in the background.</p>
 
   <h2>4. Cookies and Local Storage</h2>
   <p>The app uses local storage and other technical browser features strictly necessary for the app to function (for example, saving your logs and preferences).</p>
@@ -85,7 +110,7 @@
   <h2>8. California and U.S. State Privacy Rights</h2>
   <p>If you are a California resident, you have specific rights under the California Consumer Privacy Act (CCPA), including the right to know what personal information is collected, request deletion, and opt-out of "sales" of personal information.</p>
 
-  <p><strong>We do not sell personal information.</strong> The app stores data locally on your device and does not share it with third parties except as described in this policy (USDA FoodData Central API queries, Open Food Facts API queries, and Vercel Analytics).</p>
+  <p><strong>We do not sell personal information.</strong> The app stores data locally on your device and does not share it with third parties except as described in this policy (USDA FoodData Central API queries, Open Food Facts API queries, Vercel Analytics, and Google Gemini when you use the optional AI Food Logging or Nutrition Coach features).</p>
 
   <p>For more information or to exercise your rights, contact us at <a href="mailto:FreeCalorieTrack@gmail.com">FreeCalorieTrack@gmail.com</a>.</p>
 
@@ -108,6 +133,7 @@
   <ul>
     <li>Local storage of nutrition data: <strong>Consent and Legitimate Interest</strong> (necessary for the app to function)</li>
     <li>Analytics data: <strong>Legitimate Interest</strong> (improving app performance and user experience)</li>
+    <li>AI Food Logging and Nutrition Coach: <strong>Consent</strong> (you actively initiate each use; Coach requires explicit opt-in confirmation before data is sent)</li>
   </ul>
 
   <p><strong>Data Transfers:</strong> The app is hosted on Vercel, which may process data in the United States and other countries outside the EEA/UK. Vercel complies with applicable data transfer mechanisms, including Standard Contractual Clauses.</p>
@@ -143,6 +169,7 @@
     <li><a href="https://vercel.com/legal/privacy-policy" target="_blank">Vercel Privacy Policy</a></li>
     <li><a href="https://www.usda.gov/privacy-policy" target="_blank">USDA Privacy Policy</a> (FoodData Central API)</li>
     <li><a href="https://world.openfoodfacts.org/privacy" target="_blank">Open Food Facts Privacy Policy</a></li>
+    <li><a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a> (Gemini API — AI Food Logging and Nutrition Coach)</li>
     <li><a href="https://www.buymeacoffee.com/privacy-policy" target="_blank">Buy Me a Coffee Privacy Policy</a></li>
     <li><a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ" target="_blank">Amazon Associates Privacy Notice</a></li>
   </ul>

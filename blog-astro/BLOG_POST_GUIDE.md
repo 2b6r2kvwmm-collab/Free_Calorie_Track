@@ -10,7 +10,9 @@
 - [ ] Add proper frontmatter with all required fields
 - [ ] Use correct heading hierarchy (h2 → h3, no h1)
 - [ ] Add descriptive alt text to all images
-- [ ] Include affiliate disclosure if needed
+- [ ] Add "At a glance" block after the hero image
+- [ ] Add affiliate disclosure (subtle `<p>` tag) if post contains affiliate links
+- [ ] Add medical/health disclaimer (subtle `<p>` tag) if post contains calculators or health/exercise advice
 - [ ] Test in dark mode
 - [ ] Check accessibility with keyboard navigation
 - [ ] Verify SEO meta tags
@@ -276,6 +278,62 @@ Next paragraph after the list.
 
 ## Custom HTML Elements
 
+### "At a Glance" Summary Block
+
+**Standard format for all posts.** Place immediately after the hero image (and after any import statements in .mdx files). Replaces the old TL;DR box.
+
+```html
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
+    <li>First key takeaway</li>
+    <li>Second key takeaway</li>
+    <li>Third key takeaway</li>
+  </ul>
+</div>
+```
+
+**Rules:**
+- Required for every post
+- 3–5 bullet points max
+- Each point should be a standalone, scannable insight
+- Place directly after the hero image
+
+---
+
+### Medical / Health Disclaimers
+
+**Use for:** Any post with calculators, health advice, dietary guidance, or exercise programs.
+
+**Format — subtle single-line paragraph:**
+
+```html
+<p class="text-sm text-gray-400 dark:text-gray-500 mt-2 mb-6">Condensed one-sentence disclaimer here — consult a healthcare provider before making significant changes.</p>
+```
+
+**Guidelines:**
+- Keep it to one concise sentence
+- Preserve the key message (educational only, consult a provider, specific condition callouts)
+- Place immediately before or after the relevant content that prompted the disclaimer
+- Do NOT use yellow boxes — those are visually distracting and no longer the standard
+
+---
+
+### Affiliate Disclosure
+
+**Required for:** Any post with Amazon affiliate links or other monetized product links. Place immediately after the hero image (and AI caption if present), before the "At a glance" block.
+
+```html
+<p class="text-xs text-gray-400 dark:text-gray-500 italic mb-6">Contains affiliate links — we earn a small commission if you buy through them, at no extra cost to you. We only recommend products we genuinely use.</p>
+```
+
+**Rules:**
+- Required whenever affiliate links appear anywhere in the post
+- Must appear near the top of the post (after hero image, before main content)
+- Use exact wording above for consistency
+
+---
+
 ### Callout Boxes
 
 **Highlighted information boxes:**
@@ -283,14 +341,6 @@ Next paragraph after the list.
 ```html
 <div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-4 rounded">
   <strong>Pro Tip:</strong> This is a helpful callout that stands out from regular text.
-</div>
-```
-
-**Warning boxes:**
-
-```html
-<div class="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-500 p-4 rounded">
-  <strong>Important:</strong> Critical information users should know.
 </div>
 ```
 
@@ -413,13 +463,13 @@ All blog posts automatically support dark mode. The theme switches based on user
 
 **Template:**
 
-Add at the bottom of the article, before the final CTA:
+Add immediately after the hero image (and AI image caption if present), before the "At a glance" block:
 
-```markdown
----
-
-**Affiliate Disclosure:** This post contains affiliate links. If you purchase through these links, we may earn a small commission at no extra cost to you. We only recommend products we've personally tested and believe in.
+```html
+<p class="text-xs text-gray-400 dark:text-gray-500 italic mb-6">Contains affiliate links — we earn a small commission if you buy through them, at no extra cost to you. We only recommend products we genuinely use.</p>
 ```
+
+See also the full template in the "Affiliate Disclosure" section under Custom HTML Elements.
 
 ---
 

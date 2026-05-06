@@ -9,9 +9,9 @@ image: "/images/blog/food-scale-guide.webp"
 
 <img src="/images/blog/food-scale-guide.webp" alt="How to use a food scale" width="1600" height="893" />
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 space-y-2 text-gray-800 dark:text-gray-200">
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
     <li>A food scale is the #1 tool for accurate calorie counting—eyeballing portions can be off by 50%+</li>
     <li>Always weigh in grams for precision, and use the tare function to zero out containers</li>
     <li>Weigh food raw/uncooked when possible (meat loses water, pasta absorbs water)</li>
@@ -394,7 +394,7 @@ Free Calorie Track makes it easy to log weighed foods:
 - ✅ 100% free, no paywall
 
 <div class="text-center my-8">
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-2 px-5 rounded-xl transition-all shadow-md">
     Start Tracking Free
   </a>
 </div>

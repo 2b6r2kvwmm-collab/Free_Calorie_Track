@@ -33,7 +33,6 @@ body {
 /* Article prose styling */
 .prose {
   color: #374151;
-  max-width: 65ch;
 }
 
 .dark .prose {
