@@ -46,12 +46,11 @@ function App() {
     }
   }, [fromLandingPage, navigate]);
 
-  // On first PWA launch, navigate to /pwa-installed (tracked by Vercel Analytics) then back to /
+  // On first PWA launch, navigate to /pwa-installed so Vercel Analytics captures it as a page view
   useEffect(() => {
     if (isAppInstalled() && !localStorage.getItem('pwa-install-tracked')) {
       localStorage.setItem('pwa-install-tracked', 'true');
       navigate('/pwa-installed', { replace: true });
-      setTimeout(() => navigate('/', { replace: true }), 0);
     }
   }, [navigate]);
 
@@ -214,6 +213,10 @@ function App() {
           <Routes>
             <Route
               path="/"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/pwa-installed"
               element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
             />
             <Route
