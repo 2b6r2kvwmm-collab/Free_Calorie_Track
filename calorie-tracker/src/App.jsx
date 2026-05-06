@@ -110,6 +110,7 @@ function App() {
     saveProfile(newProfile);
     addWeightEntry(newProfile.weight);
     setProfile(newProfile);
+    navigate('/profile-complete', { replace: true });
     if (!isAppInstalled() && !installReminderPermanentlyDismissed()) setTimeout(() => setShowInstallReminder(true), 800);
   };
 
@@ -149,6 +150,7 @@ function App() {
   if (!landingPageShown && !profile && !isAppInstalled()) {
     return (
       <LandingPage onGetStarted={() => {
+        navigate('/onboarding-started', { replace: true });
         markLandingPageShown();
         setLandingPageShown(true);
       }} />
@@ -158,6 +160,7 @@ function App() {
   if (!installPromptShown && !isAppInstalled()) {
     return (
       <InstallPrompt onContinue={() => {
+        navigate('/install-skipped', { replace: true });
         markInstallPromptShown();
         setInstallPromptShown(true);
       }} />
@@ -217,6 +220,10 @@ function App() {
             />
             <Route
               path="/pwa-installed"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/profile-complete"
               element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
             />
             <Route
