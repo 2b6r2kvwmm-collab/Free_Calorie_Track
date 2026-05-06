@@ -67,6 +67,9 @@ function App() {
   });
   const [showShareModal, setShowShareModal] = useState(false);
 
+  const isAppInstalled = () =>
+    window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
@@ -130,9 +133,6 @@ function App() {
     markShareModalShown();
     setShowShareModal(false);
   };
-
-  const isAppInstalled = () =>
-    window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 
   const [showInstallReminder, setShowInstallReminder] = useState(false);
 
