@@ -1,5 +1,4 @@
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
-import { track } from '@vercel/analytics';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
@@ -35,6 +34,12 @@ function App() {
     return urlParams.get('from') === 'landing-page';
   });
 
+  // Check if this is a first-launch from the installed PWA
+  const [fromPwaInstall] = useState(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('source') === 'pwa-install';
+  });
+
   // Handle landing page detection once on mount
   useEffect(() => {
     if (fromLandingPage) {
@@ -46,6 +51,18 @@ function App() {
       navigate('/', { replace: true });
     }
   }, [fromLandingPage, navigate]);
+
+  // On first PWA launch, navigate to trackable URL then clean up
+  useEffect(() => {
+    if (fromPwaInstall) {
+      navigate('/', { replace: true });
+      return;
+    }
+    if (isAppInstalled() && !localStorage.getItem('pwa-install-tracked')) {
+      localStorage.setItem('pwa-install-tracked', 'true');
+      navigate('/?source=pwa-install', { replace: true });
+    }
+  }, [fromPwaInstall, navigate]);
 
   // Redirect to blog if user navigates to /blog/* while SPA is loaded
   useEffect(() => {
@@ -78,13 +95,6 @@ function App() {
     }
     saveDarkMode(darkMode);
   }, [darkMode]);
-
-  useEffect(() => {
-    if (isAppInstalled() && !localStorage.getItem('pwa-install-tracked')) {
-      localStorage.setItem('pwa-install-tracked', 'true');
-      track('pwa_installed');
-    }
-  }, []);
 
   // Check if we should show the share modal (after 5 days of tracking)
   const [userDaysTracked, setUserDaysTracked] = useState(0);
