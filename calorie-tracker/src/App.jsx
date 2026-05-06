@@ -34,12 +34,6 @@ function App() {
     return urlParams.get('from') === 'landing-page';
   });
 
-  // Check if this is a first-launch from the installed PWA
-  const [fromPwaInstall] = useState(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('source') === 'pwa-install';
-  });
-
   // Handle landing page detection once on mount
   useEffect(() => {
     if (fromLandingPage) {
@@ -52,17 +46,14 @@ function App() {
     }
   }, [fromLandingPage, navigate]);
 
-  // On first PWA launch, navigate to trackable URL then clean up
+  // On first PWA launch, navigate to /pwa-installed (tracked by Vercel Analytics) then back to /
   useEffect(() => {
-    if (fromPwaInstall) {
-      navigate('/', { replace: true });
-      return;
-    }
     if (isAppInstalled() && !localStorage.getItem('pwa-install-tracked')) {
       localStorage.setItem('pwa-install-tracked', 'true');
-      navigate('/?source=pwa-install', { replace: true });
+      navigate('/pwa-installed', { replace: true });
+      setTimeout(() => navigate('/', { replace: true }), 0);
     }
-  }, [fromPwaInstall, navigate]);
+  }, [navigate]);
 
   // Redirect to blog if user navigates to /blog/* while SPA is loaded
   useEffect(() => {
