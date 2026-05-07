@@ -11,12 +11,10 @@ interface Props {
 }
 
 const { title, description, pubDate, image } = Astro.props;
-// Ensure canonical URL never has trailing slash for consistency
-const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
-const canonicalURL = new URL(pathname, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 // Extract slug from pathname for schema lookup
-const slug = pathname.split('/').filter(Boolean).pop() || '';
+const slug = Astro.url.pathname.split('/').filter(Boolean).pop() || '';
 const postSchemaData = schemaData[slug];
 ---
 

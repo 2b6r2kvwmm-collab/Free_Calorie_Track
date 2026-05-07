@@ -35,7 +35,7 @@
 - ✅ **No JavaScript required** - bots see full content immediately
 - ✅ **Article-specific meta tags** - unique title, description, image for each post
 - ✅ **Open Graph & Twitter Cards** - proper social sharing previews
-- ✅ **Canonical URLs** - prevents duplicate content issues
+- ✅ **Canonical URLs** - match actual served URL (trailing slash) to prevent GSC canonical mismatch
 - ✅ **Semantic HTML** - proper article structure, headings, landmarks
 
 **Result:** Search engines can properly index content, show rich snippets, and rank articles.
@@ -60,8 +60,8 @@ best-blenders-for-protein-shakes.md
 macro-calculator-guide.md
 ```
 
-The filename becomes the URL:
-- `what-are-calories.md` → `freecalorietrack.com/blog/what-are-calories`
+The filename becomes the URL (Astro adds a trailing slash):
+- `what-are-calories.md` → `freecalorietrack.com/blog/what-are-calories/`
 
 ---
 
@@ -717,7 +717,7 @@ All automatic via frontmatter:
 - Meta description
 - Open Graph (Facebook, LinkedIn)
 - Twitter Cards
-- Canonical URL
+- Canonical URL (auto-generated with trailing slash to match Astro's served URL — do not override)
 
 ### Performance
 
