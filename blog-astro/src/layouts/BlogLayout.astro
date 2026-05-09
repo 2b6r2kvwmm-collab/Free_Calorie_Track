@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import { footerContent } from '../../../shared/footer-content.js';
-import { schemaData } from './schemaData';
+import { schemaData, type ReviewSchema, type HowToSchema, type FAQSchema } from './schemaData';
 
 interface Props {
   title: string;
@@ -126,7 +126,7 @@ const schemaItems = postSchemaData
   })} />
 
   <!-- Review Schema (for gear reviews) -->
-  {schemaItems.filter(s => s.type === 'Review').map((schema) => (
+  {(schemaItems.filter(s => s.type === 'Review') as ReviewSchema[]).map((schema) => (
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Review",
@@ -156,7 +156,7 @@ const schemaItems = postSchemaData
   ))}
 
   <!-- HowTo Schema (for guides) -->
-  {schemaItems.filter(s => s.type === 'HowTo').map((schema) => (
+  {(schemaItems.filter(s => s.type === 'HowTo') as HowToSchema[]).map((schema) => (
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "HowTo",
@@ -174,7 +174,7 @@ const schemaItems = postSchemaData
   ))}
 
   <!-- FAQ Schema (for FAQ pages) -->
-  {schemaItems.filter(s => s.type === 'FAQPage').map((schema) => (
+  {(schemaItems.filter(s => s.type === 'FAQPage') as FAQSchema[]).map((schema) => (
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",

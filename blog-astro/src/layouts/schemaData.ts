@@ -2,7 +2,7 @@
 // Used by BlogLayout.astro to conditionally render structured data
 // A single post can have multiple schemas by using an array.
 
-interface ReviewSchema {
+export interface ReviewSchema {
   type: 'Review';
   itemReviewed: {
     name: string;
@@ -19,12 +19,12 @@ interface ReviewSchema {
   reviewBody: string;
 }
 
-interface HowToStep {
+export interface HowToStep {
   name: string;
   text: string;
 }
 
-interface HowToSchema {
+export interface HowToSchema {
   type: 'HowTo';
   name: string;
   description: string;
@@ -32,12 +32,12 @@ interface HowToSchema {
   step: HowToStep[];
 }
 
-interface FAQItem {
+export interface FAQItem {
   question: string;
   answer: string;
 }
 
-interface FAQSchema {
+export interface FAQSchema {
   type: 'FAQPage';
   mainEntity: FAQItem[];
 }
