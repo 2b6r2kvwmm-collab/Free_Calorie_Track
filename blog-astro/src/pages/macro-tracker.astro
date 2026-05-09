@@ -7,33 +7,6 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
 ---
 
 <LandingPageLayout title={title} description={description} keywords={keywords}>
-  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "How to Track Macros",
-    "description": "A step-by-step guide to tracking protein, carbs, and fat using Free Calorie Track.",
-    "totalTime": "PT5M",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Set Your Profile and Macro Goals",
-        "text": "Open Free Calorie Track, enter your age, weight, height, and activity level. The app calculates your TDEE and sets macro targets automatically, or you can enter custom targets."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Log Your Meals",
-        "text": "Scan barcodes, search the 220,000+ food database, or describe a meal to the AI logger. Each entry updates your protein, carbs, and fat totals in real time."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Track Progress in Real Time",
-        "text": "Watch the macro progress bars update throughout the day. Review the weekly trends screen to see patterns and adjust your diet or goals as needed."
-      }
-    ]
-  })} />
 
   <!-- Hero copy -->
   <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -416,6 +389,35 @@ const keywords = "macro tracker, free macro tracker, best free macro tracker, ma
           "@type": "Answer",
           "text": "Yes, this macro tracker works completely offline. You can install it on any device as a Progressive Web App (PWA) and track macros without internet. All your food data and macro history is stored locally on your device."
         }
+      }
+    ]
+  })} />
+
+  <!-- HowTo Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Track Macros",
+    "description": "A step-by-step guide to tracking protein, carbs, and fat using Free Calorie Track.",
+    "totalTime": "PT5M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Set Your Profile and Macro Goals",
+        "text": "Open Free Calorie Track, enter your age, weight, height, and activity level. The app calculates your TDEE and sets macro targets automatically, or you can enter custom targets."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Log Your Meals",
+        "text": "Scan barcodes, search the 220,000+ food database, or describe a meal to the AI logger. Each entry updates your protein, carbs, and fat totals in real time."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Track Progress in Real Time",
+        "text": "Watch the macro progress bars update throughout the day. Review the weekly trends screen to see patterns and adjust your diet or goals as needed."
       }
     ]
   })} />
