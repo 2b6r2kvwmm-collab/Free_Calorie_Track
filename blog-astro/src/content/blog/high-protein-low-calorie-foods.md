@@ -1,6 +1,6 @@
 ---
 title: "40+ High Protein Low Calorie Foods + Free Protein Tracker"
-description: "The best high protein low calorie foods for weight loss and muscle building. Includes macro breakdowns, meal ideas, and free protein tracking tool. No signup required."
+description: "The best high protein low calorie foods for weight loss and muscle building. Includes macro breakdowns, meal ideas, and a free protein tracking tool."
 pubDate: 2026-03-02
 author: "FCT Staff"
 category: "Guides"

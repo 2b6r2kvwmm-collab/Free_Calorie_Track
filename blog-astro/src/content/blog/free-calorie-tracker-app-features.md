@@ -1,6 +1,6 @@
 ---
 title: "Free Calorie Tracker App: 100% Free, No Paywall, No Ads"
-description: "Free Calorie Track is a completely free calorie counter with barcode scanner, macro tracking, AI food logging, weekly nutrition coaching, and thousands of foods. No premium tier, no subscriptions, no ads."
+description: "Free Calorie Track is a completely free calorie counter with barcode scanning, macro tracking, AI food logging, and weekly nutrition coaching. No subscription, no ads."
 pubDate: 2026-03-02
 author: "FCT Staff"
 category: "Guides"

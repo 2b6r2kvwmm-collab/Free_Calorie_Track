@@ -1,6 +1,6 @@
 ---
 title: "What Are Macros? (Free Macro Tracker Included)"
-description: "Simple explanation of macros (protein, carbs, fat) + free macro tracker with real-time progress bars, automatic macro goals, and barcode scanning. No signup required."
+description: "Simple explanation of macros (protein, carbs, fat) with a free macro tracker featuring real-time progress bars, automatic goals, and barcode scanning."
 pubDate: 2026-02-25
 author: "FCT Staff"
 category: "Guides"
