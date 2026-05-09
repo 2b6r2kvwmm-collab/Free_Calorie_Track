@@ -7,6 +7,51 @@ const keywords = "calorie counter, free calorie counter, how to count calories, 
 ---
 
 <LandingPageLayout title={title} description={description} keywords={keywords}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Count Calories",
+    "description": "A step-by-step guide to counting calories accurately for weight loss using Free Calorie Track.",
+    "totalTime": "PT10M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Calculate Your Calorie Target",
+        "text": "Use the built-in TDEE calculator to find your maintenance calories, then set a deficit of 300–500 calories per day for steady weight loss."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Track Everything for One Baseline Week",
+        "text": "Log every meal honestly for your first week without changing your diet. This establishes your real baseline and shows where calories are coming from."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Weigh Food in Grams",
+        "text": "Use a kitchen scale and log in grams rather than cups or pieces. Volume measurements can be off by 30% or more for calorie-dense foods."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Log Everything Including Oils and Drinks",
+        "text": "Cooking oils, dressings, and caloric beverages add up fast. Scan barcodes or use the food database to log these accurately."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 5,
+        "name": "Use AI for Meals Hard to Log Manually",
+        "text": "For restaurant meals or mixed dishes, use the AI food logging feature. Describe your meal or take a photo and the AI estimates calories and macros."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 6,
+        "name": "Review Weekly and Adjust",
+        "text": "Check the weekly trends screen. If weight isn't moving after two weeks, reduce your target by 100–150 calories or add activity."
+      }
+    ]
+  })} />
 
   <!-- Hero copy -->
   <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">

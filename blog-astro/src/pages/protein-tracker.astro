@@ -7,6 +7,33 @@ const keywords = "protein tracker, free protein tracker, daily protein tracker, 
 ---
 
 <LandingPageLayout title={title} description={description} keywords={keywords}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Track Daily Protein Intake",
+    "description": "A step-by-step guide to tracking daily protein intake using Free Calorie Track.",
+    "totalTime": "PT5M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Set Your Profile and Goals",
+        "text": "Open Free Calorie Track and enter your weight and goal. The app sets a protein target automatically based on your body weight, or you can enter a custom gram target."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Log Your Meals",
+        "text": "Scan barcodes, search the food database, or use AI logging to add meals. Protein grams are tracked automatically from each entry."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "See Your Progress",
+        "text": "Check the real-time protein progress bar throughout the day. The weekly trends screen shows your average protein intake so you can see if you're consistently hitting your goal."
+      }
+    ]
+  })} />
 
   <!-- Hero copy -->
   <div class="bg-gradient-to-br from-gray-50 via-emerald-50/30 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">

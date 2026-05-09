@@ -60,7 +60,7 @@ const postsWithMeta = blogEntries.map(entry => {
         "@type": "Article",
         "headline": post.data.title,
         "description": post.data.description,
-        "url": `https://freecalorietrack.com/blog/${post.slug}`,
+        "url": `https://freecalorietrack.com/blog/${post.slug}/`,
         "datePublished": post.data.pubDate.toISOString(),
         ...(post.data.image && {
           "image": `https://freecalorietrack.com${post.data.image}`
