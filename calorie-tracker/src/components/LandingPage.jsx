@@ -21,13 +21,13 @@ const NotIncluded = ({ label }) => (
 const RequiresSubscription = ({ label }) => (
   <span className="flex items-center gap-1.5">
     <Lock size={15} className="text-gray-400 flex-shrink-0" />
-    <span className="text-gray-500 dark:text-gray-400">{label || 'Requires subscription'}</span>
+    <span className="text-gray-500 dark:text-gray-300">{label || 'Requires subscription'}</span>
   </span>
 );
 const Limited = ({ label }) => (
   <span className="flex items-center gap-1.5">
     <AlertTriangle size={15} className="text-amber-500 flex-shrink-0" />
-    <span className="text-gray-500 dark:text-gray-400">{label || 'Limited'}</span>
+    <span className="text-gray-500 dark:text-gray-300">{label || 'Limited'}</span>
   </span>
 );
 
@@ -452,6 +452,7 @@ export default function LandingPage({ onGetStarted }) {
               height="3000"
               className="w-full h-auto"
               loading="eager"
+              fetchPriority="high"
               style={{ imageRendering: 'high-quality', transform: 'translateZ(0)', willChange: 'transform' }}
               decoding="sync"
             />
@@ -507,7 +508,7 @@ export default function LandingPage({ onGetStarted }) {
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
                 <f.icon size={24} className="text-emerald-600 dark:text-emerald-400 mb-3" />
                 <h3 className="font-bold text-sm text-gray-800 dark:text-gray-100">{f.title}</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">{f.desc}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-300 mt-1 leading-relaxed">{f.desc}</p>
               </div>
             ))}
           </div>
@@ -539,7 +540,7 @@ export default function LandingPage({ onGetStarted }) {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 leading-relaxed border-t border-gray-200 dark:border-gray-700 pt-4">
+        <p className="text-xs text-gray-500 dark:text-gray-300 mt-4 leading-relaxed border-t border-gray-200 dark:border-gray-700 pt-4">
           <strong>*Disclaimer:</strong> Comparison based on typical free-tier features available from leading subscription-based calorie and macro tracking apps as of March 2026. Feature availability may change over time. No specific apps or trademarks are referenced to avoid trademark concerns.
         </p>
       </div>

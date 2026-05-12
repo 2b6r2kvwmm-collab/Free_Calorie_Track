@@ -16,18 +16,35 @@
     </style>
 
     <!-- Prevent dark mode flash - must run before any rendering -->
-    <script src="/dark-mode-init.js"></script>
+    <script>
+      (function() {
+        try {
+          var userId = localStorage.getItem('calorieTracker_currentUser') || 'default';
+          var darkModeKey = 'calorieTracker_' + userId + '_darkMode';
+          var darkMode = localStorage.getItem(darkModeKey);
+          if (darkMode === null || darkMode === 'true') {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
 
     <!-- Content Security Policy - Removed meta tag to avoid conflict with vercel.json headers -->
 
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Self-hosted Inter font preload -->
+    <link rel="preload" href="/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 
     <link rel="canonical" href="https://freecalorietrack.com/" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <script>
+      if (!window.navigator.standalone && !window.matchMedia('(display-mode: standalone)').matches) {
+        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, viewport-fit=cover');
+      }
+    </script>
     <meta name="theme-color" content="#10b981" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
