@@ -261,6 +261,7 @@
     <style>
       /* Footer Styles */
       .app-footer {
+        display: none;
         text-align: center;
         padding: 40px 20px calc(100px + env(safe-area-inset-bottom)) 20px;
         font-family: sans-serif;
@@ -423,6 +424,6 @@
     <script type="module" src="/src/main.jsx"></script>
 
     <!-- FOOTER_PLACEHOLDER: replaced at build time by vite-plugin-footer.js from shared/footer-content.js -->
-    <div class="app-footer" style="display: none;"><!-- FOOTER_INJECT --></div>
+    <div class="app-footer"><!-- FOOTER_INJECT --></div>
     </body>
 </html>
