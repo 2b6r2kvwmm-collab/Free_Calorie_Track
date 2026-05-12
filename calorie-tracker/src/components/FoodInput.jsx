@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { getFavorites, getRecentFoods, addFavorite, removeFavorite, copyYesterdaysMeals, getMealTypeEnabled, saveMealTypeEnabled, getAITermsAccepted, setAITermsAccepted, getAILogsToday, AI_DAILY_LIMIT } from '../utils/storage';
 import { useNavigate } from 'react-router-dom';
 import { ScanBarcode, Salad, Search, Star, Clock, ChefHat, Sparkles, Zap, ClipboardCopy } from 'lucide-react';
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 import { lockScroll, unlockScroll } from '../utils/scrollLock';
 import FoodSearch from './FoodSearch';
-import BarcodeScanner from './BarcodeScanner';
+const BarcodeScanner = lazy(() => import('./BarcodeScanner'));
 import QuickAdd from './QuickAdd';
 import CommonFoods from './CommonFoods';
 import CustomFoodManager from './CustomFoodManager';
@@ -95,7 +95,15 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
   }
 
   if (mode === 'barcode') {
-    return <BarcodeScanner onAddFood={handleAddFood} onClose={() => setMode('menu')} />;
+    return (
+      <Suspense fallback={
+        <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center z-50">
+          <div className="text-white text-lg">Loading scanner…</div>
+        </div>
+      }>
+        <BarcodeScanner onAddFood={handleAddFood} onClose={() => setMode('menu')} />
+      </Suspense>
+    );
   }
 
   if (mode === 'quick') {
