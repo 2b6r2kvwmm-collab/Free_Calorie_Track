@@ -1917,6 +1917,59 @@ export const commonFoods = [
   // Malawian staples
   { name: 'Baobab Powder', calories: 25, protein: 0.5, carbs: 6, fat: 0.1, fiber: 4, sodium: 10, sugar: 1, saturatedFat: 0, servingSize: '1 tbsp (10g)', category: 'Malawian' },
   { name: 'Dried Cassava Chips', calories: 100, protein: 1, carbs: 24, fat: 0.3, fiber: 1.5, sodium: 15, sugar: 1, saturatedFat: 0, servingSize: '1 oz (28g)', category: 'Malawian' },
+
+  // Singaporean hawker staples
+  { name: 'Hainanese Chicken Rice', calories: 520, protein: 34, carbs: 58, fat: 16, fiber: 1, sodium: 880, sugar: 2, saturatedFat: 4, servingSize: '1 plate', category: 'Singaporean' },
+  { name: 'Laksa', calories: 620, protein: 28, carbs: 68, fat: 26, fiber: 3, sodium: 1400, sugar: 4, saturatedFat: 14, servingSize: '1 bowl', category: 'Singaporean' },
+  { name: 'Char Kway Teow', calories: 490, protein: 20, carbs: 62, fat: 18, fiber: 2, sodium: 1200, sugar: 3, saturatedFat: 5, servingSize: '1 plate', category: 'Singaporean' },
+  { name: 'Nasi Lemak (with egg & sambal)', calories: 500, protein: 18, carbs: 56, fat: 22, fiber: 3, sodium: 820, sugar: 4, saturatedFat: 10, servingSize: '1 plate', category: 'Singaporean' },
+  { name: 'Roti Prata (plain)', calories: 190, protein: 5, carbs: 28, fat: 7, fiber: 1, sodium: 320, sugar: 1, saturatedFat: 3.5, servingSize: '1 piece', category: 'Singaporean' },
+  { name: 'Kaya Toast', calories: 220, protein: 5, carbs: 30, fat: 9, fiber: 1, sodium: 280, sugar: 10, saturatedFat: 5, servingSize: '2 slices', category: 'Singaporean' },
+  { name: 'Teh Tarik', calories: 130, protein: 3, carbs: 22, fat: 3.5, fiber: 0, sodium: 60, sugar: 20, saturatedFat: 2, servingSize: '1 cup (250ml)', category: 'Singaporean' },
+  { name: 'Bak Kut Teh (pork rib soup)', calories: 380, protein: 32, carbs: 8, fat: 24, fiber: 1, sodium: 1100, sugar: 1, saturatedFat: 9, servingSize: '1 bowl', category: 'Singaporean' },
+  { name: 'Mee Goreng', calories: 520, protein: 22, carbs: 72, fat: 16, fiber: 3, sodium: 1300, sugar: 6, saturatedFat: 3, servingSize: '1 plate', category: 'Singaporean' },
+  { name: 'Wonton Mee (dry)', calories: 450, protein: 20, carbs: 58, fat: 16, fiber: 2, sodium: 980, sugar: 3, saturatedFat: 4, servingSize: '1 plate', category: 'Singaporean' },
+  { name: 'Hokkien Mee', calories: 560, protein: 26, carbs: 70, fat: 20, fiber: 2, sodium: 1200, sugar: 3, saturatedFat: 5, servingSize: '1 plate', category: 'Singaporean' },
+  { name: 'Chili Crab (with mantou)', calories: 480, protein: 28, carbs: 36, fat: 22, fiber: 2, sodium: 1400, sugar: 8, saturatedFat: 5, servingSize: '1 serving', category: 'Singaporean' },
+  { name: 'Kopi (Singaporean coffee)', calories: 100, protein: 2, carbs: 16, fat: 3, fiber: 0, sodium: 40, sugar: 14, saturatedFat: 2, servingSize: '1 cup (200ml)', category: 'Singaporean' },
+  { name: 'Popiah (fresh spring roll)', calories: 160, protein: 6, carbs: 24, fat: 5, fiber: 2, sodium: 340, sugar: 3, saturatedFat: 1, servingSize: '1 roll', category: 'Singaporean' },
+  { name: 'Chicken Satay (Singaporean)', calories: 220, protein: 22, carbs: 8, fat: 10, fiber: 1, sodium: 480, sugar: 4, saturatedFat: 3, servingSize: '4 skewers with peanut sauce', category: 'Singaporean' },
+
+  // Swedish staples
+  { name: 'Köttbullar (Swedish meatballs)', calories: 480, protein: 28, carbs: 14, fat: 34, fiber: 0.5, sodium: 720, sugar: 3, saturatedFat: 14, servingSize: '1 serving, ~10 balls with cream sauce', category: 'Swedish' },
+  { name: 'Gravlax', calories: 180, protein: 22, carbs: 1, fat: 10, fiber: 0, sodium: 1200, sugar: 0.5, saturatedFat: 2, servingSize: '100g', category: 'Swedish' },
+  { name: 'Kanelbulle (cinnamon bun)', calories: 330, protein: 6, carbs: 48, fat: 12, fiber: 2, sodium: 280, sugar: 18, saturatedFat: 6, servingSize: '1 bun (90g)', category: 'Swedish' },
+  { name: 'Filmjölk (Swedish soured milk)', calories: 60, protein: 3.5, carbs: 5, fat: 3, fiber: 0, sodium: 55, sugar: 5, saturatedFat: 2, servingSize: '100ml', category: 'Swedish' },
+  { name: 'Pyttipanna (Swedish hash)', calories: 380, protein: 18, carbs: 38, fat: 18, fiber: 3, sodium: 680, sugar: 2, saturatedFat: 6, servingSize: '1 plate', category: 'Swedish' },
+  { name: 'Raggmunk (potato pancake with bacon)', calories: 420, protein: 14, carbs: 36, fat: 24, fiber: 2, sodium: 780, sugar: 1, saturatedFat: 9, servingSize: '2 pancakes with bacon', category: 'Swedish' },
+  { name: 'Ärtsoppa (Swedish pea soup)', calories: 280, protein: 18, carbs: 34, fat: 6, fiber: 8, sodium: 820, sugar: 3, saturatedFat: 2, servingSize: '1 bowl (400ml)', category: 'Swedish' },
+  { name: 'Smörgås (Swedish open sandwich)', calories: 280, protein: 14, carbs: 22, fat: 14, fiber: 2, sodium: 680, sugar: 1, saturatedFat: 5, servingSize: '1 open sandwich', category: 'Swedish' },
+  { name: 'Semla (cardamom cream bun)', calories: 480, protein: 8, carbs: 60, fat: 22, fiber: 2, sodium: 280, sugar: 28, saturatedFat: 13, servingSize: '1 bun (120g)', category: 'Swedish' },
+  { name: 'Inlagd Sill (pickled herring)', calories: 120, protein: 12, carbs: 8, fat: 4, fiber: 0, sodium: 820, sugar: 6, saturatedFat: 0.8, servingSize: '1 serving (80g)', category: 'Swedish' },
+  { name: 'Falukorv (Swedish sausage)', calories: 240, protein: 12, carbs: 8, fat: 18, fiber: 0, sodium: 820, sugar: 1, saturatedFat: 7, servingSize: '2 slices (100g)', category: 'Swedish' },
+  { name: 'Prinsesstårta (princess cake)', calories: 350, protein: 5, carbs: 38, fat: 20, fiber: 1, sodium: 120, sugar: 28, saturatedFat: 12, servingSize: '1 slice (120g)', category: 'Swedish' },
+
+  // Egyptian staples
+  { name: 'Koshari', calories: 450, protein: 14, carbs: 82, fat: 8, fiber: 8, sodium: 620, sugar: 4, saturatedFat: 1, servingSize: '1 bowl', category: 'Egyptian' },
+  { name: 'Ful Medames (fava bean stew)', calories: 180, protein: 10, carbs: 28, fat: 4, fiber: 8, sodium: 480, sugar: 2, saturatedFat: 0.5, servingSize: '1 serving (200g)', category: 'Egyptian' },
+  { name: 'Ta\'amiyya (Egyptian falafel)', calories: 150, protein: 7, carbs: 16, fat: 7, fiber: 4, sodium: 320, sugar: 1, saturatedFat: 1, servingSize: '3 pieces', category: 'Egyptian' },
+  { name: 'Molokhia (green leaf soup)', calories: 120, protein: 8, carbs: 10, fat: 5, fiber: 3, sodium: 580, sugar: 1, saturatedFat: 1.5, servingSize: '1 bowl (300ml)', category: 'Egyptian' },
+  { name: 'Mahshi (stuffed grape leaves)', calories: 200, protein: 6, carbs: 30, fat: 7, fiber: 3, sodium: 480, sugar: 2, saturatedFat: 2, servingSize: '4 pieces', category: 'Egyptian' },
+  { name: 'Om Ali (Egyptian bread pudding)', calories: 380, protein: 9, carbs: 46, fat: 18, fiber: 1, sodium: 180, sugar: 28, saturatedFat: 10, servingSize: '1 serving (200g)', category: 'Egyptian' },
+  { name: 'Basbousa (semolina cake)', calories: 240, protein: 4, carbs: 36, fat: 9, fiber: 1, sodium: 120, sugar: 22, saturatedFat: 5, servingSize: '1 piece (80g)', category: 'Egyptian' },
+  { name: 'Feteer Meshaltet', calories: 380, protein: 8, carbs: 48, fat: 18, fiber: 1, sodium: 320, sugar: 2, saturatedFat: 10, servingSize: '1 piece (150g)', category: 'Egyptian' },
+  { name: 'Hawawshi (spiced meat pie)', calories: 480, protein: 26, carbs: 42, fat: 22, fiber: 2, sodium: 780, sugar: 2, saturatedFat: 8, servingSize: '1 piece', category: 'Egyptian' },
+  { name: 'Egyptian Baladi Bread', calories: 130, protein: 5, carbs: 26, fat: 1, fiber: 2, sodium: 220, sugar: 0.5, saturatedFat: 0.2, servingSize: '1 loaf (60g)', category: 'Egyptian' },
+  { name: 'Fattah (rice, bread & meat)', calories: 520, protein: 28, carbs: 68, fat: 14, fiber: 3, sodium: 820, sugar: 2, saturatedFat: 5, servingSize: '1 serving (350g)', category: 'Egyptian' },
+  { name: 'Kofta Bil Sanieh (baked kofta)', calories: 380, protein: 28, carbs: 16, fat: 22, fiber: 2, sodium: 680, sugar: 3, saturatedFat: 8, servingSize: '1 serving (250g)', category: 'Egyptian' },
+
+  // Brazilian everyday staples
+  { name: 'Frango Grelhado (Brazilian grilled chicken)', calories: 220, protein: 38, carbs: 0, fat: 6, fiber: 0, sodium: 420, sugar: 0, saturatedFat: 1.5, servingSize: '1 fillet (180g)', category: 'Latin American' },
+  { name: 'Bife Grelhado (Brazilian grilled beef)', calories: 280, protein: 34, carbs: 0, fat: 16, fiber: 0, sodium: 380, sugar: 0, saturatedFat: 6, servingSize: '1 piece (180g)', category: 'Latin American' },
+  { name: 'Pastel de Feira (fried pastry)', calories: 280, protein: 10, carbs: 30, fat: 14, fiber: 1, sodium: 480, sugar: 1, saturatedFat: 5, servingSize: '1 pastel', category: 'Latin American' },
+  { name: 'Esfiha (Brazilian meat pastry)', calories: 180, protein: 8, carbs: 22, fat: 7, fiber: 1, sodium: 340, sugar: 1, saturatedFat: 2.5, servingSize: '1 piece', category: 'Latin American' },
+  { name: 'Vitamina de Banana (Brazilian shake)', calories: 220, protein: 6, carbs: 38, fat: 5, fiber: 2, sodium: 80, sugar: 28, saturatedFat: 3, servingSize: '1 glass (300ml)', category: 'Latin American' },
+  { name: 'Macarrão à Bolonhesa (Brazilian pasta)', calories: 520, protein: 26, carbs: 68, fat: 14, fiber: 4, sodium: 620, sugar: 6, saturatedFat: 5, servingSize: '1 plate', category: 'Latin American' },
 ];
 
 // Toppings for sandwiches and burgers
