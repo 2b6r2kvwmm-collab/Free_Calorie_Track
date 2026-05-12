@@ -86,6 +86,14 @@ function App() {
     saveDarkMode(darkMode);
   }, [darkMode]);
 
+  // Show footer for returning users who skip the landing page
+  useEffect(() => {
+    if (landingPageShown) {
+      const footer = document.querySelector('.app-footer');
+      if (footer) footer.style.display = 'block';
+    }
+  }, [landingPageShown]);
+
   // Check if we should show the share modal (after 5 days of tracking)
   const [userDaysTracked, setUserDaysTracked] = useState(0);
 
