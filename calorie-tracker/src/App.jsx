@@ -259,6 +259,18 @@ function App() {
               element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
             />
             <Route
+              path="/support-clicked-footer"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/support-clicked-settings"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/support-clicked-modal"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
               path="/coach"
               element={<Trends key={refreshKey} />}
             />

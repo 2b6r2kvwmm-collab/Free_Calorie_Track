@@ -1244,7 +1244,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
         {/* Donation Button */}
         <button
-          onClick={() => { navigate('/support-clicked', { replace: true }); window.open('https://buymeacoffee.com/griffs', '_blank'); }}
+          onClick={() => { navigate('/support-clicked-settings'); window.open('https://buymeacoffee.com/griffs', '_blank'); }}
           className="block w-full py-3 px-6 rounded-lg font-semibold text-center bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
         >
           Chip in $5
