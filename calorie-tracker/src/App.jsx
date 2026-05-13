@@ -157,8 +157,8 @@ function App() {
   // App routes
   if (!landingPageShown && !profile && !isAppInstalled()) {
     return (
-      <LandingPage onGetStarted={() => {
-        navigate('/onboarding-started', { replace: true });
+      <LandingPage onGetStarted={(source = 'hero') => {
+        navigate(`/onboarding-started-${source}`);
         markLandingPageShown();
         setLandingPageShown(true);
       }} />

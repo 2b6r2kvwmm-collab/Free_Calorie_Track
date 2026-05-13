@@ -428,7 +428,7 @@ export default function LandingPage({ onGetStarted }) {
               Barcode scanning, macro tracking, and AI food logging — <span className="font-semibold text-gray-800 dark:text-gray-200">completely free, no account or subscription required.</span>
             </p>
             <button
-              onClick={onGetStarted}
+              onClick={() => onGetStarted('hero')}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
               aria-label="Start tracking calories and macros now"
             >
@@ -552,7 +552,7 @@ export default function LandingPage({ onGetStarted }) {
         <div className="bg-emerald-600 dark:bg-emerald-700 rounded-2xl px-8 py-12 text-center text-white">
           <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch. Just a free calorie app.</p>
           <button
-            onClick={onGetStarted}
+            onClick={() => onGetStarted('cta')}
             className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50"
             aria-label="Start using the best free calorie app now"
           >
