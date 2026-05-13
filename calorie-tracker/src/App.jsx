@@ -255,10 +255,6 @@ function App() {
               element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
             />
             <Route
-              path="/donated"
-              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
-            />
-            <Route
               path="/coach"
               element={<Trends key={refreshKey} />}
             />
