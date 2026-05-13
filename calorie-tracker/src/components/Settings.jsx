@@ -1,4 +1,5 @@
 import { useState, useRef, useMemo } from 'react';
+import { track } from '@vercel/analytics';
 import { Link } from 'react-router-dom';
 import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getCustomNutrition, saveCustomNutrition, clearCustomNutrition, getNutritionTrackingEnabled, saveNutritionTrackingEnabled, getWaterTrackerEnabled, saveWaterTrackerEnabled, getWaterGoal, saveWaterGoal, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats, ozToMl, mlToOz } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE, getReproductiveStatusCalorieAdjustment, getCurrentTrimester, getWeeksPregnant, calculateNutritionTargets } from '../utils/calculations';
@@ -1246,6 +1247,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
           href="https://bit.ly/supportFCT"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => track('support_click', { source: 'settings' })}
           className="block w-full py-3 px-6 rounded-lg font-semibold text-center bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
         >
           Chip in $5

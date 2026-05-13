@@ -86,11 +86,11 @@ function App() {
     saveDarkMode(darkMode);
   }, [darkMode]);
 
-  // Show footer for returning users who skip the landing page
+  // Reveal footer once landing page is done — removes the new-user hide style
   useEffect(() => {
     if (landingPageShown) {
-      const footer = document.querySelector('.app-footer');
-      if (footer) footer.style.display = 'block';
+      const hideStyle = document.getElementById('footer-hidden');
+      if (hideStyle) hideStyle.remove();
     }
   }, [landingPageShown]);
 
@@ -252,6 +252,10 @@ function App() {
             />
             <Route
               path="/ai-food-logged"
+              element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
+            />
+            <Route
+              path="/donated"
               element={<Dashboard key={refreshKey} onRefresh={handleRefresh} />}
             />
             <Route

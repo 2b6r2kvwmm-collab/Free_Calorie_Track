@@ -261,7 +261,6 @@
     <style>
       /* Footer Styles */
       .app-footer {
-        display: none;
         text-align: center;
         padding: 40px 20px calc(100px + env(safe-area-inset-bottom)) 20px;
         font-family: sans-serif;
@@ -423,6 +422,18 @@
     </div>
     <script type="module" src="/src/main.jsx"></script>
 
+    <!-- Hide footer for new users before it renders — runs sync so no CLS -->
+    <script>
+      (function() {
+        try {
+          var uid = localStorage.getItem('calorieTracker_currentUser') || 'default';
+          var shown = localStorage.getItem('calorieTracker_' + uid + '_landingPageShown');
+          if (shown !== 'true') {
+            document.head.insertAdjacentHTML('beforeend', '<style id="footer-hidden">.app-footer{display:none}</style>');
+          }
+        } catch(e) {}
+      })();
+    </script>
     <!-- FOOTER_PLACEHOLDER: replaced at build time by vite-plugin-footer.js from shared/footer-content.js -->
     <div class="app-footer"><!-- FOOTER_INJECT --></div>
     </body>

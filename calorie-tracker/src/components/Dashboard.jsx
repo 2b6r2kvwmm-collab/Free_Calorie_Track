@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { track } from '@vercel/analytics';
 import {
   getTodayEntries,
   deleteFoodEntry,
@@ -1332,6 +1333,7 @@ export default function Dashboard({ onRefresh }) {
           onDonate={() => {
             markMilestoneShown(showMilestone);
             setShowMilestone(null);
+            track('support_click', { source: 'milestone' });
             window.open('https://bit.ly/supportFCT', '_blank');
           }}
         />
