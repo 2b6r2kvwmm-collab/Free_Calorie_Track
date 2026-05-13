@@ -21,7 +21,7 @@ export const footerContent = {
     heading: "Help keep Free Calorie Track free",
     description: "No ads. No paywalls. Funded by donations and commissions on gear I actually use and love.",
     buttonText: "Chip in $5",
-    buttonUrl: "https://buymeacoffee.com/griffs"
+    buttonUrl: "https://bit.ly/supportFCT"
   },
 
   /**

@@ -1332,7 +1332,7 @@ export default function Dashboard({ onRefresh }) {
           onDonate={() => {
             markMilestoneShown(showMilestone);
             setShowMilestone(null);
-            window.open('https://buymeacoffee.com/griffs', '_blank');
+            window.open('https://bit.ly/supportFCT', '_blank');
           }}
         />
       )}

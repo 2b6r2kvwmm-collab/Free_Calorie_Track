@@ -1243,7 +1243,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
         {/* Donation Button */}
         <a
-          href="https://buymeacoffee.com/griffs"
+          href="https://bit.ly/supportFCT"
           target="_blank"
           rel="noopener noreferrer"
           className="block w-full py-3 px-6 rounded-lg font-semibold text-center bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
