@@ -1324,7 +1324,7 @@ export default function Dashboard({ onRefresh }) {
           onDonate={() => {
             markMilestoneDate();
             setShowMilestone(null);
-            navigate('/support-clicked-modal');
+            history.pushState({}, '', '/support-clicked-modal');
             window.open('https://buymeacoffee.com/griffs', '_blank');
           }}
         />
