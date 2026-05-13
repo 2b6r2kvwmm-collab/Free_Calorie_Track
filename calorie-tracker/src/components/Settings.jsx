@@ -1,6 +1,5 @@
 import { useState, useRef, useMemo } from 'react';
-import { track } from '@vercel/analytics';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getCustomNutrition, saveCustomNutrition, clearCustomNutrition, getNutritionTrackingEnabled, saveNutritionTrackingEnabled, getWaterTrackerEnabled, saveWaterTrackerEnabled, getWaterGoal, saveWaterGoal, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats, ozToMl, mlToOz } from '../utils/storage';
 import { calculateBMR, calculateTDEE, getBaselineTDEE, getReproductiveStatusCalorieAdjustment, getCurrentTrimester, getWeeksPregnant, calculateNutritionTargets } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
@@ -10,6 +9,7 @@ import { sanitizeObject } from '../utils/sanitize';
 import ConfirmationModal from './ConfirmationModal';
 
 export default function Settings({ onUpdateProfile, onClose }) {
+  const navigate = useNavigate();
   // Memoize storage reads to prevent synchronous localStorage access on every render
   const currentProfile = useMemo(() => getProfile(), []);
   const fileInputRef = useRef(null);
@@ -1243,15 +1243,12 @@ export default function Settings({ onUpdateProfile, onClose }) {
         })()}
 
         {/* Donation Button */}
-        <a
-          href="https://buymeacoffee.com/griffs"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => track('support_click', { source: 'settings' })}
+        <button
+          onClick={() => { navigate('/support-clicked', { replace: true }); window.open('https://buymeacoffee.com/griffs', '_blank'); }}
           className="block w-full py-3 px-6 rounded-lg font-semibold text-center bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
         >
           Chip in $5
-        </a>
+        </button>
 
         {/* Subtle link to gear reviews */}
         <p className="text-center mt-3">

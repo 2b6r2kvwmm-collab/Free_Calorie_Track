@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { track } from '@vercel/analytics';
 import {
   getTodayEntries,
   deleteFoodEntry,
@@ -1333,7 +1332,7 @@ export default function Dashboard({ onRefresh }) {
           onDonate={() => {
             markMilestoneShown(showMilestone);
             setShowMilestone(null);
-            track('support_click', { source: 'milestone' });
+            navigate('/support-clicked', { replace: true });
             window.open('https://buymeacoffee.com/griffs', '_blank');
           }}
         />
