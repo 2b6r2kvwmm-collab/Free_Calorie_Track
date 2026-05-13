@@ -19,6 +19,7 @@ const STORAGE_KEYS = {
   WATER_UNIT: 'waterUnit',
   WORKOUT_TEMPLATES: 'workoutTemplates',
   MILESTONES_SHOWN: 'milestonesShown',
+  LAST_MILESTONE_DATE: 'lastMilestoneDate',
   SHARE_MODAL_SHOWN: 'shareModalShown',
 };
 
@@ -663,6 +664,14 @@ export function markMilestoneShown(milestone) {
   setData(STORAGE_KEYS.MILESTONES_SHOWN, milestones);
 }
 
+export function getLastMilestoneDate() {
+  return getData(STORAGE_KEYS.LAST_MILESTONE_DATE) || null;
+}
+
+export function markMilestoneDate() {
+  setData(STORAGE_KEYS.LAST_MILESTONE_DATE, getLocalDateString());
+}
+
 // Share modal tracking
 export function getShareModalShown() {
   return getData(STORAGE_KEYS.SHARE_MODAL_SHOWN) || false;
@@ -694,12 +703,20 @@ export function calculateUserStats() {
   const mealsLogged = foodLog.length;
   const workouts = exerciseLog.length;
 
+  // Rolling 30-day window stats
+  const today = new Date();
+  const windowStart = new Date(today);
+  windowStart.setDate(today.getDate() - 29); // 30-day window inclusive of today
+  const windowStartStr = getLocalDateString(windowStart);
+  const recentEntries = foodLog.filter(e => e.date >= windowStartStr);
+  const recentDaysTracked = new Set(recentEntries.map(e => e.date)).size;
+  const recentMealsLogged = recentEntries.length;
+
   // Calculate months since first use (earliest food log entry)
   let monthsUsing = 0;
   if (foodLog.length > 0) {
     const sortedDates = foodLog.map(entry => entry.date).sort();
     const firstDate = new Date(sortedDates[0] + 'T12:00:00'); // noon to avoid timezone edge cases
-    const today = new Date();
     const diffDays = Math.floor((today - firstDate) / (1000 * 60 * 60 * 24));
     monthsUsing = Math.max(1, Math.round(diffDays / 30.44));
   }
@@ -713,6 +730,8 @@ export function calculateUserStats() {
     workouts,
     monthsUsing,
     savedVsCompetitors,
+    recentDaysTracked,
+    recentMealsLogged,
   };
 }
 

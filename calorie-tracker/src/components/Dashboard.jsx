@@ -20,8 +20,8 @@ import {
   getWaterTrackerEnabled,
   getNutritionTrackingEnabled,
   getDashboardFocus,
-  getMilestonesShown,
-  markMilestoneShown,
+  getLastMilestoneDate,
+  markMilestoneDate,
   calculateUserStats,
   getBackupReminderState,
   markBackupReminderShown,
@@ -238,25 +238,18 @@ export default function Dashboard({ onRefresh }) {
   // Check for milestone celebrations and backup reminders
   useEffect(() => {
     const stats = calculateUserStats();
-    const milestonesShown = getMilestonesShown();
-    const { daysTracked } = stats;
+    const { recentDaysTracked } = stats;
 
-    // Check 365-day milestone first (highest priority)
-    if (daysTracked >= 365 && !milestonesShown.days365) {
-      setShowMilestone(365);
-      return;
-    }
-
-    // Check 180-day milestone
-    if (daysTracked >= 180 && !milestonesShown.days180) {
-      setShowMilestone(180);
-      return;
-    }
-
-    // Check 60-day milestone
-    if (daysTracked >= 60 && !milestonesShown.days60) {
-      setShowMilestone(60);
-      return;
+    // Rolling 30-day milestone: show if ≥15 days tracked in last 30 and ≥30 days since last shown
+    if (recentDaysTracked >= 15) {
+      const lastDate = getLastMilestoneDate();
+      const daysSinceLast = lastDate
+        ? Math.floor((new Date() - new Date(lastDate + 'T12:00:00')) / (1000 * 60 * 60 * 24))
+        : Infinity;
+      if (daysSinceLast >= 30) {
+        setShowMilestone(stats);
+        return;
+      }
     }
 
     // Backup reminder: only if no milestone is showing and user hasn't exported
@@ -1323,14 +1316,13 @@ export default function Dashboard({ onRefresh }) {
 
       {showMilestone && (
         <MilestoneModal
-          milestone={showMilestone}
-          stats={calculateUserStats()}
+          stats={showMilestone}
           onClose={() => {
-            markMilestoneShown(showMilestone);
+            markMilestoneDate();
             setShowMilestone(null);
           }}
           onDonate={() => {
-            markMilestoneShown(showMilestone);
+            markMilestoneDate();
             setShowMilestone(null);
             navigate('/support-clicked', { replace: true });
             window.open('https://buymeacoffee.com/griffs', '_blank');

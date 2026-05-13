@@ -1,31 +1,34 @@
 import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
-export default function MilestoneModal({ milestone, stats, onClose, onDonate }) {
-  const modalRef = useModalAccessibility(true, onClose);
-  const milestoneInfo = {
-    60: {
-      emoji: '🎉',
-      title: '60-Day Milestone!',
-      message: 'Two months of consistent tracking—that\'s serious dedication!',
-    },
-    180: {
+function getMilestoneInfo(recentDaysTracked) {
+  if (recentDaysTracked >= 25) {
+    return {
       emoji: '🔥',
-      title: '180-Day Milestone!',
-      message: 'Six months strong! You\'re crushing it!',
-    },
-    365: {
-      emoji: '🏆',
-      title: 'One Year Anniversary!',
-      message: 'A full year of tracking! You\'re an absolute legend!',
-    },
+      title: 'Elite-level consistency!',
+      message: `You tracked ${recentDaysTracked} out of the last 30 days. That's near-perfect dedication.`,
+    };
+  }
+  if (recentDaysTracked >= 20) {
+    return {
+      emoji: '🎉',
+      title: 'Great month!',
+      message: `${recentDaysTracked} days tracked this month — you've got real momentum going.`,
+    };
+  }
+  return {
+    emoji: '👏',
+    title: 'Staying consistent!',
+    message: `${recentDaysTracked} out of 30 days tracked. Consistency like this adds up fast.`,
   };
+}
 
-  const info = milestoneInfo[milestone];
+export default function MilestoneModal({ stats, onClose, onDonate }) {
+  const modalRef = useModalAccessibility(true, onClose);
+  const { emoji, title, message } = getMilestoneInfo(stats.recentDaysTracked);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" ref={modalRef}>
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-md w-full p-6 relative">
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-2xl"
@@ -34,43 +37,51 @@ export default function MilestoneModal({ milestone, stats, onClose, onDonate }) 
           ×
         </button>
 
-        {/* Content */}
         <div className="text-center">
-          <div className="text-6xl mb-4">{info.emoji}</div>
-          <h2 className="text-2xl font-bold mb-2 dark:text-white">{info.title}</h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">{info.message}</p>
+          <div className="text-6xl mb-4">{emoji}</div>
+          <h2 className="text-2xl font-bold mb-2 dark:text-white">{title}</h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-6">{message}</p>
 
-          {/* Stats */}
+          {/* Stats grid — recent month + all-time */}
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">This month</p>
+            <div className="grid grid-cols-2 gap-4 text-sm mb-4">
               <div>
                 <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                  {stats.recentDaysTracked}
+                </div>
+                <div className="text-gray-600 dark:text-gray-300">Days tracked</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                  {stats.recentMealsLogged}
+                </div>
+                <div className="text-gray-600 dark:text-gray-300">Meals logged</div>
+              </div>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">All time</p>
+            <div className="grid grid-cols-3 gap-4 text-sm">
+              <div>
+                <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   {stats.daysTracked}
                 </div>
-                <div className="text-gray-600 dark:text-gray-300">Days Tracked</div>
+                <div className="text-gray-600 dark:text-gray-300">Days</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-                  {stats.mealsLogged}
-                </div>
-                <div className="text-gray-600 dark:text-gray-300">Meals Logged</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   {stats.workouts}
                 </div>
                 <div className="text-gray-600 dark:text-gray-300">Workouts</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
+                <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
                   ${stats.savedVsCompetitors}
                 </div>
-                <div className="text-gray-600 dark:text-gray-300">Saved vs. subscriptions</div>
+                <div className="text-gray-600 dark:text-gray-300">Saved</div>
               </div>
             </div>
           </div>
 
-          {/* Donation CTA */}
           <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
             <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
               Enjoying Free Calorie Track? Help keep it free for everyone.
