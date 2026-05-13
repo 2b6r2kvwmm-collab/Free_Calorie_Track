@@ -101,7 +101,7 @@ supportSection: {
   heading: "Help keep Free Calorie Track free",
   description: "No ads. No paywalls...",
   buttonText: "Chip in $5",
-  buttonUrl: "https://bit.ly/supportFCT"
+  buttonUrl: "https://buymeacoffee.com/griffs"
 }
 ```
 

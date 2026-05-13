@@ -86,13 +86,13 @@ function App() {
     saveDarkMode(darkMode);
   }, [darkMode]);
 
-  // Reveal footer once landing page is done — removes the new-user hide style
+  // Reveal footer once user has a profile — removes the new-user hide style
   useEffect(() => {
-    if (landingPageShown) {
+    if (landingPageShown || profile) {
       const hideStyle = document.getElementById('footer-hidden');
       if (hideStyle) hideStyle.remove();
     }
-  }, [landingPageShown]);
+  }, [landingPageShown, profile]);
 
   // Check if we should show the share modal (after 5 days of tracking)
   const [userDaysTracked, setUserDaysTracked] = useState(0);

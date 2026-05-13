@@ -427,8 +427,10 @@
       (function() {
         try {
           var uid = localStorage.getItem('calorieTracker_currentUser') || 'default';
-          var shown = localStorage.getItem('calorieTracker_' + uid + '_landingPageShown');
-          if (shown !== 'true') {
+          var prefix = 'calorieTracker_' + uid + '_';
+          var shown = localStorage.getItem(prefix + 'landingPageShown');
+          var hasProfile = localStorage.getItem(prefix + 'profile');
+          if (shown !== 'true' && !hasProfile) {
             document.head.insertAdjacentHTML('beforeend', '<style id="footer-hidden">.app-footer{display:none}</style>');
           }
         } catch(e) {}

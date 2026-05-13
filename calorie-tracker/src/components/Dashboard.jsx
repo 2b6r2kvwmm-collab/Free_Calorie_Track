@@ -1334,7 +1334,7 @@ export default function Dashboard({ onRefresh }) {
             markMilestoneShown(showMilestone);
             setShowMilestone(null);
             track('support_click', { source: 'milestone' });
-            window.open('https://bit.ly/supportFCT', '_blank');
+            window.open('https://buymeacoffee.com/griffs', '_blank');
           }}
         />
       )}

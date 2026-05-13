@@ -1244,7 +1244,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
         {/* Donation Button */}
         <a
-          href="https://bit.ly/supportFCT"
+          href="https://buymeacoffee.com/griffs"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => track('support_click', { source: 'settings' })}
