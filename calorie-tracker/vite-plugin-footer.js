@@ -34,7 +34,7 @@ function generateFooterHTML(content) {
         <p style="font-size: 14px; line-height: 1.5; color: #999; max-width: 500px; margin: 0 auto 15px;">
           ${content.supportSection.description}
         </p>
-        <a href="${content.supportSection.buttonUrl}" target="_blank" rel="noopener noreferrer" class="support-button">
+        <a href="${content.supportSection.buttonUrl}" target="_blank" rel="noopener noreferrer" class="support-button" onclick="if(window.va)window.va('event','support_click',{source:'footer'})">
           ${content.supportSection.buttonText}
         </a>
       </div>
