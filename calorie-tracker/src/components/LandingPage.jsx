@@ -502,7 +502,7 @@ export default function LandingPage({ onGetStarted }) {
               { icon: Sparkles, title: 'AI food logging (Beta)', desc: 'Describe a meal, snap a photo of your plate, or photograph a recipe — AI estimates the nutrition instantly. Free, optional, 10 logs/day.' },
               { icon: Brain, title: 'Nutrition Coach (Beta)', desc: 'Log 3+ days and get a weekly AI analysis of what\'s working, what to adjust, and specific things to try. Free and optional.' },
               { icon: WifiOff, title: 'Works offline', desc: 'Install on any device. No internet needed after setup.' },
-              { icon: ShieldCheck, title: 'Private by design', desc: 'No account, no subscription, no setup. Your data stays on your device and never passes through our servers.' },
+              { icon: ShieldCheck, title: 'Private by design', desc: 'No account, no subscription, no setup. Your food logs stay on your device and are never sold or shared.' },
               { icon: History, title: 'Editable history', desc: 'Forgot to log yesterday? No problem. Add or edit meals and exercise from any past day in the History tab.' },
             ].map((f) => (
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">

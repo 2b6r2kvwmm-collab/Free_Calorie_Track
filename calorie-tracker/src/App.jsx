@@ -34,6 +34,13 @@ function App() {
     return urlParams.get('from') === 'landing-page';
   });
 
+  // Track first-ever app visit
+  useEffect(() => {
+    if (!landingPageShown && !profile && !isAppInstalled()) {
+      history.pushState({}, '', '/first-visit');
+    }
+  }, []);
+
   // Handle landing page detection once on mount
   useEffect(() => {
     if (fromLandingPage) {
