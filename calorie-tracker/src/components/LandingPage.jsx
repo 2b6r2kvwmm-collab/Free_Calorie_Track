@@ -215,7 +215,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: 'Is my personal and nutrition data safe?',
-        a: 'Yes. Because data never leaves your device, there\'s no server to hack, no database breach to worry about, and no third party with access to your information. The only way your data leaves your device is if you explicitly export it yourself. No account means no email address or password to compromise either.',
+        a: 'Yes. Your food logs, exercise history, weight entries, and profile are stored locally on your device and never transmitted to any server — there\'s no database to breach, no account to compromise. The optional AI features (food logging and Nutrition Coach) do send data to Google Gemini to generate results, but only what you actively submit in that moment, and nothing that identifies you as a person. No name, no email, no account — just the food description or log summary you chose to analyze.',
       },
     ],
   },
@@ -471,7 +471,7 @@ export default function LandingPage({ onGetStarted }) {
             },
             {
               title: 'No account. No cloud.',
-              desc: 'Your data lives on your device, not on a server. There\'s nothing to sign up for, no email required, and nothing to hand over.',
+              desc: 'Your food logs, exercise history, and profile live on your device — not our servers. Nothing to sign up for, no email required.',
             },
             {
               title: 'Works everywhere, even offline.',
@@ -502,7 +502,7 @@ export default function LandingPage({ onGetStarted }) {
               { icon: Sparkles, title: 'AI food logging (Beta)', desc: 'Describe a meal, snap a photo of your plate, or photograph a recipe — AI estimates the nutrition instantly. Free, optional, 10 logs/day.' },
               { icon: Brain, title: 'Nutrition Coach (Beta)', desc: 'Log 3+ days and get a weekly AI analysis of what\'s working, what to adjust, and specific things to try. Free and optional.' },
               { icon: WifiOff, title: 'Works offline', desc: 'Install on any device. No internet needed after setup.' },
-              { icon: ShieldCheck, title: 'Private by design', desc: 'No account, no subscription, no setup. Your food logs stay on your device and are never sold or shared.' },
+              { icon: ShieldCheck, title: 'Private by design', desc: 'No account, no setup. Your food logs never leave your device. Optional AI features only send what you actively submit — and never anything that identifies you.' },
               { icon: History, title: 'Editable history', desc: 'Forgot to log yesterday? No problem. Add or edit meals and exercise from any past day in the History tab.' },
             ].map((f) => (
               <div key={f.title} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4">
