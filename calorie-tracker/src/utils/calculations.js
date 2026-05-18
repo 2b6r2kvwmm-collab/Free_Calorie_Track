@@ -132,9 +132,7 @@ export function getAdjustedTDEE(profile) {
 
 // MET (Metabolic Equivalent of Task) values for common exercises
 export const exercises = [
-  {"name":"Walking (slow, 2 mph)","met":2.5,"category":"Walking","speed":"2mph"},
-  {"name":"Walking (moderate, 3 mph)","met":3.5,"category":"Walking","speed":"3mph"},
-  {"name":"Walking (brisk, 4 mph)","met":5,"category":"Walking","speed":"4mph"},
+  {"name":"Walking","met":3.5,"category":"Walking"},
   {"name":"Power Walking","met":4.5,"category":"Walking"},
   {"name":"Nordic Walking","met":5.5,"category":"Walking"},
   {"name":"Hiking (flat terrain)","met":4.5,"category":"Outdoor"},

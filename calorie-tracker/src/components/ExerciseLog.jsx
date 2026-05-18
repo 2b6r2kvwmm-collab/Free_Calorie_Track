@@ -26,6 +26,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
   const [trackingMode, setTrackingMode] = useState('duration'); // 'duration' or 'reps'
   const [walkingTrackingMode, setWalkingTrackingMode] = useState('duration'); // 'duration', 'steps', or 'distance'
+  const [walkingSpeed, setWalkingSpeed] = useState('moderate'); // 'slow', 'moderate', 'brisk'
   const [cardioTrackingMode, setCardioTrackingMode] = useState('distanceDuration'); // 'distanceDuration', 'paceDistance', or 'paceDuration'
   const [sets, setSets] = useState('');
   const [reps, setReps] = useState('');
@@ -79,8 +80,12 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const isStrengthExercise = selectedExercise &&
     (selectedExercise.category === 'Weightlifting' || selectedExercise.category === 'Bodyweight');
 
+  const WALKING_SPEED_MET = { slow: 2.5, moderate: 3.5, brisk: 5.0 };
+  const WALKING_SPEED_LABEL = { slow: 'Slow (2 mph)', moderate: 'Moderate (3 mph)', brisk: 'Brisk (4 mph)' };
+
   // Check if exercise is walking
   const isWalkingExercise = selectedExercise && selectedExercise.category === 'Walking';
+  const isBaseWalking = selectedExercise && selectedExercise.name === 'Walking';
 
   // Check if exercise supports weighted vest (bodyweight + specific exercises)
   const supportsWeightedVest = selectedExercise && (
@@ -104,7 +109,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       // Convert steps to miles (avg 2,000 steps per mile)
       const miles = numSteps / 2000;
       // Estimate calories: ~0.57 calories per step per kg of body weight
-      let caloriesBurned = Math.round(numSteps * 0.04 * profile.weight);
+      let caloriesBurned = Math.round(numSteps * 0.04 * (profile.weight / 70));
       // Estimate duration: ~2,000 steps per 20 minutes = 100 steps/min
       const estimatedDuration = Math.round(numSteps / 100);
 
@@ -119,9 +124,10 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       }
 
       const loadText = loadType === 'backpack' ? 'backpack' : 'vest';
+      const speedSuffix = isBaseWalking ? `, ${WALKING_SPEED_LABEL[walkingSpeed]}` : '';
       const exerciseName = useWeightedVest
-        ? `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi, ${vestWeight} lb ${loadText})`
-        : `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi)`;
+        ? `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi${speedSuffix}, ${vestWeight} lb ${loadText})`
+        : `${selectedExercise.name} (${numSteps.toLocaleString()} steps, ${miles.toFixed(1)} mi${speedSuffix})`;
 
       onAddExercise({
         name: exerciseName,
@@ -152,9 +158,10 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
       }
 
       const loadText = loadType === 'backpack' ? 'backpack' : 'vest';
+      const speedSuffixDist = isBaseWalking ? `, ${WALKING_SPEED_LABEL[walkingSpeed]}` : '';
       const exerciseName = useWeightedVest
-        ? `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi, ${vestWeight} lb ${loadText})`
-        : `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi)`;
+        ? `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi${speedSuffixDist}, ${vestWeight} lb ${loadText})`
+        : `${selectedExercise.name} (${distanceMiles.toFixed(1)} mi${speedSuffixDist})`;
 
       onAddExercise({
         name: exerciseName,
@@ -166,8 +173,8 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
 
     if (trackingMode === 'duration') {
       // Calculate MET value (adjust for weighted vest if applicable)
-      let metValue = selectedExercise.met;
-      let exerciseName = selectedExercise.name;
+      let metValue = isBaseWalking ? WALKING_SPEED_MET[walkingSpeed] : selectedExercise.met;
+      let exerciseName = isBaseWalking ? `${selectedExercise.name} (${WALKING_SPEED_LABEL[walkingSpeed]})` : selectedExercise.name;
 
       // Handle distance-based exercises (Running/Cycling)
       if (requiresDistance) {
@@ -239,7 +246,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
         return;
       } else if (isWalkingExercise && useWeightedVest) {
         metValue = calculateWeightedVestMET(
-          selectedExercise.met,
+          isBaseWalking ? WALKING_SPEED_MET[walkingSpeed] : selectedExercise.met,
           selectedExercise.speed,
           vestWeight
         );
@@ -408,6 +415,29 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                   >
                     Reps & Sets
                   </button>
+                </div>
+              </div>
+            )}
+
+            {/* Walking Speed Selector */}
+            {isBaseWalking && (
+              <div>
+                <label className="block text-lg font-semibold mb-3">Pace</label>
+                <div className="grid grid-cols-3 gap-3">
+                  {Object.entries(WALKING_SPEED_LABEL).map(([speed, label]) => (
+                    <button
+                      key={speed}
+                      type="button"
+                      onClick={() => setWalkingSpeed(speed)}
+                      className={`py-2 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                        walkingSpeed === speed
+                          ? 'bg-emerald-600 text-white border-emerald-500'
+                          : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
@@ -743,7 +773,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                     </div>
                     <div className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
                       {(() => {
-                        let met = selectedExercise.met;
+                        let met = isBaseWalking ? WALKING_SPEED_MET[walkingSpeed] : selectedExercise.met;
                         let estimatedDuration = parseInt(duration) || 0;
 
                         if (requiresDistance && cardioTrackingMode === 'distanceDuration' && distance && duration) {
@@ -762,7 +792,7 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
                             met = getCyclingMET(calculatedPace);
                           }
                         } else if (isWalkingExercise && useWeightedVest) {
-                          met = calculateWeightedVestMET(selectedExercise.met, selectedExercise.speed, vestWeight);
+                          met = calculateWeightedVestMET(isBaseWalking ? WALKING_SPEED_MET[walkingSpeed] : selectedExercise.met, selectedExercise.speed, vestWeight);
                           // Backpacks burn ~7% more calories than vests
                           if (loadType === 'backpack') {
                             met = met * 1.07;
