@@ -248,6 +248,7 @@ export default function Dashboard({ onRefresh }) {
         : Infinity;
       if (daysSinceLast >= 30) {
         setShowMilestone(stats);
+        history.pushState({}, '', '/milestone-modal-shown');
         return;
       }
     }
@@ -1320,6 +1321,7 @@ export default function Dashboard({ onRefresh }) {
           onClose={() => {
             markMilestoneDate();
             setShowMilestone(null);
+            history.pushState({}, '', '/milestone-modal-dismissed');
           }}
           onDonate={() => {
             markMilestoneDate();
