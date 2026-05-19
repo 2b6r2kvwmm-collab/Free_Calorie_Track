@@ -1,6 +1,6 @@
 ---
-title: "40+ High Protein Low Calorie Foods + Free Protein Tracker"
-description: "The best high protein low calorie foods for weight loss and muscle building. Includes macro breakdowns, meal ideas, and a free protein tracking tool."
+title: "High Protein Low Calorie Foods: Macros Per 100g (Complete List)"
+description: "The best high protein low calorie foods ranked by protein per 100g. Includes full macro breakdowns, meal ideas, and a free protein tracker."
 pubDate: 2026-03-02
 author: "FCT Staff"
 category: "Guides"
@@ -28,6 +28,29 @@ image: "/images/blog/high-protein-foods.webp"
     <li>Protein has a high thermic effect (burns 20-30% of calories during digestion)</li>
   </ul>
 </div>
+
+## Quick Reference: Protein Per 100g
+
+| Food | Calories (per 100g) | Protein | Fat | Carbs |
+|------|---------------------|---------|-----|-------|
+| Chicken breast (cooked) | 165 | 31g | 4g | 0g |
+| Turkey breast (cooked) | 135 | 30g | 1g | 0g |
+| White fish (cod, cooked) | 97 | 21g | 1g | 0g |
+| Shrimp (cooked) | 106 | 20g | 2g | 1g |
+| Tuna (canned in water) | 85 | 19g | 1g | 0g |
+| Egg whites | 52 | 11g | 0g | 1g |
+| Non-fat Greek yogurt | 57 | 11g | 0g | 4g |
+| Cottage cheese (low-fat) | 71 | 12g | 1g | 3g |
+| Pork tenderloin (cooked) | 123 | 22g | 3g | 0g |
+| Seitan | 141 | 25g | 2g | 5g |
+| Tempeh | 165 | 19g | 6g | 11g |
+| Tofu (extra firm) | 80 | 9g | 4g | 2g |
+| Lentils (cooked) | 116 | 9g | 0g | 20g |
+| Edamame (shelled) | 121 | 12g | 5g | 9g |
+
+*All values are approximate and may vary by brand and preparation.*
+
+---
 
 If you're trying to lose fat while preserving muscle, or just want to feel fuller on fewer calories, **high protein low calorie foods** are your best friend. Protein keeps you satisfied longer, has a high thermic effect (your body burns calories digesting it), and helps preserve lean mass when you're in a calorie deficit.
 
