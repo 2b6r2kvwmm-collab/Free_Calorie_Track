@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import InAppBrowserPrompt, { isInAppBrowser } from './InAppBrowserPrompt';
 import {
   Dumbbell, Salad, ScanBarcode,
   Activity, TrendingUp, WifiOff, ShieldCheck, Sparkles, Brain,
@@ -382,6 +383,17 @@ function FAQAccordion({ sections }) {
 }
 
 export default function LandingPage({ onGetStarted }) {
+  const [showInAppPrompt, setShowInAppPrompt] = useState(false);
+
+  const handleGetStarted = (source) => {
+    if (isInAppBrowser()) {
+      history.pushState({}, '', '/in-app-browser-shown');
+      setShowInAppPrompt(true);
+    } else {
+      onGetStarted(source);
+    }
+  };
+
   // Hide the universal footer from index.html when landing page is shown
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top on mount
@@ -428,7 +440,7 @@ export default function LandingPage({ onGetStarted }) {
               Barcode scanning, macro tracking, and AI food logging — <span className="font-semibold text-gray-800 dark:text-gray-200">completely free, no account or subscription required.</span>
             </p>
             <button
-              onClick={() => onGetStarted('hero')}
+              onClick={() => handleGetStarted('hero')}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold text-lg py-4 px-12 rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-xl hover:shadow-emerald-500/40 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-300"
               aria-label="Start tracking calories and macros now"
             >
@@ -552,7 +564,7 @@ export default function LandingPage({ onGetStarted }) {
         <div className="bg-emerald-600 dark:bg-emerald-700 rounded-2xl px-8 py-12 text-center text-white">
           <p className="text-lg text-emerald-100 mb-4">No sign-up. No credit card. No catch. Just a free calorie app.</p>
           <button
-            onClick={() => onGetStarted('cta')}
+            onClick={() => handleGetStarted('cta')}
             className="bg-white text-emerald-700 font-bold text-lg py-3 px-10 rounded-xl shadow-lg hover:shadow-xl hover:bg-emerald-50 transition-all active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50"
             aria-label="Start using the best free calorie app now"
           >
@@ -596,6 +608,12 @@ export default function LandingPage({ onGetStarted }) {
       </div>
 
     </div>
+
+    {showInAppPrompt && (
+      <InAppBrowserPrompt
+        onContinueAnyway={() => { setShowInAppPrompt(false); onGetStarted('hero'); }}
+      />
+    )}
     </>
   );
 }
