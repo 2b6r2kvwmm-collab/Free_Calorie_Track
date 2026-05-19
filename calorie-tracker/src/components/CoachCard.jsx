@@ -109,7 +109,7 @@ export default function CoachCard() {
   const effectiveResult = isExpired ? null : result;
 
   const runCoach = async () => {
-    navigate('/coach', { replace: true });
+    history.pushState({}, '', '/nutrition-coach-used');
     setLoading(true);
     setError('');
     try {

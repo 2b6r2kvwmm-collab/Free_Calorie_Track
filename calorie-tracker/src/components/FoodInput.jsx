@@ -145,7 +145,7 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
         {mode === 'menu' && (
           <div className="space-y-2">
             {[
-              { icon: <ScanBarcode size={18} />, label: 'Scan Barcode', sub: 'Any product', onClick: () => setMode('barcode') },
+              { icon: <ScanBarcode size={18} />, label: 'Scan Barcode', sub: 'Any product', onClick: () => { history.pushState({}, '', '/barcode-scanner-opened'); setMode('barcode'); } },
               { icon: <Salad size={18} />, label: 'Common Foods', sub: 'Ingredients & meals', onClick: () => setMode('common') },
               { icon: <Search size={18} />, label: 'Search Food Database', sub: 'Branded products', onClick: () => setMode('search') },
             ].map(({ icon, label, sub, onClick }) => (

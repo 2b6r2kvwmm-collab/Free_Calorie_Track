@@ -115,6 +115,7 @@ function App() {
       setUserDaysTracked(stats.daysTracked);
       // Wait 2 seconds after page load to show modal (less jarring)
       const timer = setTimeout(() => {
+        history.pushState({}, '', '/share-modal-shown');
         setShowShareModal(true);
       }, 2000);
       return () => clearTimeout(timer);
@@ -146,6 +147,7 @@ function App() {
   };
 
   const handleShareModalClose = () => {
+    history.pushState({}, '', '/share-modal-dismissed');
     markShareModalShown();
     setShowShareModal(false);
   };
@@ -175,7 +177,7 @@ function App() {
   if (!installPromptShown && !isAppInstalled()) {
     return (
       <InstallPrompt onContinue={() => {
-        navigate('/install-skipped', { replace: true });
+        history.pushState({}, '', '/install-skipped');
         markInstallPromptShown();
         setInstallPromptShown(true);
       }} />

@@ -19,8 +19,8 @@ export default function ProfileSetup({ onComplete }) {
   });
 
   useEffect(() => {
-    // Scroll to top when component mounts
     window.scrollTo(0, 0);
+    history.pushState({}, '', '/profile-setup-shown');
   }, []);
 
   const handleSubmit = (e) => {

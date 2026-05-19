@@ -51,6 +51,7 @@ function InstallPrompt({ onContinue }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    history.pushState({}, '', '/install-prompt-shown');
 
     const ua = navigator.userAgent.toLowerCase();
     const checkMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

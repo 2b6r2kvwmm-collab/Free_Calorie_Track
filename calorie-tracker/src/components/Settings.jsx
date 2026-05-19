@@ -189,6 +189,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
   // Export all data as JSON
   const onExport = () => {
+    history.pushState({}, '', '/data-exported');
     handleExport();
     setImportMessage('Data exported successfully!');
     setTimeout(() => setImportMessage(''), 3000);
