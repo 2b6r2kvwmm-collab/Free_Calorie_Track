@@ -64,7 +64,7 @@ Modern tracking apps have three ways to log food — and knowing when to use eac
 
 - **Barcode scanner** — fastest for packaged foods. Scan, confirm, done.
 - **Food database search** — best for whole foods (chicken breast, banana, oats)
-- **AI food logging** — the biggest recent change. Describe a meal in plain English and the AI estimates the calories and macros. Genuinely useful for restaurant meals, home cooking, and anything without a label.
+- **AI food logging** — the biggest recent change. Take a photo of your meal or describe it in plain English and the AI estimates the calories and macros. Adding a note to your photo ("large portion, used extra dressing") meaningfully improves accuracy. Genuinely useful for restaurant meals, home cooking, and anything without a label.
 
 **Features you need:**
 - ✅ Barcode scanner for packaged foods
@@ -113,7 +113,7 @@ The built-in calculator handles all the math and adjusts as you update your stat
 4. Include everything: cooking oils, condiments, "just a bite" samples
 5. Track drinks (alcohol, juice, soda, coffee creamer)
 
-**For meals you can't easily look up:** Use AI logging. Describe what you ate — "grilled chicken thigh with roasted sweet potato and a side salad with olive oil" — and the AI returns an estimate broken down by food. It won't be as precise as weighing, but it's far better than skipping the log entirely.
+**For meals you can't easily look up:** Use AI logging. Take a photo of your plate, or describe what you ate — "grilled chicken thigh with roasted sweet potato and a side salad with olive oil." The AI returns an estimate broken down by food. Adding a note to your photo ("large portion," "heavy on the oil") pushes accuracy closer to reality. It won't be as precise as weighing, but it's far better than skipping the log entirely.
 
 ### Step 3: Read Nutrition Labels
 
@@ -163,7 +163,9 @@ Every packaged food has a Nutrition Facts label. Here's how to read it for calor
 
 **Method 3: AI Logging (For anything you didn't weigh)**
 
-If you cooked without weighing, or ate something you didn't prepare, describe it. "Two scrambled eggs cooked in butter with a slice of sourdough toast and a handful of blueberries." The AI breaks it down by item and returns calorie and macro estimates. Not perfect — but accurate enough to keep your log moving when the alternative is leaving it blank.
+If you cooked without weighing, or ate something you didn't prepare, take a photo or describe it. "Two scrambled eggs cooked in butter with a slice of sourdough toast and a handful of blueberries." The AI breaks it down by item and returns calorie and macro estimates.
+
+One underused trick: photograph the recipe or ingredient list before you cook. A photo of the recipe card or the open cookbook page gives the AI exact ingredient quantities to work with — which makes the estimate significantly more accurate than describing a finished plate from memory. Not perfect, but often surprisingly close.
 
 **Example recipe for Method 1: Chicken stir-fry**
 - 200g chicken breast (raw weight)
@@ -189,9 +191,9 @@ Log each item, save as "Chicken Stir-Fry," note total weight. Next time, just we
 
 This is where most people give up — or just skip the log. AI food logging changes the calculus here significantly.
 
-- **Restaurant meals at local spots** — Previously: guess and add 20%. Now: describe the dish and let the AI estimate it. "Pad Thai with shrimp, medium portion" gets you a reasonable breakdown immediately.
-- **Mixed dishes without recipes** — Casseroles, stews, dishes at dinner parties. Describe what you can see: protein, starch, vegetables, visible fat. The AI handles the rest.
-- **Foods cooked by others** — Same approach. You don't need the recipe — describe the plate.
+- **Restaurant meals at local spots** — Previously: guess and add 20%. Now: photograph your plate and add a note ("large portion, came with extra sauce") or just describe the dish. "Pad Thai with shrimp, medium portion" gets you a reasonable breakdown immediately.
+- **Mixed dishes without recipes** — Casseroles, stews, dishes at dinner parties. If you can photograph the dish before serving, do it — the AI can estimate from the visual. Add a note about any ingredients that aren't obvious from looking at it.
+- **Foods cooked by others** — Same approach. Photograph the plate. If you know anything about how it was prepared, add it as a note — "cooked in a lot of butter," "very saucy" — it matters.
 - **"A handful" of calorie-dense foods** — Nuts, granola, dried fruit. Weigh these whenever possible. AI estimation of loose snacks is the weakest use case; a scale is still better.
 
 **When in doubt:** Use AI logging to get a working estimate rather than skipping. An imperfect log is far more useful than a gap.
@@ -313,7 +315,7 @@ Plan your meals in the morning and log them ahead of time. This removes decision
 **Option 2: Build it yourself** — Log individual components
 - Example: Burger = bun (200) + patty (300) + cheese (100) + sauce (50) + fries (400) = 1,050 cal
 
-**Option 3: Use AI logging** — Describe the meal in plain English. "Chicken tikka masala with basmati rice, medium restaurant portion" returns a calorie and macro estimate in seconds. Include details that change the calorie count: sauces, oils, sides, portion size. The more specific you are, the better the estimate.
+**Option 3: Use AI logging** — Photograph your plate or describe the meal. "Chicken tikka masala with basmati rice, medium restaurant portion" returns a calorie and macro estimate in seconds. A photo plus a short annotation ("large portion, extra naan on the side") is more accurate than a description alone — the AI can see the plate and use your note to calibrate. The more context you provide, the better the estimate.
 
 **Option 4: Estimate conservatively** — Add 20% to any estimate to account for cooking oils and hidden ingredients restaurants don't disclose.
 
@@ -367,9 +369,11 @@ Tracking macros is optional but helpful. At minimum, track protein.
 
 ### "How accurate is AI food logging?"
 
-Accurate enough to be useful, not accurate enough to replace weighing. For a restaurant meal or home-cooked dish you didn't measure, AI logging typically gets you within 10–20% of the actual calorie count — which is comparable to how accurately most people estimate by eye, but without the systematic bias toward underestimating.
+It depends on what you give it. A photo of your plate with a short annotation ("double portion, heavy dressing") is more accurate than a text description alone — the AI can see the food and use your note to calibrate portion size and preparation. The most accurate use case is photographing a recipe or ingredient list before you cook: the AI has exact quantities and can calculate precisely, often getting very close to what you'd get from logging every ingredient individually.
 
-Use it as your default for anything you can't scan or weigh. Treat the result as a reasonable estimate and move on.
+For restaurant meals or finished dishes you didn't weigh, expect to be within 10–20% of the actual count — comparable to a careful visual estimate, but without the systematic bias toward underestimating.
+
+Use it as your default for anything you can't scan or weigh. Treat the result as a reasonable working estimate and move on.
 
 ---
 
