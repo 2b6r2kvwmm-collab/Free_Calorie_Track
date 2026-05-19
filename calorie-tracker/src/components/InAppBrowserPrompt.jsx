@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Copy, Check, ExternalLink, X } from 'lucide-react';
+import { Copy, Check, ExternalLink } from 'lucide-react';
 
 function detectContext() {
   const ua = navigator.userAgent;
