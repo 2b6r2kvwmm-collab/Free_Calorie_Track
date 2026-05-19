@@ -6,29 +6,25 @@ author: "FCT Staff"
 image: "/images/blog/how-to-count-calories.webp"
 ---
 
-![How to count calories](/images/blog/how-to-count-calories.webp)
+<img src="/images/blog/how-to-count-calories.webp" alt="How to count calories for weight loss" width="1600" height="893" />
 
-<div class="bg-emerald-50 dark:bg-emerald-900/20 border-l-4 border-emerald-500 p-6 my-6 rounded-r-lg">
-  <h3 class="text-lg font-bold text-emerald-900 dark:text-emerald-100 mt-0 mb-3">💡 TL;DR</h3>
-  <ul class="mb-0 space-y-2 text-gray-800 dark:text-gray-200">
-    <li>Calorie counting is the most effective method for weight management backed by science</li>
-    <li>You need: a food scale, tracking app, and basic knowledge of nutrition labels</li>
+<div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+  <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
+  <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
+    <li>Calorie counting is the most evidence-backed method for weight management</li>
+    <li>You need: a food scale, a tracking app, and basic knowledge of nutrition labels</li>
     <li>Start by tracking everything you eat for 1 week without changing habits</li>
-    <li>Accuracy matters more than perfection—consistent tracking beats occasional precision</li>
+    <li>Accuracy matters more than perfection — consistent tracking beats occasional precision</li>
   </ul>
 </div>
 
-If you've ever felt overwhelmed by the idea of counting calories, you're not alone. But here's the truth: **calorie counting is the most straightforward, science-backed method for managing your weight**—and it's simpler than you think once you understand the basics.
-
-This guide will walk you through everything you need to know to start counting calories effectively, from essential tools to common pitfalls.
+If you've ever felt overwhelmed by the idea of counting calories, you're not alone. But calorie counting is the most straightforward, science-backed method for managing your weight — and it's simpler than you think once you understand the basics.
 
 ---
 
 ## Why Count Calories?
 
-### The Science is Simple
-
-Weight management comes down to energy balance:
+Weight management comes down to one thing: [energy balance](/blog/what-are-calories).
 
 - **Eat more calories than you burn** = Weight gain
 - **Eat fewer calories than you burn** = Weight loss
@@ -36,13 +32,13 @@ Weight management comes down to energy balance:
 
 Calorie counting removes the guesswork. Instead of wondering why the scale isn't moving, you'll have data showing exactly what's happening.
 
-### The Benefits
+**Why it works:**
 
-1. **Awareness** - Most people underestimate their intake by 30-50%
-2. **Flexibility** - No food is off-limits if it fits your calories
-3. **Education** - You'll learn which foods are calorie-dense vs nutrient-dense
-4. **Accountability** - Tracking creates a record of your choices
-5. **Results** - Studies consistently show calorie counting works for weight loss
+1. **Awareness** — Most people underestimate their intake by 30–50%
+2. **Flexibility** — No food is off-limits if it fits your calories
+3. **Education** — You'll learn which foods are calorie-dense vs. filling
+4. **Accountability** — Tracking creates a record of your choices
+5. **Results** — Studies consistently show calorie counting works for weight loss
 
 ---
 
@@ -87,13 +83,13 @@ For liquids and specific ingredients where weight isn't practical (though weighi
 
 ### Step 1: Calculate Your Calorie Target
 
-Before tracking, you need to know your goal. **Free Calorie Track automatically calculates your TDEE (Total Daily Energy Expenditure)** based on your age, sex, height, weight, and activity level—then recommends calorie targets based on your goal.
+Before tracking, you need to know your goal. Free Calorie Track automatically calculates your [TDEE (Total Daily Energy Expenditure)](/blog/how-to-calculate-tdee) based on your age, sex, height, weight, and activity level — then recommends calorie targets based on your goal.
 
-**For weight loss:** The app suggests a 300-500 calorie deficit from your TDEE
-**For muscle gain:** The app suggests a 200-300 calorie surplus
-**For maintenance:** The app calculates your TDEE
+**For weight loss:** A 300–500 calorie deficit from your TDEE
+**For muscle gain:** A 200–300 calorie surplus
+**For maintenance:** Eat at your TDEE
 
-The built-in calculator saves you from doing manual math and adjusts as you update your stats.
+The built-in calculator handles all the math and adjusts as you update your stats.
 
 ### Step 2: Track Everything for 1 Week (Baseline Week)
 
@@ -345,41 +341,23 @@ No. Aim for a weekly average. If your goal is 2,000 calories/day (14,000/week), 
 
 ### "What about macros—do I need to track protein, carbs, and fat?"
 
-Calories determine weight loss, but macros affect satiety and muscle preservation:
-- **Protein:** 0.7-1g per lb body weight (helps preserve muscle, keeps you full)
-- **Fat:** 0.3-0.5g per lb body weight (hormone production, satiety)
+Calories determine weight loss, but [macros](/blog/what-are-macros) affect satiety and muscle preservation:
+- **Protein:** 0.7–1g per lb body weight (preserves muscle, keeps you full)
+- **Fat:** 0.3–0.5g per lb body weight (hormone production, satiety)
 - **Carbs:** Fill the rest (energy, performance)
 
 Tracking macros is optional but helpful. At minimum, track protein.
 
 ---
 
-## Start Tracking Today with Free Calorie Track
-
-Free Calorie Track makes calorie counting simple:
-
-- ✅ **Barcode scanner** for instant food logging
-- ✅ **Thousands of common foods** pre-loaded
-- ✅ **Custom meals and recipes** you can save
-- ✅ **Macro tracking** for protein, carbs, fat
-- ✅ **100% free** forever, no premium tier
-
-<div class="text-center my-8">
-  <a href="/" class="inline-block bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl transition-colors shadow-lg">
-    Start Tracking Free
-  </a>
-</div>
-
----
-
 ## Your 7-Day Action Plan
 
-### Day 1-2: Setup
+### Day 1–2: Setup
 - Buy a food scale (or order one)
 - Download Free Calorie Track
-- Calculate your calorie target
+- Calculate your calorie target in the app
 
-### Day 3-9: Baseline Week
+### Day 3–9: Baseline Week
 - Track everything you normally eat
 - Don't try to change habits yet
 - Get comfortable with the app
@@ -392,7 +370,25 @@ Free Calorie Track makes calorie counting simple:
 ### Day 11+: Execute
 - Eat at your target calories
 - Weigh yourself weekly (same day, same time)
-- Adjust as needed based on results
+- Adjust based on results
+
+---
+
+## Start Tracking with Free Calorie Track
+
+Free Calorie Track makes calorie counting simple:
+
+- ✅ **Barcode scanner** for instant food logging
+- ✅ **220,000+ foods** pre-loaded
+- ✅ **Custom meals and recipes** you can save
+- ✅ **Macro tracking** for protein, carbs, fat
+- ✅ **100% free** forever, no premium tier
+
+<div class="text-center my-8">
+  <a href="/" class="inline-block bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold py-3 px-8 rounded-xl transition-all shadow-lg shadow-emerald-500/30">
+    Start Tracking Free →
+  </a>
+</div>
 
 ---
 
@@ -404,9 +400,19 @@ Free Calorie Track makes calorie counting simple:
     <h4 class="font-semibold text-gray-900 dark:text-white mb-1">How to Use a Food Scale</h4>
     <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Master the most important tool for calorie counting</p>
   </a>
-  <a href="/blog/how-many-calories-should-i-eat-to-lose-weight" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+  <a href="/blog/how-to-calculate-tdee" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">🔥</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Free TDEE Calculator</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Find your maintenance calories before setting a deficit</p>
+  </a>
+  <a href="/blog/calorie-deficit-calculator" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
     <div class="text-2xl mb-2">🎯</div>
-    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">How Many Calories to Lose Weight</h4>
-    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Calculate your perfect calorie deficit</p>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">Calorie Deficit Calculator</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Calculate exactly how many calories to cut for weight loss</p>
+  </a>
+  <a href="/blog/high-fiber-foods" class="block p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <div class="text-2xl mb-2">🥦</div>
+    <h4 class="font-semibold text-gray-900 dark:text-white mb-1">High Fiber Foods</h4>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">Foods that keep you full on fewer calories</p>
   </a>
 </div>

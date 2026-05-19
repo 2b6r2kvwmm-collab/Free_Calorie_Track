@@ -174,7 +174,7 @@ Most high-fiber foods contain both types. For general health and weight loss, to
 
 Free Calorie Track automatically tracks fiber alongside calories, [protein, carbs, and fat](/blog/what-are-macros) for every food you log. Use the barcode scanner for packaged foods or search the 220,000+ food database to see your fiber in real time — no manual math needed.
 
-If you're not hitting your fiber target consistently, the daily breakdown shows you exactly where the gap is. Adjust from there.
+If you're not hitting your fiber target consistently, the daily breakdown shows you exactly where the gap is. Adjust from there. New to tracking? See our [beginner's guide to counting calories](/blog/how-to-count-calories).
 
 👉 **[Start tracking free →](/)** — no account required
 
