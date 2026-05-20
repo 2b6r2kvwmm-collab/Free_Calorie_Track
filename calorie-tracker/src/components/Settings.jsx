@@ -122,7 +122,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
       computedAge = today.getFullYear() - dob.getFullYear();
       if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) computedAge--;
     }
-    if (!computedAge || isNaN(computedAge)) return;
+    if (!computedAge || isNaN(computedAge) || computedAge < 13) return;
 
     const profile = {
       age: computedAge,
@@ -393,9 +393,20 @@ export default function Settings({ onUpdateProfile, onClose }) {
               type="date"
               value={formData.birthday}
               onChange={(e) => updateFieldAndSave('birthday', e.target.value)}
-              max={new Date(Date.now() - 13 * 365.25 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+              max={new Date().toISOString().split('T')[0]}
               className="text-base py-2 px-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800 mb-3"
             />
+            {formData.birthday && (() => {
+              const dob = new Date(formData.birthday);
+              const today = new Date();
+              let age = today.getFullYear() - dob.getFullYear();
+              if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
+              return age < 13 ? (
+                <p className="text-sm text-red-600 dark:text-red-400 mb-3">
+                  You must be at least 13 years old to use Free Calorie Track.
+                </p>
+              ) : null;
+            })()}
             {!formData.birthday && (
               <>
                 <label className="block text-sm font-semibold mb-1 text-gray-600 dark:text-gray-400">Or enter age manually</label>
@@ -411,17 +422,17 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 />
               </>
             )}
-            {formData.birthday && (
-              <p className="text-sm text-emerald-600 dark:text-emerald-400">
-                Age computed automatically: {(() => {
-                  const today = new Date();
-                  const dob = new Date(formData.birthday);
-                  let age = today.getFullYear() - dob.getFullYear();
-                  if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
-                  return age;
-                })()} years
-              </p>
-            )}
+            {formData.birthday && (() => {
+              const today = new Date();
+              const dob = new Date(formData.birthday);
+              let age = today.getFullYear() - dob.getFullYear();
+              if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
+              return age >= 13 ? (
+                <p className="text-sm text-emerald-600 dark:text-emerald-400">
+                  Age computed automatically: {age} years
+                </p>
+              ) : null;
+            })()}
           </div>
 
           {/* Sex */}

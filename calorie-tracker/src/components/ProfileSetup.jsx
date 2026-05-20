@@ -32,8 +32,17 @@ export default function ProfileSetup({ onComplete }) {
     history.pushState({}, '', '/profile-setup-shown');
   }, []);
 
+  const isTooYoung = formData.birthday && (() => {
+    const dob = new Date(formData.birthday);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
+    return age < 13;
+  })();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (isTooYoung) return;
     if (step === 1) { setStep(2); window.scrollTo(0, 0); return; }
 
     let height = parseFloat(formData.height);
@@ -129,9 +138,20 @@ export default function ProfileSetup({ onComplete }) {
                   required
                   value={formData.birthday}
                   onChange={(e) => updateField('birthday', e.target.value)}
-                  max={new Date(Date.now() - 13 * 365.25 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                  max={new Date().toISOString().split('T')[0]}
                   className="text-base py-2 px-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800"
                 />
+                {formData.birthday && (() => {
+                  const dob = new Date(formData.birthday);
+                  const today = new Date();
+                  let age = today.getFullYear() - dob.getFullYear();
+                  if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
+                  return age < 13 ? (
+                    <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                      You must be at least 13 years old to use Free Calorie Track.
+                    </p>
+                  ) : null;
+                })()}
               </div>
 
               {/* Sex */}
@@ -349,7 +369,7 @@ export default function ProfileSetup({ onComplete }) {
           <button
             type="submit"
             className="btn-primary w-full"
-            disabled={step === 2 && !disclaimerAccepted}
+            disabled={(step === 2 && !disclaimerAccepted) || !!isTooYoung}
           >
             {step === 1 ? 'Continue →' : 'Complete Setup'}
           </button>
