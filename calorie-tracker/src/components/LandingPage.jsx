@@ -421,9 +421,14 @@ export default function LandingPage({ onGetStarted }) {
           <span className="text-lg font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent" style={{ fontFamily: "'Inter', system-ui, sans-serif", letterSpacing: '-0.02em' }}>
             Free Calorie Track
           </span>
-          <Link to="/blog" className="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
-            Blog
-          </Link>
+          <div className="flex items-center gap-5">
+            <a href="https://shop.freecalorietrack.com" target="_blank" rel="noopener noreferrer" onClick={() => history.pushState({}, '', '/shop-clicked-lp-header')} className="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+              Shop
+            </a>
+            <Link to="/blog" className="text-sm text-gray-600 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors font-medium">
+              Blog
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -589,6 +594,9 @@ export default function LandingPage({ onGetStarted }) {
         <div className="max-w-6xl mx-auto">
           {/* Links */}
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600 dark:text-gray-400 mb-4">
+            <a href="https://shop.freecalorietrack.com" target="_blank" rel="noopener noreferrer" onClick={() => history.pushState({}, '', '/shop-clicked-lp-footer')} className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+              Shop
+            </a>
             <Link to="/blog" className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
               Blog
             </Link>

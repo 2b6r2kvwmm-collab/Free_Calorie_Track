@@ -1251,15 +1251,23 @@ export default function Settings({ onUpdateProfile, onClose }) {
           Chip in $5
         </button>
 
-        {/* Subtle link to gear reviews */}
-        <p className="text-center mt-3">
+        <div className="grid grid-cols-2 gap-3 mt-3">
+          <a
+            href="https://shop.freecalorietrack.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => history.pushState({}, '', '/shop-clicked-settings')}
+            className="btn-secondary text-center text-sm py-2.5"
+          >
+            Shop FCT
+          </a>
           <Link
             to="/blog?category=Gear+Reviews"
-            className="text-xs text-gray-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            className="btn-secondary text-center text-sm py-2.5"
           >
-            Gear recommendations →
+            Gear Reviews
           </Link>
-        </p>
+        </div>
       </div>
 
       {/* Share Section */}

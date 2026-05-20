@@ -34,31 +34,25 @@ function generateFooterHTML(content) {
         <p style="font-size: 14px; line-height: 1.5; color: #999; max-width: 500px; margin: 0 auto 15px;">
           ${content.supportSection.description}
         </p>
-        <a href="${content.supportSection.buttonUrl}" target="_blank" rel="noopener noreferrer" class="support-button" onclick="history.pushState({},'','/support-clicked-footer')">
-          ${content.supportSection.buttonText}
-        </a>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <a href="${content.supportSection.buttonUrl}" target="_blank" rel="noopener noreferrer" class="support-button" onclick="history.pushState({},'','/support-clicked-footer')">
+            ${content.supportSection.buttonText}
+          </a>
+          <a href="${content.supportSection.shopUrl}" target="_blank" rel="noopener noreferrer" class="shop-button" onclick="history.pushState({},'','/shop-clicked-footer')">
+            <span class="shop-button-inner">${content.supportSection.shopText}</span>
+          </a>
+        </div>
       </div>
 
       <hr class="footer-divider">
 
-      <div style="margin-top: 35px; margin-bottom: 20px;">
-        <p class="gear-header" style="color: #999; margin-bottom: 4px;">
-          <strong>${content.gearLinks.heading}</strong>
-        </p>
-        <p style="font-size: 12px; color: #888; margin-bottom: 20px;">
+      <div style="margin-top: 30px; margin-bottom: 20px;">
+        <p style="font-size: 12px; color: #888; margin-bottom: 8px;">
           ${content.gearLinks.disclaimer}
         </p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; max-width: 700px; margin: 0 auto;">
-          ${content.gearLinks.items.map(item => `
-          <div class="gear-card">
-            <div class="gear-card-title">${item.name}</div>
-            <div class="gear-card-desc">${item.desc}</div>
-            <div style="display: flex; gap: 6px;">
-              <a href="${item.url}" target="_blank" rel="noopener noreferrer" style="flex: 1; text-align: center; background: linear-gradient(to right, #10b981, #14b8a6); color: #fff; text-decoration: none; font-size: 11px; font-weight: 600; padding: 5px 8px; border-radius: 5px;">Check it out →</a>
-              <a href="${item.reviewUrl}" style="flex: 1; text-align: center; background: #374151; color: #9ca3af; text-decoration: none; font-size: 11px; font-weight: 500; padding: 5px 8px; border-radius: 5px;">Read review</a>
-            </div>
-          </div>`).join('')}
-        </div>
+        <a href="https://freecalorietrack.com/blog?category=Gear+Reviews" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: none; font-size: 14px; font-weight: 500;">
+          Check out my favorite gear →
+        </a>
       </div>
 
       <hr class="footer-divider">
