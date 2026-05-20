@@ -20,6 +20,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const [dashboardOpen, setDashboardOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [dataOpen, setDataOpen] = useState(false);
+  const [savedFlash, setSavedFlash] = useState(false);
   const [useCustomGoals, setUseCustomGoals] = useState(!!(getCustomMacros() || getCustomCalorieGoal()));
 
   // Calculate default custom macros based on current profile if not already set
@@ -100,73 +101,67 @@ export default function Settings({ onUpdateProfile, onClose }) {
     manualTrimester: currentProfile.manualTrimester || '',
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Convert imperial to metric if needed for storage
+  const doSave = (fd, cm, ucg, ucn) => {
     let height, weight;
-    weight = parseFloat(formData.weight);
+    weight = parseFloat(fd.weight);
 
-    if (formData.unit === 'imperial') {
-      const totalInches = (parseInt(formData.heightFeet) || 0) * 12 + (parseFloat(formData.heightInches) || 0);
+    if (fd.unit === 'imperial') {
+      const totalInches = (parseInt(fd.heightFeet) || 0) * 12 + (parseFloat(fd.heightInches) || 0);
       height = totalInches * 2.54;
       weight = weight * 0.453592;
     } else {
-      height = parseFloat(formData.height);
+      height = parseFloat(fd.height);
     }
 
-    // Compute age from birthday if provided
-    let computedAge = parseInt(formData.age);
-    if (formData.birthday) {
+    if (!height || !weight || isNaN(height) || isNaN(weight)) return;
+
+    let computedAge = parseInt(fd.age);
+    if (fd.birthday) {
       const today = new Date();
-      const dob = new Date(formData.birthday);
+      const dob = new Date(fd.birthday);
       computedAge = today.getFullYear() - dob.getFullYear();
       if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) computedAge--;
     }
+    if (!computedAge || isNaN(computedAge)) return;
 
     const profile = {
       age: computedAge,
-      birthday: formData.birthday || null,
-      sex: formData.sex,
+      birthday: fd.birthday || null,
+      sex: fd.sex,
       height,
       weight,
-      activityLevel: formData.activityLevel,
-      unit: formData.unit,
-      fitnessGoal: formData.fitnessGoal,
-      reproductiveStatus: formData.reproductiveStatus || 'none',
-      dueDate: formData.dueDate || null,
-      manualTrimester: formData.manualTrimester || null,
+      activityLevel: fd.activityLevel,
+      unit: fd.unit,
+      fitnessGoal: fd.fitnessGoal,
+      reproductiveStatus: fd.reproductiveStatus || 'none',
+      dueDate: fd.dueDate || null,
+      manualTrimester: fd.manualTrimester || null,
     };
 
-    // If sex changed from female to male, reset reproductive status
-    if (formData.sex === 'male') {
+    if (fd.sex === 'male') {
       profile.reproductiveStatus = 'none';
       profile.dueDate = null;
       profile.manualTrimester = null;
     }
 
-    // Save or clear custom goals
-    if (useCustomGoals) {
-      saveCustomMacros(customMacros);
-      // Calculate net goal: Total Calories from Macros - Lifestyle TDEE
-      const totalCaloriesFromMacros = (customMacros.protein * 4) + (customMacros.carbs * 4) + (customMacros.fat * 9);
+    if (ucg) {
+      saveCustomMacros(cm);
+      const totalCaloriesFromMacros = (cm.protein * 4) + (cm.carbs * 4) + (cm.fat * 9);
       const bmrForGoal = calculateBMR(profile);
-      const tdeeForGoal = calculateTDEE(bmrForGoal, formData.activityLevel);
+      const tdeeForGoal = calculateTDEE(bmrForGoal, fd.activityLevel);
       const netCalorieGoal = totalCaloriesFromMacros - tdeeForGoal;
       saveCustomCalorieGoal(netCalorieGoal);
       saveDailyGoal(netCalorieGoal);
     } else {
       clearCustomMacros();
       clearCustomCalorieGoal();
-      // Auto-set net calorie goal based on fitness goal
       const bmrForGoal = calculateBMR(profile);
-      const tdeeForGoal = calculateTDEE(bmrForGoal, formData.activityLevel);
-      const macroTargets = calculateMacroTargets(weight, tdeeForGoal, formData.fitnessGoal);
+      const tdeeForGoal = calculateTDEE(bmrForGoal, fd.activityLevel);
+      const macroTargets = calculateMacroTargets(weight, tdeeForGoal, fd.fitnessGoal);
       saveDailyGoal(macroTargets.calorieAdjustment);
     }
 
-    // Save or clear custom nutrition targets
-    if (useCustomNutrition) {
+    if (ucn) {
       saveCustomNutrition(customNutrition);
     } else {
       clearCustomNutrition();
@@ -174,11 +169,19 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
     saveProfile(profile);
     onUpdateProfile(profile);
-    onClose();
+
+    setSavedFlash(true);
+    setTimeout(() => setSavedFlash(false), 1500);
   };
 
   const updateField = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const updateFieldAndSave = (field, value) => {
+    const newFd = { ...formData, [field]: value };
+    setFormData(newFd);
+    doSave(newFd, customMacros, useCustomGoals, useCustomNutrition);
   };
 
   // When unit changes, convert height/weight
@@ -200,14 +203,9 @@ export default function Settings({ onUpdateProfile, onClose }) {
       newWeight = Math.round(newWeight * 0.453592 * 10) / 10;
     }
 
-    setFormData(prev => ({
-      ...prev,
-      unit: newUnit,
-      height: newHeight,
-      heightFeet,
-      heightInches,
-      weight: newWeight,
-    }));
+    const newFd = { ...formData, unit: newUnit, height: newHeight, heightFeet, heightInches, weight: newWeight };
+    setFormData(newFd);
+    doSave(newFd, customMacros, useCustomGoals, useCustomNutrition);
   };
 
   // Export all data as JSON
@@ -340,7 +338,10 @@ export default function Settings({ onUpdateProfile, onClose }) {
       <div className="card">
         <button type="button" onClick={() => setProfileOpen(v => !v)} className="flex w-full items-center justify-between gap-4">
           <h2 className="text-xl font-bold">Profile Settings</h2>
-          <svg className={`w-5 h-5 text-gray-400 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+          <div className="flex items-center gap-2">
+            {savedFlash && <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">Saved ✓</span>}
+            <svg className={`w-5 h-5 text-gray-400 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+          </div>
         </button>
 
         {profileOpen && <><div className="mb-6 mt-4 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
@@ -349,7 +350,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={e => e.preventDefault()} className="space-y-8">
           {/* SECTION: Basic Information */}
           <div className="space-y-6">
             <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 border-b-2 border-gray-200 dark:border-gray-700 pb-2">
@@ -391,7 +392,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
             <input
               type="date"
               value={formData.birthday}
-              onChange={(e) => updateField('birthday', e.target.value)}
+              onChange={(e) => updateFieldAndSave('birthday', e.target.value)}
               max={new Date(Date.now() - 13 * 365.25 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
               className="text-base py-2 px-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800 mb-3"
             />
@@ -405,6 +406,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                   max="120"
                   value={formData.age}
                   onChange={(e) => updateField('age', e.target.value)}
+                  onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
                   className="input-field"
                 />
               </>
@@ -428,7 +430,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
             <div className="grid grid-cols-2 gap-4">
               <button
                 type="button"
-                onClick={() => updateField('sex', 'male')}
+                onClick={() => updateFieldAndSave('sex', 'male')}
                 className={`py-2 px-4 rounded-lg font-semibold text-sm border-2 transition-colors ${
                   formData.sex === 'male'
                     ? 'bg-emerald-600 text-white border-emerald-500'
@@ -439,7 +441,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               </button>
               <button
                 type="button"
-                onClick={() => updateField('sex', 'female')}
+                onClick={() => updateFieldAndSave('sex', 'female')}
                 className={`py-2 px-4 rounded-lg font-semibold text-sm border-2 transition-colors ${
                   formData.sex === 'female'
                     ? 'bg-emerald-600 text-white border-emerald-500'
@@ -470,6 +472,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 step="0.1"
                 value={formData.height}
                 onChange={(e) => updateField('height', e.target.value)}
+                onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
                 className="input-field"
                 placeholder="170"
               />
@@ -484,6 +487,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                     max="8"
                     value={formData.heightFeet}
                     onChange={(e) => updateField('heightFeet', e.target.value)}
+                    onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
                     className="input-field"
                     placeholder="5"
                   />
@@ -498,6 +502,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                     step="0.1"
                     value={formData.heightInches}
                     onChange={(e) => updateField('heightInches', e.target.value)}
+                    onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
                     className="input-field"
                     placeholder="10"
                   />
@@ -519,6 +524,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               step="0.1"
               value={formData.weight}
               onChange={(e) => updateField('weight', e.target.value)}
+              onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
               className="input-field"
               placeholder={formData.unit === 'metric' ? '70' : '154'}
             />
@@ -541,12 +547,12 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 <select
                   value={formData.reproductiveStatus}
                   onChange={(e) => {
-                    updateField('reproductiveStatus', e.target.value);
-                    // Clear dates when status changes
-                    if (e.target.value === 'none') {
-                      updateField('dueDate', '');
-                      updateField('manualTrimester', '');
-                    }
+                    const newStatus = e.target.value;
+                    const newFd = newStatus === 'none'
+                      ? { ...formData, reproductiveStatus: newStatus, dueDate: '', manualTrimester: '' }
+                      : { ...formData, reproductiveStatus: newStatus };
+                    setFormData(newFd);
+                    doSave(newFd, customMacros, useCustomGoals, useCustomNutrition);
                   }}
                   className="input-field mb-4"
                 >
@@ -566,7 +572,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                       <input
                         type="date"
                         value={formData.dueDate}
-                        onChange={(e) => updateField('dueDate', e.target.value)}
+                        onChange={(e) => updateFieldAndSave('dueDate', e.target.value)}
                         className="input-field"
                         max={new Date(Date.now() + 280 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
                       />
@@ -606,7 +612,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                         <label className="block text-sm font-semibold mb-2">Or select trimester manually</label>
                         <select
                           value={formData.manualTrimester}
-                          onChange={(e) => updateField('manualTrimester', e.target.value)}
+                          onChange={(e) => updateFieldAndSave('manualTrimester', e.target.value)}
                           className="input-field"
                         >
                           <option value="">Select trimester...</option>
@@ -641,7 +647,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
             </p>
             <select
               value={formData.activityLevel}
-              onChange={(e) => updateField('activityLevel', e.target.value)}
+              onChange={(e) => updateFieldAndSave('activityLevel', e.target.value)}
               className="input-field"
             >
               <option value="sedentary">Sedentary - Desk job, little movement</option>
@@ -664,7 +670,11 @@ export default function Settings({ onUpdateProfile, onClose }) {
                 type="checkbox"
                 id="useCustomGoals"
                 checked={useCustomGoals}
-                onChange={(e) => setUseCustomGoals(e.target.checked)}
+                onChange={(e) => {
+                const checked = e.target.checked;
+                setUseCustomGoals(checked);
+                doSave(formData, customMacros, checked, useCustomNutrition);
+              }}
                 className="w-5 h-5 text-emerald-500 rounded"
               />
               <label htmlFor="useCustomGoals" className="text-lg font-semibold cursor-pointer">
@@ -759,7 +769,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                   <button
                     key={goalKey}
                     type="button"
-                    onClick={() => updateField('fitnessGoal', goalKey)}
+                    onClick={() => updateFieldAndSave('fitnessGoal', goalKey)}
                     className={`w-full text-left p-4 rounded-lg border-2 transition-colors ${
                       formData.fitnessGoal === goalKey
                         ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20'
@@ -908,6 +918,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                         step="1"
                         value={customMacros.protein}
                         onChange={(e) => setCustomMacros({ ...customMacros, protein: parseInt(e.target.value) || 0 })}
+                        onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
                         className="input-field"
                       />
                     </div>
@@ -922,6 +933,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                         step="1"
                         value={customMacros.carbs}
                         onChange={(e) => setCustomMacros({ ...customMacros, carbs: parseInt(e.target.value) || 0 })}
+                        onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
                         className="input-field"
                       />
                     </div>
@@ -936,6 +948,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                         step="1"
                         value={customMacros.fat}
                         onChange={(e) => setCustomMacros({ ...customMacros, fat: parseInt(e.target.value) || 0 })}
+                        onBlur={() => doSave(formData, customMacros, useCustomGoals, useCustomNutrition)}
                         className="input-field"
                       />
                     </div>
@@ -993,9 +1006,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
           })()}
           </div>
 
-          <button type="submit" className="btn-primary w-full mt-8">
-            Save Changes
-          </button>
         </form></>}
       </div>
 
@@ -1114,15 +1124,18 @@ export default function Settings({ onUpdateProfile, onClose }) {
                       id="useCustomNutrition"
                       checked={useCustomNutrition}
                       onChange={(e) => {
-                        setUseCustomNutrition(e.target.checked);
-                        // Recalculate defaults when unchecking
-                        if (!e.target.checked) {
+                        const checked = e.target.checked;
+                        setUseCustomNutrition(checked);
+                        if (!checked) {
                           const bmr = calculateBMR(currentProfile);
                           const tdee = calculateTDEE(bmr, currentProfile.activityLevel);
                           const reproAdj = getReproductiveStatusCalorieAdjustment(currentProfile);
                           const totalCalories = tdee + reproAdj;
                           const defaults = calculateNutritionTargets(totalCalories);
                           setCustomNutrition(defaults);
+                          clearCustomNutrition();
+                        } else {
+                          saveCustomNutrition(customNutrition);
                         }
                       }}
                       className="w-4 h-4 text-emerald-500 rounded"
@@ -1149,6 +1162,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                             step="1"
                             value={customNutrition.fiber}
                             onChange={(e) => setCustomNutrition({ ...customNutrition, fiber: parseInt(e.target.value) || 0 })}
+                            onBlur={() => saveCustomNutrition(customNutrition)}
                             className="input-field text-sm"
                           />
                         </div>
@@ -1163,6 +1177,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                             step="100"
                             value={customNutrition.sodium}
                             onChange={(e) => setCustomNutrition({ ...customNutrition, sodium: parseInt(e.target.value) || 0 })}
+                            onBlur={() => saveCustomNutrition(customNutrition)}
                             className="input-field text-sm"
                           />
                         </div>
@@ -1177,6 +1192,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                             step="1"
                             value={customNutrition.sugar}
                             onChange={(e) => setCustomNutrition({ ...customNutrition, sugar: parseInt(e.target.value) || 0 })}
+                            onBlur={() => saveCustomNutrition(customNutrition)}
                             className="input-field text-sm"
                           />
                         </div>
@@ -1191,6 +1207,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
                             step="1"
                             value={customNutrition.saturatedFat}
                             onChange={(e) => setCustomNutrition({ ...customNutrition, saturatedFat: parseInt(e.target.value) || 0 })}
+                            onBlur={() => saveCustomNutrition(customNutrition)}
                             className="input-field text-sm"
                           />
                         </div>

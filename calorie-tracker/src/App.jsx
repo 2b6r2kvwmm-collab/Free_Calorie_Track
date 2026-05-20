@@ -158,7 +158,7 @@ function App() {
     if (!profile || isAppInstalled() || installReminderPermanentlyDismissed()) return;
     const timer = setTimeout(() => setShowInstallReminder(true), 1500);
     return () => clearTimeout(timer);
-  }, [profile]);
+  }, []);
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';
   const todayFormatted = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
