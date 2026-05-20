@@ -89,6 +89,8 @@ export default function Settings({ onUpdateProfile, onClose }) {
     birthday: currentProfile.birthday || '',
     sex: currentProfile.sex,
     height: displayHeight,
+    heightFeet: currentProfile.unit === 'imperial' ? String(Math.floor(displayHeight / 12)) : '',
+    heightInches: currentProfile.unit === 'imperial' ? String(Math.round(displayHeight % 12 * 10) / 10) : '',
     weight: displayWeight,
     activityLevel: currentProfile.activityLevel,
     unit: currentProfile.unit,
@@ -102,12 +104,15 @@ export default function Settings({ onUpdateProfile, onClose }) {
     e.preventDefault();
 
     // Convert imperial to metric if needed for storage
-    let height = parseFloat(formData.height);
-    let weight = parseFloat(formData.weight);
+    let height, weight;
+    weight = parseFloat(formData.weight);
 
     if (formData.unit === 'imperial') {
-      height = height * 2.54; // inches to cm
-      weight = weight * 0.453592; // lbs to kg
+      const totalInches = (parseInt(formData.heightFeet) || 0) * 12 + (parseFloat(formData.heightInches) || 0);
+      height = totalInches * 2.54;
+      weight = weight * 0.453592;
+    } else {
+      height = parseFloat(formData.height);
     }
 
     // Compute age from birthday if provided
@@ -183,20 +188,24 @@ export default function Settings({ onUpdateProfile, onClose }) {
     let newHeight = parseFloat(formData.height);
     let newWeight = parseFloat(formData.weight);
 
+    let heightFeet = '', heightInches = '';
     if (newUnit === 'imperial') {
-      // Converting from metric to imperial
       newHeight = Math.round(newHeight / 2.54 * 10) / 10;  // cm to inches
-      newWeight = Math.round(newWeight / 0.453592 * 10) / 10;  // kg to lbs
+      newWeight = Math.round(newWeight / 0.453592 * 10) / 10;
+      heightFeet = String(Math.floor(newHeight / 12));
+      heightInches = String(Math.round(newHeight % 12 * 10) / 10);
     } else {
-      // Converting from imperial to metric
-      newHeight = Math.round(newHeight * 2.54 * 10) / 10;  // inches to cm
-      newWeight = Math.round(newWeight * 0.453592 * 10) / 10;  // lbs to kg
+      const totalInches = (parseInt(formData.heightFeet) || 0) * 12 + (parseFloat(formData.heightInches) || 0);
+      newHeight = Math.round(totalInches * 2.54 * 10) / 10;
+      newWeight = Math.round(newWeight * 0.453592 * 10) / 10;
     }
 
     setFormData(prev => ({
       ...prev,
       unit: newUnit,
       height: newHeight,
+      heightFeet,
+      heightInches,
       weight: newWeight,
     }));
   };
@@ -451,20 +460,50 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
           {/* Height */}
           <div>
-            <label className="block text-lg font-semibold mb-3">
-              Height ({formData.unit === 'metric' ? 'cm' : 'inches'})
-            </label>
-            <input
-              type="number"
-              required
-              min="50"
-              max="300"
-              step="0.1"
-              value={formData.height}
-              onChange={(e) => updateField('height', e.target.value)}
-              className="input-field"
-              placeholder={formData.unit === 'metric' ? '170' : '67'}
-            />
+            <label className="block text-lg font-semibold mb-3">Height</label>
+            {formData.unit === 'metric' ? (
+              <input
+                type="number"
+                required
+                min="50"
+                max="300"
+                step="0.1"
+                value={formData.height}
+                onChange={(e) => updateField('height', e.target.value)}
+                className="input-field"
+                placeholder="170"
+              />
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Feet</label>
+                  <input
+                    type="number"
+                    required
+                    min="1"
+                    max="8"
+                    value={formData.heightFeet}
+                    onChange={(e) => updateField('heightFeet', e.target.value)}
+                    className="input-field"
+                    placeholder="5"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Inches</label>
+                  <input
+                    type="number"
+                    required
+                    min="0"
+                    max="11"
+                    step="0.1"
+                    value={formData.heightInches}
+                    onChange={(e) => updateField('heightInches', e.target.value)}
+                    className="input-field"
+                    placeholder="10"
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Weight */}

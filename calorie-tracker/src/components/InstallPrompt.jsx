@@ -181,7 +181,7 @@ function InstallPrompt({ onContinue }) {
             </div>
 
             <button
-              onClick={() => { history.pushState({}, '', '/install-confirm-shown'); setShowConfirm(true); }}
+              onClick={() => { window.scrollTo(0, 0); history.pushState({}, '', '/install-confirm-shown'); setShowConfirm(true); }}
               className="w-full mt-4 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-3 px-6 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
             >
@@ -248,7 +248,7 @@ function InstallPrompt({ onContinue }) {
             </p>
 
             <button
-              onClick={() => { history.pushState({}, '', '/install-confirm-shown'); setShowConfirm(true); }}
+              onClick={() => { window.scrollTo(0, 0); history.pushState({}, '', '/install-confirm-shown'); setShowConfirm(true); }}
               className="w-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
             >
