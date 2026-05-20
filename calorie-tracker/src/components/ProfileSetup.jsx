@@ -112,11 +112,11 @@ export default function ProfileSetup({ onComplete }) {
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Unit system</label>
                 <div className="flex gap-2">
-                  <button type="button" onClick={() => updateField('unit', 'metric')} className={toggleBtn(formData.unit === 'metric')}>
-                    Metric (kg, cm)
-                  </button>
                   <button type="button" onClick={() => updateField('unit', 'imperial')} className={toggleBtn(formData.unit === 'imperial')}>
                     Imperial (lbs, ft)
+                  </button>
+                  <button type="button" onClick={() => updateField('unit', 'metric')} className={toggleBtn(formData.unit === 'metric')}>
+                    Metric (kg, cm)
                   </button>
                 </div>
               </div>
