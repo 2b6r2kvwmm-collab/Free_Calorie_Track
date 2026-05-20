@@ -65,10 +65,12 @@ function detectPlatform() {
 
 export default function InstallReminderModal({ onClose }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
   const platform = detectPlatform();
   const instructions = STEPS[platform];
 
   useEffect(() => {
+    history.pushState({}, '', '/install-reminder-shown');
     const handler = (e) => { e.preventDefault(); setDeferredPrompt(e); };
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
@@ -76,8 +78,10 @@ export default function InstallReminderModal({ onClose }) {
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
+    history.pushState({}, '', '/install-reminder-auto-triggered');
     deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') history.pushState({}, '', '/install-reminder-auto-accepted');
     setDeferredPrompt(null);
     onClose();
   };
@@ -87,8 +91,13 @@ export default function InstallReminderModal({ onClose }) {
       <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm shadow-2xl">
         <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-gray-100 dark:border-gray-700">
           <div className="flex items-center gap-2">
-            <Download size={18} className="text-emerald-600 dark:text-emerald-400" />
-            <span className="font-bold text-gray-900 dark:text-gray-100">Add to Home Screen</span>
+            {showConfirm
+              ? <span className="text-base">🔒</span>
+              : <Download size={18} className="text-emerald-600 dark:text-emerald-400" />
+            }
+            <span className="font-bold text-gray-900 dark:text-gray-100">
+              {showConfirm ? 'Just so you know' : 'Install the app'}
+            </span>
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1">
             <X size={18} />
@@ -96,36 +105,58 @@ export default function InstallReminderModal({ onClose }) {
         </div>
 
         <div className="px-5 py-4 space-y-4">
-          <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 leading-relaxed">
-            Takes 15 seconds and turns this into a fully-functional app you can open any time — even when you're offline.
-          </p>
-
-          {deferredPrompt ? (
-            <button
-              onClick={handleInstall}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl transition-colors"
-            >
-              Install Now
-            </button>
-          ) : (
-            <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 space-y-2">
-              <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">
-                {instructions.label}
+          {showConfirm ? (
+            <>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                Your food logs are stored on your device — not on any server — for your privacy. Without installing, that data won't persist between browser sessions. Anything you log today could be lost.
               </p>
-              <ol className="space-y-1.5 list-decimal list-inside">
-                {instructions.steps.map((step, i) => (
-                  <li key={i} className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{step}</li>
-                ))}
-              </ol>
-            </div>
-          )}
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="w-full btn-primary"
+              >
+                Install the app
+              </button>
+              <button
+                onClick={() => { history.pushState({}, '', '/install-reminder-declined'); onClose(); }}
+                className="w-full text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 py-1"
+              >
+                Continue without installing
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 leading-relaxed">
+                Takes 15 seconds and turns this into a fully-functional app you can open any time — even when you're offline.
+              </p>
 
-          <button
-            onClick={onClose}
-            className="w-full text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 py-1"
-          >
-            Maybe later
-          </button>
+              {deferredPrompt ? (
+                <button
+                  onClick={handleInstall}
+                  className="w-full btn-primary"
+                >
+                  Install Now
+                </button>
+              ) : (
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-4 space-y-2">
+                  <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wide">
+                    {instructions.label}
+                  </p>
+                  <ol className="space-y-1.5 list-decimal list-inside">
+                    {instructions.steps.map((step, i) => (
+                      <li key={i} className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{step}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              <button
+                onClick={() => { history.pushState({}, '', '/install-reminder-confirm-shown'); setShowConfirm(true); }}
+                className="w-full text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 py-1"
+              >
+                Maybe later
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
