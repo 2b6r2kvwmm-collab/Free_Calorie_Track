@@ -66,29 +66,17 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   const stopScanner = async () => {
     if (scannerRef.current) {
       try {
-        // Get the camera state before stopping
-        const state = scannerRef.current.getState();
-
-        // Stop the scanner if it's running
-        if (state === Html5Qrcode.SCANNING) {
-          await scannerRef.current.stop();
-        }
-
-        // Clear the scanner completely
+        await scannerRef.current.stop();
+      } catch (err) {
+        // May fail if already stopped — ignore
+      }
+      try {
         await scannerRef.current.clear();
       } catch (err) {
-        console.error('Error stopping scanner:', err);
-        // Try to force clear even if stop failed
-        try {
-          await scannerRef.current.clear();
-        } catch (clearErr) {
-          console.error('Error clearing scanner:', clearErr);
-        }
-      } finally {
-        // Always cleanup references and state
-        scannerRef.current = null;
-        setScanning(false);
+        // Ignore
       }
+      scannerRef.current = null;
+      setScanning(false);
     }
 
     // CRITICAL for Safari on Mac: Force stop ALL video tracks
