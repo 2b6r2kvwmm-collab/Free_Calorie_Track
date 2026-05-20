@@ -17,6 +17,9 @@ export default function Settings({ onUpdateProfile, onClose }) {
   const [showImportConfirm, setShowImportConfirm] = useState(false);
   const [pendingImportData, setPendingImportData] = useState(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [dataOpen, setDataOpen] = useState(false);
   const [useCustomGoals, setUseCustomGoals] = useState(!!(getCustomMacros() || getCustomCalorieGoal()));
 
   // Calculate default custom macros based on current profile if not already set
@@ -83,6 +86,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
   const [formData, setFormData] = useState({
     age: currentProfile.age,
+    birthday: currentProfile.birthday || '',
     sex: currentProfile.sex,
     height: displayHeight,
     weight: displayWeight,
@@ -106,8 +110,18 @@ export default function Settings({ onUpdateProfile, onClose }) {
       weight = weight * 0.453592; // lbs to kg
     }
 
+    // Compute age from birthday if provided
+    let computedAge = parseInt(formData.age);
+    if (formData.birthday) {
+      const today = new Date();
+      const dob = new Date(formData.birthday);
+      computedAge = today.getFullYear() - dob.getFullYear();
+      if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) computedAge--;
+    }
+
     const profile = {
-      age: parseInt(formData.age),
+      age: computedAge,
+      birthday: formData.birthday || null,
       sex: formData.sex,
       height,
       weight,
@@ -314,270 +328,13 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
   return (
     <div className="space-y-6">
-      {/* Dashboard Customization */}
       <div className="card">
-        <h2 className="text-2xl font-bold mb-4">Dashboard Customization</h2>
+        <button type="button" onClick={() => setProfileOpen(v => !v)} className="flex w-full items-center justify-between gap-4">
+          <h2 className="text-xl font-bold">Profile Settings</h2>
+          <svg className={`w-5 h-5 text-gray-400 transition-transform ${profileOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+        </button>
 
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <input
-              type="checkbox"
-              id="waterTrackerEnabled"
-              checked={waterTrackerEnabled}
-              onChange={(e) => {
-                setWaterTrackerEnabled(e.target.checked);
-                saveWaterTrackerEnabled(e.target.checked);
-              }}
-              className="w-5 h-5 text-emerald-500 rounded mt-1"
-            />
-            <div className="flex-1">
-              <label htmlFor="waterTrackerEnabled" className="text-lg font-semibold cursor-pointer">
-                Show Water Intake Tracker
-              </label>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Display the water intake tracker on your dashboard to track daily hydration.
-              </p>
-
-              {/* Water Goal Input - only shown when water tracker is enabled */}
-              {waterTrackerEnabled && (
-                <div className="mt-3 pl-2 border-l-2 border-blue-300 dark:border-blue-700">
-                  <label htmlFor="waterGoal" className="block text-sm font-semibold mb-2">
-                    Daily Water Goal ({currentProfile.unit === 'imperial' ? 'oz' : 'mL'})
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      id="waterGoal"
-                      type="number"
-                      min="1"
-                      max={currentProfile.unit === 'imperial' ? 500 : 10000}
-                      step={currentProfile.unit === 'imperial' ? 1 : 100}
-                      value={customWaterGoal}
-                      onChange={(e) => {
-                        const value = parseFloat(e.target.value);
-                        setCustomWaterGoal(value);
-                      }}
-                      onBlur={() => {
-                        // Save when user finishes editing
-                        const goalMl = currentProfile.unit === 'imperial'
-                          ? ozToMl(customWaterGoal)
-                          : customWaterGoal;
-                        saveWaterGoal(goalMl);
-                      }}
-                      className="input-field w-32"
-                      placeholder={currentProfile.unit === 'imperial' ? '64' : '2000'}
-                    />
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
-                      {currentProfile.unit === 'imperial' ? 'oz' : 'mL'}
-                    </span>
-                  </div>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                    Default: {currentProfile.unit === 'imperial' ? '64 oz (8 glasses)' : '2,000 mL'}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <input
-              type="checkbox"
-              id="mealTypeEnabled"
-              checked={mealTypeEnabled}
-              onChange={(e) => {
-                setMealTypeEnabled(e.target.checked);
-                saveMealTypeEnabled(e.target.checked);
-              }}
-              className="w-5 h-5 text-emerald-500 rounded mt-1"
-            />
-            <div>
-              <label htmlFor="mealTypeEnabled" className="text-lg font-semibold cursor-pointer">
-                Categorize meals by type
-              </label>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Prompt to assign each food to Breakfast, Lunch, Dinner, or Snacks when logging.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3">
-            <input
-              type="checkbox"
-              id="nutritionTrackingEnabled"
-              checked={nutritionTrackingEnabled}
-              onChange={(e) => {
-                setNutritionTrackingEnabled(e.target.checked);
-                saveNutritionTrackingEnabled(e.target.checked);
-              }}
-              className="w-5 h-5 text-emerald-500 rounded mt-1"
-            />
-            <div className="flex-1">
-              <label htmlFor="nutritionTrackingEnabled" className="text-lg font-semibold cursor-pointer">
-                Show Additional Nutrition
-              </label>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Track fiber, sodium, sugar, and saturated fat on your dashboard.
-              </p>
-
-              {/* Custom Nutrition Targets - only shown when nutrition tracking is enabled */}
-              {nutritionTrackingEnabled && (
-                <div className="mt-4 pl-2 border-l-2 border-emerald-300 dark:border-emerald-700">
-                  <div className="flex items-center gap-3 mb-3">
-                    <input
-                      type="checkbox"
-                      id="useCustomNutrition"
-                      checked={useCustomNutrition}
-                      onChange={(e) => {
-                        setUseCustomNutrition(e.target.checked);
-                        // Recalculate defaults when unchecking
-                        if (!e.target.checked) {
-                          const bmr = calculateBMR(currentProfile);
-                          const tdee = calculateTDEE(bmr, currentProfile.activityLevel);
-                          const reproAdj = getReproductiveStatusCalorieAdjustment(currentProfile);
-                          const totalCalories = tdee + reproAdj;
-                          const defaults = calculateNutritionTargets(totalCalories);
-                          setCustomNutrition(defaults);
-                        }
-                      }}
-                      className="w-4 h-4 text-emerald-500 rounded"
-                    />
-                    <label htmlFor="useCustomNutrition" className="text-sm font-semibold cursor-pointer">
-                      Customize targets (Advanced)
-                    </label>
-                  </div>
-
-                  {useCustomNutrition && (
-                    <div className="space-y-3 p-3 bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">
-                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
-                        Fiber is a goal (minimum), others are limits (maximum).
-                      </p>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-xs font-semibold mb-1 text-emerald-700 dark:text-emerald-400">
-                            Fiber (g) - goal
-                          </label>
-                          <input
-                            type="number"
-                            min="0"
-                            step="1"
-                            value={customNutrition.fiber}
-                            onChange={(e) => setCustomNutrition({ ...customNutrition, fiber: parseInt(e.target.value) || 0 })}
-                            className="input-field text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-semibold mb-1 text-orange-700 dark:text-orange-400">
-                            Sodium (mg) - limit
-                          </label>
-                          <input
-                            type="number"
-                            min="0"
-                            step="100"
-                            value={customNutrition.sodium}
-                            onChange={(e) => setCustomNutrition({ ...customNutrition, sodium: parseInt(e.target.value) || 0 })}
-                            className="input-field text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-semibold mb-1 text-pink-700 dark:text-pink-400">
-                            Sugar (g) - limit
-                          </label>
-                          <input
-                            type="number"
-                            min="0"
-                            step="1"
-                            value={customNutrition.sugar}
-                            onChange={(e) => setCustomNutrition({ ...customNutrition, sugar: parseInt(e.target.value) || 0 })}
-                            className="input-field text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-semibold mb-1 text-red-700 dark:text-red-400">
-                            Saturated Fat (g) - limit
-                          </label>
-                          <input
-                            type="number"
-                            min="0"
-                            step="1"
-                            value={customNutrition.saturatedFat}
-                            onChange={(e) => setCustomNutrition({ ...customNutrition, saturatedFat: parseInt(e.target.value) || 0 })}
-                            className="input-field text-sm"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {!useCustomNutrition && (() => {
-                    const bmr = calculateBMR(bmrProfile);
-                    const tdeeCalc = calculateTDEE(bmr, formData.activityLevel);
-                    const reproAdj = getReproductiveStatusCalorieAdjustment({ sex: formData.sex, reproductiveStatus: formData.reproductiveStatus });
-                    const totalCalories = tdeeCalc + reproAdj;
-                    const autoTargets = calculateNutritionTargets(totalCalories);
-
-                    return (
-                      <p className="text-xs text-gray-600 dark:text-gray-400 italic">
-                        Auto: {autoTargets.fiber}g fiber, {autoTargets.sodium}mg sodium, {autoTargets.sugar}g sugar, {autoTargets.saturatedFat}g saturated fat
-                      </p>
-                    );
-                  })()}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-lg font-semibold mb-3">Dashboard Focus</label>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-              Choose what to prioritize on your dashboard.
-            </p>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setDashboardFocus('calories');
-                  saveDashboardFocus('calories');
-                }}
-                className={`py-3 px-4 rounded-lg font-semibold border-2 transition-colors ${
-                  dashboardFocus === 'calories'
-                    ? 'bg-emerald-600 text-white border-emerald-500'
-                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
-                }`}
-              >
-                Calories First
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setDashboardFocus('macros');
-                  saveDashboardFocus('macros');
-                }}
-                className={`py-3 px-4 rounded-lg font-semibold border-2 transition-colors ${
-                  dashboardFocus === 'macros'
-                    ? 'bg-emerald-600 text-white border-emerald-500'
-                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
-                }`}
-              >
-                Macros First
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-              {dashboardFocus === 'macros'
-                ? 'Macro progress bars will appear above calorie breakdown.'
-                : 'Calorie breakdown appears first (current layout).'}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="card">
-        <h2 className="text-2xl font-bold mb-4">Profile Settings</h2>
-
-        {/* Privacy Statement */}
-        <div className="mb-6 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
+        {profileOpen && <><div className="mb-6 mt-4 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg border border-emerald-200 dark:border-emerald-800">
           <p className="text-sm text-gray-700 dark:text-gray-300">
             <span className="font-semibold">🔒 Privacy First:</span> Unlike other apps, all your health data (including pregnancy information, weight, and food logs) stays locally on your device. We never collect, transmit, or sell any of your personal information.
           </p>
@@ -597,7 +354,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <button
                 type="button"
                 onClick={() => handleUnitChange('metric')}
-                className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
+                className={`py-2 px-4 rounded-lg font-semibold text-sm border-2 transition-colors ${
                   formData.unit === 'metric'
                     ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
@@ -608,7 +365,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <button
                 type="button"
                 onClick={() => handleUnitChange('imperial')}
-                className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
+                className={`py-2 px-4 rounded-lg font-semibold text-sm border-2 transition-colors ${
                   formData.unit === 'imperial'
                     ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
@@ -619,18 +376,41 @@ export default function Settings({ onUpdateProfile, onClose }) {
             </div>
           </div>
 
-          {/* Age */}
+          {/* Birthday / Age */}
           <div>
-            <label className="block text-lg font-semibold mb-3">Age (years)</label>
+            <label className="block text-lg font-semibold mb-1">Birthday <span className="text-sm font-normal text-gray-500 dark:text-gray-400">(optional — keeps age current)</span></label>
             <input
-              type="number"
-              required
-              min="13"
-              max="120"
-              value={formData.age}
-              onChange={(e) => updateField('age', e.target.value)}
-              className="input-field"
+              type="date"
+              value={formData.birthday}
+              onChange={(e) => updateField('birthday', e.target.value)}
+              max={new Date(Date.now() - 13 * 365.25 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+              className="text-base py-2 px-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800 mb-3"
             />
+            {!formData.birthday && (
+              <>
+                <label className="block text-sm font-semibold mb-1 text-gray-600 dark:text-gray-400">Or enter age manually</label>
+                <input
+                  type="number"
+                  required={!formData.birthday}
+                  min="13"
+                  max="120"
+                  value={formData.age}
+                  onChange={(e) => updateField('age', e.target.value)}
+                  className="input-field"
+                />
+              </>
+            )}
+            {formData.birthday && (
+              <p className="text-sm text-emerald-600 dark:text-emerald-400">
+                Age computed automatically: {(() => {
+                  const today = new Date();
+                  const dob = new Date(formData.birthday);
+                  let age = today.getFullYear() - dob.getFullYear();
+                  if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
+                  return age;
+                })()} years
+              </p>
+            )}
           </div>
 
           {/* Sex */}
@@ -640,7 +420,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <button
                 type="button"
                 onClick={() => updateField('sex', 'male')}
-                className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
+                className={`py-2 px-4 rounded-lg font-semibold text-sm border-2 transition-colors ${
                   formData.sex === 'male'
                     ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
@@ -651,7 +431,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
               <button
                 type="button"
                 onClick={() => updateField('sex', 'female')}
-                className={`py-3 px-6 rounded-lg font-semibold text-lg border-2 transition-colors ${
+                className={`py-2 px-4 rounded-lg font-semibold text-sm border-2 transition-colors ${
                   formData.sex === 'female'
                     ? 'bg-emerald-600 text-white border-emerald-500'
                     : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600'
@@ -1177,7 +957,268 @@ export default function Settings({ onUpdateProfile, onClose }) {
           <button type="submit" className="btn-primary w-full mt-8">
             Save Changes
           </button>
-        </form>
+        </form></>}
+      </div>
+
+      <div className="card">
+        <button type="button" onClick={() => setDashboardOpen(v => !v)} className="flex w-full items-center justify-between gap-4">
+          <h2 className="text-xl font-bold">Dashboard Customization</h2>
+          <svg className={`w-5 h-5 text-gray-400 transition-transform ${dashboardOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+        </button>
+
+        {dashboardOpen && <div className="space-y-4 mt-4">
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="waterTrackerEnabled"
+              checked={waterTrackerEnabled}
+              onChange={(e) => {
+                setWaterTrackerEnabled(e.target.checked);
+                saveWaterTrackerEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div className="flex-1">
+              <label htmlFor="waterTrackerEnabled" className="text-lg font-semibold cursor-pointer">
+                Show Water Intake Tracker
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Display the water intake tracker on your dashboard to track daily hydration.
+              </p>
+
+              {/* Water Goal Input - only shown when water tracker is enabled */}
+              {waterTrackerEnabled && (
+                <div className="mt-3 pl-2 border-l-2 border-blue-300 dark:border-blue-700">
+                  <label htmlFor="waterGoal" className="block text-sm font-semibold mb-2">
+                    Daily Water Goal ({currentProfile.unit === 'imperial' ? 'oz' : 'mL'})
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      id="waterGoal"
+                      type="number"
+                      min="1"
+                      max={currentProfile.unit === 'imperial' ? 500 : 10000}
+                      step={currentProfile.unit === 'imperial' ? 1 : 100}
+                      value={customWaterGoal}
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        setCustomWaterGoal(value);
+                      }}
+                      onBlur={() => {
+                        // Save when user finishes editing
+                        const goalMl = currentProfile.unit === 'imperial'
+                          ? ozToMl(customWaterGoal)
+                          : customWaterGoal;
+                        saveWaterGoal(goalMl);
+                      }}
+                      className="input-field w-32"
+                      placeholder={currentProfile.unit === 'imperial' ? '64' : '2000'}
+                    />
+                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                      {currentProfile.unit === 'imperial' ? 'oz' : 'mL'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                    Default: {currentProfile.unit === 'imperial' ? '64 oz (8 glasses)' : '2,000 mL'}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="mealTypeEnabled"
+              checked={mealTypeEnabled}
+              onChange={(e) => {
+                setMealTypeEnabled(e.target.checked);
+                saveMealTypeEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div>
+              <label htmlFor="mealTypeEnabled" className="text-lg font-semibold cursor-pointer">
+                Categorize meals by type
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Prompt to assign each food to Breakfast, Lunch, Dinner, or Snacks when logging.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="nutritionTrackingEnabled"
+              checked={nutritionTrackingEnabled}
+              onChange={(e) => {
+                setNutritionTrackingEnabled(e.target.checked);
+                saveNutritionTrackingEnabled(e.target.checked);
+              }}
+              className="w-5 h-5 text-emerald-500 rounded mt-1"
+            />
+            <div className="flex-1">
+              <label htmlFor="nutritionTrackingEnabled" className="text-lg font-semibold cursor-pointer">
+                Show Additional Nutrition
+              </label>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Track fiber, sodium, sugar, and saturated fat on your dashboard.
+              </p>
+
+              {/* Custom Nutrition Targets - only shown when nutrition tracking is enabled */}
+              {nutritionTrackingEnabled && (
+                <div className="mt-4 pl-2 border-l-2 border-emerald-300 dark:border-emerald-700">
+                  <div className="flex items-center gap-3 mb-3">
+                    <input
+                      type="checkbox"
+                      id="useCustomNutrition"
+                      checked={useCustomNutrition}
+                      onChange={(e) => {
+                        setUseCustomNutrition(e.target.checked);
+                        // Recalculate defaults when unchecking
+                        if (!e.target.checked) {
+                          const bmr = calculateBMR(currentProfile);
+                          const tdee = calculateTDEE(bmr, currentProfile.activityLevel);
+                          const reproAdj = getReproductiveStatusCalorieAdjustment(currentProfile);
+                          const totalCalories = tdee + reproAdj;
+                          const defaults = calculateNutritionTargets(totalCalories);
+                          setCustomNutrition(defaults);
+                        }
+                      }}
+                      className="w-4 h-4 text-emerald-500 rounded"
+                    />
+                    <label htmlFor="useCustomNutrition" className="text-sm font-semibold cursor-pointer">
+                      Customize targets (Advanced)
+                    </label>
+                  </div>
+
+                  {useCustomNutrition && (
+                    <div className="space-y-3 p-3 bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
+                        Fiber is a goal (minimum), others are limits (maximum).
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-emerald-700 dark:text-emerald-400">
+                            Fiber (g) - goal
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={customNutrition.fiber}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, fiber: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-orange-700 dark:text-orange-400">
+                            Sodium (mg) - limit
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="100"
+                            value={customNutrition.sodium}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, sodium: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-pink-700 dark:text-pink-400">
+                            Sugar (g) - limit
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={customNutrition.sugar}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, sugar: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold mb-1 text-red-700 dark:text-red-400">
+                            Saturated Fat (g) - limit
+                          </label>
+                          <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            value={customNutrition.saturatedFat}
+                            onChange={(e) => setCustomNutrition({ ...customNutrition, saturatedFat: parseInt(e.target.value) || 0 })}
+                            className="input-field text-sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {!useCustomNutrition && (() => {
+                    const bmr = calculateBMR(bmrProfile);
+                    const tdeeCalc = calculateTDEE(bmr, formData.activityLevel);
+                    const reproAdj = getReproductiveStatusCalorieAdjustment({ sex: formData.sex, reproductiveStatus: formData.reproductiveStatus });
+                    const totalCalories = tdeeCalc + reproAdj;
+                    const autoTargets = calculateNutritionTargets(totalCalories);
+
+                    return (
+                      <p className="text-xs text-gray-600 dark:text-gray-400 italic">
+                        Auto: {autoTargets.fiber}g fiber, {autoTargets.sodium}mg sodium, {autoTargets.sugar}g sugar, {autoTargets.saturatedFat}g saturated fat
+                      </p>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-lg font-semibold mb-3">Dashboard Focus</label>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+              Choose what to prioritize on your dashboard.
+            </p>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setDashboardFocus('calories');
+                  saveDashboardFocus('calories');
+                }}
+                className={`py-3 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                  dashboardFocus === 'calories'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
+                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                Calories First
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setDashboardFocus('macros');
+                  saveDashboardFocus('macros');
+                }}
+                className={`py-3 px-4 rounded-lg font-semibold border-2 transition-colors ${
+                  dashboardFocus === 'macros'
+                    ? 'bg-emerald-600 text-white border-emerald-500'
+                    : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                Macros First
+              </button>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              {dashboardFocus === 'macros'
+                ? 'Macro progress bars will appear above calorie breakdown.'
+                : 'Calorie breakdown appears first (current layout).'}
+            </p>
+          </div>
+        </div>}
       </div>
 
       {/* Support Free Calorie Track */}
@@ -1270,42 +1311,14 @@ export default function Settings({ onUpdateProfile, onClose }) {
         </div>
       </div>
 
-      {/* Share Section */}
-      <div className="card">
-        <h2 className="text-2xl font-bold mb-4">Share Free Calorie Track</h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-          Help others discover a truly free calorie tracker with no paywalls!
-        </p>
-
-        <button
-          onClick={() => {
-            if (navigator.share) {
-              navigator.share({
-                title: 'Free Calorie Track',
-                text: 'Check out Free Calorie Track — free calorie and macro tracking with optional AI food logging and weekly coaching. No paywalls, no ads, no account needed.',
-                url: 'https://freecalorietrack.com'
-              }).catch(() => {
-                // User cancelled share, do nothing
-              });
-            } else {
-              // Fallback: copy link to clipboard
-              navigator.clipboard.writeText('https://freecalorietrack.com').then(() => {
-                setImportMessage('Link copied to clipboard!');
-                setTimeout(() => setImportMessage(''), 3000);
-              });
-            }
-          }}
-          className="btn-primary w-full"
-        >
-          📤 Share This App
-        </button>
-      </div>
-
       {/* Data Management Section */}
       <div className="card">
-        <h2 className="text-2xl font-bold mb-4">Data Management</h2>
+        <button type="button" onClick={() => setDataOpen(v => !v)} className="flex w-full items-center justify-between gap-4">
+          <h2 className="text-xl font-bold">Data Management</h2>
+          <svg className={`w-5 h-5 text-gray-400 transition-transform ${dataOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+        </button>
 
-        {/* Warning Banner */}
+        {dataOpen && <>{/* Warning Banner */}
         <div className="bg-amber-50 dark:bg-amber-900/20 border-2 border-amber-500 p-4 rounded-lg mb-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">⚠️</span>
@@ -1457,7 +1470,38 @@ export default function Settings({ onUpdateProfile, onClose }) {
               🗑️ Delete All Data Permanently
             </button>
           </div>
-        </div>
+        </div></>}
+      </div>
+
+      {/* Share Section */}
+      <div className="card">
+        <h2 className="text-2xl font-bold mb-4">Share Free Calorie Track</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+          Help others discover a truly free calorie tracker with no paywalls!
+        </p>
+
+        <button
+          onClick={() => {
+            if (navigator.share) {
+              navigator.share({
+                title: 'Free Calorie Track',
+                text: 'Check out Free Calorie Track — free calorie and macro tracking with optional AI food logging and weekly coaching. No paywalls, no ads, no account needed.',
+                url: 'https://freecalorietrack.com'
+              }).catch(() => {
+                // User cancelled share, do nothing
+              });
+            } else {
+              // Fallback: copy link to clipboard
+              navigator.clipboard.writeText('https://freecalorietrack.com').then(() => {
+                setImportMessage('Link copied to clipboard!');
+                setTimeout(() => setImportMessage(''), 3000);
+              });
+            }
+          }}
+          className="btn-primary w-full"
+        >
+          📤 Share This App
+        </button>
       </div>
 
       {/* Trademark Disclaimer */}

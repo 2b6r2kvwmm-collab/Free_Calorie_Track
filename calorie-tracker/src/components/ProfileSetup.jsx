@@ -16,7 +16,7 @@ export default function ProfileSetup({ onComplete }) {
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
   const [customMacros, setCustomMacros] = useState({ protein: 150, carbs: 200, fat: 65 });
   const [formData, setFormData] = useState({
-    age: '',
+    birthday: '',
     sex: 'male',
     height: '',
     heightFeet: '',
@@ -45,8 +45,14 @@ export default function ProfileSetup({ onComplete }) {
       weight = weight * 0.453592;
     }
 
+    const dob = new Date(formData.birthday);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
+
     const profile = {
-      age: parseInt(formData.age),
+      age,
+      birthday: formData.birthday,
       sex: formData.sex,
       height,
       weight,
@@ -115,31 +121,29 @@ export default function ProfileSetup({ onComplete }) {
                 </div>
               </div>
 
-              {/* Age + Sex on one row */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Age</label>
-                  <input
-                    type="number"
-                    required
-                    min="13"
-                    max="120"
-                    value={formData.age}
-                    onChange={(e) => updateField('age', e.target.value)}
-                    className="input-field"
-                    placeholder="25"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Sex</label>
-                  <div className="flex gap-2 h-[50px]">
-                    <button type="button" onClick={() => updateField('sex', 'male')} className={toggleBtn(formData.sex === 'male')}>
-                      Male
-                    </button>
-                    <button type="button" onClick={() => updateField('sex', 'female')} className={toggleBtn(formData.sex === 'female')}>
-                      Female
-                    </button>
-                  </div>
+              {/* Birthday */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Birthday</label>
+                <input
+                  type="date"
+                  required
+                  value={formData.birthday}
+                  onChange={(e) => updateField('birthday', e.target.value)}
+                  max={new Date(Date.now() - 13 * 365.25 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                  className="text-base py-2 px-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800"
+                />
+              </div>
+
+              {/* Sex */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Sex</label>
+                <div className="flex gap-2">
+                  <button type="button" onClick={() => updateField('sex', 'male')} className={toggleBtn(formData.sex === 'male')}>
+                    Male
+                  </button>
+                  <button type="button" onClick={() => updateField('sex', 'female')} className={toggleBtn(formData.sex === 'female')}>
+                    Female
+                  </button>
                 </div>
               </div>
 
