@@ -19,6 +19,14 @@ const HOMESCREEN_STEPS = [
     ],
   },
   {
+    platform: 'iPhone — DuckDuckGo',
+    steps: [
+      'Tap the Share button (⬆︎) in the address bar at the top.',
+      'Tap "Add to Home Screen."',
+      'Tap "Add" to confirm.',
+    ],
+  },
+  {
     platform: 'iPhone — Firefox',
     steps: [
       'Tap the three-dot menu (...) at the bottom of the screen.',
@@ -65,6 +73,8 @@ function InstallPrompt({ onContinue }) {
         instructions = HOMESCREEN_STEPS.find(s => s.platform === 'iPhone — Chrome');
       } else if (/fxios/.test(ua)) {
         instructions = HOMESCREEN_STEPS.find(s => s.platform === 'iPhone — Firefox');
+      } else if (/ddg/.test(ua)) {
+        instructions = HOMESCREEN_STEPS.find(s => s.platform === 'iPhone — DuckDuckGo');
       } else {
         instructions = HOMESCREEN_STEPS.find(s => s.platform === 'iPhone — Safari');
       }
