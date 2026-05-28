@@ -9,6 +9,8 @@ image: "/images/blog/high-fiber-foods.webp"
 
 <img src="/images/blog/high-fiber-foods.webp" alt="High fiber foods including legumes, vegetables, and seeds" width="1600" height="893" />
 
+<p class="text-xs text-gray-400 dark:text-gray-500 italic mb-6">Contains affiliate links — we earn a small commission if you buy through them, at no extra cost to you. We only recommend products we genuinely use.</p>
+
 <div class="my-6 pb-6 border-b border-gray-200 dark:border-gray-700">
   <p class="text-xs font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-3 mt-0">At a glance</p>
   <ul class="space-y-1.5 text-gray-700 dark:text-gray-300 text-sm mb-0 list-none pl-0">
@@ -167,6 +169,14 @@ Most high-fiber foods contain both types. For general health and weight loss, to
 4. **Don't peel your produce.** The skin of apples, pears, and potatoes contains most of the fiber.
 5. **Snack on fruit instead of crackers.** An apple has 4g of fiber. Most crackers have less than 1g per serving.
 6. **Drink more water.** Fiber needs water to work properly. Without it, increasing fiber can cause constipation rather than relieve it.
+
+---
+
+## What If You Can't Hit Your Fiber Goal Through Food Alone?
+
+Most people struggle to consistently reach 25–38g of fiber per day from food — busy schedules, limited food variety, or just not enjoying enough legumes and vegetables. When that's the case, **psyllium husk** is the most research-backed fiber supplement available. It's the active ingredient in Metamucil, but buying it in bulk powder form is far cheaper and more flexible. One tablespoon stirred into water or a smoothie adds about 5g of soluble fiber with minimal calories and no flavor.
+
+Psyllium is particularly effective for the blood sugar and satiety benefits of soluble fiber — it forms a thick gel in your gut that slows digestion and blunts glucose spikes. If you're regularly falling 10–15g short of your daily target, a morning or pre-meal psyllium supplement can close the gap without restructuring your entire diet. We recommend [this psyllium husk powder](https://amzn.to/4nN1CN2) as a simple, affordable starting point. For a deeper look at when and how to use it, see our guide on [psyllium husk as a fiber supplement](/blog/psyllium-husk-fiber-supplement).
 
 ---
 

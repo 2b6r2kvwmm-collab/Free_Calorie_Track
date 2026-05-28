@@ -5,13 +5,7 @@
       "destination": "/index.html"
     }
   ],
-  "redirects": [
-    {
-      "source": "/blog/how-to-count-calories",
-      "destination": "/calorie-counter",
-      "permanent": true
-    }
-  ],
+  "redirects": [],
   "headers": [
     {
       "source": "/(.*)",
