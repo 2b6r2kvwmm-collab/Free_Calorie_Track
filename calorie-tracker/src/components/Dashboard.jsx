@@ -458,6 +458,7 @@ export default function Dashboard({ onRefresh }) {
       baseSodium: food.sodium || 0,
       baseSugar: food.sugar || 0,
       baseSaturatedFat: food.saturatedFat || 0,
+      baseGrams: food.servingGrams || null, // accurate gram basis from OFF; null for non-barcode foods
       quantity: 1, // Default multiplier
       timestamp: Date.now(),
       date: getLocalDateString(),
@@ -576,8 +577,10 @@ export default function Dashboard({ onRefresh }) {
 
   const handleEditFood = (entry) => {
     setEditingFood(entry.timestamp);
-    // Extract base grams from serving size
-    const baseGrams = extractGrams(entry.servingSize);
+    // Prefer stored baseGrams (set for barcode foods from OFF's serving_quantity).
+    // Falling back to string parsing can give wrong results when OFF nutrition values
+    // were per-serving but serving_size has no parseable gram amount (e.g. "1 bar").
+    const baseGrams = entry.baseGrams || extractGrams(entry.servingSize);
 
     // Use the actual logged grams if available, otherwise calculate from quantity
     let currentGrams;

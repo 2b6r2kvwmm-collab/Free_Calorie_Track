@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FITNESS_GOALS, GOAL_INFO } from '../utils/macros';
 import { saveCustomMacros, clearCustomMacros, saveCustomCalorieGoal, clearCustomCalorieGoal } from '../utils/storage';
-import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
+import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
 
 const toggleBtn = (active) =>
   `flex-1 py-2 px-3 rounded-lg text-sm font-semibold border-2 transition-all ${
@@ -13,10 +13,10 @@ const toggleBtn = (active) =>
 export default function ProfileSetup({ onComplete }) {
   const [step, setStep] = useState(1);
   const [useCustomGoals, setUseCustomGoals] = useState(false);
-  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(true);
   const [customMacros, setCustomMacros] = useState({ protein: 150, carbs: 200, fat: 65 });
   const [formData, setFormData] = useState({
-    birthday: '',
+    birthYear: '',
     sex: 'male',
     height: '',
     heightFeet: '',
@@ -32,13 +32,7 @@ export default function ProfileSetup({ onComplete }) {
     history.pushState({}, '', '/profile-setup-shown');
   }, []);
 
-  const isTooYoung = formData.birthday && (() => {
-    const dob = new Date(formData.birthday);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
-    return age < 13;
-  })();
+  const isTooYoung = formData.birthYear && (new Date().getFullYear() - parseInt(formData.birthYear) < 13);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,14 +48,11 @@ export default function ProfileSetup({ onComplete }) {
       weight = weight * 0.453592;
     }
 
-    const dob = new Date(formData.birthday);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
+    const age = new Date().getFullYear() - parseInt(formData.birthYear);
 
     const profile = {
       age,
-      birthday: formData.birthday,
+      birthYear: parseInt(formData.birthYear),
       sex: formData.sex,
       height,
       weight,
@@ -130,28 +121,24 @@ export default function ProfileSetup({ onComplete }) {
                 </div>
               </div>
 
-              {/* Birthday */}
+              {/* Birth Year */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Birthday</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Birth year</label>
                 <input
-                  type="date"
+                  type="number"
                   required
-                  value={formData.birthday}
-                  onChange={(e) => updateField('birthday', e.target.value)}
-                  max={new Date().toISOString().split('T')[0]}
-                  className="text-base py-2 px-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800"
+                  min="1900"
+                  max={new Date().getFullYear() - 13}
+                  value={formData.birthYear}
+                  onChange={(e) => updateField('birthYear', e.target.value)}
+                  className="input-field"
+                  placeholder={new Date().getFullYear() - 30}
                 />
-                {formData.birthday && (() => {
-                  const dob = new Date(formData.birthday);
-                  const today = new Date();
-                  let age = today.getFullYear() - dob.getFullYear();
-                  if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
-                  return age < 13 ? (
-                    <p className="text-sm text-red-600 dark:text-red-400 mt-1">
-                      You must be at least 13 years old to use Free Calorie Track.
-                    </p>
-                  ) : null;
-                })()}
+                {isTooYoung && (
+                  <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                    You must be at least 13 years old to use Free Calorie Track.
+                  </p>
+                )}
               </div>
 
               {/* Sex */}
@@ -263,6 +250,32 @@ export default function ProfileSetup({ onComplete }) {
                 </select>
                 <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Most people choose Sedentary or Light. Workouts are logged separately.</p>
               </div>
+
+              {/* Live TDEE preview */}
+              {(() => {
+                const birthYear = parseInt(formData.birthYear);
+                const age = birthYear ? new Date().getFullYear() - birthYear : null;
+                if (!age || age < 13 || age > 120) return null;
+                let weightKg, heightCm;
+                if (formData.unit === 'metric') {
+                  weightKg = parseFloat(formData.weight);
+                  heightCm = parseFloat(formData.height);
+                } else {
+                  weightKg = parseFloat(formData.weight) * 0.453592;
+                  const totalInches = (parseInt(formData.heightFeet) || 0) * 12 + (parseInt(formData.heightInches) || 0);
+                  heightCm = totalInches * 2.54;
+                }
+                if (!weightKg || !heightCm || weightKg < 20 || heightCm < 50) return null;
+                const bmr = calculateBMR({ weight: weightKg, height: heightCm, age, sex: formData.sex });
+                const tdee = Math.round(calculateTDEE(bmr, formData.activityLevel));
+                return (
+                  <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-3 border border-emerald-200 dark:border-emerald-800">
+                    <p className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold uppercase tracking-wide mb-0.5">Estimated daily calories</p>
+                    <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{tdee.toLocaleString()} cal</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">You'll choose your goal on the next step</p>
+                  </div>
+                );
+              })()}
             </>
           )}
 

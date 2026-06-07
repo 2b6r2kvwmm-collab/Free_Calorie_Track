@@ -56,8 +56,6 @@ function InstallPrompt({ onContinue }) {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [canAutoInstall, setCanAutoInstall] = useState(false);
   const [browserInstructions, setBrowserInstructions] = useState(null);
-  const [showConfirm, setShowConfirm] = useState(false);
-
   useEffect(() => {
     window.scrollTo(0, 0);
     history.pushState({}, '', '/install-prompt-shown');
@@ -125,34 +123,7 @@ function InstallPrompt({ onContinue }) {
           </p>
         </div>
 
-        {showConfirm ? (
-          /* Confirm dismiss — shared by desktop and mobile */
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border-2 border-amber-100 dark:border-amber-900/40">
-            <div className="text-5xl mb-4 text-center">🔒</div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 text-center"
-                style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-              Just so you know
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-6 text-center"
-               style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-              Your food logs are stored on your device — not on any server — for your privacy. Without installing, that data won't persist between browser sessions. Anything you log today could be lost.
-            </p>
-            <button
-              onClick={() => { history.pushState({}, '', '/install-confirm-returned'); setShowConfirm(false); }}
-              className="btn-primary w-full mb-3"
-              style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
-            >
-              Install the app
-            </button>
-            <button
-              onClick={onContinue}
-              className="w-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-3 px-6 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-              style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
-            >
-              Continue without installing
-            </button>
-          </div>
-        ) : !isMobile ? (
+        {!isMobile ? (
           /* Desktop */
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border-2 border-emerald-100 dark:border-emerald-900">
             <div className="text-5xl mb-4 text-center">📱</div>
@@ -191,7 +162,7 @@ function InstallPrompt({ onContinue }) {
             </div>
 
             <button
-              onClick={() => { window.scrollTo(0, 0); history.pushState({}, '', '/install-confirm-shown'); setShowConfirm(true); }}
+              onClick={() => { history.pushState({}, '', '/install-skipped-desktop'); onContinue(); }}
               className="w-full mt-4 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-3 px-6 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
             >
@@ -258,7 +229,7 @@ function InstallPrompt({ onContinue }) {
             </p>
 
             <button
-              onClick={() => { window.scrollTo(0, 0); history.pushState({}, '', '/install-confirm-shown'); setShowConfirm(true); }}
+              onClick={() => { history.pushState({}, '', '/install-skipped-mobile'); onContinue(); }}
               className="w-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-xl font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
               style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
             >

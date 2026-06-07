@@ -190,6 +190,23 @@ export async function getFoodByBarcode(barcode, signal = null) {
     const saturatedFat = getNutrient('saturated-fat_serving', 'saturated-fat_100g') ||
                         getNutrient('saturated-fat', 'saturated-fat');
 
+    // Determine the gram basis that matches the nutrition values we used.
+    // OFF's serving_quantity is the numeric gram weight of one serving. When we
+    // used _serving nutriment values, baseGrams must match that serving weight —
+    // otherwise the edit-form scaling formula (cal * grams / baseGrams) is wrong.
+    const usedServingValues = nutriments['energy-kcal_serving'] && nutriments['energy-kcal_serving'] > 0;
+    let servingGrams = 100;
+    if (usedServingValues) {
+      const numericQ = parseFloat(product.serving_quantity);
+      if (numericQ > 0) {
+        servingGrams = numericQ;
+      } else {
+        // Fall back to parsing the string (e.g. "40g", "1 bar (40g)")
+        const m = (product.serving_size || '').match(/(\d+(?:\.\d+)?)\s*(g|ml)/i);
+        servingGrams = m ? parseFloat(m[1]) : 100;
+      }
+    }
+
     return {
       name: product.product_name || 'Unknown Product',
       brand: product.brands || '',
@@ -202,6 +219,7 @@ export async function getFoodByBarcode(barcode, signal = null) {
       sugar: Math.round(sugar * 10) / 10,
       saturatedFat: Math.round(saturatedFat * 10) / 10,
       servingSize: product.serving_size || '100g',
+      servingGrams,
       barcode: product.code,
     };
   } catch (error) {

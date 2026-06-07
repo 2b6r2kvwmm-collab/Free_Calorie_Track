@@ -1,6 +1,6 @@
-import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense, useCallback } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals, getFoodLog } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon, Sun, Moon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
@@ -127,7 +127,6 @@ function App() {
     addWeightEntry(newProfile.weight);
     setProfile(newProfile);
     navigate('/profile-complete', { replace: true });
-    if (!isAppInstalled() && !installReminderPermanentlyDismissed()) setTimeout(() => setShowInstallReminder(true), 800);
   };
 
   const handleUpdateProfile = (updatedProfile) => {
@@ -153,12 +152,30 @@ function App() {
   };
 
   const [showInstallReminder, setShowInstallReminder] = useState(false);
+  const [installReminderVariant, setInstallReminderVariant] = useState('default');
+  const prevLogEmptyRef = useRef(getFoodLog().length === 0);
 
+  // Session-start reminder — only for returning users who already have food logged
   useEffect(() => {
     if (!profile || isAppInstalled() || installReminderPermanentlyDismissed()) return;
+    if (getFoodLog().length === 0) return;
     const timer = setTimeout(() => setShowInstallReminder(true), 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  // First-food trigger — show encouraging install reminder after first food logged
+  useEffect(() => {
+    if (!profile || isAppInstalled() || installReminderPermanentlyDismissed() || showInstallReminder) return;
+    if (prevLogEmptyRef.current && getFoodLog().length > 0) {
+      prevLogEmptyRef.current = false;
+      const timer = setTimeout(() => {
+        setInstallReminderVariant('firstFood');
+        setShowInstallReminder(true);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+    if (getFoodLog().length === 0) prevLogEmptyRef.current = true;
+  }, [refreshKey]);
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';
   const todayFormatted = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
@@ -387,7 +404,10 @@ function App() {
 
       {/* Install reminder — shown each session if not installed as PWA */}
       {showInstallReminder && (
-        <InstallReminderModal onClose={() => { incrementInstallReminderDismissals(); setShowInstallReminder(false); }} />
+        <InstallReminderModal
+          variant={installReminderVariant}
+          onClose={() => { incrementInstallReminderDismissals(); setShowInstallReminder(false); setInstallReminderVariant('default'); }}
+        />
       )}
 
       {/* Update Notification */}
