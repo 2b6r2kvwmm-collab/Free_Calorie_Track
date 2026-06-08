@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, lazy, Suspense, useCallback } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, getShareModalShown, markShareModalShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals, getFoodLog } from './utils/storage';
+import { getProfile, saveProfile, getDarkMode, saveDarkMode, addWeightEntry, getLandingPageShown, markLandingPageShown, getInstallPromptShown, markInstallPromptShown, calculateUserStats, saveDashboardFocus, installReminderPermanentlyDismissed, incrementInstallReminderDismissals, getFoodLog } from './utils/storage';
 import { getCurrentUserId, getAllUsers } from './utils/users';
 import { LayoutDashboard, TrendingUp, History as HistoryIcon, Settings as SettingsIcon, Sun, Moon } from 'lucide-react';
 import LandingPage from './components/LandingPage';
@@ -15,7 +15,6 @@ const Trends = lazy(() => import('./components/Trends'));
 const History = lazy(() => import('./components/History'));
 const Settings = lazy(() => import('./components/Settings'));
 const UserManager = lazy(() => import('./components/UserManager'));
-const ShareModal = lazy(() => import('./components/ShareModal'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -101,27 +100,6 @@ function App() {
     }
   }, [landingPageShown, profile]);
 
-  // Check if we should show the share modal (after 5 days of tracking)
-  const [userDaysTracked, setUserDaysTracked] = useState(0);
-
-  useEffect(() => {
-    if (!profile) return; // Only check for logged-in users
-
-    const shareModalShown = getShareModalShown();
-    if (shareModalShown) return; // Already shown
-
-    const stats = calculateUserStats();
-    if (stats.daysTracked >= 5) {
-      setUserDaysTracked(stats.daysTracked);
-      // Wait 2 seconds after page load to show modal (less jarring)
-      const timer = setTimeout(() => {
-        history.pushState({}, '', '/share-modal-shown');
-        setShowShareModal(true);
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [profile, refreshKey]);
-
   const handleProfileComplete = (newProfile) => {
     saveProfile(newProfile);
     addWeightEntry(newProfile.weight);
@@ -143,12 +121,6 @@ function App() {
     setProfile(getProfile());
     setRefreshKey(prev => prev + 1);
     setShowUserManager(false);
-  };
-
-  const handleShareModalClose = () => {
-    history.pushState({}, '', '/share-modal-dismissed');
-    markShareModalShown();
-    setShowShareModal(false);
   };
 
   const [showInstallReminder, setShowInstallReminder] = useState(false);
@@ -392,13 +364,6 @@ function App() {
             onUserSwitch={handleUserSwitch}
             onClose={() => setShowUserManager(false)}
           />
-        </Suspense>
-      )}
-
-      {/* Share Modal - shown after 5 days of tracking */}
-      {showShareModal && (
-        <Suspense fallback={null}>
-          <ShareModal onClose={handleShareModalClose} daysTracked={userDaysTracked} />
         </Suspense>
       )}
 
