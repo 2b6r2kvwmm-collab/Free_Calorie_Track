@@ -37,10 +37,11 @@ export default function RecipeBuilder({ onSave, onClose }) {
     }
   }, [showFoodSelector, showBarcodeManual]);
 
-  // Calculate total nutrition
+  // Calculate total nutrition — uses ing.baseUnit (grams per serving) stored at add time
   const calculateTotals = () => {
     const totals = ingredients.reduce((acc, ing) => {
-      const multiplier = ing.quantity / 100; // Assuming base values are per 100g
+      const baseUnit = ing.baseUnit || 100;
+      const multiplier = ing.quantity / baseUnit;
       return {
         calories: acc.calories + (ing.calories * multiplier),
         protein: acc.protein + (ing.protein * multiplier),
@@ -59,9 +60,18 @@ export default function RecipeBuilder({ onSave, onClose }) {
   };
 
   const addIngredient = (food, quantity = 100) => {
+    // Determine the gram basis that the food's nutrition values correspond to.
+    // servingGrams is set for barcode (OFF) foods; otherwise parse from servingSize string.
+    const servingGrams = food.servingGrams ||
+      (() => {
+        const m = (food.servingSize || '').match(/(\d+(?:\.\d+)?)\s*(g|ml)/i);
+        return m ? parseFloat(m[1]) : 100;
+      })();
+
     const newIngredient = {
       name: food.name,
-      quantity: quantity,
+      quantity,          // grams the user wants to add (editable)
+      baseUnit: servingGrams, // grams that the stored nutrition values correspond to
       calories: food.calories || 0,
       protein: food.protein || 0,
       carbs: food.carbs || 0,

@@ -270,20 +270,26 @@ export default function Settings({ onUpdateProfile, onClose }) {
           return;
         }
 
-        // Validate profile structure
-        if (typeof importData.profile !== 'object' ||
-            !importData.profile.age ||
-            !importData.profile.sex ||
-            !importData.profile.height ||
-            !importData.profile.weight) {
+        // Validate profile structure and types
+        const p = importData.profile;
+        if (typeof p !== 'object' || !p.sex ||
+            typeof p.age !== 'number' || isNaN(p.age) || p.age < 13 || p.age > 120 ||
+            typeof p.height !== 'number' || isNaN(p.height) || p.height <= 0 ||
+            typeof p.weight !== 'number' || isNaN(p.weight) || p.weight <= 0) {
           setImportMessage('Error: Invalid profile data in backup file');
           setTimeout(() => setImportMessage(''), 5000);
           return;
         }
 
-        // Validate arrays are actually arrays
+        // Validate arrays are actually arrays and within size limits
+        const MAX_ENTRIES = 50000;
         if (importData.foodLog && !Array.isArray(importData.foodLog)) {
           setImportMessage('Error: Invalid food log data');
+          setTimeout(() => setImportMessage(''), 5000);
+          return;
+        }
+        if (importData.foodLog && importData.foodLog.length > MAX_ENTRIES) {
+          setImportMessage('Error: Food log too large to import');
           setTimeout(() => setImportMessage(''), 5000);
           return;
         }
@@ -294,6 +300,14 @@ export default function Settings({ onUpdateProfile, onClose }) {
         }
         if (importData.weightLog && !Array.isArray(importData.weightLog)) {
           setImportMessage('Error: Invalid weight log data');
+          setTimeout(() => setImportMessage(''), 5000);
+          return;
+        }
+        // Validate food log entries have required fields
+        if (importData.foodLog && importData.foodLog.some(e =>
+          !e.name || typeof e.calories !== 'number' || !e.date
+        )) {
+          setImportMessage('Error: Food log contains invalid entries');
           setTimeout(() => setImportMessage(''), 5000);
           return;
         }

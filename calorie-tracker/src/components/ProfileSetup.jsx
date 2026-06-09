@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FITNESS_GOALS, GOAL_INFO } from '../utils/macros';
 import { saveCustomMacros, clearCustomMacros, saveCustomCalorieGoal, clearCustomCalorieGoal } from '../utils/storage';
-import { calculateBMR, calculateTDEE, getBaselineTDEE } from '../utils/calculations';
+import { calculateBMR, calculateTDEE } from '../utils/calculations';
 
 const toggleBtn = (active) =>
   `flex-1 py-2 px-3 rounded-lg text-sm font-semibold border-2 transition-all ${
@@ -65,7 +65,7 @@ export default function ProfileSetup({ onComplete }) {
       saveCustomMacros(customMacros);
       const totalCaloriesFromMacros = (customMacros.protein * 4) + (customMacros.carbs * 4) + (customMacros.fat * 9);
       const bmr = calculateBMR(profile);
-      const baselineTDEE = getBaselineTDEE(bmr);
+      const baselineTDEE = calculateTDEE(bmr, profile.activityLevel);
       saveCustomCalorieGoal(Math.round(totalCaloriesFromMacros - baselineTDEE));
     } else {
       clearCustomMacros();

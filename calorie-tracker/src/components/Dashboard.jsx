@@ -215,8 +215,9 @@ export default function Dashboard({ onRefresh }) {
   // Detect mismatch between custom goal and fitness goal
   const hasGoalMismatch = usingCustomGoals && (() => {
     const fitnessGoal = profile.fitnessGoal || 'maintenance';
-    const customIsSurplus = customCalorieGoal > tdee + 100; // More than 100 cal above TDEE
-    const customIsDeficit = customCalorieGoal < tdee - 100; // More than 100 cal below TDEE
+    // customCalorieGoal is a net delta (macros total − TDEE), so compare to 0 not to TDEE
+    const customIsSurplus = customCalorieGoal > 100;
+    const customIsDeficit = customCalorieGoal < -100;
 
     // Mismatch if custom goal doesn't align with fitness goal
     if ((fitnessGoal === 'weight-loss' && customIsSurplus) ||
@@ -577,10 +578,12 @@ export default function Dashboard({ onRefresh }) {
 
   const handleEditFood = (entry) => {
     setEditingFood(entry.timestamp);
-    // Prefer stored baseGrams (set for barcode foods from OFF's serving_quantity).
-    // Falling back to string parsing can give wrong results when OFF nutrition values
-    // were per-serving but serving_size has no parseable gram amount (e.g. "1 bar").
-    const baseGrams = entry.baseGrams || extractGrams(entry.servingSize);
+    const storedBaseGrams = entry.baseGrams;
+    const parsedBaseGrams = extractGrams(entry.servingSize);
+    const baseGrams = storedBaseGrams || parsedBaseGrams;
+    // Flag as approximate when: no stored gram basis AND the serving size string has
+    // no parseable gram amount (e.g. "1 bar", "1 piece") — extractGrams returned 100 as default.
+    const editIsApproximate = !storedBaseGrams && !/\d+(?:\.\d+)?\s*(g|ml)/i.test(entry.servingSize || '');
 
     // Use the actual logged grams if available, otherwise calculate from quantity
     let currentGrams;
@@ -596,6 +599,7 @@ export default function Dashboard({ onRefresh }) {
     setEditFormData({
       grams: currentGrams,
       baseGrams: baseGrams,
+      editIsApproximate,
       baseCalories: entry.baseCalories || entry.calories,
       baseProtein: entry.baseProtein || entry.protein || 0,
       baseCarbs: entry.baseCarbs || entry.carbs || 0,
@@ -1058,6 +1062,11 @@ export default function Dashboard({ onRefresh }) {
                                 <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                                   Original serving: {entry.servingSize || '100g'} ({editFormData.baseGrams}g)
                                 </div>
+                                {editFormData.editIsApproximate && (
+                                  <div className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+                                    Serving size has no gram weight — edit is approximate.
+                                  </div>
+                                )}
                               </div>
 
                               {/* Real-time preview of calculated values */}

@@ -50,6 +50,9 @@ export function setData(key, value) {
     localStorage.setItem(userKey, JSON.stringify(value));
   } catch (error) {
     console.error('Error writing to localStorage:', error);
+    if (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+      window.dispatchEvent(new CustomEvent('storage-quota-exceeded'));
+    }
   }
 }
 

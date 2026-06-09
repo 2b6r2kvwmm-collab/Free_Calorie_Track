@@ -78,7 +78,13 @@ function App() {
     if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true) return true;
     return getInstallPromptShown();
   });
-  const [showShareModal, setShowShareModal] = useState(false);
+  const [storageQuotaExceeded, setStorageQuotaExceeded] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setStorageQuotaExceeded(true);
+    window.addEventListener('storage-quota-exceeded', handler);
+    return () => window.removeEventListener('storage-quota-exceeded', handler);
+  }, []);
 
   const isAppInstalled = () =>
     window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
@@ -179,6 +185,14 @@ function App() {
 
   return (
     <div className="min-h-screen pb-20" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom))' }}>
+      {/* Storage quota warning */}
+      {storageQuotaExceeded && (
+        <div className="bg-red-600 text-white text-sm px-4 py-2 flex items-center justify-between">
+          <span>Storage is full — export your data in Settings to free up space. New entries may not be saved.</span>
+          <button onClick={() => setStorageQuotaExceeded(false)} className="ml-4 font-bold text-white hover:text-red-200">×</button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 py-4">

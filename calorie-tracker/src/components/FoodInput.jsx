@@ -23,10 +23,12 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
   const recentFoods = getRecentFoods();
   const modalRef = useModalAccessibility(true, onClose);
 
-  // Lock body scroll when modal opens
+  // Lock body scroll when modal opens; clear pendingFood on unmount so
+  // Escape-to-close while the meal-type overlay is showing never leaves stale state.
   useEffect(() => {
     lockScroll();
     return () => {
+      setPendingFood(null);
       unlockScroll();
     };
   }, []);
