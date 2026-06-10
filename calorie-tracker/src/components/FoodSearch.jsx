@@ -123,6 +123,9 @@ export default function FoodSearch({ onAddFood, onClose }) {
       const foods = await searchFoods(query.trim(), abortControllerRef.current.signal);
       setResults(foods);
       setError(null);
+      if (foods.length === 0) {
+        history.pushState({}, '', '/food-search-empty');
+      }
     } catch (error) {
       if (error.name !== 'AbortError') {
         console.error('Search failed:', error.message);

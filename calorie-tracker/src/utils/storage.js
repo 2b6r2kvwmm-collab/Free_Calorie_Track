@@ -93,6 +93,13 @@ export function deleteFoodEntry(timestamp) {
   setData(STORAGE_KEYS.FOOD_LOG, filtered);
 }
 
+// Re-insert a deleted entry exactly as it was (for undo)
+export function restoreFoodEntry(entry) {
+  const log = getFoodLog();
+  log.push(entry);
+  setData(STORAGE_KEYS.FOOD_LOG, log);
+}
+
 export function updateFoodEntry(timestamp, updatedFields) {
   const log = getFoodLog();
   const updatedLog = log.map(entry =>
@@ -125,6 +132,12 @@ export function deleteExerciseEntry(timestamp) {
   const log = getExerciseLog();
   const filtered = log.filter(entry => entry.timestamp !== timestamp);
   setData(STORAGE_KEYS.EXERCISE_LOG, filtered);
+}
+
+export function restoreExerciseEntry(entry) {
+  const log = getExerciseLog();
+  log.push(entry);
+  setData(STORAGE_KEYS.EXERCISE_LOG, log);
 }
 
 export function updateExerciseEntry(timestamp, updatedFields) {
@@ -598,6 +611,32 @@ export function copyYesterdaysMeals() {
   });
 
   return { success: true, count, message: `Copied ${count} meal(s) from yesterday` };
+}
+
+// Copy yesterday's exercises to today
+export function copyYesterdaysWorkout() {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = getLocalDateString(yesterday);
+  const todayStr = getLocalDateString();
+
+  const yesterdayEntries = getExerciseLog().filter(entry => entry.date === yesterdayStr);
+
+  if (yesterdayEntries.length === 0) {
+    return { success: false, count: 0, message: 'No workout found from yesterday' };
+  }
+
+  const log = getExerciseLog();
+  yesterdayEntries.forEach((entry, i) => {
+    log.push({
+      ...entry,
+      timestamp: Date.now() + i,
+      date: todayStr,
+    });
+  });
+  setData(STORAGE_KEYS.EXERCISE_LOG, log);
+
+  return { success: true, count: yesterdayEntries.length, message: `Copied ${yesterdayEntries.length} exercise(s) from yesterday` };
 }
 
 // Backup reminder tracking - { day10: true, day30: false }

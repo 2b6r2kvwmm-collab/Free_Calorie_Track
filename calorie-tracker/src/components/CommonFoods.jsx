@@ -96,6 +96,13 @@ export default function CommonFoods({ onAddFood, onClose }) {
   const displayedFoods = filteredFoods.slice(0, displayLimit);
   const hasMore = filteredFoods.length > displayLimit;
 
+  const noResults = debouncedSearchQuery.trim() !== '' && filteredFoods.length === 0;
+  useEffect(() => {
+    if (noResults) {
+      history.pushState({}, '', '/common-foods-search-empty');
+    }
+  }, [noResults]);
+
   // Helper function to get clean display name
   const getDisplayName = (food) => {
     const state = getRawCookedState(food.name);

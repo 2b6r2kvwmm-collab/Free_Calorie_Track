@@ -170,6 +170,11 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
     if (mode === 'photo' && imageFile.size > 4 * 1024 * 1024) { setError('Image is too large — please use an image under 4MB.'); return; }
     if (mode === 'photo' && !imageFile.type.startsWith('image/')) { setError('Invalid file type — please select an image.'); return; }
     if (photoNote.length > 500) { setError('Note is too long — please keep it under 500 characters.'); return; }
+    if (getAILogsToday() >= AI_DAILY_LIMIT) {
+      setError(`You've reached the daily limit of ${AI_DAILY_LIMIT} AI estimates. It resets tomorrow — you can still log food manually or by barcode.`);
+      history.pushState({}, '', '/ai-log-rate-limited');
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -192,6 +197,7 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
         items = await analyzeImageMeal(base64, mimeType, photoNote.trim() || null);
       }
       incrementAILogsToday();
+      history.pushState({}, '', '/ai-log-success');
       clearSession();
       setFailCount(0);
       setResults(items);
@@ -201,6 +207,7 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
       const newFailCount = failCount + 1;
       setFailCount(newFailCount);
       setError(err.message || 'Something went wrong. Please try again.');
+      history.pushState({}, '', '/ai-log-failed');
 
       // Auto-save photo/description to session on any failure
       const sessionData = { mode, description, photoNote };

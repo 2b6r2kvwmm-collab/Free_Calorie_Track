@@ -11,7 +11,6 @@ import {
 import FirstUseTip from './FirstUseTip';
 import {
   calculateBMR,
-  getBaselineTDEE,
   calculateTDEE,
   getReproductiveStatusCalorieAdjustment,
 } from '../utils/calculations';
@@ -53,7 +52,7 @@ export default function Trends() {
   }
 
   const bmr = useMemo(() => calculateBMR(profile), [profile]);
-  const baselineTDEE = useMemo(() => getBaselineTDEE(bmr), [bmr]);
+  const baselineTDEE = useMemo(() => calculateTDEE(bmr, profile.activityLevel || 'sedentary'), [bmr, profile]);
 
   // Calculate date range - memoize to prevent recalculation on every render
   const dates = useMemo(() => {

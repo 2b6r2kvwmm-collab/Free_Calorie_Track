@@ -126,11 +126,6 @@ export function calculateTDEE(bmr, activityLevel) {
   return Math.round(bmr * activityMultipliers[activityLevel]);
 }
 
-// Get baseline resting calories (sedentary TDEE to avoid double-counting exercise)
-export function getBaselineTDEE(bmr) {
-  return Math.round(bmr * 1.2); // Sedentary multiplier
-}
-
 // Get TDEE adjusted for pregnancy/breastfeeding
 export function getAdjustedTDEE(profile) {
   const bmr = calculateBMR(profile);

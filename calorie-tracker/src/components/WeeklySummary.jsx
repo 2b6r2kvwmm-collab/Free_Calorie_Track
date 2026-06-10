@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { getFoodLog, getExerciseLog, getProfile } from '../utils/storage';
-import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
+import { calculateBMR, calculateTDEE } from '../utils/calculations';
 import { getCurrentMacros } from '../utils/macros';
 
 export default function WeeklySummary() {
@@ -18,7 +18,7 @@ export default function WeeklySummary() {
 
   // Memoize expensive calculations
   const bmr = useMemo(() => calculateBMR(profile), [profile]);
-  const baselineTDEE = useMemo(() => getBaselineTDEE(bmr), [bmr]);
+  const baselineTDEE = useMemo(() => calculateTDEE(bmr, profile.activityLevel || 'sedentary'), [bmr, profile]);
 
   // Memoize expensive weekly/monthly calculations to prevent re-computation on every render
   const summaryData = useMemo(() => {

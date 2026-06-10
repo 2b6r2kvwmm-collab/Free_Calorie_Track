@@ -349,17 +349,18 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
 
         {/* Meal Type Selector Overlay */}
         {pendingFood && (
-          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-60">
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-60" role="dialog" aria-modal="true" aria-labelledby="meal-type-heading">
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full shadow-xl">
-              <h3 className="text-lg font-bold mb-2">Add to which meal?</h3>
+              <h3 id="meal-type-heading" className="text-lg font-bold mb-2">Add to which meal?</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                 {pendingFood.name} - {pendingFood.calories} cal
               </p>
 
               <div className="space-y-2 mb-4">
-                {MEAL_TYPES.map((mealType) => (
+                {MEAL_TYPES.map((mealType, i) => (
                   <button
                     key={mealType}
+                    autoFocus={i === 0}
                     onClick={() => confirmAddFood(mealType)}
                     className="w-full py-3 px-4 text-left font-semibold rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
                   >

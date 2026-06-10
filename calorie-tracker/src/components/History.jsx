@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { getFoodLog, getExerciseLog, getProfile, deleteFoodEntry, deleteExerciseEntry, addFoodEntry, addExerciseEntry } from '../utils/storage';
-import { calculateBMR, getBaselineTDEE } from '../utils/calculations';
+import { calculateBMR, calculateTDEE } from '../utils/calculations';
 import FoodInput from './FoodInput';
 import ExerciseLog from './ExerciseLog';
 import ExerciseCalorieInfo from './ExerciseCalorieInfo';
@@ -13,13 +13,15 @@ export default function History({ onRefresh }) {
   const [showExerciseLog, setShowExerciseLog] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [datePickerValue, setDatePickerValue] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [visibleCount, setVisibleCount] = useState(14);
 
   // Get current profile and calculate TDEE
   const profile = getProfile();
 
   // Guard: if no profile, use default values
   const bmr = useMemo(() => profile ? calculateBMR(profile) : 1500, [profile]);
-  const baselineTDEE = useMemo(() => getBaselineTDEE(bmr), [bmr]);
+  const baselineTDEE = useMemo(() => calculateTDEE(bmr, profile?.activityLevel || 'sedentary'), [bmr, profile]);
 
   useEffect(() => {
     loadHistory();
@@ -136,6 +138,15 @@ export default function History({ onRefresh }) {
     return dateStr === today;
   };
 
+  const query = searchQuery.trim().toLowerCase();
+  const filteredHistory = query
+    ? historyData.filter(day =>
+        day.foodEntries.some(e => e.name.toLowerCase().includes(query)) ||
+        day.exerciseEntries.some(e => e.name.toLowerCase().includes(query))
+      )
+    : historyData;
+  const visibleHistory = filteredHistory.slice(0, visibleCount);
+
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold text-center mb-6">History</h2>
@@ -180,15 +191,40 @@ export default function History({ onRefresh }) {
         </div>
       </div>
 
+      {/* Search past entries */}
+      {historyData.length > 0 && (
+        <div className="card">
+          <label htmlFor="history-search-input" className="sr-only">Search food or exercise history</label>
+          <input
+            id="history-search-input"
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search food or exercise..."
+            className="w-full px-3 py-2 text-base border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:border-emerald-500 bg-white dark:bg-gray-800"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="none"
+            spellCheck="false"
+          />
+        </div>
+      )}
+
       {historyData.length === 0 ? (
         <div className="card text-center py-12">
           <div className="text-gray-500 dark:text-gray-400">
             No history yet. Start logging food and exercise!
           </div>
         </div>
+      ) : filteredHistory.length === 0 ? (
+        <div className="card text-center py-12">
+          <div className="text-gray-500 dark:text-gray-400">
+            No days match "{searchQuery.trim()}"
+          </div>
+        </div>
       ) : (
         <div className="space-y-3">
-          {historyData.map((day) => (
+          {visibleHistory.map((day) => (
             <div key={day.date} className="card">
               {/* Date Header */}
               <button
@@ -358,6 +394,15 @@ export default function History({ onRefresh }) {
               )}
             </div>
           ))}
+
+          {filteredHistory.length > visibleCount && (
+            <button
+              onClick={() => setVisibleCount(c => c + 30)}
+              className="btn-secondary w-full"
+            >
+              Show More ({filteredHistory.length - visibleCount} more day{filteredHistory.length - visibleCount !== 1 ? 's' : ''})
+            </button>
+          )}
         </div>
       )}
 

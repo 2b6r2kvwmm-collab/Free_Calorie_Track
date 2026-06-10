@@ -12,6 +12,7 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   const mediaStreamRef = useRef(null);
   const modalRef = useModalAccessibility(true, onClose);
   const [scanning, setScanning] = useState(false);
+  const [cameraStarting, setCameraStarting] = useState(true);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [manualEntry, setManualEntry] = useState(false);
@@ -29,6 +30,7 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
   }, []);
 
   const startScanner = async () => {
+    setCameraStarting(true);
     try {
       const scanner = new Html5Qrcode("barcode-scanner");
       scannerRef.current = scanner;
@@ -42,6 +44,7 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
 
       setScanning(true);
       setError('');
+      setCameraStarting(false);
     } catch (err) {
       console.error('Scanner error:', err);
 
@@ -58,6 +61,7 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
 
       setError(errorMessage);
       setManualEntry(true);
+      setCameraStarting(false);
     }
   };
 
@@ -285,6 +289,12 @@ export default function BarcodeScanner({ onAddFood, onClose }) {
               <>
                 {!manualEntry && !error && (
                   <>
+                    {cameraStarting && (
+                      <div className="text-center py-8 text-gray-600 dark:text-gray-400" role="status">
+                        <div className="animate-pulse text-lg mb-1">Starting camera…</div>
+                        <div className="text-xs">If prompted, allow camera access</div>
+                      </div>
+                    )}
                     <div id="barcode-scanner" className="w-full rounded-lg overflow-hidden mb-4"></div>
                     <p className="text-center text-gray-600 dark:text-gray-400 mb-4">
                       Point your camera at a barcode to scan

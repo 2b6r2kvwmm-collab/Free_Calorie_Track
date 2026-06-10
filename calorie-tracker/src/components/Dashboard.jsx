@@ -4,6 +4,8 @@ import {
   getTodayEntries,
   deleteFoodEntry,
   deleteExerciseEntry,
+  restoreFoodEntry,
+  restoreExerciseEntry,
   updateFoodEntry,
   updateExerciseEntry,
   getProfile,
@@ -75,6 +77,7 @@ export default function Dashboard({ onRefresh }) {
   const [showBackupReminder, setShowBackupReminder] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [showGoalMismatchWarning, setShowGoalMismatchWarning] = useState(false);
+  const goalMismatchModalRef = useModalAccessibility(showGoalMismatchWarning, () => setShowGoalMismatchWarning(false));
   const [goalRefreshKey, setGoalRefreshKey] = useState(0); // Force re-render when goal changes
   // Memoize storage reads to prevent synchronous localStorage access on every render
   const waterTrackerEnabled = useMemo(() => getWaterTrackerEnabled(), []);
@@ -401,7 +404,7 @@ export default function Dashboard({ onRefresh }) {
   // Toast auto-dismiss
   useEffect(() => {
     if (toast) {
-      const timer = setTimeout(() => setToast(null), 3000);
+      const timer = setTimeout(() => setToast(null), toast.undo ? 6000 : 3000);
       return () => clearTimeout(timer);
     }
   }, [toast]);
@@ -547,16 +550,41 @@ export default function Dashboard({ onRefresh }) {
     }
   }, [isProcessing, onRefresh]);
 
+  // Note: deletes intentionally skip onRefresh() — it remounts Dashboard
+  // (key={refreshKey} in App) which would wipe the undo toast. All dashboard
+  // totals derive from the local `entries` state, so loadEntries() suffices.
   const handleDeleteFood = (timestamp) => {
+    const deleted = entries.food.find(e => e.timestamp === timestamp);
     deleteFoodEntry(timestamp);
     loadEntries();
-    onRefresh();
+    if (deleted) {
+      setToast({
+        message: `Deleted ${deleted.name}`,
+        type: 'success',
+        undo: () => {
+          restoreFoodEntry(deleted);
+          loadEntries();
+          setToast(null);
+        },
+      });
+    }
   };
 
   const handleDeleteExercise = (timestamp) => {
+    const deleted = entries.exercise.find(e => e.timestamp === timestamp);
     deleteExerciseEntry(timestamp);
     loadEntries();
-    onRefresh();
+    if (deleted) {
+      setToast({
+        message: `Deleted ${deleted.name}`,
+        type: 'success',
+        undo: () => {
+          restoreExerciseEntry(deleted);
+          loadEntries();
+          setToast(null);
+        },
+      });
+    }
   };
 
   // Helper function to extract grams from serving size
@@ -1358,12 +1386,12 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Goal Mismatch Warning */}
       {showGoalMismatchWarning && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="goal-mismatch-heading" ref={goalMismatchModalRef}>
           <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6 shadow-xl">
             <div className="flex items-start gap-3 mb-4">
               <div className="text-3xl">⚠️</div>
               <div>
-                <h3 className="text-xl font-bold mb-2">Goal Mismatch Detected</h3>
+                <h3 id="goal-mismatch-heading" className="text-xl font-bold mb-2">Goal Mismatch Detected</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
                   Your custom calorie goal doesn't match your fitness goal:
                 </p>
@@ -1406,7 +1434,7 @@ export default function Dashboard({ onRefresh }) {
 
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50 px-4 w-full max-w-md">
+        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50 px-4 w-full max-w-md" role="status" aria-live="polite">
           <div className={`px-6 py-4 rounded-lg shadow-xl ${
             toast.type === 'error'
               ? 'bg-red-600 text-white'
@@ -1414,7 +1442,15 @@ export default function Dashboard({ onRefresh }) {
           }`}>
             <div className="flex items-center gap-3">
               <span className="text-2xl">{toast.type === 'error' ? '❌' : '✓'}</span>
-              <span className="font-semibold">{toast.message}</span>
+              <span className="font-semibold flex-1">{toast.message}</span>
+              {toast.undo && (
+                <button
+                  onClick={toast.undo}
+                  className="underline font-bold whitespace-nowrap px-2 py-1"
+                >
+                  Undo
+                </button>
+              )}
             </div>
           </div>
         </div>

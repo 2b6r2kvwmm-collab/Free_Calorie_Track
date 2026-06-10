@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { exercises, calculateExerciseCalories, calculateWeightedVestMET, getRunningMET, getCyclingMET, calculatePace } from '../utils/calculations';
-import { getProfile, addExerciseEntry } from '../utils/storage';
+import { getProfile, addExerciseEntry, copyYesterdaysWorkout } from '../utils/storage';
 import WorkoutTemplates from './WorkoutTemplates';
 import ExerciseCalorieInfo from './ExerciseCalorieInfo';
 import { trackWorkout } from '../utils/gamification';
@@ -41,6 +41,8 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
   const [walkingDistance, setWalkingDistance] = useState('');
   const [walkingDistanceUnit, setWalkingDistanceUnit] = useState('miles');
   const [showWorkoutTemplates, setShowWorkoutTemplates] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState('All');
+  const [copyMessage, setCopyMessage] = useState('');
   const scrollRef = useRef(null);
 
   // Get current profile - needs to be fresh if user updates profile while modal is open
@@ -70,11 +72,24 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const filteredExercises = debouncedSearchQuery
-    ? exercises.filter(ex =>
-        ex.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
-      )
-    : exercises;
+  const categories = ['All', ...new Set(exercises.map(ex => ex.category))];
+
+  const filteredExercises = exercises.filter(ex => {
+    if (categoryFilter !== 'All' && ex.category !== categoryFilter) return false;
+    if (debouncedSearchQuery && !ex.name.toLowerCase().includes(debouncedSearchQuery.toLowerCase())) return false;
+    return true;
+  });
+
+  const handleCopyYesterday = () => {
+    const result = copyYesterdaysWorkout();
+    if (result.success) {
+      history.pushState({}, '', '/workout-copied-yesterday');
+      if (onRefresh) onRefresh();
+      onClose();
+    } else {
+      setCopyMessage(result.message);
+    }
+  };
 
   // Check if exercise is strength-based (Weightlifting or Bodyweight)
   const isStrengthExercise = selectedExercise &&
@@ -336,10 +351,23 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
           <div>
             <button
               onClick={() => setShowWorkoutTemplates(true)}
-              className="btn-secondary w-full mb-4 text-left"
+              className="btn-secondary w-full mb-3 text-left"
             >
               📋 Workout Templates
             </button>
+
+            <button
+              onClick={handleCopyYesterday}
+              className="btn-secondary w-full mb-4 text-left"
+            >
+              🔁 Copy Yesterday's Workout
+            </button>
+
+            {copyMessage && (
+              <div className="text-sm text-gray-600 dark:text-gray-400 mb-4" role="status">
+                {copyMessage}
+              </div>
+            )}
 
             <label htmlFor="exercise-search-input" className="sr-only">Search for exercises</label>
             <input
@@ -355,6 +383,22 @@ function ExerciseLog({ onAddExercise, onClose, onRefresh }) {
               autoCapitalize="none"
               spellCheck="false"
             />
+
+            <div className="flex gap-2 overflow-x-auto pb-2 mb-4 -mt-2">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setCategoryFilter(cat)}
+                  className={`px-3 py-1.5 rounded-full text-sm font-semibold border-2 whitespace-nowrap transition-colors ${
+                    categoryFilter === cat
+                      ? 'bg-emerald-600 text-white border-emerald-500'
+                      : 'bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:border-emerald-500'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
 
             <div className="space-y-2 max-h-96 overflow-y-auto">
               {filteredExercises.map((exercise, index) => (
