@@ -1,7 +1,7 @@
 import { useState, useRef, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getProfile, saveProfile, saveDailyGoal, getData, setData, getCustomMacros, saveCustomMacros, clearCustomMacros, getCustomCalorieGoal, saveCustomCalorieGoal, clearCustomCalorieGoal, getCustomNutrition, saveCustomNutrition, clearCustomNutrition, getNutritionTrackingEnabled, saveNutritionTrackingEnabled, getWaterTrackerEnabled, saveWaterTrackerEnabled, getWaterGoal, saveWaterGoal, getMealTypeEnabled, saveMealTypeEnabled, getDashboardFocus, saveDashboardFocus, applyMacroPreset, calculateUserStats, ozToMl, mlToOz } from '../utils/storage';
-import { calculateBMR, calculateTDEE, getBaselineTDEE, getReproductiveStatusCalorieAdjustment, getCurrentTrimester, getWeeksPregnant, calculateNutritionTargets } from '../utils/calculations';
+import { calculateBMR, calculateTDEE, getProfileAge, getReproductiveStatusCalorieAdjustment, getCurrentTrimester, getWeeksPregnant, calculateNutritionTargets } from '../utils/calculations';
 import { FITNESS_GOALS, GOAL_INFO, calculateMacroTargets } from '../utils/macros';
 import { APP_VERSION, VERSION_DATE } from '../version';
 import { handleExport } from '../utils/backupExport';
@@ -86,7 +86,7 @@ export default function Settings({ onUpdateProfile, onClose }) {
     : currentProfile.weight;
 
   const [formData, setFormData] = useState({
-    age: currentProfile.age,
+    age: getProfileAge(currentProfile),
     birthday: currentProfile.birthday || '',
     sex: currentProfile.sex,
     height: displayHeight,
@@ -126,6 +126,8 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
     const profile = {
       age: computedAge,
+      // Preserve birthYear unless the user manually changed their age
+      birthYear: computedAge === getProfileAge(currentProfile) ? currentProfile.birthYear || null : null,
       birthday: fd.birthday || null,
       sex: fd.sex,
       height,
@@ -272,6 +274,14 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
         // Validate profile structure and types
         const p = importData.profile;
+        // Derive age from birthYear/birthday if the backup lacks a numeric age
+        if (typeof p === 'object' && (typeof p.age !== 'number' || isNaN(p.age))) {
+          if (p.birthYear) {
+            p.age = new Date().getFullYear() - parseInt(p.birthYear);
+          } else if (p.birthday) {
+            p.age = Math.floor((Date.now() - new Date(p.birthday).getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+          }
+        }
         if (typeof p !== 'object' || !p.sex ||
             typeof p.age !== 'number' || isNaN(p.age) || p.age < 13 || p.age > 120 ||
             typeof p.height !== 'number' || isNaN(p.height) || p.height <= 0 ||
@@ -345,7 +355,6 @@ export default function Settings({ onUpdateProfile, onClose }) {
 
   const bmr = calculateBMR(bmrProfile);
   const tdee = calculateTDEE(bmr, formData.activityLevel);
-  const baselineTDEE = getBaselineTDEE(bmr);
 
   return (
     <div className="space-y-6">

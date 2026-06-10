@@ -469,7 +469,7 @@ export default function LandingPage({ onGetStarted }) {
               height="3000"
               className="w-full h-auto"
               loading="eager"
-              fetchPriority="high"
+              fetchpriority="high"
               style={{ imageRendering: 'high-quality', transform: 'translateZ(0)', willChange: 'transform' }}
               decoding="sync"
             />

@@ -9,7 +9,7 @@ import {
   getLocalDateString, COACH_MIN_DAYS,
 } from '../utils/storage';
 import { calculateMacroTargets } from '../utils/macros';
-import { getAdjustedTDEE } from '../utils/calculations';
+import { getAdjustedTDEE, getProfileAge } from '../utils/calculations';
 
 function buildProfilePayload() {
   const profile = getProfile();
@@ -23,7 +23,7 @@ function buildProfilePayload() {
   return {
     goal: profile.goal,
     activityLevel: profile.activityLevel,
-    age: profile.age,
+    age: getProfileAge(profile),
     weight: profile.weight,
     units: profile.units,
     calorieGoal,

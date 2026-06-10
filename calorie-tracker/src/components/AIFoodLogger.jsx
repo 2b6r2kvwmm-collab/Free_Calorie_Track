@@ -180,7 +180,15 @@ export default function AIFoodLogger({ onLog, onClose, onLogged }) {
       if (mode === 'text') {
         items = await analyzeTextMeal(description.trim());
       } else {
-        const { base64, mimeType } = await imageFileToBase64(imageFile);
+        // Compress before upload to bound payload size (large phone photos can be 10MB+)
+        const compressed = await compressImageToBase64(imageFile, 1024, 0.8);
+        let base64, mimeType;
+        if (compressed) {
+          base64 = compressed.split(',')[1];
+          mimeType = 'image/jpeg';
+        } else {
+          ({ base64, mimeType } = await imageFileToBase64(imageFile));
+        }
         items = await analyzeImageMeal(base64, mimeType, photoNote.trim() || null);
       }
       incrementAILogsToday();

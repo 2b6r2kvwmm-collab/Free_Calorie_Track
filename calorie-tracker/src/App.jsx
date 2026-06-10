@@ -152,7 +152,6 @@ function App() {
       }, 2000);
       return () => clearTimeout(timer);
     }
-    if (getFoodLog().length === 0) prevLogEmptyRef.current = true;
   }, [refreshKey]);
 
   const currentUserName = getAllUsers().find(u => u.id === currentUserId)?.name || 'User';

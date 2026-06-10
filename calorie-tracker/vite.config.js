@@ -26,7 +26,8 @@ export default defineConfig({
     }
   },
   plugins: [
-    basicSsl(),
+    // NO_HTTPS=1 disables the self-signed cert for tooling that can't accept it
+    ...(process.env.NO_HTTPS ? [] : [basicSsl()]),
     react(),
     footerInjectionPlugin(),
     VitePWA({
@@ -41,6 +42,8 @@ export default defineConfig({
         name: 'Free Calorie Track',
         short_name: 'Free Calorie Track',
         description: 'Free calorie and macro tracker with barcode scanning, trends, and offline support',
+        start_url: '/',
+        scope: '/',
         theme_color: '#10b981',
         background_color: '#ffffff',
         display: 'standalone',

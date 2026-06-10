@@ -88,9 +88,18 @@ export function getWeeksPregnant(dueDate) {
   return Math.max(0, Math.min(42, Math.round(weeksPregnant)));
 }
 
+// Derive current age from birthYear when available, so stored age never goes stale
+export function getProfileAge(profile) {
+  if (profile?.birthYear) {
+    return new Date().getFullYear() - profile.birthYear;
+  }
+  return profile?.age;
+}
+
 // Calculate BMR using Mifflin-St Jeor Equation
 export function calculateBMR(profile) {
-  const { weight, height, age, sex } = profile;
+  const { weight, height, sex } = profile;
+  const age = getProfileAge(profile);
 
   // weight in kg, height in cm
   const bmr = (10 * weight) + (6.25 * height) - (5 * age);

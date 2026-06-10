@@ -20,7 +20,6 @@ const STORAGE_KEYS = {
   WORKOUT_TEMPLATES: 'workoutTemplates',
   MILESTONES_SHOWN: 'milestonesShown',
   LAST_MILESTONE_DATE: 'lastMilestoneDate',
-  SHARE_MODAL_SHOWN: 'shareModalShown',
 };
 
 // Get local date string (YYYY-MM-DD) in user's timezone, not UTC
@@ -673,15 +672,6 @@ export function getLastMilestoneDate() {
 
 export function markMilestoneDate() {
   setData(STORAGE_KEYS.LAST_MILESTONE_DATE, getLocalDateString());
-}
-
-// Share modal tracking
-export function getShareModalShown() {
-  return getData(STORAGE_KEYS.SHARE_MODAL_SHOWN) || false;
-}
-
-export function markShareModalShown() {
-  setData(STORAGE_KEYS.SHARE_MODAL_SHOWN, true);
 }
 
 // Update modal tracking

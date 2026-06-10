@@ -7,8 +7,9 @@ import { lockScroll, unlockScroll } from '../utils/scrollLock';
 import FoodSearch from './FoodSearch';
 const BarcodeScanner = lazy(() => import('./BarcodeScanner'));
 import QuickAdd from './QuickAdd';
-import CommonFoods from './CommonFoods';
-import CustomFoodManager from './CustomFoodManager';
+// Lazy so the ~2,400-item commonFoods data stays out of the main bundle
+const CommonFoods = lazy(() => import('./CommonFoods'));
+const CustomFoodManager = lazy(() => import('./CustomFoodManager'));
 import AIFoodLogger from './AIFoodLogger';
 import AIOnboardingModal from './AIOnboardingModal';
 
@@ -112,12 +113,18 @@ export default function FoodInput({ onAddFood, onClose, onRefresh }) {
     return <QuickAdd onAddFood={handleAddFood} onClose={() => setMode('menu')} />;
   }
 
-  if (mode === 'common') {
-    return <CommonFoods onAddFood={handleAddFood} onClose={() => setMode('menu')} />;
-  }
-
-  if (mode === 'custom') {
-    return <CustomFoodManager onAddFood={handleAddFood} onClose={() => setMode('menu')} />;
+  if (mode === 'common' || mode === 'custom') {
+    return (
+      <Suspense fallback={
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="text-white text-lg">Loading…</div>
+        </div>
+      }>
+        {mode === 'common'
+          ? <CommonFoods onAddFood={handleAddFood} onClose={() => setMode('menu')} />
+          : <CustomFoodManager onAddFood={handleAddFood} onClose={() => setMode('menu')} />}
+      </Suspense>
+    );
   }
 
   if (mode === 'ai') {

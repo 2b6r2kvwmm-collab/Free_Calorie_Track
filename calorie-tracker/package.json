@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:http": "NO_HTTPS=1 vite",
     "build": "vite build",
     "preview": "vite preview"
   },

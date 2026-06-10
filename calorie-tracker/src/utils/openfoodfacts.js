@@ -205,6 +205,10 @@ export async function getFoodByBarcode(barcode, signal = null) {
         const m = (product.serving_size || '').match(/(\d+(?:\.\d+)?)\s*(g|ml)/i);
         servingGrams = m ? parseFloat(m[1]) : 100;
       }
+      // Guard against malformed OFF data (e.g. "999999g") corrupting scaling
+      if (!isFinite(servingGrams) || servingGrams < 1 || servingGrams > 10000) {
+        servingGrams = 100;
+      }
     }
 
     return {
