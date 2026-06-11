@@ -1,4 +1,20 @@
-const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+// gemini-2.0-flash and gemini-2.0-flash-lite were shut down by Google (2026) —
+// keep all entries here pointing at live models or the fallback chain is dead weight.
+const GEMINI_MODELS = ['gemini-3.5-flash', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+
+const GEMINI_TIMEOUT_MS = 25000;
+
+// Constrains Gemini to valid JSON matching this shape (structured output)
+const COACH_SCHEMA = {
+  type: 'OBJECT',
+  properties: {
+    whatsWorking: { type: 'ARRAY', items: { type: 'STRING' } },
+    needsAttention: { type: 'ARRAY', items: { type: 'STRING' } },
+    thisTry: { type: 'ARRAY', items: { type: 'STRING' } },
+    trajectory: { type: 'STRING' },
+  },
+  required: ['whatsWorking', 'needsAttention', 'thisTry', 'trajectory'],
+};
 
 const COACH_PROMPT = `You are a supportive nutrition coach analyzing a user's food logs from the past week. Based on their actual logged data and personal goals, provide personalized, specific insights.
 
@@ -72,17 +88,28 @@ ${logs.map(day => {
 
   return {
     contents: [{ parts: [{ text: `${COACH_PROMPT}\n\n${userContext}` }] }],
-    generationConfig: { response_mime_type: 'application/json', temperature: 0.4 },
+    generationConfig: { response_mime_type: 'application/json', response_schema: COACH_SCHEMA, temperature: 0.4 },
   };
 }
 
 async function callGeminiModel(model, body) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.GEMINI_API_KEY}`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
+  let res;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
+    });
+  } catch (err) {
+    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+      const timeoutErr = new Error('Gemini took too long to respond. Please try again.');
+      timeoutErr.isBusy = true; // retryable: let the chain try the next model
+      throw timeoutErr;
+    }
+    throw err;
+  }
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));

@@ -99,9 +99,13 @@ export default function CommonFoods({ onAddFood, onClose }) {
   const noResults = debouncedSearchQuery.trim() !== '' && filteredFoods.length === 0;
   useEffect(() => {
     if (noResults) {
-      history.pushState({}, '', '/common-foods-search-empty');
+      // Query goes in the path (Vercel Analytics drops query strings) so failed
+      // searches can guide future database expansions
+      const slug = debouncedSearchQuery.trim().toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+      history.pushState({}, '', `/common-foods-search-empty/${slug}`);
     }
-  }, [noResults]);
+  }, [noResults, debouncedSearchQuery]);
 
   // Helper function to get clean display name
   const getDisplayName = (food) => {

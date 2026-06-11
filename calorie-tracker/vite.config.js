@@ -12,6 +12,15 @@ export default defineConfig({
       '.ngrok-free.dev', // Allow all ngrok free tier domains
       '.ngrok.io',       // Allow all ngrok paid tier domains (if upgraded)
     ],
+    proxy: {
+      // Local stand-in for the Vercel functions in /api (run: node scripts/dev-api.mjs).
+      // Origin is rewritten so the handlers' CORS allowlist accepts LAN/phone requests.
+      '/api': {
+        target: 'http://127.0.0.1:3001',
+        changeOrigin: true,
+        headers: { origin: 'http://localhost:5173' },
+      },
+    },
   },
   build: {
     rollupOptions: {

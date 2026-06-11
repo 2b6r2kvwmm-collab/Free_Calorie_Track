@@ -124,7 +124,11 @@ export default function FoodSearch({ onAddFood, onClose }) {
       setResults(foods);
       setError(null);
       if (foods.length === 0) {
-        history.pushState({}, '', '/food-search-empty');
+        // Query goes in the path (Vercel Analytics drops query strings) so failed
+        // searches can guide future database expansions
+        const slug = query.trim().toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
+        history.pushState({}, '', `/food-search-empty/${slug}`);
       }
     } catch (error) {
       if (error.name !== 'AbortError') {

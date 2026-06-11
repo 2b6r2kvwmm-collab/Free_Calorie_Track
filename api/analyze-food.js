@@ -1,4 +1,25 @@
-const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-lite'];
+// gemini-2.0-flash and gemini-2.0-flash-lite were shut down by Google (2026) —
+// keep all entries here pointing at live models or the fallback chain is dead weight.
+const GEMINI_MODELS = ['gemini-3.5-flash', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'];
+
+const GEMINI_TIMEOUT_MS = 25000;
+
+// Constrains Gemini to valid JSON matching this shape (structured output)
+const NUTRITION_SCHEMA = {
+  type: 'ARRAY',
+  minItems: 1,
+  items: {
+    type: 'OBJECT',
+    properties: {
+      name: { type: 'STRING' },
+      calories: { type: 'NUMBER' },
+      protein: { type: 'NUMBER' },
+      carbs: { type: 'NUMBER' },
+      fat: { type: 'NUMBER' },
+    },
+    required: ['name', 'calories', 'protein', 'carbs', 'fat'],
+  },
+};
 
 const NUTRITION_PROMPT = `You are a nutrition estimation assistant. Analyze the food described or shown and return a JSON array of food items with estimated nutrition.
 
@@ -45,7 +66,7 @@ export const config = {
 function buildTextRequest(description) {
   return {
     contents: [{ parts: [{ text: `${NUTRITION_PROMPT}\n\nFood to analyze: ${description}` }] }],
-    generationConfig: { response_mime_type: 'application/json', temperature: 0.1 },
+    generationConfig: { response_mime_type: 'application/json', response_schema: NUTRITION_SCHEMA, temperature: 0.1 },
   };
 }
 
@@ -58,17 +79,28 @@ function buildImageRequest(base64Data, mimeType, note) {
         { inline_data: { mime_type: mimeType, data: base64Data } },
       ],
     }],
-    generationConfig: { response_mime_type: 'application/json', temperature: 0.1 },
+    generationConfig: { response_mime_type: 'application/json', response_schema: NUTRITION_SCHEMA, temperature: 0.1 },
   };
 }
 
 async function callGeminiModel(model, body) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${process.env.GEMINI_API_KEY}`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  });
+  let res;
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(GEMINI_TIMEOUT_MS),
+    });
+  } catch (err) {
+    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+      const timeoutErr = new Error('Gemini took too long to respond — tap to try again.');
+      timeoutErr.isBusy = true; // retryable: let the chain try the next model
+      throw timeoutErr;
+    }
+    throw err;
+  }
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
