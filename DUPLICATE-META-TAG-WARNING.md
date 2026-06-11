@@ -60,9 +60,8 @@ When adding/editing meta tags:
 ## Files to Watch
 
 ### Main App (React):
-- `/calorie-tracker/index.html` - Should have NO meta description
-- `/calorie-tracker/src/components/LandingPage.jsx` - Controls meta via React Helmet
-- `/calorie-tracker/src/components/SEO.jsx` - React Helmet component
+- `/calorie-tracker/index.html` - The single source of ALL SPA meta tags (static, no React Helmet)
+- React Helmet is no longer used — `SEO.jsx` and the JSX blog components were deleted when the blog moved to Astro. Do not add meta tags from React components.
 
 ### Blog/Landing Pages (Astro):
 - `/blog-astro/src/layouts/LandingPageLayout.astro` - Controls meta for landing pages

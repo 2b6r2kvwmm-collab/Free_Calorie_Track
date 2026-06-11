@@ -50,6 +50,7 @@ Add entry before the closing `</urlset>` tag:
 ```xml
 <url>
   <loc>https://freecalorietrack.com/blog/your-post-slug</loc>
+  <lastmod>YYYY-MM-DD</lastmod>  <!-- Date of publish; update when you edit the post -->
   <priority>0.8</priority>  <!-- Use 0.85 for Gear Reviews -->
   <changefreq>monthly</changefreq>
 </url>
@@ -61,7 +62,30 @@ Add entry before the closing `</urlset>` tag:
 
 **⚠️ If you skip this step, your post will NOT appear in search engines!**
 
-### 2. Verify Schema Markup (Automatic)
+**Note:** This hand-maintained sitemap is the ONLY sitemap in production. `build-all.sh`
+intentionally does NOT copy Astro's auto-generated `sitemap-index.xml` to avoid two
+competing sitemaps. robots.txt points to `/sitemap.xml`.
+
+### 2. Add to llms.txt (GEO / AI search)
+
+**File:** `/calorie-tracker/public/llms.txt`
+
+Add a link line under the matching section (`## Guides` or `## Gear Reviews`):
+
+```
+- [Post Title](https://freecalorietrack.com/blog/your-post-slug): One-line summary
+```
+
+### 3. When EDITING an existing post
+
+Add/update `updatedDate` in the post frontmatter (emits `dateModified` in the Article
+schema and `article:modified_time`), and update the `<lastmod>` in sitemap.xml:
+
+```yaml
+updatedDate: 2026-06-11
+```
+
+### 4. Verify Schema Markup (Automatic)
 
 The following are automatically added by `BlogLayout.astro`:
 - ✅ Article schema (headline, author, dates, publisher)
@@ -71,7 +95,7 @@ The following are automatically added by `BlogLayout.astro`:
 
 **No action needed** - just verify by viewing page source after build.
 
-### 3. Test Build
+### 5. Test Build
 
 ```bash
 npm run build

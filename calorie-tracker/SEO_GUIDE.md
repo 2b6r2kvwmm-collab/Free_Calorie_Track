@@ -15,18 +15,11 @@
 - **Status:** ✅ Properly configured
 - **Content:** Allows all crawlers, points to sitemap
 
-### 3. Dynamic Meta Tags (react-helmet-async)
-- **Package:** Installed (`react-helmet-async`)
-- **Component:** `src/components/SEO.jsx`
-- **Status:** ✅ Implemented on all blog pages
-- **Includes:**
-  - Title tags (unique per page)
-  - Meta descriptions
-  - Keywords
-  - Open Graph tags (Facebook)
-  - Twitter Cards
-  - Canonical URLs
-  - Article metadata
+### 3. Meta Tags
+- **SPA:** All meta tags (title, description, OG, Twitter, canonical, JSON-LD) are static in `index.html` so crawlers see them without JavaScript. `index.html` also contains a static HTML fallback inside `#root` (features + FAQ mirroring the FAQPage schema).
+- **Blog:** Handled by the Astro site (`/blog-astro/src/layouts/BlogLayout.astro`) — Article schema with `datePublished`/`dateModified`, BreadcrumbList, OG/Twitter, canonicals.
+- Note: the old `src/components/SEO.jsx` (react-helmet-async) and JSX blog components were deleted when the blog moved to Astro.
+- **GEO:** `/public/llms.txt` lists the app + all blog posts for AI crawlers. Update it when adding posts.
 
 ### 4. Image Optimization
 - **Format:** WebP (modern, compressed)

@@ -6,6 +6,7 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     pubDate: z.date(),
+    updatedDate: z.date().optional(),
     author: z.string().default('FCT Staff'),
     image: z.string().optional(),
     category: z.enum(['Guides', 'Gear Reviews', 'Calculators']).default('Guides'),

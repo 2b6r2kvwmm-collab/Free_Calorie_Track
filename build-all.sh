@@ -54,14 +54,10 @@ if [ -d "blog-astro/public/images/blog" ]; then
   cp -r blog-astro/public/images/blog/* calorie-tracker/dist/images/blog/
 fi
 
-# Copy sitemap files
-echo "🗺️  Copying sitemap..."
-if [ -f "blog-astro/dist/sitemap-index.xml" ]; then
-  cp blog-astro/dist/sitemap-index.xml calorie-tracker/dist/
-fi
-if [ -f "blog-astro/dist/sitemap-0.xml" ]; then
-  cp blog-astro/dist/sitemap-0.xml calorie-tracker/dist/
-fi
+# Sitemap: the hand-maintained calorie-tracker/public/sitemap.xml is the single
+# source of truth (robots.txt references it). Astro's sitemap-index.xml/sitemap-0.xml
+# are intentionally NOT copied to avoid two competing sitemaps in production.
+echo "🗺️  Using calorie-tracker/public/sitemap.xml (Astro sitemap not copied)"
 
 echo "✅ Build complete! Output in calorie-tracker/dist"
 echo "   - Main app: /calorie-tracker/dist"

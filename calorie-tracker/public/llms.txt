@@ -1,0 +1,50 @@
+# Free Calorie Track
+
+> Free Calorie Track (freecalorietrack.com) is a 100% free calorie and macro tracking web app (PWA). No account, no subscription, no ads, no paywall. All data is stored locally on the user's device — nothing is uploaded to a server. Features include USDA food database search, barcode scanning, AI photo food logging, 1,400+ common foods, exercise logging, TDEE/BMR calculation, weight trends, and weekly nutrition summaries.
+
+Key facts:
+- Completely free: every feature is available without payment or account creation
+- Privacy-first: food logs, weight, and profile data never leave the device (localStorage)
+- Works offline as an installable Progressive Web App
+- Food data sources: USDA FoodData Central and Open Food Facts
+
+## App
+
+- [Free Calorie Track app](https://freecalorietrack.com/): Track calories, macros (protein, carbs, fat), fiber, and exercise
+- [Protein Tracker](https://freecalorietrack.com/protein-tracker): Free protein tracking with automatic goals
+- [Macro Tracker](https://freecalorietrack.com/macro-tracker): Free macro tracking with real-time progress bars
+
+## Guides
+
+- [What Are Calories?](https://freecalorietrack.com/blog/what-are-calories): What calories are and how calorie tracking works
+- [What Are Macros?](https://freecalorietrack.com/blog/what-are-macros): Protein, carbs, and fat explained
+- [What is Protein?](https://freecalorietrack.com/blog/what-is-protein): Why protein matters, how much you need, best sources
+- [How to Count Calories](https://freecalorietrack.com/blog/how-to-count-calories): Complete beginner's guide to calorie counting
+- [How to Use a Food Scale](https://freecalorietrack.com/blog/how-to-use-a-food-scale): Weighing food for accurate tracking
+- [TDEE Calculator](https://freecalorietrack.com/blog/how-to-calculate-tdee): Calculate total daily energy expenditure, BMR, and macros
+- [Calorie Deficit Calculator](https://freecalorietrack.com/blog/calorie-deficit-calculator): How many calories to eat to lose weight safely
+- [Macro Calculator](https://freecalorietrack.com/blog/macro-calculator-guide): Personalized protein/carb/fat targets
+- [BMI vs FFMI](https://freecalorietrack.com/blog/bmi-vs-ffmi): Which body composition metric is better
+- [High Protein Low Calorie Foods](https://freecalorietrack.com/blog/high-protein-low-calorie-foods): Foods ranked by protein per 100g
+- [High Fiber Foods](https://freecalorietrack.com/blog/high-fiber-foods): Fiber per serving, daily targets, meal ideas
+- [Balancing Protein and Fiber](https://freecalorietrack.com/blog/balancing-protein-and-fiber): Hitting both targets daily
+- [Protein Supplements](https://freecalorietrack.com/blog/protein-supplementation): Who needs them and how to use them
+- [Creatine Guide](https://freecalorietrack.com/blog/creatine-guide): Benefits, dosing, timing, safety
+- [Psyllium Husk](https://freecalorietrack.com/blog/psyllium-husk-fiber-supplement): Benefits, dosing, and timing
+- [GLP-1 Protein Tracking](https://freecalorietrack.com/blog/protein-tracking-on-glp-1): Preventing muscle loss on Ozempic/Wegovy/Mounjaro
+- [Rucking Guide](https://freecalorietrack.com/blog/rucking-guide-weighted-vest-training): Heart rate, calorie burn, starting weight
+- [Calorie App Privacy](https://freecalorietrack.com/blog/calorie-app-privacy): How calorie apps handle health data
+- [Free Calorie Tracker Features](https://freecalorietrack.com/blog/free-calorie-tracker-app-features): Full feature overview
+
+## Gear Reviews
+
+- [NutriBullet Pro 900 Review](https://freecalorietrack.com/blog/best-blenders-for-protein-shakes): Best blender for protein shakes
+- [Core Fitness Adjustable Dumbbells](https://freecalorietrack.com/blog/best-adjustable-dumbbells-beginners): Best for beginners/intermediates
+- [Nuobell 580 Review](https://freecalorietrack.com/blog/best-adjustable-dumbbells-advanced): Best heavy adjustable dumbbells
+- [ZELUS Weighted Vest Review](https://freecalorietrack.com/blog/zelus-weighted-vest-review): Budget pick for rucking
+- [Breville Barista Express Review](https://freecalorietrack.com/blog/breville-barista-express-review): 6+ years of daily use
+- [OXO Obsidian Carbon Steel Pan](https://freecalorietrack.com/blog/oxo-obsidian-carbon-steel-pan-review): Nonstick alternative
+
+## Optional
+
+- [Sitemap](https://freecalorietrack.com/sitemap.xml)

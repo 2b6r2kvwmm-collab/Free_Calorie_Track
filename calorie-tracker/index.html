@@ -441,18 +441,82 @@
   </head>
   <body>
     <div id="root">
-      <!-- Static content for crawlers that don't execute JavaScript. React will replace this entire div on mount. -->
-      <div style="max-width: 56rem; margin: 0 auto; padding: 2rem 1rem; text-align: center;">
-        <h1 style="font-size: 2.5rem; font-weight: 700; color: #10b981; margin-bottom: 1rem;">
-          The Best Free Calorie Counter & Macro Tracker
+      <!-- Static content for crawlers/AI agents that don't execute JavaScript.
+           React replaces this entire div on mount. FAQ text mirrors the FAQPage JSON-LD above. -->
+      <div style="max-width: 56rem; margin: 0 auto; padding: 2rem 1rem;">
+        <h1 style="font-size: 2.5rem; font-weight: 700; color: #10b981; margin-bottom: 1rem; text-align: center;">
+          The Best Free Calorie Counter &amp; Macro Tracker
         </h1>
-        <p style="font-size: 1.125rem; color: #374151; margin-bottom: 2rem;">
+        <p style="font-size: 1.125rem; color: #374151; margin-bottom: 1rem; text-align: center;">
           No subscription required. Track calories, macros, and exercise.
         </p>
-        <p style="color: #6b7280;">
-          Free calorie counter with barcode scanning, macro tracking, exercise logging, and weight trends.
-          No ads, no paywalls, no subscription fees. All your data stays private on your device.
+        <p style="color: #6b7280; text-align: center;">
+          Free calorie counter with barcode scanning, macro tracking, AI photo food logging, exercise logging,
+          and weight trends. No ads, no paywalls, no subscription fees. All your data stays private on your device.
         </p>
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 2rem 0 0.5rem;">Features</h2>
+        <ul style="color: #6b7280; line-height: 1.7;">
+          <li>Barcode scanner with the Open Food Facts database (3+ million products)</li>
+          <li>USDA food database search plus 1,400+ built-in common foods</li>
+          <li>AI photo food logging — snap a meal photo to estimate calories and macros</li>
+          <li>Real-time macro tracking: protein, carbs, fat, and optional fiber goals</li>
+          <li>Exercise logging with automatic net-calorie balance (TDEE-aware)</li>
+          <li>Weight trends, weekly summaries, and full history editing</li>
+          <li>Works offline as an installable Progressive Web App — no account needed</li>
+        </ul>
+        <h2 style="font-size: 1.5rem; font-weight: 700; margin: 2rem 0 0.5rem;">Frequently Asked Questions</h2>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Is Free Calorie Track really free?</h3>
+          <p style="color: #6b7280; margin: 0;">Yes. All core features in the app are free to use. There is currently no premium tier, no upgrade wall, and no free-trial period that expires. Barcode scanning, macro tracking, trends, history editing, exercise logging — all of it is included. The app is funded by optional donations, not by gating features behind a paywall. While the core features will remain free, optional features may be introduced in the future.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Do I need to create an account or sign up?</h3>
+          <p style="color: #6b7280; margin: 0;">No. There is no account, no email, no password. You open the app and start tracking immediately. Your data is stored locally on your device, so there is nothing to sign into. If you use multiple devices, you can export and import your data as a backup file.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">How does barcode scanning work, and is it really free?</h3>
+          <p style="color: #6b7280; margin: 0;">Yes, barcode scanning is completely free with no daily or monthly limit. Point your camera at any product barcode and the app looks it up instantly using the Open Food Facts database, which contains over 3 million products. If a product is not in the database, you can manually enter the nutrition info and save it as a custom food.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Can I track macros (protein, carbs, and fat) for free?</h3>
+          <p style="color: #6b7280; margin: 0;">Yes. Macro tracking is fully included. The app shows real-time progress bars for protein, carbs, and fat alongside your calorie count. You can use the automatically calculated macro targets based on your fitness goal, or set your own custom macro goals in settings. No paywall, no premium required.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">What are Net calories, and why do they matter?</h3>
+          <p style="color: #6b7280; margin: 0;">Net calories represent your true energy balance for the day: the calories you ate, minus the calories your body burned at rest (TDEE), minus the calories you burned exercising. A net of zero means maintenance. Negative net means a deficit and you will lose weight over time. Positive net means a surplus and you will gain weight. Most apps show gross calories eaten without factoring in what your body burns, which makes the number misleading. Free Calorie Track shows the real picture.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">What is the difference between BMR and TDEE?</h3>
+          <p style="color: #6b7280; margin: 0;">BMR (Basal Metabolic Rate) is how many calories your body burns doing absolutely nothing — just keeping you alive. TDEE (Total Daily Energy Expenditure) is your total daily burn, which includes BMR plus the energy spent on daily movement, activity, and digestion. TDEE is the number that actually matters for tracking, because it is the baseline your food intake gets compared against. Free Calorie Track calculates both using the widely used Mifflin-St Jeor equation.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">How is Free Calorie Track different from other popular calorie trackers?</h3>
+          <p style="color: #6b7280; margin: 0;">Most popular calorie tracking apps require account creation and limit essential features — like barcode scanning, macro tracking, and trend insights — behind premium subscriptions. They may also show ads to free-tier users. Free Calorie Track includes these features at no cost, requires no account, shows no ads, and stores your data locally on your device rather than requiring cloud storage.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Why is this app free when others charge for the same features?</h3>
+          <p style="color: #6b7280; margin: 0;">Free Calorie Track is funded by optional donations, not by investors or advertising. It runs as a Progressive Web App, which means no app store fees or middlemen. The goal was to build a calorie tracker that respects your privacy and doesn&#x27;t gate features behind paywalls.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Where is my data stored?</h3>
+          <p style="color: #6b7280; margin: 0;">Your nutrition data and personal information are stored locally on your device using browser storage (localStorage). No cloud account is required. Your meal logs, exercise history, weight entries, and profile information never leave your device. Only anonymous usage statistics (page views, feature usage) are collected to improve the app.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Does the app work without an internet connection?</h3>
+          <p style="color: #6b7280; margin: 0;">Yes. Once installed, the app works fully offline. The thousands of common foods in the database, your saved favorites, recipes, and all logged data are available without internet. The only feature that requires a connection is searching the branded food database or scanning barcodes for products not already cached on your device.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Will tracking calories actually help me lose weight?</h3>
+          <p style="color: #6b7280; margin: 0;">Research suggests that calorie awareness is a useful tool for many people managing their weight. That said, tracking is a tool — it works best when it is sustainable. Free Calorie Track is designed to make tracking fast and low-friction so you will actually stick with it. No ads interrupting you, no paywalls forcing upgrades, and full history editing so one missed day does not derail your streak. Individual results vary.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Is there a free protein tracker included in the app?</h3>
+          <p style="color: #6b7280; margin: 0;">Yes. Free Calorie Track functions as a dedicated protein tracker as well. You can view your daily protein intake on a real-time progress bar separate from your total calories. This makes it incredibly easy to hit high-protein diet goals without needing to pay for premium tracking features.</p>
+        </section>
+        <section>
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 1.25rem 0 0.25rem;">Can I use Free Calorie Track to track fiber intake?</h3>
+          <p style="color: #6b7280; margin: 0;">Yes. Free Calorie Track automatically tracks fiber for every food you log alongside calories and macros. You can enable a daily fiber goal in Settings to see real-time progress on your dashboard. It works for high-fiber foods like beans, lentils, oats, and vegetables — search the database, scan the barcode, snap a photo, or just describe the food and the AI will estimate it. No account or subscription required.</p>
+        </section>
       </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>

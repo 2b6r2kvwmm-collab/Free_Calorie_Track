@@ -21,10 +21,10 @@
 
 ### 2. Submit Sitemap
 
-Astro automatically generates a sitemap at `/sitemap-index.xml`.
+The production sitemap is the hand-maintained `/calorie-tracker/public/sitemap.xml` (Astro's auto-generated sitemap is intentionally not deployed).
 
 1. In Google Search Console, go to **Sitemaps** (left sidebar)
-2. Enter sitemap URL: `https://freecalorietrack.com/sitemap-index.xml`
+2. Enter sitemap URL: `https://freecalorietrack.com/sitemap.xml`
 3. Click **Submit**
 4. Google will start crawling within 24-48 hours
 
@@ -75,7 +75,7 @@ Astro automatically generates a sitemap at `/sitemap-index.xml`.
 
 1. In Bing Webmaster Tools, go to **Sitemaps**
 2. Click **Submit Sitemap**
-3. Enter: `https://freecalorietrack.com/sitemap-index.xml`
+3. Enter: `https://freecalorietrack.com/sitemap.xml`
 4. Click **Submit**
 5. Bing will start crawling within 48 hours
 
@@ -238,7 +238,7 @@ Test Twitter Card tags:
 **Cause:** Sitemap URL incorrect or inaccessible
 
 **Fix:**
-- Verify sitemap loads: `https://freecalorietrack.com/sitemap-index.xml`
+- Verify sitemap loads: `https://freecalorietrack.com/sitemap.xml`
 - Check Vercel build succeeded
 - Re-submit sitemap URL
 
